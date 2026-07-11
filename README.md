@@ -1,24 +1,17 @@
-# OMOIKIRI KZ New Final Beta
+﻿# OMOIKIRI KZ Preview
 
-Clean static build of the OMOIKIRI Kazakhstan site.
+Temporary OMOIKIRI KZ preview for catalog and ecommerce testing.
 
-This repository contains only the files needed for the current beta version of the site:
+## Pages
 
-- catalog pages and product pages;
-- homepage, cart, favorites, search and language switch;
-- Kazakhstan contact and dealer pages;
-- static assets, styles and scripts;
-- GitHub Pages support files.
-
-Development/import scripts and duplicate preview files are intentionally excluded.
+- `index.html` - homepage prototype with RU/KZ language switch.
+- `product/akisame-100-2-r/index.html` - AKISAME 100-2-R product page with KZT prices.
 
 ## Local Preview
 
 Serve this folder with any static file server and open:
 
 - `/`
-- `/sinks/`
-- `/contact/`
-- `/dealers/`
+- `/product/akisame-100-2-r/?attribute_pa_color=gm`
 
-Prices are shown in KZT.
+This is a design/prototype archive, not a production Bitrix template.

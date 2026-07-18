@@ -39,6 +39,10 @@
     return String(value || '').replace(/^https?:\/\/omoikiri\.ru(?=\/)/i, '/assets/remote/omoikiri.ru');
   }
 
+  function publicOmoikiriUrl(value) {
+    return String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, 'https://omoikiri.ru');
+  }
+
   function numeric(text) {
     return Number(String(text || '').replace(/\D/g, ''));
   }
@@ -350,7 +354,28 @@
       }
 
       .card_actions .rrc {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         flex: 0 0 auto !important;
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 42px !important;
+        padding: 0 18px !important;
+        border-radius: 999px !important;
+        overflow: visible !important;
+        white-space: nowrap !important;
+      }
+
+      .card_actions .rrc .price,
+      .card_actions .rrc .woocommerce-Price-amount,
+      .card_actions .rrc bdi,
+      .card_actions .rrc ins,
+      .card_actions .rrc del {
+        display: inline !important;
+        visibility: visible !important;
+        opacity: 1 !important;
       }
 
       .card_actions .fav_button {
@@ -606,7 +631,7 @@
 
   function productImage() {
     const image = document.querySelector('.prod_image img, .woocommerce-product-gallery img, .rtwpvg-single-image-container img, .product img');
-    return localizeOmoikiriUrl(image?.currentSrc ||
+    return publicOmoikiriUrl(image?.currentSrc ||
       image?.src ||
       '');
   }

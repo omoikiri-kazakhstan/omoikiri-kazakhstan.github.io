@@ -99,7 +99,7 @@
   }
 
   function localizeImage(value) {
-    return String(value || '').replace(/^https?:\/\/omoikiri\.ru(?=\/)/i, '/assets/remote/omoikiri.ru');
+    return String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, 'https://omoikiri.ru');
   }
 
   function cleanPrice(value) {

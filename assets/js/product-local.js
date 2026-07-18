@@ -343,14 +343,15 @@
       }
 
       #add-to-favorites.dealer-favorite-active svg {
-        fill: currentColor !important;
+        fill: transparent !important;
+        color: #e4003a !important;
       }
 
       .card_actions {
         display: flex !important;
         align-items: center !important;
         flex-wrap: nowrap !important;
-        gap: 22px !important;
+        gap: 20px !important;
       }
 
       .card_actions .rrc {
@@ -362,7 +363,7 @@
         height: auto !important;
         min-width: 0 !important;
         min-height: 42px !important;
-        padding: 0 20px !important;
+        padding: 0 18px !important;
         border-radius: 999px !important;
         overflow: visible !important;
         white-space: nowrap !important;
@@ -372,7 +373,7 @@
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 8px !important;
+        gap: 7px !important;
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
@@ -410,8 +411,8 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #e4003a !important;
-        font-size: 19px !important;
-        font-weight: 700 !important;
+        font-size: 17px !important;
+        font-weight: 500 !important;
         line-height: 1 !important;
         text-decoration: none !important;
       }
@@ -464,6 +465,10 @@
         font: 700 14px/1.2 Arial, sans-serif !important;
         white-space: nowrap !important;
         vertical-align: middle !important;
+      }
+
+      .fav_button[aria-pressed="true"] .dealer-favorite-label {
+        color: #e4003a !important;
       }
 
       .card_actions .pin {
@@ -1446,7 +1451,7 @@
     button.closest('.fav_button')?.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
     button.closest('.fav_button')?.setAttribute('aria-pressed', active ? 'true' : 'false');
 
-    if (label) label.textContent = active ? 'удалить' : 'в избранное';
+    if (label) label.textContent = 'в избранное';
   }
 
   function toggleFavorite() {

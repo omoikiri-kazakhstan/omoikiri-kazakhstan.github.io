@@ -362,20 +362,75 @@
         height: auto !important;
         min-width: 0 !important;
         min-height: 42px !important;
-        padding: 0 18px !important;
+        padding: 0 20px !important;
         border-radius: 999px !important;
         overflow: visible !important;
         white-space: nowrap !important;
       }
 
-      .card_actions .rrc .price,
+      .card_actions .rrc .price {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #fff !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+        text-decoration: none !important;
+      }
+
       .card_actions .rrc .woocommerce-Price-amount,
-      .card_actions .rrc bdi,
-      .card_actions .rrc ins,
-      .card_actions .rrc del {
+      .card_actions .rrc bdi {
         display: inline !important;
         visibility: visible !important;
         opacity: 1 !important;
+        color: inherit !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+      }
+
+      .card_actions .rrc ins {
+        display: inline-flex !important;
+        align-items: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #fff !important;
+        font-size: 22px !important;
+        font-weight: 800 !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+      }
+
+      .card_actions .rrc del {
+        display: inline-flex !important;
+        align-items: center !important;
+        position: relative !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #e4003a !important;
+        font-size: 19px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+      }
+
+      .card_actions .rrc del::after {
+        content: "" !important;
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: 50% !important;
+        height: 2px !important;
+        background: #e4003a !important;
+        transform: translateY(-50%) !important;
+      }
+
+      .card_actions .rrc .price > .woocommerce-Price-amount {
+        color: #fff !important;
+        font-size: 22px !important;
+        font-weight: 800 !important;
       }
 
       .card_actions .fav_button {
@@ -572,12 +627,12 @@
     const saleKzt = formatKzt(roundKzt(sale || regular));
     const regularKzt = formatKzt(roundKzt(regular));
     if (regular && sale && regular !== sale) {
-      return '<span class="price"><del><span class="woocommerce-Price-amount amount"><bdi>' +
+      return '<span class="price dealer-product-price dealer-sale-product-price"><del><span class="woocommerce-Price-amount amount"><bdi>' +
         regularKzt + '</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi>' +
         saleKzt + '</bdi></span></ins></span>';
     }
 
-    return '<span class="price"><span class="woocommerce-Price-amount amount"><bdi>' +
+    return '<span class="price dealer-product-price"><span class="woocommerce-Price-amount amount"><bdi>' +
       saleKzt + '</bdi></span></span>';
   }
 

@@ -205,12 +205,12 @@
       body.single-product .sku,
       body.single-product .dealer-product-sku {
         display: block !important;
-        margin: 3px 0 16px !important;
+        margin: 0 !important;
         color: #202020 !important;
-        font-family: "GothamProRegular", Arial, Helvetica, sans-serif !important;
-        font-size: 17px !important;
+        font-family: "GothamProLight", "GothamProRegular", Arial, Helvetica, sans-serif !important;
+        font-size: 20px !important;
         font-weight: 400 !important;
-        line-height: 1.25 !important;
+        line-height: normal !important;
         letter-spacing: 0 !important;
         text-transform: none !important;
       }
@@ -218,10 +218,10 @@
       body.single-product .card_actions .pin,
       body.single-product .card_actions .pin a,
       body.single-product .card_actions .pin span {
-        font-family: "GothamProMedium", Arial, Helvetica, sans-serif !important;
-        font-size: 12px !important;
-        font-weight: 500 !important;
-        line-height: 1.2 !important;
+        font-family: "GothamProRegular", Arial, Helvetica, sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: normal !important;
         letter-spacing: 0 !important;
         color: #111 !important;
       }
@@ -319,9 +319,9 @@
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        flex: 0 0 34px !important;
-        width: 34px !important;
-        height: 34px !important;
+        flex: 0 0 24px !important;
+        width: 24px !important;
+        height: 24px !important;
         border: 0 !important;
         padding: 0 !important;
         background: transparent !important;
@@ -334,8 +334,8 @@
       }
 
       #add-to-favorites svg {
-        width: 32px !important;
-        height: 32px !important;
+        width: 24px !important;
+        height: 24px !important;
         display: block !important;
         stroke: currentColor !important;
         stroke-width: 1.7 !important;
@@ -351,7 +351,7 @@
         display: flex !important;
         align-items: center !important;
         flex-wrap: nowrap !important;
-        gap: 20px !important;
+        gap: 25px !important;
       }
 
       .card_actions .rrc {
@@ -367,7 +367,7 @@
         border-radius: 999px !important;
         overflow: visible !important;
         white-space: nowrap !important;
-        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
       }
 
       .card_actions .rrc .price {
@@ -378,7 +378,7 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
-        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
         line-height: 1 !important;
         white-space: nowrap !important;
         text-decoration: none !important;
@@ -401,9 +401,9 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
-        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
         font-size: 22px !important;
-        font-weight: 700 !important;
+        font-weight: 900 !important;
         line-height: 1 !important;
         text-decoration: none !important;
       }
@@ -415,7 +415,7 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #e4003a !important;
-        font-family: "GothamProRegular", "GothamProMedium", Arial, Helvetica, sans-serif !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
         font-size: 17px !important;
         font-weight: 400 !important;
         line-height: 1 !important;
@@ -435,9 +435,9 @@
 
       .card_actions .rrc .price > .woocommerce-Price-amount {
         color: #fff !important;
-        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
         font-size: 22px !important;
-        font-weight: 700 !important;
+        font-weight: 900 !important;
       }
 
       .card_actions .fav_button {

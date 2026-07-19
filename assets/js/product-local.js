@@ -367,6 +367,7 @@
         border-radius: 999px !important;
         overflow: visible !important;
         white-space: nowrap !important;
+        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
       }
 
       .card_actions .rrc .price {
@@ -377,6 +378,7 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
+        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
         line-height: 1 !important;
         white-space: nowrap !important;
         text-decoration: none !important;
@@ -388,6 +390,7 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: inherit !important;
+        font-family: inherit !important;
         line-height: 1 !important;
         text-decoration: none !important;
       }
@@ -398,8 +401,9 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
+        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
         font-size: 22px !important;
-        font-weight: 800 !important;
+        font-weight: 700 !important;
         line-height: 1 !important;
         text-decoration: none !important;
       }
@@ -411,8 +415,9 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #e4003a !important;
+        font-family: "GothamProRegular", "GothamProMedium", Arial, Helvetica, sans-serif !important;
         font-size: 17px !important;
-        font-weight: 500 !important;
+        font-weight: 400 !important;
         line-height: 1 !important;
         text-decoration: none !important;
       }
@@ -430,8 +435,9 @@
 
       .card_actions .rrc .price > .woocommerce-Price-amount {
         color: #fff !important;
+        font-family: "GothamProBold", "GothamProMedium", Arial, Helvetica, sans-serif !important;
         font-size: 22px !important;
-        font-weight: 800 !important;
+        font-weight: 700 !important;
       }
 
       .card_actions .fav_button {

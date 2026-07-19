@@ -370,6 +370,15 @@
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+        cursor: text !important;
+        -webkit-touch-callout: text !important;
+      }
+
+      .card_actions .rrc * {
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        cursor: text !important;
+        -webkit-touch-callout: text !important;
       }
 
       .card_actions .rrc .price {
@@ -441,6 +450,7 @@
         height: 2px !important;
         background: #e4003a !important;
         transform: translateY(-50%) !important;
+        pointer-events: none !important;
       }
 
       .card_actions .rrc .price > .woocommerce-Price-amount {
@@ -669,6 +679,49 @@
       priceBox.querySelectorAll('.woocommerce-Price-amount.amount').forEach((node) => {
         node.dataset.kztDone = '1';
       });
+    });
+  }
+
+  function unlockPriceSelection(root) {
+    (root || document).querySelectorAll('.card_actions .rrc, .summary .rrc').forEach((priceBox) => {
+      priceBox.removeAttribute('draggable');
+      priceBox.style.userSelect = 'text';
+      priceBox.style.webkitUserSelect = 'text';
+      priceBox.style.cursor = 'text';
+
+      priceBox.querySelectorAll('*').forEach((node) => {
+        node.removeAttribute('draggable');
+        node.style.userSelect = 'text';
+        node.style.webkitUserSelect = 'text';
+        node.style.cursor = 'text';
+      });
+    });
+  }
+
+  function protectPriceSelection() {
+    if (document.documentElement.dataset.dealerPriceSelectionBound === '1') return;
+    document.documentElement.dataset.dealerPriceSelectionBound = '1';
+
+    const priceSelector = '.card_actions .rrc, .summary .rrc';
+    const keepBrowserSelection = (event) => {
+      if (!event.target.closest(priceSelector)) return;
+      event.stopPropagation();
+    };
+
+    [
+      'pointerdown',
+      'pointermove',
+      'pointerup',
+      'mousedown',
+      'mousemove',
+      'mouseup',
+      'touchstart',
+      'touchmove',
+      'touchend',
+      'selectstart',
+      'dragstart'
+    ].forEach((eventName) => {
+      document.addEventListener(eventName, keepBrowserSelection, true);
     });
   }
 
@@ -1612,6 +1665,8 @@
     localizeProductImages(document);
     updateVariationPriceDisplay();
     convertPrices(document);
+    unlockPriceSelection(document);
+    protectPriceSelection();
     bindCart();
     bindFavorite();
     updateCartCount();
@@ -1658,6 +1713,7 @@
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);
+        unlockPriceSelection(document);
         refreshFavoriteState();
       });
     }
@@ -1681,6 +1737,7 @@
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);
+        unlockPriceSelection(document);
         bindFavorite();
       }, delay);
     });

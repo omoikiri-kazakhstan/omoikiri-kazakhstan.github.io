@@ -368,6 +368,8 @@
         overflow: visible !important;
         white-space: nowrap !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
       }
 
       .card_actions .rrc .price {
@@ -382,6 +384,8 @@
         line-height: 1 !important;
         white-space: nowrap !important;
         text-decoration: none !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
       }
 
       .card_actions .rrc .woocommerce-Price-amount,
@@ -393,6 +397,8 @@
         font-family: inherit !important;
         line-height: 1 !important;
         text-decoration: none !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
       }
 
       .card_actions .rrc ins {
@@ -406,6 +412,8 @@
         font-weight: 900 !important;
         line-height: 1 !important;
         text-decoration: none !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
       }
 
       .card_actions .rrc del {
@@ -420,6 +428,8 @@
         font-weight: 400 !important;
         line-height: 1 !important;
         text-decoration: none !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
       }
 
       .card_actions .rrc del::after {

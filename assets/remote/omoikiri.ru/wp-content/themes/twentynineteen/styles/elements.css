@@ -1,0 +1,250 @@
+.ico_line {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    line-height: 1.5em;
+}
+
+.ico_line>img {
+    width: 20px;
+}
+
+/* квадрат youtube */
+
+.about_top_video {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #fff;
+    bottom: 85px;
+    right: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    z-index: 2;
+    cursor: pointer;
+    transition-duration: .3s;
+
+}
+
+.about_top_video>p {
+    font-family: 'GothamProRegular';
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.about_top_video>p:last-child {
+    text-align: right;
+}
+
+.about_top_video>.play {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 30px solid #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.about_top_video:hover {
+    border: 1px solid var(--hover-link);
+    transition-duration: .5s;
+}
+
+.about_top_video:hover .play {
+    border-left: 30px solid var(--hover-link);
+    transition-duration: .5s;
+}
+
+/* квадрат youtube */
+
+/* стрелочки слайдера */
+
+.gal_nav {
+	display: flex;
+	gap: 25px;
+	align-items: center;
+}
+
+.gallery-prev,
+.gallery-next {
+	cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .gallery-prev {
+		margin-left: auto;
+	}
+}
+
+.gallery-prev svg {
+	width: 30px;
+	height: 30px;
+	transition-duration: .3s;
+}
+
+.gallery-prev svg:hover {
+	fill: var(--hover-link);
+	transition-duration: .5s;
+}
+
+.gallery-next svg {
+	width: 30px;
+	height: 30px;
+	transition-duration: .3s;
+}
+
+.gallery-next svg:hover {
+	fill: var(--hover-link);
+	transition-duration: .5s;
+}
+
+/* стрелочки слайдера */
+
+/* точки галерея */
+
+.view {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.select_view {
+    width: 25px;
+    height: 25px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: #efefef;
+    border-radius: 50%;
+    cursor: pointer;
+    transition-duration: .15s;
+}
+
+.selected {
+    transition-duration: .5s;
+    background-color: #fff;
+}
+
+/* точки галерея */
+
+/* галерея */
+
+.gallery_cont {
+	width: 1920px;
+    margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+    padding: 0 100px;
+}
+
+@media screen and (max-width: 1920px) {
+	.gallery_cont {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 1500px) {
+	.gallery_cont {
+		padding: 0 50px;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.gallery_cont {
+		padding: 0 25px;
+	}
+}
+
+.gallery_nav {
+	width: 100%;
+	max-width: 1920px;
+	margin: 0 auto;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+    padding: 25px 0;
+    align-items: center;
+}
+
+.rolls .gallery_cont {
+    margin: 50px 0;
+}
+
+@media screen and (max-width: 800px) {
+    .gallery_nav {
+		gap: 25px;
+	}
+}
+
+.swiper {
+	width: 100%;
+	max-width: 1920px;
+	margin: 0 auto;
+}
+
+.swiper-slide {
+	height: 400px;
+}
+
+@media screen and (max-width: 1500px) {
+	.swiper-slide {
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+	.swiper-slide {
+        height: 250px;
+    }
+}
+
+.swiper-slide>a {
+	background-color: #ececec;
+}
+
+.swiper-slide img {
+	height: 100%;
+	width: 100%;
+    object-fit: cover;
+}
+
+.swiper-wrapper .slick-slide {
+	margin: 0 25px;
+}
+
+.swiper-wrapper .slick-list {
+	margin: 0 -25px;
+}
+
+.swiper-wrapper .slick-track {
+	margin-left: 0;
+}
+
+.slick-next,
+.slick-prev {
+	z-index: 9999;
+	width: 30px !important;
+}
+
+.slick-lightbox-close {
+	right: 30px !important;
+}
+
+.slick-lightbox-close:before {
+	font-size: 40px !important;
+}
+
+.slick-prev:before {
+	content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' fill='%23fff' version='1.1' id='XMLID_64_' viewBox='0 0 24 24' xml:space='preserve'%3E%3Cg id='link-previous'%3E%3Cg%3E%3Cpolygon points='10.3,20.7 1.6,12 10.3,3.3 11.7,4.7 5.5,11 22,11 22,13 5.5,13 11.7,19.3 '%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+.slick-next:before {
+	content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' fill='%23fff' version='1.1' id='XMLID_301_' viewBox='0 0 24 24' xml:space='preserve'%3E%3Cg id='link-next'%3E%3Cg%3E%3Cpolygon points='13.7,20.7 12.3,19.2 18.6,13 2,13 2,11 18.6,11 12.3,4.8 13.7,3.3 22.4,12 '%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/* галерея */

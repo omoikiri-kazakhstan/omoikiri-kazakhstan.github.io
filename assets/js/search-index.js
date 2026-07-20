@@ -620,7 +620,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/pled.png",
     "url": "product/pled/index.html",
     "slug": "pled"
   },
@@ -1409,7 +1409,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2025/02/gr-02-set.png",
     "url": "product/gr-02-set/index.html",
     "slug": "gr-02-set"
   },
@@ -1418,7 +1418,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/grinder.png",
     "url": "product/grinder/index.html",
     "slug": "grinder"
   },
@@ -1755,7 +1755,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2025/11/kinrei.png",
     "url": "product/kenrei-set/index.html",
     "slug": "kenrei-set"
   },
@@ -1987,7 +1987,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/m-complex-4-1.png",
     "url": "product/m-complex-4/index.html",
     "slug": "m-complex-4"
   },
@@ -1996,7 +1996,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/M-Complex-5S.png",
     "url": "product/m-complex-5s/index.html",
     "slug": "m-complex-5s"
   },
@@ -2031,7 +2031,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/ME-01-1.png",
     "url": "product/me-01/index.html",
     "slug": "me-01"
   },
@@ -2255,7 +2255,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Mod-1.png",
     "url": "product/mod-1-0/index.html",
     "slug": "mod-1-0"
   },
@@ -2264,7 +2264,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Mod-2.png",
     "url": "product/mod-2-0/index.html",
     "slug": "mod-2-0"
   },
@@ -2273,7 +2273,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Mod-3.png",
     "url": "product/mod-3-0/index.html",
     "slug": "mod-3-0"
   },
@@ -2903,7 +2903,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2025/12/omoikane-rw.png",
     "url": "product/omoikane-rw/index.html",
     "slug": "omoikane-rw"
   },
@@ -2912,7 +2912,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2025/12/omoikane-sw.png",
     "url": "product/omoikane-sw/index.html",
     "slug": "omoikane-sw"
   },
@@ -2921,7 +2921,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2025/12/omoikane-ww.png",
     "url": "product/omoikane-ww/index.html",
     "slug": "omoikane-ww"
   },
@@ -3014,7 +3014,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Pure-Drop-10.png",
     "url": "product/pure-drop-1-0/index.html",
     "slug": "pure-drop-1-0"
   },
@@ -3023,7 +3023,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Pure-Drop-214S.png",
     "url": "product/pure-drop-2-1-4s/index.html",
     "slug": "pure-drop-2-1-4s"
   },
@@ -3032,7 +3032,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Pure-Drop-Lite.png",
     "url": "product/pure-drop-lite/index.html",
     "slug": "pure-drop-lite"
   },
@@ -3041,7 +3041,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Pure-Drop-Soft.png",
     "url": "product/pure-drop-soft/index.html",
     "slug": "pure-drop-soft"
   },
@@ -3505,7 +3505,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Soft.png",
     "url": "product/soft/index.html",
     "slug": "soft"
   },
@@ -3514,7 +3514,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/banki.png",
     "url": "product/nabor-banok-dlya-sypuchih-produktov/index.html",
     "slug": "nabor-banok-dlya-sypuchih-produktov"
   },
@@ -3930,7 +3930,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "OMOIKIRI Home",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2025/11/takara.png",
     "url": "product/takara-set/index.html",
     "slug": "takara-set"
   },
@@ -4534,7 +4534,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "",
     "skus": [],
     "category": "Фильтры",
-    "image": "https://mc.yandex.ru/watch/43500299",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/V-Complex-1.png",
     "url": "product/v-complex-1/index.html",
     "slug": "v-complex-1"
   },

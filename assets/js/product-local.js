@@ -1096,7 +1096,7 @@
     if (!isTapProduct() && !isSinkProduct() && !isBathSinkProduct() && !isDispenserProduct() && !isAccessoryProduct()) return title;
 
     let code = selectedColorDisplayCode();
-    if (/^(ab-\d+|wod|wood|wd)$/i.test(code)) code = '';
+    if (/^(wod|wood|wd)$/i.test(code)) code = '';
 
     if (isSinkProduct() || isBathSinkProduct() || isDispenserProduct() || isAccessoryProduct()) {
       code = code.replace(/-P$/i, '');

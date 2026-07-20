@@ -226,6 +226,10 @@
       return String(value || '').replace(/^https?:\/\/omoikiri\.ru(?=\/)/i, '/assets/remote/omoikiri.ru');
     }
 
+    function publicImage(value) {
+      return String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, 'https://omoikiri.ru');
+    }
+
     function readCart() {
       const stored = JSON.parse(localStorage.getItem('omoikiriCart') || 'null');
       if (Array.isArray(stored) && stored.length) return stored;
@@ -257,7 +261,7 @@
           if (!product) return '';
           return `
             <article class="dealer-cart-row">
-              <img src="${localizeImage(product.image)}" alt="">
+              <img src="${localizeImage(product.image)}" data-fallback-src="${publicImage(product.image)}" alt="">
               <div>
                 <h2>${product.name || product.title || 'OMOIKIRI'}</h2>
                 <p>${product.detail || product.color || ''} ${product.price ? '· ' + money(Number(product.price)) : ''}</p>
@@ -279,6 +283,12 @@
       }, 0);
 
       document.querySelector('#cart-total').textContent = money(total);
+      document.querySelectorAll('.dealer-cart-row img[data-fallback-src]').forEach((image) => {
+        image.addEventListener('error', () => {
+          const fallback = image.dataset.fallbackSrc || '';
+          if (fallback && image.src !== fallback) image.src = fallback;
+        }, { once: true });
+      });
       document.querySelectorAll('[data-cart-id]').forEach((button) => {
         button.addEventListener('click', () => changeQty(button.dataset.cartId, Number(button.dataset.delta)));
       });
@@ -292,6 +302,6 @@
 
     renderCart();
   </script>
-<script src="assets/js/lang-switch.js?v=20260720-02" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20260720-03" data-root=""></script>
 </body>
 </html>

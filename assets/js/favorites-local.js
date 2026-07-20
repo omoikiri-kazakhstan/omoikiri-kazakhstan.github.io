@@ -203,7 +203,7 @@
 
   function parseDetails(html, colorCode) {
     const doc = new DOMParser().parseFromString(html, 'text/html');
-    const details = { sku: '', color: '', price: '' };
+    const details = { sku: '', color: '', price: '', image: '' };
     const select = doc.querySelector('select[name="attribute_pa_color"]');
 
     if (select && colorCode) {
@@ -223,7 +223,12 @@
         const variation = variations.find((item) => item.attributes?.attribute_pa_color === colorCode) || variations[0];
         details.sku = variation?.sku || '';
         details.price = priceFromRub(variation?.display_price) || priceFromRubText(variation?.price_html);
+        details.image = variation?.image?.full_src || variation?.image?.url || variation?.image?.src || variation?.variation_gallery_images?.[0]?.full_src || variation?.variation_gallery_images?.[0]?.url || variation?.variation_gallery_images?.[0]?.src || '';
       } catch (error) {}
+    }
+
+    if (!details.image) {
+      details.image = doc.querySelector('.prod_image img, .woocommerce-product-gallery img, .product img')?.getAttribute('src') || '';
     }
 
     if (!details.price) {
@@ -271,11 +276,12 @@
       const shortArticle = /^\d{1,5}$/.test(String(currentArticle));
       const missingColor = !item.color && !/\([^)]{2,}\)/.test(item.title || '');
       const missingPrice = !numericPrice(item.price);
+      const missingImage = !item.image;
       const slug = slugFromHref(item.href) || item.slug || '';
       const legacyId = slug && currentArticle && item.id !== favoriteKey(slug, currentArticle);
       const messyTitle = cleanProductTitle(item.title) !== String(item.title || '').replace(/\s+/g, ' ').trim();
 
-      if (!shortArticle && !missingColor && !missingPrice && !legacyId && !messyTitle) return item;
+      if (!shortArticle && !missingColor && !missingPrice && !missingImage && !legacyId && !messyTitle) return item;
 
       const details = await fetchDetails(item);
       const color = cleanColorName(item.color || details.color || colorNames[colorCodeFromHref(item.href)] || '');
@@ -286,6 +292,7 @@
         article: sku || item.article,
         sku: sku || item.sku,
         color,
+        image: localizeImage(item.image || details.image),
         price: cleanPrice(item.price) || details.price,
         title: titleWithColor(item.title, color)
       };

@@ -898,7 +898,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById(id + "_text").classList.add("active");
 
             // Обновляем атрибут 'src' и переигрываем видео
-            const newSrc = `https://omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_${id}.mp4`;
+            const newSrc = `/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_${id}.mp4`;
             videoSource.setAttribute("src", newSrc);
             videoElement.load();
             videoElement.play();

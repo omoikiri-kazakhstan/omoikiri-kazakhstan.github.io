@@ -289,6 +289,10 @@
         margin-top: 0 !important;
       }
 
+      .prdctfltr_buttons > :not(.dealer-local-clear-filters) {
+        display: none !important;
+      }
+
       .prdctfltr_buttons.dealer-clear-visible {
         display: flex !important;
         margin-top: 30px !important;
@@ -2398,6 +2402,8 @@
     updateProductImagesForSelectedColor(filters);
     syncCatalogFiltersToUrl(filters, priceRange);
 
+    normalizeClearFilterButtons();
+
     document.querySelectorAll('.dealer-local-clear-filters').forEach((button) => {
       button.classList.toggle('is-visible', hasActiveFilters);
     });
@@ -2408,6 +2414,28 @@
 
     const message = ensureEmptyMessage();
     if (message) message.classList.toggle('is-visible', visible === 0);
+  }
+
+  function normalizeClearFilterButtons() {
+    const resetContainers = [...document.querySelectorAll('.prdctfltr_buttons')];
+    if (!resetContainers.length) return null;
+
+    resetContainers.forEach((container, index) => {
+      [...container.children].forEach((child) => {
+        if (!child.classList?.contains('dealer-local-clear-filters')) {
+          child.style.display = 'none';
+          child.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      [...container.querySelectorAll('.dealer-local-clear-filters')].forEach((button, buttonIndex) => {
+        if (index > 0 || buttonIndex > 0) {
+          button.remove();
+        }
+      });
+    });
+
+    return resetContainers[0].querySelector('.dealer-local-clear-filters');
   }
 
   function bindFilters() {
@@ -2540,27 +2568,34 @@
       });
     });
 
-    document.querySelectorAll('.dealer-local-clear-filters').forEach((button) => button.remove());
-
     const resetContainers = [...document.querySelectorAll('.prdctfltr_buttons')];
     const primaryResetContainer = resetContainers[0];
 
     if (primaryResetContainer) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'dealer-local-clear-filters';
-      button.textContent = 'очистить фильтры';
-      button.addEventListener('click', async () => {
-        document.querySelectorAll('.prdctfltr_filter input[type="checkbox"]').forEach((input) => {
-          input.checked = false;
+      let button = normalizeClearFilterButtons();
+      if (!button) {
+        button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'dealer-local-clear-filters';
+        button.textContent = 'очистить фильтры';
+        primaryResetContainer.appendChild(button);
+      }
+
+      if (button.dataset.dealerClearBound !== '1') {
+        button.dataset.dealerClearBound = '1';
+        button.addEventListener('click', async () => {
+          document.querySelectorAll('.prdctfltr_filter input[type="checkbox"]').forEach((input) => {
+            input.checked = false;
+          });
+          resetLocalPriceSlider();
+          await ensureAllLocalProductsLoaded();
+          await ensureCatalogMetaLoaded();
+          applyFilters();
         });
-        resetLocalPriceSlider();
-        await ensureAllLocalProductsLoaded();
-        await ensureCatalogMetaLoaded();
-        applyFilters();
-      });
-      primaryResetContainer.appendChild(button);
+      }
     }
+
+    normalizeClearFilterButtons();
   }
 
   function addCartLink() {

@@ -555,6 +555,7 @@
         font-family: "GothamProRegular", Arial, Helvetica, sans-serif;
       }
 
+      .dealer-search-suggestions.show,
       body.dealer-search-open .dealer-search-suggestions.show {
         display: block;
       }
@@ -1138,11 +1139,9 @@
 
     const open = () => {
       line.style.display = 'block';
-      window.requestAnimationFrame(() => {
-        line.classList.add('show');
-        document.body.classList.add('dealer-search-open');
-        input?.focus();
-      });
+      line.classList.add('show');
+      document.body.classList.add('dealer-search-open');
+      window.setTimeout(() => input?.focus(), 0);
     };
 
     button.addEventListener('click', (event) => {

@@ -257,7 +257,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="top_nav">
-  
+
 <div class="search_line">
   <div  class="dgwt-wcas-search-wrapp dgwt-wcas-has-submit woocommerce dgwt-wcas-style-pirx js-dgwt-wcas-layout-classic dgwt-wcas-layout-classic js-dgwt-wcas-mobile-overlay-enabled">
 		<form class="dgwt-wcas-search-form" role="search" action="index.html" method="get">
@@ -289,11 +289,11 @@
 					"/>
 				</svg>
 				</button>
-			
+
 			<input type="hidden" name="post_type" value="product"/>
 			<input type="hidden" name="dgwt_wcas" value="1"/>
 
-			
+
 					</div>
 	</form>
 </div>
@@ -301,7 +301,7 @@
 
 <div id="hamb"><span></span><span></span><span></span></div>
   <div class="menu_ico" id="pin"></div>
-  
+
   <span><a href="tel:87077832888">8 (707) 783-28-88</a></span>
   <div class="logo">
     <a href="/"><img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/default/logo_black.svg" alt=""></a>
@@ -309,11 +309,11 @@
 
   <div class="favorites-icon-wrapper">
     <a href="favorites/index.html" class="favorites-link">
-        <span id="favorites-count" class="favorites-count">0</span> 
+        <span id="favorites-count" class="favorites-count">0</span>
     </a>
 </div>
-  
-  
+
+
 
   <div class="menu_ico" id="search"></div>
 </div>
@@ -356,7 +356,7 @@
 document.getElementById('search').addEventListener('click', function(event) {
     var searchLine = document.querySelector('.search_line');
     var inputField = document.querySelector('.dgwt-wcas-search-input');
-    
+
     if (searchLine.classList.contains('show')) {
         searchLine.classList.remove('show');
         setTimeout(() => {
@@ -376,7 +376,7 @@ document.getElementById('search').addEventListener('click', function(event) {
 document.addEventListener('click', function(event) {
     var searchLine = document.querySelector('.search_line');
     var inputField = document.querySelector('.dgwt-wcas-search-input');
-    
+
     if (!searchLine.contains(event.target) && searchLine.classList.contains('show')) {
         searchLine.classList.remove('show');
         setTimeout(() => {
@@ -584,7 +584,7 @@ $(function() {
 				// Назначение событий для каждой кнопки
 				Object.keys(mappings).forEach(function(buttonId) {
 					const imgId = mappings[buttonId];
-					
+
 					// Найдем элемент кнопки
 					const button = document.getElementById(buttonId);
 
@@ -698,7 +698,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const changeBg = document.querySelector('.change_bg');
     const tapColors = document.querySelectorAll('.tap_color');
     const images = document.querySelectorAll('.color_half img');
-    
+
     const videoElement = document.querySelector('.tap_gif');
     const videoSources = {
         'TO': "/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/to.webm",
@@ -726,7 +726,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateBackgroundAndVideo() {
         const newColor = colors[selectedColor] || '#ffffff'; // Фолбэк на белый цвет
         changeBg.style.backgroundColor = newColor;
-        
+
         // Обновляем источник видео
         if (videoElement) {
             videoElement.querySelector('source').src = videoSources[selectedColor];
@@ -891,7 +891,7 @@ document.addEventListener("DOMContentLoaded", function() {
             swapItems.forEach(s => s.classList.remove("active"));
             images.forEach(img => img.classList.remove("active"));
             texts.forEach(text => text.classList.remove("active"));
-            
+
             // Добавляем класс active к выбранным элементам
             this.classList.add("active");
             document.getElementById(id + "_img").classList.add("active");
@@ -1126,10 +1126,10 @@ if (pc.matches) {
 
 	gsap.utils.toArray('.sinks_anim img').forEach((img, index) => {
 		const offset = index % 2 === 0 ? -200 : 200;
-		gsap.fromTo(img, 
-			{ x: offset }, 
-			{ 
-				x: 0, 
+		gsap.fromTo(img,
+			{ x: offset },
+			{
+				x: 0,
 				duration: 1,
 				ease: "power2.out",
 				scrollTrigger: {
@@ -1172,7 +1172,7 @@ if (pc.matches) {
 	gsap.from('.text3', {
 		scrollTrigger: {
 			trigger: '.sinks3',
-			start: 'top 50%', 
+			start: 'top 50%',
 			end: 'center center',
 			scrub: true,
 		},
@@ -1450,7 +1450,7 @@ if (pc.matches) {
 		stagger: 0.2,
 	})
 
-	// 
+	//
 }
 
 </script>
@@ -1663,5 +1663,5 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
   });
 })();
 </script>
-<script src="assets/js/lang-switch.js?v=20260721-04" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20260721-05" data-root=""></script>
 <script src="assets/js/local-router.js"></script>

@@ -61,7 +61,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <link rel='stylesheet' id='dashicons-css' href='/assets/remote/omoikiri.ru/wp-includes/css/dashicons.min.css?ver=7.0.1' media='all' />
 <link rel='stylesheet' id='rtwpvg-css' href='/assets/remote/omoikiri.ru/wp-content/plugins/woo-product-variation-gallery/assets/css/rtwpvg.min.css?ver=1783679514' media='all' />
 <style id="rtwpvg-inline-css">
-		
+
 			:root {
 				--rtwpvg-thumbnail-gap: 0px;
 				--rtwpvg-gallery-margin-bottom: 30px;
@@ -77,7 +77,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			}
 
 			/* MD, Desktops */
-			
+
 			/* SM Devices, Tablets */
 						@media only screen and (max-width: 768px) {
 				.rtwpvg-images {
@@ -85,16 +85,16 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				}
 			}
 
-			
+
 			/* XSM Devices, Phones */
 						@media only screen and (max-width: 480px) {
 				.rtwpvg-images {
 					max-width: 100% !important;
 				}
 			}
-			
-					
-		
+
+
+
 /*# sourceURL=rtwpvg-inline-css */
 </style>
 <link rel='stylesheet' id='woo-variation-gallery-slider-css' href='/assets/remote/omoikiri.ru/wp-content/plugins/woo-variation-gallery/assets/css/slick.min.css?ver=1.8.1' media='all' />
@@ -178,7 +178,7 @@ var _wpUtilSettings = {"ajax":{"url":"/assets/data/ajax-noop.json"}};
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="top_nav">
-  
+
 <div class="search_line">
   <div  class="dgwt-wcas-search-wrapp dgwt-wcas-has-submit woocommerce dgwt-wcas-style-pirx js-dgwt-wcas-layout-classic dgwt-wcas-layout-classic js-dgwt-wcas-mobile-overlay-enabled">
 		<form class="dgwt-wcas-search-form" role="search" action="" method="get">
@@ -210,11 +210,11 @@ var _wpUtilSettings = {"ajax":{"url":"/assets/data/ajax-noop.json"}};
 					"/>
 				</svg>
 				</button>
-			
+
 			<input type="hidden" name="post_type" value="product"/>
 			<input type="hidden" name="dgwt_wcas" value="1"/>
 
-			
+
 					</div>
 	</form>
 </div>
@@ -222,7 +222,7 @@ var _wpUtilSettings = {"ajax":{"url":"/assets/data/ajax-noop.json"}};
 
 <div id="hamb"><span></span><span></span><span></span></div>
   <div class="menu_ico" id="pin"></div>
-  
+
   <span><a href="tel:87077832888">8 (707) 783-28-88</a></span>
   <div class="logo">
     <a href="/"><img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/default/logo_black.svg" alt=""></a>
@@ -230,11 +230,11 @@ var _wpUtilSettings = {"ajax":{"url":"/assets/data/ajax-noop.json"}};
 
   <div class="favorites-icon-wrapper">
     <a href="/favorites/index.html" class="favorites-link">
-        <span id="favorites-count" class="favorites-count">0</span> 
+        <span id="favorites-count" class="favorites-count">0</span>
     </a>
 </div>
-  
-  
+
+
 
   <div class="menu_ico" id="search"></div>
 </div>
@@ -277,7 +277,7 @@ var _wpUtilSettings = {"ajax":{"url":"/assets/data/ajax-noop.json"}};
 document.getElementById('search').addEventListener('click', function(event) {
     var searchLine = document.querySelector('.search_line');
     var inputField = document.querySelector('.dgwt-wcas-search-input');
-    
+
     if (searchLine.classList.contains('show')) {
         searchLine.classList.remove('show');
         setTimeout(() => {
@@ -297,7 +297,7 @@ document.getElementById('search').addEventListener('click', function(event) {
 document.addEventListener('click', function(event) {
     var searchLine = document.querySelector('.search_line');
     var inputField = document.querySelector('.dgwt-wcas-search-input');
-    
+
     if (!searchLine.contains(event.target) && searchLine.classList.contains('show')) {
         searchLine.classList.remove('show');
         setTimeout(() => {
@@ -392,9 +392,9 @@ $(function() {
 	<div id="content" class="site-content">
 
 	<section id="primary" class="content-area"><main id="main" class="site-main">
-					
+
 			<div class="woocommerce-notices-wrapper"></div>        <script>
-        jQuery(document).ready(function($) {     
+        jQuery(document).ready(function($) {
             $('input.variation_id').change( function(){
                 if( '' != $('input.variation_id').val() ) {
 
@@ -402,8 +402,8 @@ $(function() {
 
                         url: '/assets/data/ajax-noop.json',
                         type: 'post',
-                        data: { 
-                            action: 'get_variation_sku', 
+                        data: {
+                            action: 'get_variation_sku',
                             variation_id: $('input.variation_id').val()
                         },
                         success: function(data) {
@@ -418,7 +418,7 @@ $(function() {
             });
         });
         </script>
-    
+
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/gallery.css">
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/buttons.css">
 
@@ -446,7 +446,7 @@ $(function() {
                             <span>></span>
                             <span>Toshima</span>
                         </div>
-                        
+
                     </div>
                     <div class="prod_image"></div>
                                     </div>
@@ -486,7 +486,7 @@ $(function() {
 
 				/**
 				 * Function to display images in the specified container
-				 * 
+				 *
 				 * @param {Array} images - Array of image URLs
 				 * @param {String} container - Selector for the container where images should be displayed
 				 */
@@ -507,9 +507,9 @@ $(function() {
 				}
 			});
         </script>
-        
+
 <form class="variations_form cart" action="" method="post" enctype='multipart/form-data' data-product_id="17760" data-product_variations="[{&quot;attributes&quot;:{&quot;attribute_pa_color&quot;:&quot;si&quot;},&quot;availability_html&quot;:&quot;&quot;,&quot;backorders_allowed&quot;:false,&quot;dimensions&quot;:{&quot;length&quot;:&quot;&quot;,&quot;width&quot;:&quot;&quot;,&quot;height&quot;:&quot;&quot;},&quot;dimensions_html&quot;:&quot;N\/A&quot;,&quot;display_price&quot;:29788,&quot;display_regular_price&quot;:33088,&quot;image&quot;:{&quot;title&quot;:&quot;Toshima-SI&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9.png&quot;,&quot;alt&quot;:&quot;Toshima-SI&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9-600x600.png&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9.png&quot;,&quot;full_src_w&quot;:1000,&quot;full_src_h&quot;:1000,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9.png&quot;,&quot;gallery_thumbnail_src_w&quot;:1000,&quot;gallery_thumbnail_src_h&quot;:1000,&quot;thumb_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9-300x300.png&quot;,&quot;thumb_src_w&quot;:300,&quot;thumb_src_h&quot;:300,&quot;src_w&quot;:600,&quot;src_h&quot;:600},&quot;image_id&quot;:17763,&quot;is_downloadable&quot;:false,&quot;is_in_stock&quot;:true,&quot;is_purchasable&quot;:true,&quot;is_sold_individually&quot;:&quot;no&quot;,&quot;is_virtual&quot;:false,&quot;max_qty&quot;:&quot;&quot;,&quot;min_qty&quot;:1,&quot;price_html&quot;:&quot;&quot;,&quot;sku&quot;:&quot;4994326&quot;,&quot;variation_description&quot;:&quot;&quot;,&quot;variation_id&quot;:17761,&quot;variation_is_active&quot;:true,&quot;variation_is_visible&quot;:true,&quot;weight&quot;:&quot;&quot;,&quot;weight_html&quot;:&quot;N\/A&quot;,&quot;stock_status&quot;:&quot;instock&quot;,&quot;variation_gallery_images&quot;:[{&quot;image_id&quot;:17763,&quot;title&quot;:&quot;Toshima-SI&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9.png&quot;,&quot;full_src_w&quot;:&quot;1000&quot;,&quot;full_src_h&quot;:&quot;1000&quot;,&quot;full_class&quot;:&quot;attachment-full size-full&quot;,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9.png&quot;,&quot;gallery_thumbnail_src_w&quot;:&quot;1000&quot;,&quot;gallery_thumbnail_src_h&quot;:&quot;1000&quot;,&quot;gallery_thumbnail_class&quot;:&quot;attachment-bottom size-bottom&quot;,&quot;archive_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9-300x300.png&quot;,&quot;archive_src_w&quot;:&quot;300&quot;,&quot;archive_src_h&quot;:&quot;300&quot;,&quot;archive_class&quot;:&quot;attachment-woocommerce_thumbnail size-woocommerce_thumbnail&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-9-600x600.png&quot;,&quot;class&quot;:&quot;wp-post-image wvg-post-image attachment-woocommerce_single size-woocommerce_single &quot;,&quot;src_w&quot;:&quot;600&quot;,&quot;src_h&quot;:&quot;600&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;extra_params&quot;:&quot;&quot;},{&quot;image_id&quot;:17764,&quot;title&quot;:&quot;Toshima-SI&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-10.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-10.png&quot;,&quot;full_src_w&quot;:&quot;800&quot;,&quot;full_src_h&quot;:&quot;267&quot;,&quot;full_class&quot;:&quot;attachment-full size-full&quot;,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-10.png&quot;,&quot;gallery_thumbnail_src_w&quot;:&quot;800&quot;,&quot;gallery_thumbnail_src_h&quot;:&quot;267&quot;,&quot;gallery_thumbnail_class&quot;:&quot;attachment-bottom size-bottom&quot;,&quot;archive_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-10-300x267.png&quot;,&quot;archive_src_w&quot;:&quot;300&quot;,&quot;archive_src_h&quot;:&quot;267&quot;,&quot;archive_class&quot;:&quot;attachment-woocommerce_thumbnail size-woocommerce_thumbnail&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-10-600x200.png&quot;,&quot;class&quot;:&quot;wp-post-image wvg-post-image attachment-woocommerce_single size-woocommerce_single &quot;,&quot;src_w&quot;:&quot;600&quot;,&quot;src_h&quot;:&quot;200&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;extra_params&quot;:&quot;&quot;},{&quot;image_id&quot;:17765,&quot;title&quot;:&quot;Toshima-SI&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-11.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-11.png&quot;,&quot;full_src_w&quot;:&quot;800&quot;,&quot;full_src_h&quot;:&quot;267&quot;,&quot;full_class&quot;:&quot;attachment-full size-full&quot;,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-11.png&quot;,&quot;gallery_thumbnail_src_w&quot;:&quot;800&quot;,&quot;gallery_thumbnail_src_h&quot;:&quot;267&quot;,&quot;gallery_thumbnail_class&quot;:&quot;attachment-bottom size-bottom&quot;,&quot;archive_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-11-300x267.png&quot;,&quot;archive_src_w&quot;:&quot;300&quot;,&quot;archive_src_h&quot;:&quot;267&quot;,&quot;archive_class&quot;:&quot;attachment-woocommerce_thumbnail size-woocommerce_thumbnail&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-SI-11-600x200.png&quot;,&quot;class&quot;:&quot;wp-post-image wvg-post-image attachment-woocommerce_single size-woocommerce_single &quot;,&quot;src_w&quot;:&quot;600&quot;,&quot;src_h&quot;:&quot;200&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;extra_params&quot;:&quot;&quot;}]},{&quot;attributes&quot;:{&quot;attribute_pa_color&quot;:&quot;ab-022&quot;},&quot;availability_html&quot;:&quot;&quot;,&quot;backorders_allowed&quot;:false,&quot;dimensions&quot;:{&quot;length&quot;:&quot;&quot;,&quot;width&quot;:&quot;&quot;,&quot;height&quot;:&quot;&quot;},&quot;dimensions_html&quot;:&quot;N\/A&quot;,&quot;display_price&quot;:29788,&quot;display_regular_price&quot;:33088,&quot;image&quot;:{&quot;title&quot;:&quot;Toshima-AB-022&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9.png&quot;,&quot;alt&quot;:&quot;Toshima-AB-022&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9-600x600.png&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9.png&quot;,&quot;full_src_w&quot;:1000,&quot;full_src_h&quot;:1000,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9.png&quot;,&quot;gallery_thumbnail_src_w&quot;:1000,&quot;gallery_thumbnail_src_h&quot;:1000,&quot;thumb_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9-300x300.png&quot;,&quot;thumb_src_w&quot;:300,&quot;thumb_src_h&quot;:300,&quot;src_w&quot;:600,&quot;src_h&quot;:600},&quot;image_id&quot;:17768,&quot;is_downloadable&quot;:false,&quot;is_in_stock&quot;:true,&quot;is_purchasable&quot;:true,&quot;is_sold_individually&quot;:&quot;no&quot;,&quot;is_virtual&quot;:false,&quot;max_qty&quot;:&quot;&quot;,&quot;min_qty&quot;:1,&quot;price_html&quot;:&quot;&quot;,&quot;sku&quot;:&quot;4994324&quot;,&quot;variation_description&quot;:&quot;&quot;,&quot;variation_id&quot;:17766,&quot;variation_is_active&quot;:true,&quot;variation_is_visible&quot;:true,&quot;weight&quot;:&quot;&quot;,&quot;weight_html&quot;:&quot;N\/A&quot;,&quot;stock_status&quot;:&quot;instock&quot;,&quot;variation_gallery_images&quot;:[{&quot;image_id&quot;:17768,&quot;title&quot;:&quot;Toshima-AB-022&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9.png&quot;,&quot;full_src_w&quot;:&quot;1000&quot;,&quot;full_src_h&quot;:&quot;1000&quot;,&quot;full_class&quot;:&quot;attachment-full size-full&quot;,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9.png&quot;,&quot;gallery_thumbnail_src_w&quot;:&quot;1000&quot;,&quot;gallery_thumbnail_src_h&quot;:&quot;1000&quot;,&quot;gallery_thumbnail_class&quot;:&quot;attachment-bottom size-bottom&quot;,&quot;archive_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9-300x300.png&quot;,&quot;archive_src_w&quot;:&quot;300&quot;,&quot;archive_src_h&quot;:&quot;300&quot;,&quot;archive_class&quot;:&quot;attachment-woocommerce_thumbnail size-woocommerce_thumbnail&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-9-600x600.png&quot;,&quot;class&quot;:&quot;wp-post-image wvg-post-image attachment-woocommerce_single size-woocommerce_single &quot;,&quot;src_w&quot;:&quot;600&quot;,&quot;src_h&quot;:&quot;600&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;extra_params&quot;:&quot;&quot;},{&quot;image_id&quot;:17769,&quot;title&quot;:&quot;Toshima-AB-022&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-10.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-10.png&quot;,&quot;full_src_w&quot;:&quot;800&quot;,&quot;full_src_h&quot;:&quot;267&quot;,&quot;full_class&quot;:&quot;attachment-full size-full&quot;,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-10.png&quot;,&quot;gallery_thumbnail_src_w&quot;:&quot;800&quot;,&quot;gallery_thumbnail_src_h&quot;:&quot;267&quot;,&quot;gallery_thumbnail_class&quot;:&quot;attachment-bottom size-bottom&quot;,&quot;archive_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-10-300x267.png&quot;,&quot;archive_src_w&quot;:&quot;300&quot;,&quot;archive_src_h&quot;:&quot;267&quot;,&quot;archive_class&quot;:&quot;attachment-woocommerce_thumbnail size-woocommerce_thumbnail&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-10-600x200.png&quot;,&quot;class&quot;:&quot;wp-post-image wvg-post-image attachment-woocommerce_single size-woocommerce_single &quot;,&quot;src_w&quot;:&quot;600&quot;,&quot;src_h&quot;:&quot;200&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;extra_params&quot;:&quot;&quot;},{&quot;image_id&quot;:17770,&quot;title&quot;:&quot;Toshima-AB-022&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-11.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-11.png&quot;,&quot;full_src_w&quot;:&quot;800&quot;,&quot;full_src_h&quot;:&quot;267&quot;,&quot;full_class&quot;:&quot;attachment-full size-full&quot;,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-11.png&quot;,&quot;gallery_thumbnail_src_w&quot;:&quot;800&quot;,&quot;gallery_thumbnail_src_h&quot;:&quot;267&quot;,&quot;gallery_thumbnail_class&quot;:&quot;attachment-bottom size-bottom&quot;,&quot;archive_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-11-300x267.png&quot;,&quot;archive_src_w&quot;:&quot;300&quot;,&quot;archive_src_h&quot;:&quot;267&quot;,&quot;archive_class&quot;:&quot;attachment-woocommerce_thumbnail size-woocommerce_thumbnail&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2024\/08\/Toshima-AB-022-11-600x200.png&quot;,&quot;class&quot;:&quot;wp-post-image wvg-post-image attachment-woocommerce_single size-woocommerce_single &quot;,&quot;src_w&quot;:&quot;600&quot;,&quot;src_h&quot;:&quot;200&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;extra_params&quot;:&quot;&quot;}]}]">
-	
+
 			<table class="variations" cellspacing="0" role="presentation">
 			<tbody>
 									<tr>
@@ -517,22 +517,22 @@ $(function() {
 						<td class="value">
 							<div class="thwvs_fields thwvs-accvalue thwvs_variation_pa_color"> <div class= "thwvs_attr_description  attr_swatch_design_default"></div><select id="pa_color" class="thwvs-image-type   attribute_pa_color  " name="attribute_pa_color" data-attribute_name = "attribute_pa_color"  style ='display:none'  data-design_type="swatch_design_default" data-show_option_none="yes"><option value="">Выберите вариант</option><option value="ab-022" >античная латунь (022)</option><option value="si"  selected='selected'>античное серебро</option></select><ul class="thwvs-wrapper-ul ">
 			<li class="thwvs-wrapper-item-li thwvs-image-li thwvs-div  thwvs-checkbox attribute_pa_color ab-022 attr_swatch_design_default  " data-attribute_name="attribute_pa_color" data-value="ab-022" title="античная латунь (022)">
-				
+
 				<img class="swatch-preview swatch-image "  src="/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/022.jpg " width="44px" height="44px" alt="античная латунь (022)">
-				
+
 			</li>
 			<li class="thwvs-wrapper-item-li thwvs-image-li thwvs-div  thwvs-checkbox attribute_pa_color si attr_swatch_design_default thwvs-selected " data-attribute_name="attribute_pa_color" data-value="si" title="античное серебро">
-				
+
 				<img class="swatch-preview swatch-image "  src="/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/018.jpg " width="44px" height="44px" alt="античное серебро">
-				
+
 			</li></ul> </div><a class="reset_variations thwvs-variation-link" href="#">Clear</a>						</td>
 					</tr>
 							</tbody>
 		</table>
-		
+
 		<div class="single_variation_wrap">
 			<div class="woocommerce-variation single_variation"></div><div class="woocommerce-variation-add-to-cart variations_button">
-	
+
 	        <script>
         jQuery(function($) {
             var jsonData = {"17761":"29 788","17766":"29 788"},
@@ -566,7 +566,7 @@ $(function() {
                         $('.rrc').html('<span>' + vprice + '</span> <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/rub.svg">');
                         $('.regular-price').html(''); // Очищаем, если нет обычной цены
                     }
-                    
+
                 }
             });
         });
@@ -592,18 +592,18 @@ $(function() {
 
 	<button type="submit" class="single_add_to_cart_button button alt">В корзину</button>
 
-	
+
 	<input type="hidden" name="add-to-cart" value="17760" />
 	<input type="hidden" name="product_id" value="17760" />
 	<input type="hidden" name="variation_id" class="variation_id" value="0" />
 </div>
 		</div>
-	
+
 	</form>
 
                         </div>
                                             </div>
-                    
+
 <div class="add_info_half">
     <div class="add_info_att">
         <p><strong>цвет: </strong><span class="color_text"></span></p>
@@ -637,7 +637,7 @@ $(function() {
                 <span>инструкция</span>
             </div>
             </a>
-            
+
             </div>
 </div>                </div>
 
@@ -647,7 +647,7 @@ $(function() {
 			if (variation.image && variation.image.full_src && variation.image.full_src.length > 1) {
 				var $img_container = $('.prod_image');
 				var $current_img = $img_container.find('img');
-				
+
 				// Создаем новый элемент img для нового изображения
 				var $new_img = $('<img>', {
 					src: variation.image.full_src,
@@ -656,7 +656,7 @@ $(function() {
 						opacity: 0 // сразу делаем его невидимым
 					}
 				});
-				
+
 				// Добавляем новый img в контейнер
 				$img_container.append($new_img);
 
@@ -674,7 +674,7 @@ $(function() {
 		});
 	});
 </script>                <script>
-	
+
 jQuery(document).ready(function($) {
 
 	// Функция для установки выбранного цвета при загрузке страницы
@@ -745,7 +745,7 @@ jQuery(document).ready(function($) {
 		} else {
 			$('.current_color').text(selectedAttribute);
 		}
-		
+
 		$('.color_text').text(colorTitle);
 	});
 	});
@@ -753,11 +753,11 @@ jQuery(document).ready(function($) {
 </script>
             </div>
         </div>
-        
-    
+
+
     <!-- Блок карточка - характеристики -->
 
-    
+
             <div class="add_info_tap">
             <div class="add_info_half">
                     <img src="/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/toshima.jpg" alt="">
@@ -768,22 +768,22 @@ jQuery(document).ready(function($) {
                     <div id="loadingMessage" class="loading">
                         Загрузка данных...
                     </div>
-                    
+
                     <div id="errorMessage" class="error" style="display: none;">
                         Ошибка загрузки данных
                     </div>
-                    
+
                     <div class="chart-container" style="display: none;">
                         <canvas id="waterFlowChart"></canvas>
                     </div>
-                    
+
                     <div class="legend" style="display: none;">
                         <!--
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #3498db;"></div>
                             <span>Холодная вода (л/мин)</span>
                         </div>
-                        
+
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #e74c3c;"></div>
                             <span>Смешанная вода (л/мин)</span>
@@ -805,14 +805,14 @@ jQuery(document).ready(function($) {
                 if (!modelData || !modelData.data || !Array.isArray(modelData.data)) {
                     return false;
                 }
-                
+
                 // Проверяем, есть ли хотя бы один валидный набор данных
                 // (не все значения null и есть хотя бы одно ненулевое значение)
                 let hasValidColdWater = false;
                 let hasValidMixWater = false;
-                
+
                 for (const item of modelData.data) {
-                    
+
                     if (item.cold_water_l_min !== null && item.cold_water_l_min !== undefined) {
                         hasValidColdWater = true;
                     }
@@ -821,7 +821,7 @@ jQuery(document).ready(function($) {
                         hasValidMixWater = true;
                     }
                 }
-                
+
                 // Возвращаем true, если есть хотя бы один валидный набор данных
                 return hasValidColdWater || hasValidMixWater;
             }
@@ -831,14 +831,14 @@ jQuery(document).ready(function($) {
                 try {
                     const response = await fetch(jsonUrl);
                     const allData = await response.json();
-                    
+
                     // Получаем название модели из заголовка h1
                     const modelName = document.querySelector('.tap_model').textContent.trim();
-                    
-                    const modelData = allData.models.find(model => 
+
+                    const modelData = allData.models.find(model =>
                         model.model.toLowerCase() === modelName.toLowerCase()
                     );
-                    
+
                     // Проверяем, есть ли данные и они валидны
                     if (!modelData || !hasValidData(modelData)) {
                         // Скрываем весь блок water_half
@@ -850,23 +850,23 @@ jQuery(document).ready(function($) {
                         document.getElementById('loadingMessage').style.display = 'none';
                         return; // Выходим из функции, не показывая ошибку
                     }
-                    
+
                     // Скрываем сообщение о загрузке
                     document.getElementById('loadingMessage').style.display = 'none';
-                    
+
                     // Показываем график и легенду
                     document.querySelector('.chart-container').style.display = 'block';
                     document.querySelector('.legend').style.display = 'flex';
-                    
+
                     // Создаем график
                     createChart(modelData);
-                    
+
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
-                    
+
                     // Скрываем сообщение о загрузке
                     document.getElementById('loadingMessage').style.display = 'none';
-                    
+
                     // Скрываем весь блок water_half при ошибке
                     const waterHalf = document.querySelector('.water_half');
                     if (waterHalf) {
@@ -878,13 +878,13 @@ jQuery(document).ready(function($) {
             // Функция для создания графика
             function createChart(modelData) {
                 // Фильтруем данные, удаляя записи с null значениями
-                const validData = modelData.data.filter(item => 
-                    item.cold_water_l_min !== null && 
+                const validData = modelData.data.filter(item =>
+                    item.cold_water_l_min !== null &&
                     item.mix_water_l_min !== null &&
-                    item.cold_water_l_min !== undefined && 
+                    item.cold_water_l_min !== undefined &&
                     item.mix_water_l_min !== undefined
                 );
-                
+
                 // Если после фильтрации данных недостаточно, скрываем блок
                 if (validData.length < 2) {
                     const waterHalf = document.querySelector('.water_half');
@@ -893,7 +893,7 @@ jQuery(document).ready(function($) {
                     }
                     return;
                 }
-                
+
                 // Extract data for chart
                 const pressures = validData.map(item => item.pressure_bar);
                 const coldWaterFlow = validData.map(item => item.cold_water_l_min);
@@ -995,7 +995,7 @@ jQuery(document).ready(function($) {
             // Загружаем данные при загрузке страницы
             document.addEventListener('DOMContentLoaded', loadData);
         </script>
-    
+
 </div>
 
 <!-- Блок карточка общая -->
@@ -1041,7 +1041,7 @@ jQuery(document).ready(function($) {
             <p>Смеситель изготовлен из высококачественной латуни с никель-хромовым покрытием без содержания свинца, благодаря чему он сохраняет воду чистой и здоровой. Латунь обладает повышенной прочностью и устойчива к деформациям, благодаря чему смеситель выдерживает высокие эксплуатационные нагрузки, не расшатывается и не протекает.</p>
         </div>
     </div>
-    
+
 <div class="material_item">
     <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/taps/3.jpg" alt="">
     <div class="material_item_text">
@@ -1061,9 +1061,9 @@ jQuery(document).ready(function($) {
 
 
 
-			
+
         </div>
-        
+
     </div>
 
 
@@ -1101,31 +1101,31 @@ jQuery(document).ready(function($) {
             var selectedOption = $('#pa_color').find('option:selected');
             var selectedValue = selectedOption.val();
             var pageTitle = $('title').text().toLowerCase().trim().split(' - ')[0];
-            
+
             var allowedColors = ['gr', 'sa', 'be', 'ca', 'pa', 'bl', 'es', 'wh', 'pl', 'ch'];
             var allowedTitles = ['nagano', 'nakagawa', 'shinagawa', 'yamada', 'nagano + pure drop lite', 'om-02'];
-            
+
             var colorMatches = allowedColors.indexOf(selectedValue) !== -1;
             var titleMatches = allowedTitles.indexOf(pageTitle) !== -1;
-            
+
             var shouldShow = colorMatches && titleMatches;
-            
+
             // Перестраиваем составной заголовок (один раз)
             if (pageTitle === 'nagano + pure drop lite' && !$('.prod_title').data('restructured')) {
                 var $title = $('.prod_title');
                 var colorHtml = $title.find('.current_color')[0].outerHTML;
                 var paintedHtml = $title.find('.painted')[0].outerHTML;
-                
+
                 $title.html('Nagano ' + colorHtml + paintedHtml + ' + Pure Drop Lite');
                 $title.data('restructured', true);
             }
-            
+
             // Теперь показываем/скрываем .painted (после перестройки)
             $('.painted').toggle(shouldShow);
         }
-        
+
         checkAndUpdateColorAndTitle();
-        
+
         $(document).on('change', '#pa_color', checkAndUpdateColorAndTitle);
     });
 </script>
@@ -1186,16 +1186,16 @@ document.getElementById('second').addEventListener('click', function() {
 				method="post"
 				data-forminator-render="0"
 				data-form-id="21310"
-				
+
 				data-design="flat"
-				
-				
-				
+
+
+
 				data-grid="open"
-				
-				
+
+
 				style="display: none;"
-				
+
 				data-uid="6a50ca1b17649"
 			><div role="alert" aria-live="polite" class="forminator-response-message forminator-error" aria-hidden="true"></div><div class="forminator-row"><div id="name-1" class="forminator-field-name forminator-col forminator-col-4  custom-field"><div class="forminator-row forminator-no-margin" data-multiple="true"><div class="forminator-col forminator-col-md-6"><div class="forminator-field"><input type="text" name="name-1-first-name" placeholder="имя" id="forminator-field-first-name-1_6a50ca1b17649" class="forminator-input" aria-required="true" data-multi="1" value="" /></div></div></div></div><div id="email-1" class="forminator-field-email forminator-col forminator-col-4  custom-field"><div class="forminator-field"><input type="email" name="email-1" value="" placeholder="e-mail" id="forminator-field-email-1_6a50ca1b17649" class="forminator-input forminator-email--field" data-required="true" aria-required="true" /></div></div><div id="phone-1" class="forminator-field-phone forminator-col forminator-col-4  custom-field"><div class="forminator-field"><input type="text" name="phone-1" value="" placeholder="телефон" id="forminator-field-phone-1_6a50ca1b17649" class="forminator-input forminator-field--phone" data-required="" aria-required="false" autocomplete="off" data-national_mode="enabled" data-country="ru" data-validation="standard" /></div></div></div><div class="forminator-row"><div id="textarea-1" class="forminator-field-textarea forminator-col forminator-col-12  custom-field"><div class="forminator-field"><textarea name="textarea-1" placeholder="напишите Ваш вопрос" id="forminator-field-textarea-1_6a50ca1b17649" class="forminator-textarea" rows="6" style="min-height:140px;" ></textarea></div></div></div><div class="forminator-row"><div id="captcha-1" class="forminator-field-captcha forminator-col forminator-col-12  row_captcha"><div class="forminator-captcha-right forminator-hcaptcha" data-theme="light"  data-sitekey="e7d4fa80-628c-4cb8-b87c-294e48f65c08" data-size="invisible"></div> <div class="forminator-checkbox__label"></div></div></div><div class="forminator-row forminator-hidden"><input type="hidden" id="hidden-1_6a50ca1b17649" name="hidden-1" value="https://omoikiri-kazakhstan.pages.dev/product/toshima" /></div><input type="hidden" name="referer_url" value="" /><div class="forminator-row forminator-row-last"><div class="forminator-col"><div class="forminator-field"><button class="forminator-button forminator-button-submit btn_submit">отправить</button></div></div></div><input type="hidden" id="forminator_nonce" name="forminator_nonce" value="42ad5607df" /><input type="hidden" name="_wp_http_referer" value="/product/toshima" /><input type="hidden" name="form_id" value="21310"><input type="hidden" name="page_id" value="17760"><input type="hidden" name="form_type" value="default"><input type="hidden" name="current_url" value="https://omoikiri-kazakhstan.pages.dev/product/toshima"><input type="hidden" name="render_id" value="0"><input type="hidden" name="action" value="forminator_submit_form_custom-forms"><label for="input_6" class="forminator-hidden" aria-hidden="true">Please do not fill in this field. <input id="input_6" type="text" name="input_6" value="" autocomplete="off"></label></form>    </div>
 </div>
@@ -1247,27 +1247,27 @@ $(document).ready(function(){
        });
    });
 </script>
-		
+
 
 	</div><!-- #content -->
 </div>
 
 	<div class="footer">
 		<div class="footer_cont">
-			
+
 			<div class="footer_col">
 				<a href="/"><div class="footer_logo"> </div></a>
 				<div class="social">
-					<div class="soc_ico" onclick="window.open('https://vk.com/omoikiri')">
+					<div class="soc_ico" onclick="window.open('https://omoikiri-kazakhstan.pages.dev/')">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path class="st0" d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z"/></svg>
 					</div>
-					<div class="soc_ico" onclick="window.open('https://www.youtube.com/channel/UCfdRuPhprzkSPITwZqoDZZQ')">
+					<div class="soc_ico" onclick="window.open('https://omoikiri-kazakhstan.pages.dev/')">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
 					</div>
-					<div class="soc_ico" onclick="window.open('https://www.pinterest.ru/omoikiri_russia/')">
+					<div class="soc_ico" onclick="window.open('https://omoikiri-kazakhstan.pages.dev/')">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" fill-rule="evenodd" clip-rule="evenodd"/></svg>
 					</div>
-					<div class="soc_ico" onclick="window.open('https://t.me/omoikiri_russia')">
+					<div class="soc_ico" onclick="window.open('https://omoikiri-kazakhstan.pages.dev/')">
 					<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" ><path d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445	c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758	c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125	c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077	C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z"/></svg>
 					</div>
 				</div>
@@ -1543,10 +1543,10 @@ var ForminatorFront = {"ajaxUrl":"/assets/data/ajax-noop.json","cform":{"process
 				}
 			});
 		</script>
-		
 
-<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20260721-04"></script>
-<script src="../../assets/js/lang-switch.js?v=20260721-04" data-root="../../"></script>
+
+<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20260721-05"></script>
+<script src="../../assets/js/lang-switch.js?v=20260721-05" data-root="../../"></script>
 <script src="../../assets/js/local-router.js" data-root="../../"></script>
 </body>
 </html>

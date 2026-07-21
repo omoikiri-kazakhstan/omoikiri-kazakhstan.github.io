@@ -79,7 +79,7 @@
 
     .dealer-cart-row {
       display: grid;
-      grid-template-columns: 104px 1fr auto auto;
+      grid-template-columns: 104px 1fr auto auto auto;
       gap: 22px;
       align-items: center;
       padding: 18px;
@@ -124,6 +124,19 @@
       font-size: 18px;
     }
 
+    .dealer-cart-remove {
+      border: 0;
+      background: transparent;
+      color: #111;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     .dealer-cart-total {
       display: grid;
       grid-template-columns: 1fr auto auto auto;
@@ -164,6 +177,11 @@
       .dealer-cart-row {
         grid-template-columns: 84px 1fr;
         gap: 14px;
+      }
+
+      .dealer-cart-remove,
+      .dealer-cart-row > strong {
+        grid-column: 2;
       }
 
       .dealer-cart-row img {
@@ -230,6 +248,36 @@
       return String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, 'https://omoikiri.ru');
     }
 
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function cleanColorName(value) {
+      const normalized = String(value || '')
+        .replace(/^\s*\d+\.\s*/, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const colorAliases = {
+        'azur blue': 'азурно-голубой',
+        'indigo blue': 'индиго',
+        'leningrad grey': 'ленинградский серый',
+        'royal green / светлое золото': 'королевский зеленый / светлое золото',
+        'sicilian lemon': 'сицилийский лимон',
+        'toscana': 'тоскана',
+        'espresso': 'эспрессо'
+      };
+      return colorAliases[normalized.toLowerCase()] || normalized;
+    }
+
+    function normalizeDetail(value) {
+      return String(value || '').replace(/Цвет:\s*([^·]+)/i, (_, color) => 'Цвет: ' + cleanColorName(color));
+    }
+
     function readCart() {
       const stored = JSON.parse(localStorage.getItem('omoikiriCart') || 'null');
       if (Array.isArray(stored) && stored.length) return stored;
@@ -260,6 +308,12 @@
       renderCart();
     }
 
+    function removeCartItem(id) {
+      cart = cart.filter((entry) => entry.id !== id);
+      saveCart();
+      renderCart();
+    }
+
     function renderCart() {
       const list = document.querySelector('#cart-list');
       if (!cart.length) {
@@ -271,21 +325,28 @@
           const article = product.article || product.sku || '';
           const details = [
             article ? 'арт. ' + article : '',
-            product.detail || product.color || '',
+            normalizeDetail(product.detail || product.color || ''),
             product.price ? money(Number(product.price)) : ''
           ].filter(Boolean).join(' · ');
+          const productName = product.name || product.title || 'OMOIKIRI';
+          const safeProductName = escapeHtml(productName);
+          const safeDetails = escapeHtml(details);
+          const safeImage = escapeHtml(localizeImage(product.image));
+          const safeFallbackImage = escapeHtml(publicImage(product.image));
+          const safeId = escapeHtml(item.id);
           return `
             <article class="dealer-cart-row">
-              <img src="${localizeImage(product.image)}" data-fallback-src="${publicImage(product.image)}" alt="">
+              <img src="${safeImage}" data-fallback-src="${safeFallbackImage}" alt="${safeProductName}">
               <div>
-                <h2>${product.name || product.title || 'OMOIKIRI'}</h2>
-                <p>${details}</p>
+                <h2>${safeProductName}</h2>
+                <p>${safeDetails}</p>
               </div>
               <div class="dealer-cart-stepper">
-                <button type="button" data-cart-id="${item.id}" data-delta="-1">-</button>
+                <button type="button" data-cart-id="${safeId}" data-delta="-1">-</button>
                 <span>${item.qty}</span>
-                <button type="button" data-cart-id="${item.id}" data-delta="1">+</button>
+                <button type="button" data-cart-id="${safeId}" data-delta="1">+</button>
               </div>
+              <button class="dealer-cart-remove" type="button" data-remove-cart-id="${safeId}" aria-label="Удалить ${safeProductName}">Удалить</button>
               <strong>${money(Number(product.price || 0) * item.qty)}</strong>
             </article>
           `;
@@ -307,9 +368,13 @@
       document.querySelectorAll('[data-cart-id]').forEach((button) => {
         button.addEventListener('click', () => changeQty(button.dataset.cartId, Number(button.dataset.delta)));
       });
+      document.querySelectorAll('[data-remove-cart-id]').forEach((button) => {
+        button.addEventListener('click', () => removeCartItem(button.dataset.removeCartId));
+      });
     }
 
     document.querySelector('#cart-clear').addEventListener('click', () => {
+      if (cart.length && !window.confirm('Очистить корзину?')) return;
       cart = [];
       saveCart();
       renderCart();
@@ -318,6 +383,6 @@
     renderCart();
     updateCartCount();
   </script>
-<script src="assets/js/lang-switch.js?v=20260721-04" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20260721-05" data-root=""></script>
 </body>
 </html>

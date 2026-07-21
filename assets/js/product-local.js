@@ -1011,10 +1011,20 @@
   }
 
   function cleanColorName(value) {
-    return String(value || '')
+    const normalized = String(value || '')
       .replace(/^\s*\d+\.\s*/, '')
       .replace(/\s+/g, ' ')
       .trim();
+    const colorAliases = {
+      'azur blue': 'азурно-голубой',
+      'indigo blue': 'индиго',
+      'leningrad grey': 'ленинградский серый',
+      'royal green / светлое золото': 'королевский зеленый / светлое золото',
+      'sicilian lemon': 'сицилийский лимон',
+      'toscana': 'тоскана',
+      'espresso': 'эспрессо'
+    };
+    return colorAliases[normalized.toLowerCase()] || normalized;
   }
 
   function escapeRegExp(value) {

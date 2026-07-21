@@ -90,6 +90,56 @@
     document.cookie = encodeURIComponent(FAVORITES_KEY) + '=' + encodeURIComponent(value) + '; path=/; max-age=31536000; SameSite=Lax';
   }
 
+  function encodeShareItems(items) {
+    const compact = items.map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      title: item.title,
+      href: item.href,
+      image: item.image,
+      price: cleanPrice(item.price),
+      sku: item.sku || item.article,
+      article: article(item),
+      color: item.color,
+      colorCode: item.colorCode,
+      variationId: item.variationId,
+      productId: item.productId
+    }));
+
+    try {
+      return btoa(unescape(encodeURIComponent(JSON.stringify(compact))))
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/g, '');
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function decodeShareItems(value) {
+    if (!value) return [];
+
+    try {
+      const padded = String(value).replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(String(value).length / 4) * 4, '=');
+      const decoded = decodeURIComponent(escape(atob(padded)));
+      const items = JSON.parse(decoded);
+      return Array.isArray(items) ? items.filter((item) => item && item.title) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function applySharedFavorites() {
+    const params = new URLSearchParams(window.location.search);
+    const shared = decodeShareItems(params.get('fav'));
+    if (!shared.length) return;
+
+    writeFavorites(shared);
+    params.delete('fav');
+    const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+    window.history.replaceState(null, document.title, cleanUrl);
+  }
+
   function escapeHtml(value) {
     return String(value || '')
       .replace(/&/g, '&amp;')
@@ -148,10 +198,20 @@
   }
 
   function cleanColorName(value) {
-    return String(value || '')
+    const normalized = String(value || '')
       .replace(/^\s*\d+\.\s*/, '')
       .replace(/\s+/g, ' ')
       .trim();
+    const colorAliases = {
+      'azur blue': 'азурно-голубой',
+      'indigo blue': 'индиго',
+      'leningrad grey': 'ленинградский серый',
+      'royal green / светлое золото': 'королевский зеленый / светлое золото',
+      'sicilian lemon': 'сицилийский лимон',
+      'toscana': 'тоскана',
+      'espresso': 'эспрессо'
+    };
+    return colorAliases[normalized.toLowerCase()] || normalized;
   }
 
   function cleanProductTitle(value) {
@@ -322,8 +382,9 @@
 
     items.forEach((item) => {
       const row = document.createElement('tr');
+      const imageAlt = item.title || 'OMOIKIRI';
       row.innerHTML = [
-        '<td class="photo-cell"><img src="' + escapeHtml(localizeImage(item.image)) + '" alt=""></td>',
+        '<td class="photo-cell"><img src="' + escapeHtml(localizeImage(item.image)) + '" alt="' + escapeHtml(imageAlt) + '"></td>',
         '<td class="name-cell"><a href="' + escapeHtml(item.href) + '">' + escapeHtml(item.title) + '</a></td>',
         '<td class="article-cell">' + escapeHtml(article(item)) + '</td>',
         '<td class="price-cell">' + escapeHtml(cleanPrice(item.price)) + '</td>',
@@ -342,7 +403,9 @@
     printTotal.textContent = total ? 'Итого: ' + formatKzt(total) : '';
 
     if (shareLinkText) {
-      shareLinkText.textContent = window.location.href.split('?')[0];
+      const base = window.location.origin + window.location.pathname;
+      const encoded = encodeShareItems(items);
+      shareLinkText.textContent = encoded ? base + '?fav=' + encoded : base;
     }
 
     repairFavorites(items);
@@ -350,12 +413,14 @@
 
   function exportExcel() {
     const items = readFavorites();
-    const rows = [['фото', 'наименование', 'артикул', 'цена']].concat(items.map((item) => [
+    const total = items.reduce((sum, item) => sum + numericPrice(item.price), 0);
+    const rows = [['ссылка на фото', 'наименование', 'артикул', 'цена']].concat(items.map((item) => [
       localizeImage(item.image) || '',
       item.title || '',
       article(item),
       cleanPrice(item.price)
     ]));
+    if (total) rows.push(['', 'Итого', '', formatKzt(total)]);
 
     const csv = rows
       .map((row) => row.map((cell) => '"' + String(cell).replace(/"/g, '""') + '"').join(';'))
@@ -390,5 +455,6 @@
     } catch (error) {}
   });
 
+  applySharedFavorites();
   render();
 })();

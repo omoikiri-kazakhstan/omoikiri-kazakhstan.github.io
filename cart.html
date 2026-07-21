@@ -238,8 +238,17 @@
 
     let cart = readCart();
 
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + (Number(item?.qty) || 0), 0);
+      document.querySelectorAll('#cart-count, .cart-count, [data-cart-count]').forEach((node) => {
+        node.textContent = String(count);
+        node.toggleAttribute('data-count-zero', count === 0);
+      });
+    }
+
     function saveCart() {
       localStorage.setItem('omoikiriCart', JSON.stringify(cart));
+      updateCartCount();
     }
 
     function changeQty(id, delta) {
@@ -307,7 +316,8 @@
     });
 
     renderCart();
+    updateCartCount();
   </script>
-<script src="assets/js/lang-switch.js?v=20260721-02" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20260721-03" data-root=""></script>
 </body>
 </html>

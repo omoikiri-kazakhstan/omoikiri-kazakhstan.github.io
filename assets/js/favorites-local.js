@@ -280,8 +280,9 @@
       const slug = slugFromHref(item.href) || item.slug || '';
       const legacyId = slug && currentArticle && item.id !== favoriteKey(slug, currentArticle);
       const messyTitle = cleanProductTitle(item.title) !== String(item.title || '').replace(/\s+/g, ' ').trim();
+      const needsVariantRefresh = Boolean((item.colorCode || colorCodeFromHref(item.href)) && item.href);
 
-      if (!shortArticle && !missingColor && !missingPrice && !missingImage && !legacyId && !messyTitle) return item;
+      if (!shortArticle && !missingColor && !missingPrice && !missingImage && !legacyId && !messyTitle && !needsVariantRefresh) return item;
 
       const details = await fetchDetails(item);
       const color = cleanColorName(item.color || details.color || colorNames[colorCodeFromHref(item.href)] || '');
@@ -293,7 +294,7 @@
         sku: sku || item.sku,
         color,
         image: localizeImage(item.image || details.image),
-        price: cleanPrice(item.price) || details.price,
+        price: details.price || cleanPrice(item.price),
         title: titleWithColor(item.title, color)
       };
     }));

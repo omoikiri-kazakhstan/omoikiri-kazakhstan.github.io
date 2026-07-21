@@ -370,7 +370,22 @@
 
       @media (max-width: 900px) {
         .dealer-local-cart-tab {
-          display: none !important;
+          display: inline-flex !important;
+          top: auto !important;
+          right: 16px !important;
+          bottom: 18px !important;
+          width: 48px !important;
+          height: 48px !important;
+          border: 1px solid rgba(0, 0, 0, .14) !important;
+          border-radius: 999px !important;
+          background: rgba(255, 255, 255, .94) !important;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, .16) !important;
+          backdrop-filter: blur(10px) !important;
+        }
+
+        .dealer-local-cart-tab svg {
+          width: 24px !important;
+          height: 24px !important;
         }
       }
 

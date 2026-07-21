@@ -1,5 +1,16 @@
 window.OMOIKIRI_SEARCH_INDEX = [
   {
+    "title": "CB-Sintesi 114-2",
+    "sku": "4999152",
+    "skus": [
+      "4999152"
+    ],
+    "category": "??????????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/cb-sintesi-114-2-gb-300x300.png",
+    "url": "product/cb-sintesi-114-2/index.html?attribute_pa_color=gb",
+    "slug": "cb-sintesi-114-2"
+  },
+  {
     "title": "Akashi-S",
     "sku": "4994263",
     "skus": [

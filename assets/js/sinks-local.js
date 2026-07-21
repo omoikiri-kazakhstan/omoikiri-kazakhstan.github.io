@@ -48,33 +48,33 @@
   const productImageProbeCache = new Map();
   const productKeys = new Set();
   const colorNames = {
-    az: 'Р°Р·СѓСЂ',
-    be: 'Р±РµР¶РµРІС‹Р№',
-    bl: 'С‡РµСЂРЅС‹Р№',
-    cc: 'РєРѕС„Рµ',
-    ch: 'С€РѕРєРѕР»Р°Рґ',
-    cn: 'РєР°СЂР±РѕРЅ',
-    dc: 'С‚РµРјРЅС‹Р№ С€РѕРєРѕР»Р°Рґ',
-    es: 'СЌРІРµСЂРµСЃС‚',
-    ev: 'СЌРІРµСЂРµСЃС‚',
-    gb: 'РіСЂР°С„РёС‚',
-    gm: 'РІРѕСЂРѕРЅРµРЅР°СЏ СЃС‚Р°Р»СЊ',
-    gr: 'СЃРµСЂС‹Р№',
-    ib: 'РёРЅРґРёРіРѕ',
-    in: 'РЅРµСЂР¶Р°РІРµСЋС‰Р°СЏ СЃС‚Р°Р»СЊ',
-    lg: 'СЃРІРµС‚Р»РѕРµ Р·РѕР»РѕС‚Рѕ',
-    mo: 'РјРѕРєРєР°',
-    ol: 'РѕР»РёРІР°',
-    pa: 'РїР°СЃС‚РёР»Р°',
-    pe: 'Р¶РµРјС‡СѓРі',
-    pl: 'РїР»Р°С‚РёРЅР°',
-    rg: 'СЂРѕР·РѕРІРѕРµ Р·РѕР»РѕС‚Рѕ',
-    sa: 'СЃР°С…Р°СЂР°',
-    sb: 'СЃРµСЂРѕ-Р±РµР¶РµРІС‹Р№',
+    az: 'азур',
+    be: 'бежевый',
+    bl: 'черный',
+    cc: 'кофе',
+    ch: 'шоколад',
+    cn: 'карбон',
+    dc: 'темный шоколад',
+    es: 'эверест',
+    ev: 'эверест',
+    gb: 'графит',
+    gm: 'вороненая сталь',
+    gr: 'серый',
+    ib: 'индиго',
+    in: 'нержавеющая сталь',
+    lg: 'светлое золото',
+    mo: 'мокка',
+    ol: 'олива',
+    pa: 'пастила',
+    pe: 'жемчуг',
+    pl: 'платина',
+    rg: 'розовое золото',
+    sa: 'сахара',
+    sb: 'серо-бежевый',
     sl: 'sicilian lemon',
-    wh: 'Р±РµР»С‹Р№',
-    wg: 'Р±РµР»РѕРµ Р·РѕР»РѕС‚Рѕ',
-    wd: 'РґРµСЂРµРІРѕ'
+    wh: 'белый',
+    wg: 'белое золото',
+    wd: 'дерево'
   };
 
   window.paginationUrls = {};
@@ -773,9 +773,42 @@
         transform: translateY(0);
       }
 
+      .dealer-local-cart-count {
+        position: absolute;
+        right: -1px;
+        bottom: 0;
+        min-width: 15px;
+        height: 15px;
+        padding: 0 4px;
+        border-radius: 999px;
+        background: #111;
+        color: #fff;
+        font: 700 10px/15px Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+
+      .dealer-local-cart-count[data-count-zero] {
+        display: none;
+      }
+
       @media (max-width: 900px) {
         .dealer-local-cart-tab {
-          display: none !important;
+          display: inline-flex !important;
+          top: auto !important;
+          right: 16px !important;
+          bottom: 18px !important;
+          width: 48px !important;
+          height: 48px !important;
+          border: 1px solid rgba(0, 0, 0, .14) !important;
+          border-radius: 999px !important;
+          background: rgba(255, 255, 255, .94) !important;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, .16) !important;
+          backdrop-filter: blur(10px) !important;
+        }
+
+        .dealer-local-cart-tab svg {
+          width: 24px !important;
+          height: 24px !important;
         }
       }
     `;
@@ -877,7 +910,7 @@
       .map((node) => node.textContent.trim().replace(/\s+/g, ' '))
       .filter(Boolean);
 
-    if (amounts.length > 1) return amounts.join(' вЂ“ ');
+    if (amounts.length > 1) return amounts.join(' – ');
     if (amounts.length) return amounts[0];
 
     const clone = price.cloneNode(true);
@@ -936,7 +969,7 @@
     }
 
     if (!details.sku) {
-      const visibleSku = doc.querySelector('.sku')?.textContent.replace(/^Р°СЂС‚\.\s*/i, '').trim();
+      const visibleSku = doc.querySelector('.sku')?.textContent.replace(/^арт\.\s*/i, '').trim();
       if (visibleSku && /^\d{6,}$/.test(visibleSku) && !DISCONTINUED_SKUS.has(visibleSku)) details.sku = visibleSku;
     }
 
@@ -1011,8 +1044,8 @@
 
   function setFavoriteButtonState(button, active) {
     button.classList.toggle('dealer-favorite-active', active);
-    button.setAttribute('aria-label', active ? 'РЈР±СЂР°С‚СЊ РёР· РёР·Р±СЂР°РЅРЅРѕРіРѕ' : 'Р”РѕР±Р°РІРёС‚СЊ РІ РёР·Р±СЂР°РЅРЅРѕРµ');
-    button.title = active ? 'РЈР±СЂР°С‚СЊ РёР· РёР·Р±СЂР°РЅРЅРѕРіРѕ' : 'Р”РѕР±Р°РІРёС‚СЊ РІ РёР·Р±СЂР°РЅРЅРѕРµ';
+    button.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
+    button.title = active ? 'Убрать из избранного' : 'Добавить в избранное';
     button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 5.6c-1.5-1.9-4.4-2-6-.4L12 7.7 9.5 5.2c-1.6-1.6-4.5-1.5-6 .4-1.6 2-1.2 4.9.8 6.9l7.1 7.1c.3.3.8.3 1.1 0l7.1-7.1c2-2 2.4-4.9.9-6.9Z"/></svg>';
   }
 
@@ -1512,7 +1545,7 @@
   }
 
   function favoriteKey(slug, value) {
-    return (slug || 'product') + '-' + String(value || 'default').toLowerCase().replace(/[^a-z0-9Р°-СЏС‘-]+/gi, '-');
+    return (slug || 'product') + '-' + String(value || 'default').toLowerCase().replace(/[^a-z0-9а-яё-]+/gi, '-');
   }
 
   function listFromDataset(product, key) {
@@ -2606,9 +2639,9 @@
     link.href = root + 'cart.html';
     link.target = '_blank';
     link.rel = 'noopener';
-    link.setAttribute('aria-label', 'РљРѕСЂР·РёРЅР°');
-    link.title = 'РљРѕСЂР·РёРЅР°';
-    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg>';
+    link.setAttribute('aria-label', 'Корзина');
+    link.title = 'Корзина';
+    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg><span class="dealer-local-cart-count" data-cart-count data-count-zero>0</span>';
     document.body.appendChild(link);
   }
 

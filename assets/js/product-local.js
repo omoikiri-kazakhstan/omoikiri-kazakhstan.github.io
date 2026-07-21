@@ -289,6 +289,24 @@
         transform: translateY(0);
       }
 
+      .dealer-local-cart-count {
+        position: absolute;
+        right: -1px;
+        bottom: 0;
+        min-width: 15px;
+        height: 15px;
+        padding: 0 4px;
+        border-radius: 999px;
+        background: #111;
+        color: #fff;
+        font: 700 10px/15px Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+
+      .dealer-local-cart-count[data-count-zero] {
+        display: none;
+      }
+
       @media (max-width: 900px) {
         .dealer-local-cart-tab {
           display: inline-flex !important;
@@ -613,7 +631,7 @@
     link.rel = 'noopener';
     link.setAttribute('aria-label', 'Корзина');
     link.title = 'Корзина';
-    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg>';
+    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg><span class="dealer-local-cart-count" data-cart-count data-count-zero>0</span>';
     document.body.appendChild(link);
   }
 
@@ -1372,6 +1390,7 @@
       id: productSlug() + '-' + String(variation).toLowerCase().replace(/[^a-z0-9а-яё-]+/gi, '-'),
       slug: productSlug(),
       name: displayTitle,
+      article: productSku(),
       color,
       detail: color ? '\u0426\u0432\u0435\u0442: ' + color : '',
       price,

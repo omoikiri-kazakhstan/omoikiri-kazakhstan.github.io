@@ -259,12 +259,18 @@
         list.innerHTML = cart.map((item) => {
           const product = products.find((entry) => entry.id === item.id) || item;
           if (!product) return '';
+          const article = product.article || product.sku || '';
+          const details = [
+            article ? 'арт. ' + article : '',
+            product.detail || product.color || '',
+            product.price ? money(Number(product.price)) : ''
+          ].filter(Boolean).join(' · ');
           return `
             <article class="dealer-cart-row">
               <img src="${localizeImage(product.image)}" data-fallback-src="${publicImage(product.image)}" alt="">
               <div>
                 <h2>${product.name || product.title || 'OMOIKIRI'}</h2>
-                <p>${product.detail || product.color || ''} ${product.price ? '· ' + money(Number(product.price)) : ''}</p>
+                <p>${details}</p>
               </div>
               <div class="dealer-cart-stepper">
                 <button type="button" data-cart-id="${item.id}" data-delta="-1">-</button>
@@ -302,6 +308,6 @@
 
     renderCart();
   </script>
-<script src="assets/js/lang-switch.js?v=20260721-01" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20260721-02" data-root=""></script>
 </body>
 </html>

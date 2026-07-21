@@ -248,6 +248,24 @@
         transform: translateY(0) !important;
       }
 
+      .dealer-local-cart-count {
+        position: absolute;
+        right: -1px;
+        bottom: 0;
+        min-width: 15px;
+        height: 15px;
+        padding: 0 4px;
+        border-radius: 999px;
+        background: #111;
+        color: #fff;
+        font: 700 10px/15px Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+
+      .dealer-local-cart-count[data-count-zero] {
+        display: none;
+      }
+
       .dealer-lang-switch {
         position: fixed;
         z-index: 100001;
@@ -732,7 +750,7 @@
     link.rel = 'noopener';
     link.setAttribute('aria-label', 'Cart');
     link.title = 'Cart';
-    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg>';
+    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg><span class="dealer-local-cart-count" data-cart-count data-count-zero>0</span>';
     document.body.appendChild(link);
   }
 

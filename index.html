@@ -1565,6 +1565,24 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
     stroke: currentColor;
   }
 
+  .dealer-local-cart-count {
+    position: absolute;
+    right: -1px;
+    bottom: 0;
+    min-width: 15px;
+    height: 15px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+    font: 700 10px/15px Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  .dealer-local-cart-count[data-count-zero] {
+    display: none;
+  }
+
   @media (max-width: 780px) {
     .dealer-local-cart-tab {
       top: 158px;
@@ -1574,7 +1592,20 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
 
   @media (max-width: 900px) {
     .dealer-local-cart-tab {
-      display: none !important;
+      display: inline-flex !important;
+      top: auto !important;
+      right: 16px !important;
+      bottom: 18px !important;
+      width: 48px !important;
+      height: 48px !important;
+      border: 1px solid rgba(0, 0, 0, .14) !important;
+      background: rgba(255, 255, 255, .94) !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .16) !important;
+    }
+
+    .dealer-local-cart-tab svg {
+      width: 24px !important;
+      height: 24px !important;
     }
   }
 </style>
@@ -1627,10 +1658,10 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
     link.rel = 'noopener';
     link.setAttribute('aria-label', 'Корзина');
     link.title = 'Корзина';
-    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke-width="3.1" stroke-linecap="round"/></svg>';
+    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke-width="3.1" stroke-linecap="round"/></svg><span class="dealer-local-cart-count" data-cart-count data-count-zero>0</span>';
     document.body.appendChild(link);
   });
 })();
 </script>
-<script src="assets/js/lang-switch.js?v=20260721-01" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20260721-02" data-root=""></script>
 <script src="assets/js/local-router.js"></script>

@@ -832,10 +832,10 @@
       const text = priceText(node);
       if (!text) return;
 
-      const copied = copyTextWithTextarea(text);
+      copyTextWithTextarea(text);
       selectPriceText(node);
 
-      if (!copied && navigator.clipboard?.writeText) {
+      if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(text).catch(() => {});
       }
       showCopiedToast();

@@ -804,11 +804,64 @@
         stroke-linejoin: round;
       }
 
+      body.single-product .dealer-price-copy-panel {
+        flex: 1 0 100%;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 380px;
+        margin-top: 10px;
+      }
+
+      body.single-product .dealer-price-copy-panel input {
+        width: min(320px, 100%);
+        height: 38px;
+        border: 1px solid #202020;
+        border-radius: 999px;
+        background: #fff;
+        color: #202020;
+        padding: 0 14px;
+        font-family: "Lato", Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 38px;
+        outline: none;
+        -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+        user-select: text !important;
+        -webkit-touch-callout: default !important;
+      }
+
+      body.single-product .dealer-price-copy-panel input::selection {
+        background: #202020;
+        color: #fff;
+      }
+
+      body.single-product .dealer-price-copy-panel span {
+        color: #202020;
+        font-family: "Lato", Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
       @media (max-width: 640px) {
         body.single-product .dealer-price-copy-button {
           width: 38px;
           height: 38px;
           margin-left: 6px;
+        }
+
+        body.single-product .dealer-price-copy-panel {
+          max-width: 100%;
+        }
+
+        body.single-product .dealer-price-copy-panel input {
+          height: 36px;
+          font-size: 14px;
+          line-height: 36px;
         }
       }
     `;
@@ -886,12 +939,46 @@
       return copyTextWithTextarea(text);
     };
 
+    const showManualCopyPanel = (node, text, copied) => {
+      if (!node || !text) return;
+      const actions = node.closest('.card_actions, .summary') || node.parentElement;
+      if (!actions) return;
+
+      actions.querySelectorAll('.dealer-price-copy-panel').forEach((panel) => panel.remove());
+
+      const panel = document.createElement('div');
+      panel.className = 'dealer-price-copy-panel';
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.readOnly = true;
+      input.value = text;
+      input.setAttribute('aria-label', 'Цена для копирования');
+
+      const hint = document.createElement('span');
+      hint.textContent = copied ? 'скопировано' : 'Ctrl+C';
+
+      const selectInput = () => {
+        input.focus();
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+      };
+
+      input.addEventListener('click', selectInput);
+      input.addEventListener('focus', () => input.select());
+
+      panel.append(input, hint);
+      actions.appendChild(panel);
+      window.setTimeout(selectInput, 0);
+    };
+
     const copyPriceText = async (node) => {
       const text = priceText(node);
       if (!text) return false;
 
       const copied = await writeClipboardText(text);
       selectPriceText(node);
+      showManualCopyPanel(node, text, copied);
 
       showCopiedToast(copied ? 'Цена скопирована' : 'Цена выделена, нажми Ctrl+C');
       return copied;

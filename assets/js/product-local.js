@@ -832,15 +832,15 @@
       selection.addRange(range);
     };
 
-    const showCopiedToast = () => {
+    const showCopiedToast = (message = 'Цена скопирована') => {
       let toast = document.querySelector('.dealer-price-copy-toast');
       if (!toast) {
         toast = document.createElement('div');
         toast.className = 'dealer-price-copy-toast';
-        toast.textContent = 'Цена скопирована';
         document.body.appendChild(toast);
       }
 
+      toast.textContent = message;
       window.clearTimeout(showCopiedToast.timer);
       toast.classList.add('is-visible');
       showCopiedToast.timer = window.setTimeout(() => {
@@ -855,8 +855,12 @@
       textarea.style.position = 'fixed';
       textarea.style.left = '-9999px';
       textarea.style.top = '0';
+      textarea.style.opacity = '0';
+      textarea.style.pointerEvents = 'none';
       document.body.appendChild(textarea);
+      textarea.focus();
       textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
 
       let copied = false;
       try {
@@ -869,17 +873,28 @@
       return copied;
     };
 
-    const copyPriceText = (node) => {
-      const text = priceText(node);
-      if (!text) return;
+    const writeClipboardText = async (text) => {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          // Some browsers deny navigator.clipboard despite a click gesture.
+        }
+      }
 
-      copyTextWithTextarea(text);
+      return copyTextWithTextarea(text);
+    };
+
+    const copyPriceText = async (node) => {
+      const text = priceText(node);
+      if (!text) return false;
+
+      const copied = await writeClipboardText(text);
       selectPriceText(node);
 
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(text).catch(() => {});
-      }
-      showCopiedToast();
+      showCopiedToast(copied ? 'Цена скопирована' : 'Цена выделена, нажми Ctrl+C');
+      return copied;
     };
 
     const ensurePriceCopyButtons = () => {
@@ -893,11 +908,11 @@
         button.setAttribute('aria-label', 'Скопировать цену');
         button.setAttribute('title', 'Скопировать цену');
         button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="10" height="10" rx="2"></rect><path d="M5 15V7a2 2 0 0 1 2-2h8"></path></svg>';
-        button.addEventListener('click', (event) => {
+        button.addEventListener('click', async (event) => {
           event.preventDefault();
           event.stopPropagation();
           lastTouchedPrice = price;
-          copyPriceText(price);
+          await copyPriceText(price);
         });
 
         price.insertAdjacentElement('afterend', button);

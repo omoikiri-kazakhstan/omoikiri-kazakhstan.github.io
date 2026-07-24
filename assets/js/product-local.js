@@ -871,6 +871,7 @@
       }
     `;
     document.head.appendChild(style);
+    return;
 
     const priceSelector = '.card_actions .rrc, .summary .rrc';
     let lastTouchedPrice = null;

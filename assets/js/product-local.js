@@ -774,6 +774,7 @@
     document.head.appendChild(style);
 
     const priceSelector = '.card_actions .rrc, .summary .rrc';
+    let lastTouchedPrice = null;
 
     const priceText = (node) => (node?.innerText || node?.textContent || '')
       .replace(/\s+/g, ' ')
@@ -823,6 +824,7 @@
     const selectPriceAfterPointer = (event) => {
       const price = event.target.closest(priceSelector);
       if (!price) return;
+      lastTouchedPrice = price;
       window.setTimeout(() => selectPriceText(price), 0);
     };
 
@@ -835,6 +837,18 @@
       if (!price) return;
       event.preventDefault();
       copyPriceText(price);
+    });
+
+    document.addEventListener('copy', (event) => {
+      if (!lastTouchedPrice) return;
+      const selectedText = String(window.getSelection?.() || '').trim();
+      if (selectedText) return;
+
+      const text = priceText(lastTouchedPrice);
+      if (!text) return;
+      event.preventDefault();
+      event.clipboardData?.setData('text/plain', text);
+      showCopiedToast();
     });
   }
 

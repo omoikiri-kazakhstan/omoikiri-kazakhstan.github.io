@@ -749,6 +749,11 @@
         -webkit-touch-callout: default !important;
       }
 
+      body.single-product .card_actions .rrc,
+      body.single-product .summary .rrc {
+        cursor: text;
+      }
+
       .dealer-price-copy-toast {
         position: fixed;
         left: 50%;
@@ -1006,22 +1011,11 @@
       });
     };
 
-    const selectPriceAfterPointer = (event) => {
-      const price = event.target.closest(priceSelector);
-      if (!price) return;
-      lastTouchedPrice = price;
-      window.setTimeout(() => selectPriceText(price), 0);
-    };
-
-    ['pointerup', 'mouseup', 'touchend'].forEach((eventName) => {
-      document.addEventListener(eventName, selectPriceAfterPointer);
-    });
-
     document.addEventListener('click', (event) => {
       const price = event.target.closest(priceSelector);
       if (!price) return;
       lastTouchedPrice = price;
-      selectPriceText(price);
+      copyPriceText(price);
     });
 
     document.addEventListener('dblclick', (event) => {

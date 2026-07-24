@@ -735,27 +735,21 @@
     if (document.documentElement.dataset.dealerPriceSelectionBound === '1') return;
     document.documentElement.dataset.dealerPriceSelectionBound = '1';
 
-    const priceSelector = '.card_actions .rrc, .summary .rrc';
-    const keepBrowserSelection = (event) => {
-      if (!event.target.closest(priceSelector)) return;
-      event.stopPropagation();
-    };
-
-    [
-      'pointerdown',
-      'pointermove',
-      'pointerup',
-      'mousedown',
-      'mousemove',
-      'mouseup',
-      'touchstart',
-      'touchmove',
-      'touchend',
-      'selectstart',
-      'dragstart'
-    ].forEach((eventName) => {
-      document.addEventListener(eventName, keepBrowserSelection, true);
-    });
+    const style = document.createElement('style');
+    style.id = 'dealer-price-selection-style';
+    style.textContent = `
+      body.single-product .card_actions .rrc,
+      body.single-product .summary .rrc,
+      body.single-product .card_actions .rrc *,
+      body.single-product .summary .rrc * {
+        -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+        user-select: text !important;
+        -webkit-touch-callout: default !important;
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   function visiblePrice() {

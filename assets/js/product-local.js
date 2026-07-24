@@ -748,8 +748,90 @@
         user-select: text !important;
         -webkit-touch-callout: default !important;
       }
+
+      .dealer-price-copy-toast {
+        position: fixed;
+        left: 50%;
+        bottom: 28px;
+        z-index: 999999;
+        transform: translateX(-50%);
+        padding: 10px 18px;
+        border-radius: 999px;
+        background: #202020;
+        color: #fff;
+        font-family: "Lato", Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .18s ease;
+      }
+
+      .dealer-price-copy-toast.is-visible {
+        opacity: 1;
+      }
     `;
     document.head.appendChild(style);
+
+    const priceSelector = '.card_actions .rrc, .summary .rrc';
+
+    const priceText = (node) => (node?.innerText || node?.textContent || '')
+      .replace(/\s+/g, ' ')
+      .replace(/\s+₸/g, ' ₸')
+      .replace(/₸\s+(?=\d)/g, '₸ — ')
+      .trim();
+
+    const selectPriceText = (node) => {
+      if (!node || !window.getSelection || !document.createRange) return;
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    };
+
+    const showCopiedToast = () => {
+      let toast = document.querySelector('.dealer-price-copy-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'dealer-price-copy-toast';
+        toast.textContent = 'Цена скопирована';
+        document.body.appendChild(toast);
+      }
+
+      window.clearTimeout(showCopiedToast.timer);
+      toast.classList.add('is-visible');
+      showCopiedToast.timer = window.setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 1200);
+    };
+
+    const copyPriceText = async (node) => {
+      const text = priceText(node);
+      if (!text) return;
+      selectPriceText(node);
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showCopiedToast();
+      } catch (error) {
+        document.execCommand?.('copy');
+        showCopiedToast();
+      }
+    };
+
+    document.addEventListener('click', (event) => {
+      const price = event.target.closest(priceSelector);
+      if (!price) return;
+      window.setTimeout(() => selectPriceText(price), 0);
+    });
+
+    document.addEventListener('dblclick', (event) => {
+      const price = event.target.closest(priceSelector);
+      if (!price) return;
+      event.preventDefault();
+      copyPriceText(price);
+    });
   }
 
   function visiblePrice() {

@@ -770,6 +770,47 @@
       .dealer-price-copy-toast.is-visible {
         opacity: 1;
       }
+
+      body.single-product .dealer-price-copy-button {
+        width: 42px;
+        height: 42px;
+        margin-left: 10px;
+        border: 0;
+        border-radius: 50%;
+        background: #202020;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        transition: transform .15s ease, opacity .15s ease;
+      }
+
+      body.single-product .dealer-price-copy-button:hover {
+        transform: translateY(-1px);
+      }
+
+      body.single-product .dealer-price-copy-button svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      @media (max-width: 640px) {
+        body.single-product .dealer-price-copy-button {
+          width: 38px;
+          height: 38px;
+          margin-left: 6px;
+        }
+      }
     `;
     document.head.appendChild(style);
 
@@ -841,6 +882,28 @@
       showCopiedToast();
     };
 
+    const ensurePriceCopyButtons = () => {
+      document.querySelectorAll(priceSelector).forEach((price) => {
+        if (price.dataset.copyButtonBound === '1') return;
+        price.dataset.copyButtonBound = '1';
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'dealer-price-copy-button';
+        button.setAttribute('aria-label', 'Скопировать цену');
+        button.setAttribute('title', 'Скопировать цену');
+        button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="10" height="10" rx="2"></rect><path d="M5 15V7a2 2 0 0 1 2-2h8"></path></svg>';
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          lastTouchedPrice = price;
+          copyPriceText(price);
+        });
+
+        price.insertAdjacentElement('afterend', button);
+      });
+    };
+
     const selectPriceAfterPointer = (event) => {
       const price = event.target.closest(priceSelector);
       if (!price) return;
@@ -856,7 +919,7 @@
       const price = event.target.closest(priceSelector);
       if (!price) return;
       lastTouchedPrice = price;
-      copyPriceText(price);
+      selectPriceText(price);
     });
 
     document.addEventListener('dblclick', (event) => {
@@ -884,6 +947,17 @@
       event.clipboardData?.setData('text/plain', text);
       showCopiedToast();
     });
+
+    ensurePriceCopyButtons();
+
+    let copyButtonTimer = 0;
+    const schedulePriceCopyButtons = () => {
+      window.clearTimeout(copyButtonTimer);
+      copyButtonTimer = window.setTimeout(ensurePriceCopyButtons, 50);
+    };
+
+    new MutationObserver(schedulePriceCopyButtons)
+      .observe(document.body, { childList: true, subtree: true });
   }
 
   function visiblePrice() {

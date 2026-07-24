@@ -807,18 +807,38 @@
       }, 1200);
     };
 
-    const copyPriceText = async (node) => {
+    const copyTextWithTextarea = (text) => {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      textarea.style.top = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      let copied = false;
+      try {
+        copied = document.execCommand?.('copy') || false;
+      } catch (error) {
+        copied = false;
+      }
+
+      textarea.remove();
+      return copied;
+    };
+
+    const copyPriceText = (node) => {
       const text = priceText(node);
       if (!text) return;
+
+      const copied = copyTextWithTextarea(text);
       selectPriceText(node);
 
-      try {
-        await navigator.clipboard.writeText(text);
-        showCopiedToast();
-      } catch (error) {
-        document.execCommand?.('copy');
-        showCopiedToast();
+      if (!copied && navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
       }
+      showCopiedToast();
     };
 
     const selectPriceAfterPointer = (event) => {
@@ -841,8 +861,15 @@
 
     document.addEventListener('copy', (event) => {
       if (!lastTouchedPrice) return;
-      const selectedText = String(window.getSelection?.() || '').trim();
-      if (selectedText) return;
+      const selection = window.getSelection?.();
+      const selectedText = String(selection || '').trim();
+      const anchor = selection?.anchorNode;
+      const focus = selection?.focusNode;
+      const selectionInsidePrice = !!selection && (
+        (anchor && lastTouchedPrice.contains(anchor)) ||
+        (focus && lastTouchedPrice.contains(focus))
+      );
+      if (selectedText && !selectionInsidePrice) return;
 
       const text = priceText(lastTouchedPrice);
       if (!text) return;

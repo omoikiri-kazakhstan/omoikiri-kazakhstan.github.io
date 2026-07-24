@@ -848,8 +848,15 @@
       window.setTimeout(() => selectPriceText(price), 0);
     };
 
-    ['pointerup', 'mouseup', 'touchend', 'click'].forEach((eventName) => {
+    ['pointerup', 'mouseup', 'touchend'].forEach((eventName) => {
       document.addEventListener(eventName, selectPriceAfterPointer);
+    });
+
+    document.addEventListener('click', (event) => {
+      const price = event.target.closest(priceSelector);
+      if (!price) return;
+      lastTouchedPrice = price;
+      copyPriceText(price);
     });
 
     document.addEventListener('dblclick', (event) => {

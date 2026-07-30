@@ -1,16 +1,5 @@
 window.OMOIKIRI_SEARCH_INDEX = [
   {
-    "title": "CB-Sintesi 114-2",
-    "sku": "4999152",
-    "skus": [
-      "4999152"
-    ],
-    "category": "??????????",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/cb-sintesi-114-2-gb-300x300.png",
-    "url": "product/cb-sintesi-114-2/index.html?attribute_pa_color=gb",
-    "slug": "cb-sintesi-114-2"
-  },
-  {
     "title": "Akashi-S",
     "sku": "4994263",
     "skus": [
@@ -61,6 +50,30 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Akira-BL.png",
     "url": "product/akira/index.html",
     "slug": "akira"
+  },
+  {
+    "title": "Akisame 100-2-L",
+    "sku": "4973103",
+    "skus": [
+      "4973544",
+      "4973089"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/akisame-100-2-l-gm.png",
+    "url": "product/akisame-100-2-l/index.html",
+    "slug": "akisame-100-2-l"
+  },
+  {
+    "title": "Akisame 100-2-R",
+    "sku": "4973104",
+    "skus": [
+      "4973547",
+      "4973090"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/akisame-100-2-r-gm.png",
+    "url": "product/akisame-100-2-r/index.html",
+    "slug": "akisame-100-2-r"
   },
   {
     "title": "Akisame 41",
@@ -248,30 +261,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/akisame-86-r-in.png",
     "url": "product/akisame-86-r/index.html",
     "slug": "akisame-86-r"
-  },
-  {
-    "title": "Akisame 100-2-L",
-    "sku": "4973103",
-    "skus": [
-      "4973544",
-      "4973089"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/akisame-100-2-l-gm.png",
-    "url": "product/akisame-100-2-l/index.html",
-    "slug": "akisame-100-2-l"
-  },
-  {
-    "title": "Akisame 100-2-R",
-    "sku": "4973104",
-    "skus": [
-      "4973547",
-      "4973090"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/akisame-100-2-r-gm.png",
-    "url": "product/akisame-100-2-r/index.html",
-    "slug": "akisame-100-2-r"
   },
   {
     "title": "Akita",
@@ -743,6 +732,17 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/cb-prime-400-gb-1.png",
     "url": "product/cb-prime-400/index.html",
     "slug": "cb-prime-400"
+  },
+  {
+    "title": "CB-Sintesi 114-2",
+    "sku": "4999152",
+    "skus": [
+      "4999152"
+    ],
+    "category": "??????????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/cb-sintesi-114-2-gb-300x300.png",
+    "url": "product/cb-sintesi-114-2/index.html?attribute_pa_color=gb",
+    "slug": "cb-sintesi-114-2"
   },
   {
     "title": "CB-Sintesi-L",
@@ -1622,15 +1622,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "kashiogawa-86"
   },
   {
-    "title": "Kasumigaura 65",
-    "sku": "4993727",
-    "skus": [],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Kasumigaura-65-IN.png",
-    "url": "product/kasumigaura-65/index.html",
-    "slug": "kasumigaura-65"
-  },
-  {
     "title": "Kata 20-U",
     "sku": "4993373",
     "skus": [
@@ -1809,6 +1800,32 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "kinokawa-90"
   },
   {
+    "title": "Kitagawa 100",
+    "sku": "4993786",
+    "skus": [
+      "4993788",
+      "4993251",
+      "4993787"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Kitagawa_100-GB-1.png",
+    "url": "product/kitagawa-100/index.html",
+    "slug": "kitagawa-100"
+  },
+  {
+    "title": "Kitagawa 100-2",
+    "sku": "4993805",
+    "skus": [
+      "4993804",
+      "4993252",
+      "4993803"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Kitagawa_100-2-GB-1.png",
+    "url": "product/kitagawa-100-2/index.html",
+    "slug": "kitagawa-100-2"
+  },
+  {
     "title": "Kitagawa 51",
     "sku": "4993832",
     "skus": [
@@ -1903,32 +1920,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Kitagawa_86-LB-AZ.png",
     "url": "product/kitagawa-86-lb/index.html",
     "slug": "kitagawa-86-lb"
-  },
-  {
-    "title": "Kitagawa 100",
-    "sku": "4993786",
-    "skus": [
-      "4993788",
-      "4993251",
-      "4993787"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Kitagawa_100-GB-1.png",
-    "url": "product/kitagawa-100/index.html",
-    "slug": "kitagawa-100"
-  },
-  {
-    "title": "Kitagawa 100-2",
-    "sku": "4993805",
-    "skus": [
-      "4993804",
-      "4993252",
-      "4993803"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Kitagawa_100-2-GB-1.png",
-    "url": "product/kitagawa-100-2/index.html",
-    "slug": "kitagawa-100-2"
   },
   {
     "title": "Kiten 48-INT",
@@ -2380,6 +2371,15 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "nagano-pure-drop-lite"
   },
   {
+    "title": "Nagare 1000",
+    "sku": "4995058",
+    "skus": [],
+    "category": "Измельчители",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Nagare-1000-2.png",
+    "url": "product/nagare-1000/index.html",
+    "slug": "nagare-1000"
+  },
+  {
     "title": "Nagare 500",
     "sku": "4995060",
     "skus": [],
@@ -2398,13 +2398,15 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "nagare-750"
   },
   {
-    "title": "Nagare 1000",
-    "sku": "4995058",
-    "skus": [],
+    "title": "Nagare Slim 1250",
+    "sku": "4995063",
+    "skus": [
+      "4995066"
+    ],
     "category": "Измельчители",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Nagare-1000-2.png",
-    "url": "product/nagare-1000/index.html",
-    "slug": "nagare-1000"
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Nagare-Slim-1250-AZ.png",
+    "url": "product/nagare-slim-1250/index.html",
+    "slug": "nagare-slim-1250"
   },
   {
     "title": "Nagare Slim 500",
@@ -2423,17 +2425,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Nagare-Slim-900-1.png",
     "url": "product/nagare-slim-900/index.html",
     "slug": "nagare-slim-900"
-  },
-  {
-    "title": "Nagare Slim 1250",
-    "sku": "4995063",
-    "skus": [
-      "4995066"
-    ],
-    "category": "Измельчители",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Nagare-Slim-1250-AZ.png",
-    "url": "product/nagare-slim-1250/index.html",
-    "slug": "nagare-slim-1250"
   },
   {
     "title": "Nakagawa",
@@ -2910,6 +2901,102 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "omi-76-u-i"
   },
   {
+    "title": "Omishima 41",
+    "sku": "4997550",
+    "skus": [
+      "4997550",
+      "4997548",
+      "4997549",
+      "4997482",
+      "4997481",
+      "4997547"
+    ],
+    "category": "?????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/omishima-41.jpg",
+    "url": "product/omishima-41/index.html?attribute_pa_color=bl",
+    "slug": "omishima-41"
+  },
+  {
+    "title": "Omishima 41-U",
+    "sku": "4997569",
+    "skus": [
+      "4997569",
+      "4997560",
+      "4997568",
+      "4997515",
+      "4997514",
+      "4997559"
+    ],
+    "category": "?????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/omishima-41-u.jpg",
+    "url": "product/omishima-41-u/index.html?attribute_pa_color=bl",
+    "slug": "omishima-41-u"
+  },
+  {
+    "title": "Omishima 60",
+    "sku": "4997546",
+    "skus": [
+      "4997546",
+      "4997544",
+      "4997545",
+      "4997480",
+      "4997466",
+      "4997543"
+    ],
+    "category": "?????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/omishima-60.jpg",
+    "url": "product/omishima-60/index.html?attribute_pa_color=bl",
+    "slug": "omishima-60"
+  },
+  {
+    "title": "Omishima 60-U",
+    "sku": "4997558",
+    "skus": [
+      "4997558",
+      "4997556",
+      "4997557",
+      "4997513",
+      "4997512",
+      "4997555"
+    ],
+    "category": "?????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/omishima-60-u.jpg",
+    "url": "product/omishima-60-u/index.html?attribute_pa_color=bl",
+    "slug": "omishima-60-u"
+  },
+  {
+    "title": "Omishima 76",
+    "sku": "4997554",
+    "skus": [
+      "4997554",
+      "4997552",
+      "4997553",
+      "4997484",
+      "4997483",
+      "4997551"
+    ],
+    "category": "?????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/omishima-76.jpg",
+    "url": "product/omishima-76/index.html?attribute_pa_color=bl",
+    "slug": "omishima-76"
+  },
+  {
+    "title": "Omishima 76-U",
+    "sku": "4997573",
+    "skus": [
+      "4997573",
+      "4997571",
+      "4997572",
+      "4997517",
+      "4997516",
+      "4997570"
+    ],
+    "category": "?????",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/07/omishima-76-u.jpg",
+    "url": "product/omishima-76-u/index.html?attribute_pa_color=bl",
+    "slug": "omishima-76-u"
+  },
+  {
     "title": "Omoikane-RW",
     "sku": "",
     "skus": [],
@@ -2967,6 +3054,20 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "ot-01"
   },
   {
+    "title": "OV-02",
+    "sku": "4956724",
+    "skus": [
+      "4956722",
+      "4956769",
+      "4956770",
+      "4956723"
+    ],
+    "category": "Аксессуары",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/OV-02-AB.png",
+    "url": "product/ov-02/index.html",
+    "slug": "ov-02"
+  },
+  {
     "title": "OV-1-R",
     "sku": "4998035",
     "skus": [
@@ -2994,20 +3095,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/OV-1-S-AB.png",
     "url": "product/ov-1-s/index.html",
     "slug": "ov-1-s"
-  },
-  {
-    "title": "OV-02",
-    "sku": "4956724",
-    "skus": [
-      "4956722",
-      "4956769",
-      "4956770",
-      "4956723"
-    ],
-    "category": "Аксессуары",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/OV-02-AB.png",
-    "url": "product/ov-02/index.html",
-    "slug": "ov-02"
   },
   {
     "title": "PL-01",
@@ -3145,6 +3232,36 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "sagami-79-2"
   },
   {
+    "title": "Sakaime 100",
+    "sku": "4993885",
+    "skus": [
+      "4993884",
+      "4993561",
+      "4993891",
+      "4993886",
+      "4993887"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Sakaime_100-BE.png",
+    "url": "product/sakaime-100/index.html",
+    "slug": "sakaime-100"
+  },
+  {
+    "title": "Sakaime 100-2",
+    "sku": "4993893",
+    "skus": [
+      "4993892",
+      "4997219",
+      "4993562",
+      "4993899",
+      "4993895"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Sakaime_100-2-BE.png",
+    "url": "product/sakaime-100-2/index.html",
+    "slug": "sakaime-100-2"
+  },
+  {
     "title": "Sakaime 60-2",
     "sku": "4993909",
     "skus": [
@@ -3265,36 +3382,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "sakaime-86-2"
   },
   {
-    "title": "Sakaime 100",
-    "sku": "4993885",
-    "skus": [
-      "4993884",
-      "4993561",
-      "4993891",
-      "4993886",
-      "4993887"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Sakaime_100-BE.png",
-    "url": "product/sakaime-100/index.html",
-    "slug": "sakaime-100"
-  },
-  {
-    "title": "Sakaime 100-2",
-    "sku": "4993893",
-    "skus": [
-      "4993892",
-      "4997219",
-      "4993562",
-      "4993899",
-      "4993895"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Sakaime_100-2-BE.png",
-    "url": "product/sakaime-100-2/index.html",
-    "slug": "sakaime-100-2"
-  },
-  {
     "title": "Saru 48",
     "sku": "4993833",
     "skus": [],
@@ -3401,6 +3488,34 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "shinagawa-sb"
   },
   {
+    "title": "Sintesi 100",
+    "sku": "4997127",
+    "skus": [
+      "4997125",
+      "4997129",
+      "4997128",
+      "4997126"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sintesi_100-CN.png",
+    "url": "product/sintesi-100/index.html",
+    "slug": "sintesi-100"
+  },
+  {
+    "title": "Sintesi 116",
+    "sku": "4997122",
+    "skus": [
+      "4997120",
+      "4997124",
+      "4997123",
+      "4997121"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sintesi_116-CN.png",
+    "url": "product/sintesi-116/index.html",
+    "slug": "sintesi-116"
+  },
+  {
     "title": "Sintesi 57",
     "sku": "4997142",
     "skus": [
@@ -3442,34 +3557,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sintesi_86-CN.png",
     "url": "product/sintesi-86/index.html",
     "slug": "sintesi-86"
-  },
-  {
-    "title": "Sintesi 100",
-    "sku": "4997127",
-    "skus": [
-      "4997125",
-      "4997129",
-      "4997128",
-      "4997126"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sintesi_100-CN.png",
-    "url": "product/sintesi-100/index.html",
-    "slug": "sintesi-100"
-  },
-  {
-    "title": "Sintesi 116",
-    "sku": "4997122",
-    "skus": [
-      "4997120",
-      "4997124",
-      "4997123",
-      "4997121"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sintesi_116-CN.png",
-    "url": "product/sintesi-116/index.html",
-    "slug": "sintesi-116"
   },
   {
     "title": "Sintesi Pro 114-2-U/I",
@@ -3537,6 +3624,34 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/sr-01-1.png",
     "url": "product/sr-01/index.html",
     "slug": "sr-01"
+  },
+  {
+    "title": "Sumi 100",
+    "sku": "4993655",
+    "skus": [
+      "4993654",
+      "4993565",
+      "4993659",
+      "4993656",
+      "4993657"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Sumi_100-BE.png",
+    "url": "product/sumi-100/index.html",
+    "slug": "sumi-100"
+  },
+  {
+    "title": "Sumi 100A",
+    "sku": "4997109",
+    "skus": [
+      "4997110",
+      "4997111",
+      "4997108"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sumi_100A-GB.png",
+    "url": "product/sumi-100a/index.html",
+    "slug": "sumi-100a"
   },
   {
     "title": "Sumi 65",
@@ -3666,34 +3781,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sumi_86A-GB.png",
     "url": "product/sumi-86a/index.html",
     "slug": "sumi-86a"
-  },
-  {
-    "title": "Sumi 100",
-    "sku": "4993655",
-    "skus": [
-      "4993654",
-      "4993565",
-      "4993659",
-      "4993656",
-      "4993657"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Sumi_100-BE.png",
-    "url": "product/sumi-100/index.html",
-    "slug": "sumi-100"
-  },
-  {
-    "title": "Sumi 100A",
-    "sku": "4997109",
-    "skus": [
-      "4997110",
-      "4997111",
-      "4997108"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Sumi_100A-GB.png",
-    "url": "product/sumi-100a/index.html",
-    "slug": "sumi-100a"
   },
   {
     "title": "SW-01",
@@ -4284,6 +4371,21 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "tateyama-s"
   },
   {
+    "title": "Tedori 100",
+    "sku": "4993917",
+    "skus": [
+      "4993916",
+      "4993567",
+      "4993923",
+      "4993918",
+      "4993919"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Tedori_100-GR.png",
+    "url": "product/tedori-100/index.html",
+    "slug": "tedori-100"
+  },
+  {
     "title": "Tedori 54-U",
     "sku": "4993989",
     "skus": [
@@ -4404,21 +4506,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Tedori_86-2-LB-BE.png",
     "url": "product/tedori-86-2-lb/index.html",
     "slug": "tedori-86-2-lb"
-  },
-  {
-    "title": "Tedori 100",
-    "sku": "4993917",
-    "skus": [
-      "4993916",
-      "4993567",
-      "4993923",
-      "4993918",
-      "4993919"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Tedori_100-GR.png",
-    "url": "product/tedori-100/index.html",
-    "slug": "tedori-100"
   },
   {
     "title": "Tokara 88-U/I",
@@ -4939,6 +5026,19 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "slug": "yamakawa-75t-u-i"
   },
   {
+    "title": "Yasugata 100",
+    "sku": "4993845",
+    "skus": [
+      "4993568",
+      "4993851",
+      "4993847"
+    ],
+    "category": "Мойки",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Yasugata_100-BE.png",
+    "url": "product/yasugata-100/index.html",
+    "slug": "yasugata-100"
+  },
+  {
     "title": "Yasugata 48R",
     "sku": "4993131",
     "skus": [
@@ -4965,19 +5065,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Yasugata_86-PL.png",
     "url": "product/yasugata-86/index.html",
     "slug": "yasugata-86"
-  },
-  {
-    "title": "Yasugata 100",
-    "sku": "4993845",
-    "skus": [
-      "4993568",
-      "4993851",
-      "4993847"
-    ],
-    "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/06/Yasugata_100-BE.png",
-    "url": "product/yasugata-100/index.html",
-    "slug": "yasugata-100"
   },
   {
     "title": "Yatomi",

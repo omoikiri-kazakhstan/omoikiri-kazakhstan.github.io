@@ -1362,7 +1362,7 @@
   }
 
   function cleanProductTitle(value) {
-    let title = String(value || '').replace(/\s+/g, ' ').trim();
+    let title = String(value || '').replace(/\s+/g, ' ').replace(/\s+-p$/i, '').trim();
     const codes = titleColorCodeCandidates();
     let changed = true;
 

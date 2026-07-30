@@ -27,8 +27,16 @@
   let userChangedColor = false;
   const lastSelectedAttributes = {};
 
-  function roundKzt(value) {
-    return Math.ceil((value * 6.1 - 880) / 1000) * 1000 + 880;
+  function roundKzt(value, rate = 6.1) {
+    return Math.ceil((value * rate - 880) / 1000) * 1000 + 880;
+  }
+
+  function roundOldKzt(value) {
+    return roundKzt(value, 6.8);
+  }
+
+  function isRegularPriceNode(node) {
+    return Boolean(node?.closest?.('del, .regular-price'));
   }
 
   function formatKzt(value) {
@@ -644,7 +652,7 @@
 
     amount.dataset.originalRub = String(raw);
     amount.dataset.kztDone = '1';
-    amount.textContent = formatKzt(roundKzt(raw));
+    amount.textContent = formatKzt(isRegularPriceNode(amount) ? roundOldKzt(raw) : roundKzt(raw));
   }
 
   function textWithoutRegularPrice(node) {
@@ -668,7 +676,7 @@
 
       if (regular && sale && regular !== sale) {
         node.innerHTML = '<span class="sale-price"><span class="regular-price" style="text-decoration: line-through;">' +
-          formatKzt(roundKzt(regular)) + '</span> ' + formatKzt(roundKzt(sale)) + '</span>';
+          formatKzt(roundOldKzt(regular)) + '</span> ' + formatKzt(roundKzt(sale)) + '</span>';
       } else {
         node.textContent = formatKzt(roundKzt(sale || regular));
       }
@@ -689,7 +697,7 @@
     if (!sale && !regular) return '';
 
     const saleKzt = formatKzt(roundKzt(sale || regular));
-    const regularKzt = formatKzt(roundKzt(regular));
+    const regularKzt = formatKzt(roundOldKzt(regular));
     if (regular && sale && regular !== sale) {
       return '<span class="price dealer-product-price dealer-sale-product-price"><del><span class="woocommerce-Price-amount amount"><bdi>' +
         regularKzt + '</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi>' +

@@ -88,8 +88,16 @@
     loading.style.display = 'none';
   }
 
-  function roundKzt(value) {
-    return Math.ceil((value * 6.1 - 880) / 1000) * 1000 + 880;
+  function roundKzt(value, rate = 6.1) {
+    return Math.ceil((value * rate - 880) / 1000) * 1000 + 880;
+  }
+
+  function roundOldKzt(value) {
+    return roundKzt(value, 6.8);
+  }
+
+  function isRegularPriceNode(node) {
+    return Boolean(node?.closest?.('del, .regular-price'));
   }
 
   function formatKzt(value) {
@@ -1092,7 +1100,7 @@
     if (!rub || rub > 10000000) return;
 
     amount.dataset.originalRub = String(rub);
-    amount.textContent = formatKzt(roundKzt(rub));
+    amount.textContent = formatKzt(isRegularPriceNode(amount) ? roundOldKzt(rub) : roundKzt(rub));
   }
 
   function convertRangePriceLabel(node) {

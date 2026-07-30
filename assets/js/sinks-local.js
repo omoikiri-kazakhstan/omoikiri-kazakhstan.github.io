@@ -1409,7 +1409,7 @@
       if (!key) return;
 
       const values = [...filter.querySelectorAll('input[type="checkbox"]:checked')].map((input) => input.value);
-      selected[key] = values;
+      selected[key] = [...new Set([...(selected[key] || []), ...values])];
     });
 
     return selected;

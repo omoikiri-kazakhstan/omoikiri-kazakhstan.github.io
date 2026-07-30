@@ -23,6 +23,9 @@
     'tateyama-s': ['ca', 'ev'],
     'umi': ['bl']
   };
+  const OLD_PRICE_OVERRIDES = {
+    'nagare-slim-500': 186880
+  };
   let applyingRequestedColor = false;
   let userChangedColor = false;
   const lastSelectedAttributes = {};
@@ -32,7 +35,7 @@
   }
 
   function roundOldKzt(value) {
-    return roundKzt(value, 6.8);
+    return OLD_PRICE_OVERRIDES[productSlug()] || roundKzt(value, 6.8);
   }
 
   function isRegularPriceNode(node) {

@@ -4035,7 +4035,8 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "4997036",
     "skus": [
       "4997034",
-      "4997092"
+      "4997092",
+      "4997582"
     ],
     "category": "Мойки",
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/Taki-54-UIF-Side-SF-GB.png",
@@ -4048,7 +4049,8 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "skus": [
       "4997476",
       "4997474",
-      "4997475"
+      "4997475",
+      "4997581"
     ],
     "category": "Мойки",
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2025/09/taki-54-uif-l-side-sf-gb.png",

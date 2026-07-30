@@ -461,6 +461,41 @@
         z-index: 300001 !important;
       }
 
+      body:not(.dealer-info-page) .mob_menu {
+        position: fixed !important;
+        top: 67px !important;
+        left: -340px !important;
+        width: min(320px, 86vw) !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: calc(100dvh - 67px) !important;
+        z-index: 100003 !important;
+        overflow-y: auto !important;
+        background: #fff !important;
+        border-right: 1px solid rgba(0, 0, 0, .12) !important;
+        box-shadow: 18px 0 34px rgba(0, 0, 0, .14) !important;
+        transition: left .24s ease !important;
+      }
+
+      body:not(.dealer-info-page) .mob_menu.active {
+        left: 0 !important;
+      }
+
+      body.dealer-menu-open {
+        overflow: hidden !important;
+      }
+
+      body.dealer-menu-open .mob_menu {
+        left: 0 !important;
+      }
+
+      @media (max-width: 780px) {
+        body:not(.dealer-info-page) .mob_menu {
+          top: 57px !important;
+          height: calc(100dvh - 57px) !important;
+        }
+      }
+
       body .pswp {
         z-index: 300000 !important;
       }
@@ -1232,6 +1267,51 @@
     }, true);
   }
 
+  function normalizeMobileMenu() {
+    const sourceHamb = document.getElementById('hamb');
+    const menu = document.querySelector('.mob_menu');
+    if (!sourceHamb || !menu || sourceHamb.dataset.dealerMenuNormalized === '1') return;
+
+    const cleanHamb = sourceHamb.cloneNode(true);
+    cleanHamb.dataset.dealerMenuNormalized = '1';
+    sourceHamb.replaceWith(cleanHamb);
+
+    const close = () => {
+      cleanHamb.classList.remove('open');
+      menu.classList.remove('active');
+      menu.style.left = '';
+      document.body.classList.remove('overflow-hidden', 'dealer-menu-open');
+    };
+
+    const open = () => {
+      cleanHamb.classList.add('open');
+      menu.classList.add('active');
+      menu.style.left = '0px';
+      document.body.classList.add('dealer-menu-open');
+    };
+
+    cleanHamb.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      menu.classList.contains('active') ? close() : open();
+    }, true);
+
+    menu.addEventListener('click', (event) => {
+      if (event.target.closest('a')) close();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!menu.classList.contains('active')) return;
+      if (menu.contains(event.target) || cleanHamb.contains(event.target)) return;
+      close();
+    }, true);
+
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'Escape') close();
+    }, true);
+  }
+
   function ensureInfoFooter() {
     if (!document.body.classList.contains('dealer-info-page')) return;
     if (document.querySelector('.dealer-info-footer')) return;
@@ -1251,6 +1331,7 @@
     addStyle();
     ensureInfoSearch();
     ensureInfoMobileMenu();
+    normalizeMobileMenu();
     ensureInfoFooter();
     createSwitcher();
     addCartLink();

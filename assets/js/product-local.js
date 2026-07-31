@@ -830,84 +830,6 @@
     });
   }
 
-  function unlockPriceSelection(root) {
-    (root || document).querySelectorAll('.card_actions .rrc, .summary .rrc').forEach((priceBox) => {
-      priceBox.removeAttribute('draggable');
-      priceBox.style.userSelect = 'text';
-      priceBox.style.webkitUserSelect = 'text';
-      priceBox.style.cursor = 'text';
-
-      priceBox.querySelectorAll('*').forEach((node) => {
-        node.removeAttribute('draggable');
-        node.style.userSelect = 'text';
-        node.style.webkitUserSelect = 'text';
-        node.style.cursor = 'text';
-      });
-    });
-  }
-
-  function protectPriceSelection() {
-    if (document.documentElement.dataset.dealerPriceSelectionBound === '1') return;
-    document.documentElement.dataset.dealerPriceSelectionBound = '1';
-
-    const style = document.createElement('style');
-    style.id = 'dealer-price-selection-style';
-    style.textContent = `
-      body.single-product .card_actions .rrc,
-      body.single-product .summary .rrc,
-      body.single-product .card_actions .rrc *,
-      body.single-product .summary .rrc * {
-        -webkit-user-select: text !important;
-        -moz-user-select: text !important;
-        -ms-user-select: text !important;
-        user-select: text !important;
-        -webkit-touch-callout: default !important;
-      }
-
-      body.single-product .card_actions .rrc,
-      body.single-product .summary .rrc {
-        display: inline !important;
-        padding: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        cursor: text !important;
-        pointer-events: auto !important;
-      }
-
-      body.single-product .card_actions .rrc .price,
-      body.single-product .summary .rrc .price,
-      body.single-product .card_actions .rrc .woocommerce-Price-amount,
-      body.single-product .summary .rrc .woocommerce-Price-amount,
-      body.single-product .card_actions .rrc bdi,
-      body.single-product .summary .rrc bdi {
-        display: inline !important;
-      }
-
-      body.single-product .card_actions .rrc .price,
-      body.single-product .summary .rrc .price {
-        background: #202020 !important;
-        border-radius: 999px !important;
-        padding: 8px 18px 9px !important;
-        line-height: 1 !important;
-      }
-
-      body.single-product .dealer-price-copy-toast,
-      body.single-product .dealer-price-copy-button,
-      body.single-product .dealer-price-copy-panel,
-      body.single-product .dealer-visible-price {
-        display: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-    document
-      .querySelectorAll('.dealer-price-copy-toast, .dealer-price-copy-button, .dealer-price-copy-panel, .dealer-visible-price')
-      .forEach((node) => node.remove());
-
-    document.querySelectorAll('.dealer-price-source-hidden').forEach((node) => {
-      node.classList.remove('dealer-price-source-hidden');
-    });
-  }
-
   function visiblePrice() {
     const candidates = [
       '.card_actions .rrc',
@@ -1861,8 +1783,6 @@
     localizeProductImages(document);
     updateVariationPriceDisplay();
     convertPrices(document);
-    unlockPriceSelection(document);
-    protectPriceSelection();
     bindCart();
     bindFavorite();
     updateCartCount();
@@ -1912,7 +1832,6 @@
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);
-        unlockPriceSelection(document);
         refreshFavoriteState();
       });
     }
@@ -1937,7 +1856,6 @@
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);
-        unlockPriceSelection(document);
         bindFavorite();
       }, delay);
     });

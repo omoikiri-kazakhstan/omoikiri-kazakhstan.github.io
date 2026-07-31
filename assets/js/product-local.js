@@ -674,69 +674,6 @@
         pointer-events: none !important;
       }
 
-      .card_actions .rrc .price.dealer-price-layer-source,
-      .card_actions .rrc .price.dealer-price-layer-source * {
-        color: transparent !important;
-        text-decoration-color: transparent !important;
-      }
-
-      .dealer-price-select-layer {
-        position: absolute !important;
-        z-index: 120 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        gap: 4px !important;
-        box-sizing: border-box !important;
-        white-space: nowrap !important;
-        background: transparent !important;
-        border: 0 !important;
-        padding: 0 !important;
-        font-family: "Lato", Arial, Helvetica, sans-serif !important;
-        line-height: 1 !important;
-        color: #fff !important;
-        cursor: text !important;
-        user-select: text !important;
-        -webkit-user-select: text !important;
-        -moz-user-select: text !important;
-        -ms-user-select: text !important;
-        -webkit-touch-callout: text !important;
-      }
-
-      .dealer-price-select-layer,
-      .dealer-price-select-layer * {
-        cursor: text !important;
-        user-select: text !important;
-        -webkit-user-select: text !important;
-        -moz-user-select: text !important;
-        -ms-user-select: text !important;
-      }
-
-      .dealer-price-select-layer .woocommerce-Price-amount,
-      .dealer-price-select-layer bdi,
-      .dealer-price-select-layer .woocommerce-Price-currencySymbol {
-        color: inherit !important;
-        font-family: inherit !important;
-        line-height: 1 !important;
-      }
-
-      .dealer-price-select-layer > .woocommerce-Price-amount,
-      .dealer-price-select-layer ins {
-        color: #fff !important;
-        font-size: 22px !important;
-        font-weight: 900 !important;
-        text-decoration: none !important;
-      }
-
-      .dealer-price-select-layer del {
-        color: #e4003a !important;
-        font-size: 17px !important;
-        font-weight: 400 !important;
-        text-decoration-line: line-through !important;
-        text-decoration-color: #e4003a !important;
-        text-decoration-thickness: 2px !important;
-      }
-
       .card_actions .fav_button {
         display: inline-flex !important;
         align-items: center !important;
@@ -975,14 +912,33 @@
     return singlePriceHtml(saleKzt);
   }
 
+  function normalizedPriceLabel(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function renderedPriceText(html) {
+    const holder = document.createElement('div');
+    holder.innerHTML = html;
+    return normalizedPriceLabel(holder.textContent);
+  }
+
   function updateVariationPriceDisplay() {
     const variation = variationData();
     const html = variation ? variationPriceHtml(variation) : '';
     if (!html) return;
 
+    const nextText = renderedPriceText(html);
     document.querySelectorAll('.woocommerce-variation-price, .card_actions .rrc').forEach((priceBox) => {
-      if (priceBox.innerHTML === html) return;
+      if (priceBox.dataset.dealerRenderedPrice === nextText || normalizedPriceLabel(priceBox.textContent) === nextText) {
+        priceBox.dataset.dealerRenderedPrice = nextText;
+        priceBox.dataset.kztDone = '1';
+        priceBox.querySelectorAll('.woocommerce-Price-amount.amount').forEach((node) => {
+          node.dataset.kztDone = '1';
+        });
+        return;
+      }
       priceBox.innerHTML = html;
+      priceBox.dataset.dealerRenderedPrice = nextText;
       priceBox.dataset.kztDone = '1';
       priceBox.querySelectorAll('.woocommerce-Price-amount.amount').forEach((node) => {
         node.dataset.kztDone = '1';
@@ -1929,72 +1885,6 @@
     }, true);
   }
 
-  function syncSelectablePriceLayer() {
-    const source = document.querySelector('.card_actions .rrc .price');
-    let layer = document.querySelector('.dealer-price-select-layer');
-
-    if (!source) {
-      layer?.remove();
-      return;
-    }
-
-    if (!layer) {
-      layer = document.createElement('span');
-      layer.className = 'dealer-price-select-layer';
-      document.body.appendChild(layer);
-    }
-
-    source.classList.add('dealer-price-layer-source');
-    source.setAttribute('aria-hidden', 'true');
-
-    if (layer.innerHTML !== source.innerHTML) {
-      layer.innerHTML = source.innerHTML;
-    }
-
-    const rect = source.getBoundingClientRect();
-    const range = document.createRange();
-    range.selectNodeContents(source);
-    const textRect = range.getBoundingClientRect();
-    range.detach();
-
-    const visible = rect.width > 0 && rect.height > 0 && textRect.width > 0 && textRect.height > 0 && getComputedStyle(source).visibility !== 'hidden';
-
-    layer.style.display = visible ? 'inline-flex' : 'none';
-    if (!visible) return;
-
-    layer.style.left = `${Math.round(textRect.left + window.scrollX)}px`;
-    layer.style.top = `${Math.round(textRect.top + window.scrollY)}px`;
-    layer.style.width = `${Math.ceil(textRect.width)}px`;
-    layer.style.height = `${Math.ceil(textRect.height)}px`;
-  }
-
-  function bindSelectablePriceLayer() {
-    if (document.documentElement.dataset.dealerSelectablePriceLayer === '1') return;
-    document.documentElement.dataset.dealerSelectablePriceLayer = '1';
-
-    const scheduleSync = () => {
-      window.requestAnimationFrame(syncSelectablePriceLayer);
-    };
-
-    window.addEventListener('scroll', scheduleSync, true);
-    window.addEventListener('resize', scheduleSync);
-    document.addEventListener('change', scheduleSync, true);
-    document.addEventListener('click', scheduleSync, true);
-
-    const observer = new MutationObserver(scheduleSync);
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ['class', 'style', 'data-kzt-done']
-    });
-
-    syncSelectablePriceLayer();
-    window.setTimeout(syncSelectablePriceLayer, 250);
-    window.setTimeout(syncSelectablePriceLayer, 900);
-  }
-
   function init() {
     addStyle();
     fixMojibake(document);
@@ -2010,7 +1900,6 @@
     localizeProductImages(document);
     updateVariationPriceDisplay();
     convertPrices(document);
-    bindSelectablePriceLayer();
     bindCart();
     bindFavorite();
     updateCartCount();

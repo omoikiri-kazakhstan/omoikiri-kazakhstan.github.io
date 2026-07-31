@@ -74,6 +74,14 @@
   };
   const MOJIBAKE_RE = /(?:[РС][\u0080-\uFFFF]|вЂ|В[©«»°]|Р[А-Яа-яЁёЇїІіЄєҐґ])/;
   const decoder = typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8') : null;
+  const REPLACEMENT_CHAR_RE = /\uFFFD/;
+
+  function cleanupTextArtifacts(text) {
+    return String(text || '')
+      .replace(/(\d)\uFFFD\s*(мм|см)\b/gi, '$1 $2')
+      .replace(/\uFFFD\s*(мм|см)\b/gi, ' $1')
+      .replace(/\uFFFD/g, '');
+  }
 
   function mojibakeScore(text) {
     return ((String(text || '').match(MOJIBAKE_RE) || []).length)
@@ -89,19 +97,19 @@
   }
 
   function decodeMojibakeText(text) {
-    const value = String(text || '');
-    if (!decoder || !MOJIBAKE_RE.test(value)) return text;
+    const value = cleanupTextArtifacts(text);
+    if (!decoder || !MOJIBAKE_RE.test(value)) return value;
 
     const bytes = [];
     for (const char of value) {
       const byte = cp1251Byte(char.codePointAt(0));
-      if (byte === null) return text;
+      if (byte === null) return value;
       bytes.push(byte);
     }
 
     const decoded = decoder.decode(new Uint8Array(bytes));
-    if (!/[А-Яа-яЁё]/.test(decoded)) return text;
-    return mojibakeScore(decoded) < mojibakeScore(value) ? decoded : text;
+    if (!/[А-Яа-яЁё]/.test(decoded)) return value;
+    return cleanupTextArtifacts(mojibakeScore(decoded) < mojibakeScore(value) ? decoded : value);
   }
 
   function fixMojibake(root) {
@@ -115,7 +123,9 @@
           if (!parent || /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA|CODE|PRE)$/i.test(parent.tagName)) {
             return NodeFilter.FILTER_REJECT;
           }
-          return MOJIBAKE_RE.test(node.nodeValue || '') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+          return (MOJIBAKE_RE.test(node.nodeValue || '') || REPLACEMENT_CHAR_RE.test(node.nodeValue || ''))
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
         }
       }
     );

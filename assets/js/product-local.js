@@ -78,8 +78,8 @@
 
   function cleanupTextArtifacts(text) {
     return String(text || '')
-      .replace(/(\d)\uFFFD\s*(мм|см)\b/gi, '$1 $2')
-      .replace(/\uFFFD\s*(мм|см)\b/gi, ' $1')
+      .replace(/(\d)\uFFFD\s*(\u043c\u043c|\u0441\u043c)\b/gi, '$1 $2')
+      .replace(/\uFFFD\s*(\u043c\u043c|\u0441\u043c)\b/gi, ' $1')
       .replace(/\uFFFD/g, '');
   }
 

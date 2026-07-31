@@ -245,6 +245,65 @@
     });
   }
 
+  function normalizeDealerChrome() {
+    document.querySelectorAll('a[href^="tel:88007000432"], a[href^="tel:+78122778888"]').forEach((link) => {
+      link.setAttribute('href', 'tel:87077832888');
+      link.textContent = '8 (707) 783-28-88';
+    });
+
+    const footer = document.querySelector('.footer');
+    if (footer && /Р|С‚РµР|САНКТ|МОСКВА|Фонтанки|Бережковск/i.test(footer.textContent || '')) {
+      footer.innerHTML = `
+        <div class="footer_cont">
+          <div class="footer_col">
+            <a href="/"><div class="footer_logo"> </div></a>
+            <p class="copyright">© 2026 OMOIKIRI. Все права защищены.</p>
+          </div>
+          <div class="footer_col">
+            <div class="footer_city">
+              <h2>АСТАНА</h2>
+              <p>Улица Акмешит, 19/1, НП: 1</p>
+              <p>тел.: <a href="tel:87010688828">8 (701) 068-88-28</a></p>
+            </div>
+            <div class="footer_city">
+              <h2>АЛМАТЫ</h2>
+              <p>ТЦ Жибек Жолы, проспект Жибек Жолы, 135</p>
+              <p>тел.: <a href="tel:87076206888">8 (707) 620-68-88</a></p>
+            </div>
+            <div class="footer_city">
+              <h2>АЛМАТЫ</h2>
+              <p>Улица Турар Рыскулов, 3</p>
+              <p>тел.: <a href="tel:87077832888">8 (707) 783-28-88</a></p>
+            </div>
+            <div class="footer_city">
+              <h2>КАРАГАНДА</h2>
+              <p>Букетова 3/2, ЖК Атамура</p>
+              <p>тел.: <a href="tel:87004685588">8 (700) 468-55-88</a></p>
+            </div>
+          </div>
+          <div class="footer_col">
+            <h2>ПРОДУКЦИЯ</h2>
+            <a href="/sinks/index.html"><p>мойки</p></a>
+            <a href="/bathsinks/index.html"><p>раковины для ванной</p></a>
+            <a href="/taps/index.html"><p>смесители</p></a>
+            <a href="/filters/index.html"><p>фильтры</p></a>
+            <a href="/disposers/index.html"><p>измельчители</p></a>
+            <a href="/dispenser/index.html"><p>дозаторы</p></a>
+            <a href="/acs/index.html"><p>аксессуары</p></a>
+            <a href="/omoikiri-home/index.html"><p>OMOIKIRI Home</p></a>
+          </div>
+          <div class="footer_col">
+            <h2>КАРТА САЙТА</h2>
+            <a href="/about/index.html"><p>о компании</p></a>
+            <a href="/service/index.html"><p>сервис</p></a>
+            <a href="/dealers/index.html"><p>где купить</p></a>
+            <a href="/contact/index.html"><p>контакты</p></a>
+          </div>
+        </div>
+      `;
+    }
+  }
+
   function addStyle() {
     if (document.getElementById('dealer-local-product-style')) return;
 
@@ -1790,6 +1849,7 @@
   function init() {
     addStyle();
     fixMojibake(document);
+    normalizeDealerChrome();
     addCartLink();
     removeDiscontinuedVariants();
     applyRequestedColor();
@@ -1843,6 +1903,7 @@
       window.requestAnimationFrame(() => {
         pendingConvert = false;
         fixMojibake(document);
+        normalizeDealerChrome();
         restoreCatalogBreadcrumbLinks();
         normalizeTitleAndButtons();
         ensureSimpleCartButton();
@@ -1866,6 +1927,7 @@
         removeDiscontinuedVariants();
         applyRequestedColor();
         fixMojibake(document);
+        normalizeDealerChrome();
         restoreCatalogBreadcrumbLinks();
         normalizeTitleAndButtons();
         ensureSimpleCartButton();

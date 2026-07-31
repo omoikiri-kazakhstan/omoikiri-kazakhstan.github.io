@@ -765,123 +765,16 @@
         cursor: text;
       }
 
-      .dealer-price-copy-toast {
-        position: fixed;
-        left: 50%;
-        bottom: 28px;
-        z-index: 999999;
-        transform: translateX(-50%);
-        padding: 10px 18px;
-        border-radius: 999px;
-        background: #202020;
-        color: #fff;
-        font-family: "Lato", Arial, Helvetica, sans-serif;
-        font-size: 14px;
-        font-weight: 700;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity .18s ease;
-      }
-
-      .dealer-price-copy-toast.is-visible {
-        opacity: 1;
-      }
-
-      body.single-product .dealer-price-copy-button {
-        width: 42px;
-        height: 42px;
-        margin-left: 10px;
-        border: 0;
-        border-radius: 50%;
-        background: #202020;
-        color: #fff;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex: 0 0 auto;
-        cursor: pointer;
-        -webkit-appearance: none;
-        appearance: none;
-        transition: transform .15s ease, opacity .15s ease;
-      }
-
-      body.single-product .dealer-price-copy-button:hover {
-        transform: translateY(-1px);
-      }
-
-      body.single-product .dealer-price-copy-button svg {
-        width: 18px;
-        height: 18px;
-        display: block;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-
+      body.single-product .dealer-price-copy-toast,
+      body.single-product .dealer-price-copy-button,
       body.single-product .dealer-price-copy-panel {
-        flex: 1 0 100%;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        max-width: 380px;
-        margin-top: 10px;
-      }
-
-      body.single-product .dealer-price-copy-panel input {
-        width: min(320px, 100%);
-        height: 38px;
-        border: 1px solid #202020;
-        border-radius: 999px;
-        background: #fff;
-        color: #202020;
-        padding: 0 14px;
-        font-family: "Lato", Arial, Helvetica, sans-serif;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 38px;
-        outline: none;
-        -webkit-user-select: text !important;
-        -moz-user-select: text !important;
-        -ms-user-select: text !important;
-        user-select: text !important;
-        -webkit-touch-callout: default !important;
-      }
-
-      body.single-product .dealer-price-copy-panel input::selection {
-        background: #202020;
-        color: #fff;
-      }
-
-      body.single-product .dealer-price-copy-panel span {
-        color: #202020;
-        font-family: "Lato", Arial, Helvetica, sans-serif;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 1;
-        white-space: nowrap;
-      }
-
-      @media (max-width: 640px) {
-        body.single-product .dealer-price-copy-button {
-          width: 38px;
-          height: 38px;
-          margin-left: 6px;
-        }
-
-        body.single-product .dealer-price-copy-panel {
-          max-width: 100%;
-        }
-
-        body.single-product .dealer-price-copy-panel input {
-          height: 36px;
-          font-size: 14px;
-          line-height: 36px;
-        }
+        display: none !important;
       }
     `;
     document.head.appendChild(style);
+    document
+      .querySelectorAll('.dealer-price-copy-toast, .dealer-price-copy-button, .dealer-price-copy-panel')
+      .forEach((node) => node.remove());
     return;
 
     const priceSelector = '.card_actions .rrc, .summary .rrc';

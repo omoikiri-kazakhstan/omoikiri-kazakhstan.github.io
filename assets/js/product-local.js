@@ -806,8 +806,18 @@
 
       body.single-product .card_actions .rrc,
       body.single-product .summary .rrc {
+        display: inline !important;
         cursor: text !important;
         pointer-events: auto !important;
+      }
+
+      body.single-product .card_actions .rrc .price,
+      body.single-product .summary .rrc .price,
+      body.single-product .card_actions .rrc .woocommerce-Price-amount,
+      body.single-product .summary .rrc .woocommerce-Price-amount,
+      body.single-product .card_actions .rrc bdi,
+      body.single-product .summary .rrc bdi {
+        display: inline !important;
       }
 
       body.single-product .dealer-price-copy-toast,

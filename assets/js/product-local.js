@@ -442,7 +442,8 @@
       }
 
       .card_actions .rrc .dealer-price-regular,
-      .card_actions .rrc .dealer-price-current {
+      .card_actions .rrc .dealer-price-current,
+      .card_actions .rrc .dealer-price-char {
         display: inline !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         line-height: inherit !important;
@@ -711,6 +712,14 @@
     return clone.textContent;
   }
 
+  function priceChars(text) {
+    return [...String(text || '')].map((char) => (
+      '<span class="dealer-price-char">' +
+      char.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+      '</span>'
+    )).join('');
+  }
+
   function convertRrc(root) {
     (root || document).querySelectorAll('.rrc').forEach((node) => {
       if (node.dataset.kztDone === '1' && node.textContent.includes('\u20b8')) return;
@@ -726,9 +735,9 @@
 
       if (regular && sale && regular !== sale) {
         node.innerHTML = '<span class="sale-price"><span class="regular-price" style="text-decoration: line-through;">' +
-          formatKzt(roundOldKzt(regular)) + '</span> ' + formatKzt(roundKzt(sale)) + '</span>';
+          priceChars(formatKzt(roundOldKzt(regular))) + '</span> ' + priceChars(formatKzt(roundKzt(sale))) + '</span>';
       } else {
-        node.textContent = formatKzt(roundKzt(sale || regular));
+        node.innerHTML = priceChars(formatKzt(roundKzt(sale || regular)));
       }
     });
   }
@@ -750,13 +759,13 @@
     const regularKzt = formatKzt(roundOldKzt(regular));
     if (regular && sale && regular !== sale) {
       return '<span class="price dealer-product-price dealer-sale-product-price">' +
-        '<span class="dealer-price-regular">' + regularKzt + '</span>' +
-        '<span class="dealer-price-current">' + saleKzt + '</span>' +
+        '<span class="dealer-price-regular">' + priceChars(regularKzt) + '</span>' +
+        '<span class="dealer-price-current">' + priceChars(saleKzt) + '</span>' +
         '</span>';
     }
 
     return '<span class="price dealer-product-price"><span class="dealer-price-current">' +
-      saleKzt + '</span></span>';
+      priceChars(saleKzt) + '</span></span>';
   }
 
   function updateVariationPriceDisplay() {
@@ -823,7 +832,9 @@
       body.single-product .card_actions .rrc .woocommerce-Price-amount,
       body.single-product .summary .rrc .woocommerce-Price-amount,
       body.single-product .card_actions .rrc bdi,
-      body.single-product .summary .rrc bdi {
+      body.single-product .summary .rrc bdi,
+      body.single-product .card_actions .rrc .dealer-price-char,
+      body.single-product .summary .rrc .dealer-price-char {
         display: inline !important;
       }
 

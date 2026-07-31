@@ -392,10 +392,8 @@
       }
 
       .card_actions {
-        display: flex !important;
-        align-items: center !important;
-        flex-wrap: nowrap !important;
-        gap: 25px !important;
+        display: block !important;
+        white-space: nowrap !important;
       }
 
       .card_actions .rrc {
@@ -415,6 +413,8 @@
         -webkit-user-select: text !important;
         cursor: text !important;
         -webkit-touch-callout: text !important;
+        vertical-align: middle !important;
+        margin-right: 25px !important;
       }
 
       .card_actions .rrc * {
@@ -426,7 +426,6 @@
 
       .card_actions .rrc .price {
         display: inline !important;
-        gap: 7px !important;
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
@@ -436,6 +435,42 @@
         text-decoration: none !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+      }
+
+      .card_actions .rrc .dealer-price-regular,
+      .card_actions .rrc .dealer-price-current {
+        display: inline !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        line-height: inherit !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        cursor: text !important;
+      }
+
+      .card_actions .rrc .dealer-price-regular {
+        position: relative !important;
+        color: #e4003a !important;
+        font-size: 17px !important;
+        font-weight: 400 !important;
+        margin-right: 7px !important;
+      }
+
+      .card_actions .rrc .dealer-price-regular::after {
+        content: "" !important;
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: 50% !important;
+        height: 2px !important;
+        background: #e4003a !important;
+        transform: translateY(-50%) !important;
+        pointer-events: none !important;
+      }
+
+      .card_actions .rrc .dealer-price-current {
+        color: #fff !important;
+        font-size: 22px !important;
+        font-weight: 900 !important;
       }
 
       .card_actions .rrc .woocommerce-Price-amount,
@@ -509,6 +544,8 @@
         line-height: 1 !important;
         cursor: pointer !important;
         user-select: none !important;
+        vertical-align: middle !important;
+        margin-right: 25px !important;
       }
 
       .card_actions .fav_button > :not(#add-to-favorites):not(.dealer-favorite-label) {
@@ -537,8 +574,12 @@
       }
 
       .card_actions .pin {
+        display: inline-flex !important;
+        align-items: center !important;
         flex: 0 0 auto !important;
         white-space: nowrap !important;
+        vertical-align: middle !important;
+        margin-right: 25px !important;
       }
 
       .dealer-simple-cart-button {
@@ -555,6 +596,7 @@
         text-transform: lowercase !important;
         cursor: pointer !important;
         box-shadow: none !important;
+        vertical-align: middle !important;
       }
 
       @media (max-width: 700px) {
@@ -600,10 +642,16 @@
         body.single-product .card_actions {
           width: 100% !important;
           max-width: 100% !important;
-          flex-wrap: wrap !important;
-          gap: 14px 18px !important;
-          align-items: center !important;
+          white-space: normal !important;
           overflow: visible !important;
+        }
+
+        body.single-product .card_actions .rrc,
+        body.single-product .card_actions .fav_button,
+        body.single-product .card_actions .pin,
+        body.single-product .card_actions .dealer-simple-cart-button {
+          margin-right: 18px !important;
+          margin-bottom: 14px !important;
         }
 
         body.single-product .card_actions .rrc {
@@ -697,13 +745,14 @@
     const saleKzt = formatKzt(roundKzt(sale || regular));
     const regularKzt = formatKzt(roundOldKzt(regular));
     if (regular && sale && regular !== sale) {
-      return '<span class="price dealer-product-price dealer-sale-product-price"><del><span class="woocommerce-Price-amount amount"><bdi>' +
-        regularKzt + '</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi>' +
-        saleKzt + '</bdi></span></ins></span>';
+      return '<span class="price dealer-product-price dealer-sale-product-price">' +
+        '<span class="dealer-price-regular">' + regularKzt + '</span>' +
+        '<span class="dealer-price-current">' + saleKzt + '</span>' +
+        '</span>';
     }
 
-    return '<span class="price dealer-product-price"><span class="woocommerce-Price-amount amount"><bdi>' +
-      saleKzt + '</bdi></span></span>';
+    return '<span class="price dealer-product-price"><span class="dealer-price-current">' +
+      saleKzt + '</span></span>';
   }
 
   function updateVariationPriceDisplay() {

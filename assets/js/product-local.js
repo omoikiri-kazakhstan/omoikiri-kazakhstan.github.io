@@ -685,13 +685,13 @@
         z-index: 120 !important;
         display: inline-flex !important;
         align-items: center !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         gap: 4px !important;
         box-sizing: border-box !important;
         white-space: nowrap !important;
         background: transparent !important;
         border: 0 !important;
-        padding: 8px 18px 9px !important;
+        padding: 0 !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         line-height: 1 !important;
         color: #fff !important;
@@ -1952,15 +1952,20 @@
     }
 
     const rect = source.getBoundingClientRect();
-    const visible = rect.width > 0 && rect.height > 0 && getComputedStyle(source).visibility !== 'hidden';
+    const range = document.createRange();
+    range.selectNodeContents(source);
+    const textRect = range.getBoundingClientRect();
+    range.detach();
+
+    const visible = rect.width > 0 && rect.height > 0 && textRect.width > 0 && textRect.height > 0 && getComputedStyle(source).visibility !== 'hidden';
 
     layer.style.display = visible ? 'inline-flex' : 'none';
     if (!visible) return;
 
-    layer.style.left = `${Math.round(rect.left + window.scrollX)}px`;
-    layer.style.top = `${Math.round(rect.top + window.scrollY)}px`;
-    layer.style.width = `${Math.ceil(rect.width)}px`;
-    layer.style.height = `${Math.ceil(rect.height)}px`;
+    layer.style.left = `${Math.round(textRect.left + window.scrollX)}px`;
+    layer.style.top = `${Math.round(textRect.top + window.scrollY)}px`;
+    layer.style.width = `${Math.ceil(textRect.width)}px`;
+    layer.style.height = `${Math.ceil(textRect.height)}px`;
   }
 
   function bindSelectablePriceLayer() {

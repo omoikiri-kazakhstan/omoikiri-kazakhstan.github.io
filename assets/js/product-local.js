@@ -72,7 +72,7 @@
     0x2116: 0xB9, 0x0454: 0xBA, 0x00BB: 0xBB, 0x0458: 0xBC,
     0x0405: 0xBD, 0x0455: 0xBE, 0x0457: 0xBF
   };
-  const MOJIBAKE_RE = /(?:[\u0420\u0421][\u0080-\uFFFF]|\u0432\u0402|\u0412[\u00A9\u00AB\u00BB\u00B0]|\u0420[\u0410-\u042F\u0430-\u044F\u0401\u0451\u0407\u0457\u0406\u0456\u0404\u0454\u0490\u0491])/;
+  const MOJIBAKE_RE = /(?:[\u0420\u0421][\u0080-\u00BF\u039C\u0400-\u040F\u0450-\u045F\u2018-\u203A\u20AC\u2122]|\u0432\u0402|\u0412[\u00A9\u00AB\u00BB\u00B0])/;
   const decoder = typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8') : null;
   const REPLACEMENT_CHAR_RE = /\uFFFD/;
 
@@ -93,8 +93,7 @@
   }
 
   function mojibakeScore(text) {
-    return ((String(text || '').match(MOJIBAKE_RE) || []).length)
-      + ((String(text || '').match(/[\u0420\u0421][\u0410-\u042F\u0430-\u044F\u0401\u0451\u0407\u0457\u0406\u0456\u0404\u0454\u0490\u0491]/g) || []).length);
+    return (String(text || '').match(MOJIBAKE_RE) || []).length;
   }
 
   function cp1251Byte(code) {

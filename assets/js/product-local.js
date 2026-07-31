@@ -402,9 +402,10 @@
         width: auto !important;
         height: auto !important;
         min-width: 0 !important;
-        min-height: 42px !important;
-        padding: 0 18px !important;
-        border-radius: 999px !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
         overflow: visible !important;
         white-space: nowrap !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
@@ -429,8 +430,11 @@
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
+        background: #202020 !important;
+        border-radius: 999px !important;
+        padding: 8px 18px 9px !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
-        line-height: inherit !important;
+        line-height: 1 !important;
         white-space: nowrap !important;
         text-decoration: none !important;
         user-select: text !important;
@@ -807,6 +811,9 @@
       body.single-product .card_actions .rrc,
       body.single-product .summary .rrc {
         display: inline !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
         cursor: text !important;
         pointer-events: auto !important;
       }
@@ -818,6 +825,14 @@
       body.single-product .card_actions .rrc bdi,
       body.single-product .summary .rrc bdi {
         display: inline !important;
+      }
+
+      body.single-product .card_actions .rrc .price,
+      body.single-product .summary .rrc .price {
+        background: #202020 !important;
+        border-radius: 999px !important;
+        padding: 8px 18px 9px !important;
+        line-height: 1 !important;
       }
 
       body.single-product .dealer-price-copy-toast,

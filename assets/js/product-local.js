@@ -524,8 +524,7 @@
       }
 
       .card_actions .rrc .dealer-price-regular,
-      .card_actions .rrc .dealer-price-current,
-      .card_actions .rrc .dealer-price-char {
+      .card_actions .rrc .dealer-price-current {
         display: inline !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         line-height: inherit !important;
@@ -794,12 +793,11 @@
     return clone.textContent;
   }
 
-  function priceChars(text) {
-    return [...String(text || '')].map((char) => (
-      '<span class="dealer-price-char">' +
-      char.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') +
-      '</span>'
-    )).join('');
+  function priceText(text) {
+    return String(text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
   function convertRrc(root) {
@@ -817,9 +815,9 @@
 
       if (regular && sale && regular !== sale) {
         node.innerHTML = '<span class="sale-price"><span class="regular-price" style="text-decoration: line-through;">' +
-          priceChars(formatKzt(roundOldKzt(regular))) + '</span> ' + priceChars(formatKzt(roundKzt(sale))) + '</span>';
+          priceText(formatKzt(roundOldKzt(regular))) + '</span> ' + priceText(formatKzt(roundKzt(sale))) + '</span>';
       } else {
-        node.innerHTML = priceChars(formatKzt(roundKzt(sale || regular)));
+        node.innerHTML = priceText(formatKzt(roundKzt(sale || regular)));
       }
     });
   }
@@ -841,13 +839,13 @@
     const regularKzt = formatKzt(roundOldKzt(regular));
     if (regular && sale && regular !== sale) {
       return '<span class="price dealer-product-price dealer-sale-product-price">' +
-        '<span class="dealer-price-regular">' + priceChars(regularKzt) + '</span>' +
-        '<span class="dealer-price-current">' + priceChars(saleKzt) + '</span>' +
+        '<span class="dealer-price-regular">' + priceText(regularKzt) + '</span>' +
+        '<span class="dealer-price-current">' + priceText(saleKzt) + '</span>' +
         '</span>';
     }
 
     return '<span class="price dealer-product-price"><span class="dealer-price-current">' +
-      priceChars(saleKzt) + '</span></span>';
+      priceText(saleKzt) + '</span></span>';
   }
 
   function updateVariationPriceDisplay() {
@@ -914,9 +912,7 @@
       body.single-product .card_actions .rrc .woocommerce-Price-amount,
       body.single-product .summary .rrc .woocommerce-Price-amount,
       body.single-product .card_actions .rrc bdi,
-      body.single-product .summary .rrc bdi,
-      body.single-product .card_actions .rrc .dealer-price-char,
-      body.single-product .summary .rrc .dealer-price-char {
+      body.single-product .summary .rrc bdi {
         display: inline !important;
       }
 

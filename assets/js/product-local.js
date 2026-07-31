@@ -72,9 +72,18 @@
     0x2116: 0xB9, 0x0454: 0xBA, 0x00BB: 0xBB, 0x0458: 0xBC,
     0x0405: 0xBD, 0x0455: 0xBE, 0x0457: 0xBF
   };
-  const MOJIBAKE_RE = /(?:[РС][\u0080-\uFFFF]|вЂ|В[©«»°]|Р[А-Яа-яЁёЇїІіЄєҐґ])/;
+  const MOJIBAKE_RE = /(?:[\u0420\u0421][\u0080-\uFFFF]|\u0432\u0402|\u0412[\u00A9\u00AB\u00BB\u00B0]|\u0420[\u0410-\u042F\u0430-\u044F\u0401\u0451\u0407\u0457\u0406\u0456\u0404\u0454\u0490\u0491])/;
   const decoder = typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8') : null;
   const REPLACEMENT_CHAR_RE = /\uFFFD/;
+
+  function normalizeMojibakeCase(text) {
+    return String(text || '')
+      .replace(/\u0420\u040F/g, '\u0420\u045F')
+      .replace(/\u0420\u040B/g, '\u0420\u045B')
+      .replace(/\u0420\u0408/g, '\u0420\u0458')
+      .replace(/\u0420\u039C/g, '\u0420\u00B5')
+      .replace(/\u0420\u0401/g, '\u0420\u0451');
+  }
 
   function cleanupTextArtifacts(text) {
     return String(text || '')
@@ -85,7 +94,7 @@
 
   function mojibakeScore(text) {
     return ((String(text || '').match(MOJIBAKE_RE) || []).length)
-      + ((String(text || '').match(/[РС][А-Яа-яЁёЇїІіЄєҐґ]/g) || []).length);
+      + ((String(text || '').match(/[\u0420\u0421][\u0410-\u042F\u0430-\u044F\u0401\u0451\u0407\u0457\u0406\u0456\u0404\u0454\u0490\u0491]/g) || []).length);
   }
 
   function cp1251Byte(code) {
@@ -97,7 +106,7 @@
   }
 
   function decodeMojibakeText(text) {
-    const value = cleanupTextArtifacts(text);
+    const value = cleanupTextArtifacts(normalizeMojibakeCase(text));
     if (!decoder || !MOJIBAKE_RE.test(value)) return value;
 
     const bytes = [];
@@ -108,7 +117,7 @@
     }
 
     const decoded = decoder.decode(new Uint8Array(bytes));
-    if (!/[А-Яа-яЁё]/.test(decoded)) return value;
+    if (!/[\u0410-\u042F\u0430-\u044F\u0401\u0451]/.test(decoded)) return value;
     return cleanupTextArtifacts(mojibakeScore(decoded) < mojibakeScore(value) ? decoded : value);
   }
 

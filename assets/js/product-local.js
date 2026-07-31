@@ -399,9 +399,7 @@
       }
 
       .card_actions .rrc {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+        display: inline-block !important;
         flex: 0 0 auto !important;
         width: auto !important;
         height: auto !important;
@@ -412,6 +410,7 @@
         overflow: visible !important;
         white-space: nowrap !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        line-height: 42px !important;
         user-select: text !important;
         -webkit-user-select: text !important;
         cursor: text !important;
@@ -426,15 +425,13 @@
       }
 
       .card_actions .rrc .price {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+        display: inline !important;
         gap: 7px !important;
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
-        line-height: 1 !important;
+        line-height: inherit !important;
         white-space: nowrap !important;
         text-decoration: none !important;
         user-select: text !important;
@@ -455,23 +452,21 @@
       }
 
       .card_actions .rrc ins {
-        display: inline-flex !important;
-        align-items: center !important;
+        display: inline !important;
         visibility: visible !important;
         opacity: 1 !important;
         color: #fff !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         font-size: 22px !important;
         font-weight: 900 !important;
-        line-height: 1 !important;
+        line-height: inherit !important;
         text-decoration: none !important;
         user-select: text !important;
         -webkit-user-select: text !important;
       }
 
       .card_actions .rrc del {
-        display: inline-flex !important;
-        align-items: center !important;
+        display: inline !important;
         position: relative !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -479,7 +474,7 @@
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         font-size: 17px !important;
         font-weight: 400 !important;
-        line-height: 1 !important;
+        line-height: inherit !important;
         text-decoration: none !important;
         user-select: text !important;
         -webkit-user-select: text !important;
@@ -764,61 +759,23 @@
       body.single-product .summary .rrc {
         cursor: text !important;
         pointer-events: auto !important;
-        position: relative !important;
-        z-index: 3 !important;
       }
 
       body.single-product .dealer-price-copy-toast,
       body.single-product .dealer-price-copy-button,
-      body.single-product .dealer-price-copy-panel {
+      body.single-product .dealer-price-copy-panel,
+      body.single-product .dealer-visible-price {
         display: none !important;
       }
     `;
     document.head.appendChild(style);
     document
-      .querySelectorAll('.dealer-price-copy-toast, .dealer-price-copy-button, .dealer-price-copy-panel')
+      .querySelectorAll('.dealer-price-copy-toast, .dealer-price-copy-button, .dealer-price-copy-panel, .dealer-visible-price')
       .forEach((node) => node.remove());
 
-    const priceSelector = '.card_actions .rrc, .summary .rrc';
-    const keepNativeSelection = (event) => {
-      event.stopPropagation();
-    };
-
-    const ensureVisiblePrice = (source) => {
-      if (!source) return null;
-      source.nextElementSibling?.classList?.contains('dealer-visible-price') && source.nextElementSibling.remove();
-      source.classList.remove('dealer-price-source-hidden');
-      source.setAttribute('contenteditable', 'plaintext-only');
-      source.setAttribute('spellcheck', 'false');
-      source.dataset.dealerVisiblePriceBound = '1';
-
-      ['beforeinput', 'paste', 'drop'].forEach((eventName) => {
-        source.addEventListener(eventName, (event) => event.preventDefault());
-      });
-
-      return source;
-    };
-
-    const bindNativePriceSelection = (root = document) => {
-      root.querySelectorAll(priceSelector).forEach((price) => {
-        ensureVisiblePrice(price);
-        if (price.dataset.dealerNativeSelection === '1') return;
-        price.dataset.dealerNativeSelection = '1';
-        ['pointerdown', 'mousedown', 'selectstart', 'dragstart'].forEach((eventName) => {
-          price.addEventListener(eventName, keepNativeSelection, true);
-        });
-      });
-    };
-
-    bindNativePriceSelection();
-    new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === 1) bindNativePriceSelection(node);
-        });
-      });
-    }).observe(document.documentElement, { childList: true, subtree: true });
-
+    document.querySelectorAll('.dealer-price-source-hidden').forEach((node) => {
+      node.classList.remove('dealer-price-source-hidden');
+    });
   }
 
   function visiblePrice() {

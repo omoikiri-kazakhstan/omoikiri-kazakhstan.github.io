@@ -523,42 +523,6 @@
         -webkit-user-select: text !important;
       }
 
-      .card_actions .rrc .dealer-price-regular,
-      .card_actions .rrc .dealer-price-current {
-        display: inline !important;
-        font-family: "Lato", Arial, Helvetica, sans-serif !important;
-        line-height: inherit !important;
-        user-select: text !important;
-        -webkit-user-select: text !important;
-        cursor: text !important;
-      }
-
-      .card_actions .rrc .dealer-price-regular {
-        position: relative !important;
-        color: #e4003a !important;
-        font-size: 17px !important;
-        font-weight: 400 !important;
-        margin-right: 7px !important;
-      }
-
-      .card_actions .rrc .dealer-price-regular::after {
-        content: "" !important;
-        position: absolute !important;
-        left: 0 !important;
-        right: 0 !important;
-        top: 50% !important;
-        height: 2px !important;
-        background: #e4003a !important;
-        transform: translateY(-50%) !important;
-        pointer-events: none !important;
-      }
-
-      .card_actions .rrc .dealer-price-current {
-        color: #fff !important;
-        font-size: 22px !important;
-        font-weight: 900 !important;
-      }
-
       .card_actions .rrc .woocommerce-Price-amount,
       .card_actions .rrc bdi {
         display: inline !important;
@@ -584,11 +548,11 @@
         text-decoration: none !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+        cursor: text !important;
       }
 
       .card_actions .rrc del {
         display: inline !important;
-        position: relative !important;
         visibility: visible !important;
         opacity: 1 !important;
         color: #e4003a !important;
@@ -596,21 +560,12 @@
         font-size: 17px !important;
         font-weight: 400 !important;
         line-height: inherit !important;
-        text-decoration: none !important;
+        text-decoration-line: line-through !important;
+        text-decoration-color: #e4003a !important;
+        text-decoration-thickness: 2px !important;
         user-select: text !important;
         -webkit-user-select: text !important;
-      }
-
-      .card_actions .rrc del::after {
-        content: "" !important;
-        position: absolute !important;
-        left: 0 !important;
-        right: 0 !important;
-        top: 50% !important;
-        height: 2px !important;
-        background: #e4003a !important;
-        transform: translateY(-50%) !important;
-        pointer-events: none !important;
+        cursor: text !important;
       }
 
       .card_actions .rrc .price > .woocommerce-Price-amount {
@@ -800,6 +755,23 @@
       .replace(/>/g, '&gt;');
   }
 
+  function priceAmountHtml(text) {
+    const amount = priceText(text).replace(/\s*\u20b8\s*$/, '');
+    return '<span class="woocommerce-Price-amount amount"><bdi>' +
+      amount + '&nbsp;<span class="woocommerce-Price-currencySymbol">\u20b8</span></bdi></span>';
+  }
+
+  function salePriceHtml(regularKzt, saleKzt) {
+    return '<span class="price dealer-product-price dealer-sale-product-price">' +
+      '<del aria-hidden="true">' + priceAmountHtml(regularKzt) + '</del> ' +
+      '<ins aria-hidden="true">' + priceAmountHtml(saleKzt) + '</ins>' +
+      '</span>';
+  }
+
+  function singlePriceHtml(priceKzt) {
+    return '<span class="price dealer-product-price">' + priceAmountHtml(priceKzt) + '</span>';
+  }
+
   function convertRrc(root) {
     (root || document).querySelectorAll('.rrc').forEach((node) => {
       if (node.dataset.kztDone === '1' && node.textContent.includes('\u20b8')) return;
@@ -814,10 +786,9 @@
       node.dataset.kztDone = '1';
 
       if (regular && sale && regular !== sale) {
-        node.innerHTML = '<span class="sale-price"><span class="regular-price" style="text-decoration: line-through;">' +
-          priceText(formatKzt(roundOldKzt(regular))) + '</span> ' + priceText(formatKzt(roundKzt(sale))) + '</span>';
+        node.innerHTML = salePriceHtml(formatKzt(roundOldKzt(regular)), formatKzt(roundKzt(sale)));
       } else {
-        node.innerHTML = priceText(formatKzt(roundKzt(sale || regular)));
+        node.innerHTML = singlePriceHtml(formatKzt(roundKzt(sale || regular)));
       }
     });
   }
@@ -838,14 +809,10 @@
     const saleKzt = formatKzt(roundKzt(sale || regular));
     const regularKzt = formatKzt(roundOldKzt(regular));
     if (regular && sale && regular !== sale) {
-      return '<span class="price dealer-product-price dealer-sale-product-price">' +
-        '<span class="dealer-price-regular">' + priceText(regularKzt) + '</span>' +
-        '<span class="dealer-price-current">' + priceText(saleKzt) + '</span>' +
-        '</span>';
+      return salePriceHtml(regularKzt, saleKzt);
     }
 
-    return '<span class="price dealer-product-price"><span class="dealer-price-current">' +
-      priceText(saleKzt) + '</span></span>';
+    return singlePriceHtml(saleKzt);
   }
 
   function updateVariationPriceDisplay() {

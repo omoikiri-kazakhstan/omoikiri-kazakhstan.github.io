@@ -397,7 +397,7 @@
       }
 
       .card_actions .rrc {
-        display: inline-block !important;
+        display: inline !important;
         flex: 0 0 auto !important;
         width: auto !important;
         height: auto !important;

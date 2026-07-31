@@ -762,7 +762,102 @@
 
       body.single-product .card_actions .rrc,
       body.single-product .summary .rrc {
-        cursor: text;
+        cursor: text !important;
+        pointer-events: auto !important;
+        position: relative !important;
+        z-index: 3 !important;
+      }
+
+      body.single-product .card_actions .rrc.dealer-price-source-hidden,
+      body.single-product .summary .rrc.dealer-price-source-hidden {
+        display: none !important;
+      }
+
+      body.single-product .card_actions .dealer-visible-price,
+      body.single-product .summary .dealer-visible-price {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 0 0 auto !important;
+        min-height: 42px !important;
+        padding: 0 18px !important;
+        border-radius: 999px !important;
+        background: #202020 !important;
+        color: #fff !important;
+        overflow: visible !important;
+        white-space: nowrap !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        cursor: text !important;
+        caret-color: transparent !important;
+        outline: none !important;
+        -webkit-touch-callout: default !important;
+      }
+
+      body.single-product .card_actions .dealer-visible-price,
+      body.single-product .summary .dealer-visible-price,
+      body.single-product .card_actions .dealer-visible-price *,
+      body.single-product .summary .dealer-visible-price * {
+        -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+        user-select: text !important;
+        cursor: text !important;
+      }
+
+      body.single-product .dealer-visible-price .price {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 7px !important;
+        color: #fff !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+        text-decoration: none !important;
+      }
+
+      body.single-product .dealer-visible-price .woocommerce-Price-amount,
+      body.single-product .dealer-visible-price bdi {
+        display: inline !important;
+        color: inherit !important;
+        font-family: inherit !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+      }
+
+      body.single-product .dealer-visible-price ins {
+        display: inline-flex !important;
+        align-items: center !important;
+        color: #fff !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        font-size: 22px !important;
+        font-weight: 900 !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+      }
+
+      body.single-product .dealer-visible-price del {
+        display: inline-flex !important;
+        align-items: center !important;
+        position: relative !important;
+        color: #e4003a !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        font-size: 17px !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+      }
+
+      body.single-product .dealer-visible-price del::after {
+        content: "" !important;
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: 50% !important;
+        height: 2px !important;
+        background: #e4003a !important;
+        transform: translateY(-50%) !important;
+        pointer-events: none !important;
       }
 
       body.single-product .dealer-price-copy-toast,
@@ -775,9 +870,185 @@
     document
       .querySelectorAll('.dealer-price-copy-toast, .dealer-price-copy-button, .dealer-price-copy-panel')
       .forEach((node) => node.remove());
-    return;
 
     const priceSelector = '.card_actions .rrc, .summary .rrc';
+    const keepNativeSelection = (event) => {
+      event.stopPropagation();
+    };
+
+    const visiblePriceText = (node) => (node?.innerText || node?.textContent || '').replace(/\s+/g, ' ').trim();
+
+    let priceDrag = null;
+
+    const selectVisiblePrice = (node) => {
+      if (!node || !window.getSelection || !document.createRange) return;
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    };
+
+    const persistVisiblePriceSelection = (node) => {
+      selectVisiblePrice(node);
+      window.requestAnimationFrame(() => selectVisiblePrice(node));
+      window.setTimeout(() => selectVisiblePrice(node), 0);
+      window.setTimeout(() => selectVisiblePrice(node), 50);
+      window.setTimeout(() => selectVisiblePrice(node), 150);
+      window.setTimeout(() => selectVisiblePrice(node), 300);
+    };
+
+    const bindVisiblePriceDragSelection = (mirror) => {
+      if (!mirror || mirror.dataset.dealerVisibleDragBound === '1') return;
+      mirror.dataset.dealerVisibleDragBound = '1';
+
+      mirror.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0) return;
+        priceDrag = {
+          node: mirror,
+          x: event.clientX,
+          y: event.clientY,
+          active: false,
+        };
+      });
+
+      mirror.addEventListener('pointermove', (event) => {
+        if (!priceDrag || priceDrag.node !== mirror) return;
+        const moved = Math.abs(event.clientX - priceDrag.x) + Math.abs(event.clientY - priceDrag.y);
+        if (moved < 4) return;
+        priceDrag.active = true;
+        event.preventDefault();
+        persistVisiblePriceSelection(mirror);
+      });
+
+      mirror.addEventListener('pointerup', () => {
+        if (priceDrag?.active) persistVisiblePriceSelection(mirror);
+        priceDrag = null;
+      });
+
+      mirror.addEventListener('pointercancel', () => {
+        priceDrag = null;
+      });
+
+      mirror.addEventListener('mousedown', (event) => {
+        if (event.button !== 0) return;
+        priceDrag = {
+          node: mirror,
+          x: event.clientX,
+          y: event.clientY,
+          active: false,
+        };
+      });
+
+      mirror.addEventListener('mousemove', (event) => {
+        if (!priceDrag || priceDrag.node !== mirror) return;
+        const moved = Math.abs(event.clientX - priceDrag.x) + Math.abs(event.clientY - priceDrag.y);
+        if (moved < 4) return;
+        priceDrag.active = true;
+        event.preventDefault();
+        persistVisiblePriceSelection(mirror);
+      });
+
+      mirror.addEventListener('mouseup', () => {
+        if (priceDrag?.active) persistVisiblePriceSelection(mirror);
+        priceDrag = null;
+      });
+    };
+
+    document.addEventListener('mousemove', (event) => {
+      if (!priceDrag?.node) return;
+      const moved = Math.abs(event.clientX - priceDrag.x) + Math.abs(event.clientY - priceDrag.y);
+      if (moved < 4) return;
+      priceDrag.active = true;
+      event.preventDefault();
+      persistVisiblePriceSelection(priceDrag.node);
+    }, true);
+
+    document.addEventListener('mouseup', () => {
+      if (priceDrag?.active && priceDrag.node) persistVisiblePriceSelection(priceDrag.node);
+      priceDrag = null;
+    }, true);
+
+    document.addEventListener('mousedown', (event) => {
+      const mirror = event.target?.closest?.('.dealer-visible-price');
+      if (!mirror || event.button !== 0) return;
+      priceDrag = {
+        node: mirror,
+        x: event.clientX,
+        y: event.clientY,
+        active: false,
+      };
+    }, true);
+
+    document.addEventListener('pointermove', (event) => {
+      if (!priceDrag?.node) return;
+      const moved = Math.abs(event.clientX - priceDrag.x) + Math.abs(event.clientY - priceDrag.y);
+      if (moved < 4) return;
+      priceDrag.active = true;
+      event.preventDefault();
+      persistVisiblePriceSelection(priceDrag.node);
+    }, true);
+
+    document.addEventListener('pointerup', () => {
+      if (priceDrag?.active && priceDrag.node) persistVisiblePriceSelection(priceDrag.node);
+      priceDrag = null;
+    }, true);
+
+    const syncVisiblePrice = (source, mirror) => {
+      if (!source || !mirror) return;
+      if (!visiblePriceText(source)) return;
+      mirror.innerHTML = source.innerHTML;
+      mirror.setAttribute('aria-label', visiblePriceText(source));
+      mirror.querySelectorAll('*').forEach((child) => {
+        child.removeAttribute('id');
+        child.removeAttribute('style');
+      });
+    };
+
+    const ensureVisiblePrice = (source) => {
+      if (!source || source.dataset.dealerVisiblePriceBound === '1') return source.nextElementSibling;
+      const mirror = document.createElement('span');
+      mirror.className = 'dealer-visible-price';
+      mirror.setAttribute('role', 'text');
+      mirror.setAttribute('contenteditable', 'plaintext-only');
+      mirror.setAttribute('spellcheck', 'false');
+      syncVisiblePrice(source, mirror);
+      bindVisiblePriceDragSelection(mirror);
+      source.classList.add('dealer-price-source-hidden');
+      source.dataset.dealerVisiblePriceBound = '1';
+      source.after(mirror);
+
+      ['beforeinput', 'paste', 'drop'].forEach((eventName) => {
+        mirror.addEventListener(eventName, (event) => event.preventDefault());
+      });
+
+      new MutationObserver(() => syncVisiblePrice(source, mirror))
+        .observe(source, { childList: true, subtree: true, characterData: true, attributes: true });
+
+      return mirror;
+    };
+
+    const bindNativePriceSelection = (root = document) => {
+      root.querySelectorAll(priceSelector).forEach((price) => {
+        const mirror = ensureVisiblePrice(price);
+        if (price.dataset.dealerNativeSelection === '1') return;
+        price.dataset.dealerNativeSelection = '1';
+        ['pointerdown', 'mousedown', 'selectstart', 'dragstart'].forEach((eventName) => {
+          price.addEventListener(eventName, keepNativeSelection, true);
+        });
+      });
+    };
+
+    bindNativePriceSelection();
+    new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) bindNativePriceSelection(node);
+        });
+      });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+    return;
+
     let lastTouchedPrice = null;
 
     const priceText = (node) => (node?.innerText || node?.textContent || '')

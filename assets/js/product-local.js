@@ -571,6 +571,8 @@
         line-height: 42px !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
         cursor: text !important;
         -webkit-touch-callout: text !important;
         vertical-align: middle !important;
@@ -580,6 +582,8 @@
       .card_actions .rrc * {
         user-select: text !important;
         -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
         cursor: text !important;
         -webkit-touch-callout: text !important;
       }
@@ -598,10 +602,14 @@
         text-decoration: none !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+        cursor: text !important;
       }
 
       .card_actions .rrc .woocommerce-Price-amount,
-      .card_actions .rrc bdi {
+      .card_actions .rrc bdi,
+      .card_actions .rrc .woocommerce-Price-currencySymbol {
         display: inline !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -611,6 +619,9 @@
         text-decoration: none !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+        cursor: text !important;
       }
 
       .card_actions .rrc ins {
@@ -625,6 +636,8 @@
         text-decoration: none !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
         cursor: text !important;
       }
 
@@ -642,6 +655,8 @@
         text-decoration-thickness: 2px !important;
         user-select: text !important;
         -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
         cursor: text !important;
       }
 
@@ -650,6 +665,76 @@
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         font-size: 22px !important;
         font-weight: 900 !important;
+      }
+
+      .card_actions .rrc .price::before,
+      .card_actions .rrc .price::after {
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        pointer-events: none !important;
+      }
+
+      .card_actions .rrc .price.dealer-price-layer-source,
+      .card_actions .rrc .price.dealer-price-layer-source * {
+        color: transparent !important;
+        text-decoration-color: transparent !important;
+      }
+
+      .dealer-price-select-layer {
+        position: absolute !important;
+        z-index: 120 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 4px !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+        background: transparent !important;
+        border: 0 !important;
+        padding: 8px 18px 9px !important;
+        font-family: "Lato", Arial, Helvetica, sans-serif !important;
+        line-height: 1 !important;
+        color: #fff !important;
+        cursor: text !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+        -webkit-touch-callout: text !important;
+      }
+
+      .dealer-price-select-layer,
+      .dealer-price-select-layer * {
+        cursor: text !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+      }
+
+      .dealer-price-select-layer .woocommerce-Price-amount,
+      .dealer-price-select-layer bdi,
+      .dealer-price-select-layer .woocommerce-Price-currencySymbol {
+        color: inherit !important;
+        font-family: inherit !important;
+        line-height: 1 !important;
+      }
+
+      .dealer-price-select-layer > .woocommerce-Price-amount,
+      .dealer-price-select-layer ins {
+        color: #fff !important;
+        font-size: 22px !important;
+        font-weight: 900 !important;
+        text-decoration: none !important;
+      }
+
+      .dealer-price-select-layer del {
+        color: #e4003a !important;
+        font-size: 17px !important;
+        font-weight: 400 !important;
+        text-decoration-line: line-through !important;
+        text-decoration-color: #e4003a !important;
+        text-decoration-thickness: 2px !important;
       }
 
       .card_actions .fav_button {
@@ -833,15 +918,13 @@
   }
 
   function priceAmountHtml(text) {
-    const amount = priceText(text).replace(/\s*\u20b8\s*$/, '');
-    return '<span class="woocommerce-Price-amount amount"><bdi>' +
-      amount + '&nbsp;<span class="woocommerce-Price-currencySymbol">\u20b8</span></bdi></span>';
+    return '<span class="woocommerce-Price-amount amount">' + priceText(text) + '</span>';
   }
 
   function salePriceHtml(regularKzt, saleKzt) {
     return '<span class="price dealer-product-price dealer-sale-product-price">' +
-      '<del aria-hidden="true">' + priceAmountHtml(regularKzt) + '</del> ' +
-      '<ins aria-hidden="true">' + priceAmountHtml(saleKzt) + '</ins>' +
+      '<del>' + priceAmountHtml(regularKzt) + '</del> ' +
+      '<ins>' + priceAmountHtml(saleKzt) + '</ins>' +
       '</span>';
   }
 
@@ -1846,6 +1929,67 @@
     }, true);
   }
 
+  function syncSelectablePriceLayer() {
+    const source = document.querySelector('.card_actions .rrc .price');
+    let layer = document.querySelector('.dealer-price-select-layer');
+
+    if (!source) {
+      layer?.remove();
+      return;
+    }
+
+    if (!layer) {
+      layer = document.createElement('span');
+      layer.className = 'dealer-price-select-layer';
+      document.body.appendChild(layer);
+    }
+
+    source.classList.add('dealer-price-layer-source');
+    source.setAttribute('aria-hidden', 'true');
+
+    if (layer.innerHTML !== source.innerHTML) {
+      layer.innerHTML = source.innerHTML;
+    }
+
+    const rect = source.getBoundingClientRect();
+    const visible = rect.width > 0 && rect.height > 0 && getComputedStyle(source).visibility !== 'hidden';
+
+    layer.style.display = visible ? 'inline-flex' : 'none';
+    if (!visible) return;
+
+    layer.style.left = `${Math.round(rect.left + window.scrollX)}px`;
+    layer.style.top = `${Math.round(rect.top + window.scrollY)}px`;
+    layer.style.width = `${Math.ceil(rect.width)}px`;
+    layer.style.height = `${Math.ceil(rect.height)}px`;
+  }
+
+  function bindSelectablePriceLayer() {
+    if (document.documentElement.dataset.dealerSelectablePriceLayer === '1') return;
+    document.documentElement.dataset.dealerSelectablePriceLayer = '1';
+
+    const scheduleSync = () => {
+      window.requestAnimationFrame(syncSelectablePriceLayer);
+    };
+
+    window.addEventListener('scroll', scheduleSync, true);
+    window.addEventListener('resize', scheduleSync);
+    document.addEventListener('change', scheduleSync, true);
+    document.addEventListener('click', scheduleSync, true);
+
+    const observer = new MutationObserver(scheduleSync);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['class', 'style', 'data-kzt-done']
+    });
+
+    syncSelectablePriceLayer();
+    window.setTimeout(syncSelectablePriceLayer, 250);
+    window.setTimeout(syncSelectablePriceLayer, 900);
+  }
+
   function init() {
     addStyle();
     fixMojibake(document);
@@ -1861,6 +2005,7 @@
     localizeProductImages(document);
     updateVariationPriceDisplay();
     convertPrices(document);
+    bindSelectablePriceLayer();
     bindCart();
     bindFavorite();
     updateCartCount();

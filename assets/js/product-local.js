@@ -26,6 +26,9 @@
   const OLD_PRICE_OVERRIDES = {
     'nagare-slim-500': 186880
   };
+  const CURRENT_PRICE_OVERRIDES = {
+    'pure-drop-2-1-4s': 218880
+  };
   let applyingRequestedColor = false;
   let userChangedColor = false;
   const lastSelectedAttributes = {};
@@ -36,6 +39,10 @@
 
   function roundOldKzt(value) {
     return OLD_PRICE_OVERRIDES[productSlug()] || roundKzt(value, 6.8);
+  }
+
+  function currentPriceOverride(slug = productSlug()) {
+    return CURRENT_PRICE_OVERRIDES[slug] || 0;
   }
 
   function isRegularPriceNode(node) {
@@ -838,7 +845,7 @@
 
     amount.dataset.originalRub = String(raw);
     amount.dataset.kztDone = '1';
-    amount.textContent = formatKzt(isRegularPriceNode(amount) ? roundOldKzt(raw) : roundKzt(raw));
+    amount.textContent = formatKzt(isRegularPriceNode(amount) ? roundOldKzt(raw) : (currentPriceOverride() || roundKzt(raw)));
   }
 
   function textWithoutRegularPrice(node) {
@@ -885,7 +892,7 @@
       if (regular && sale && regular !== sale) {
         node.innerHTML = salePriceHtml(formatKzt(roundOldKzt(regular)), formatKzt(roundKzt(sale)));
       } else {
-        node.innerHTML = singlePriceHtml(formatKzt(roundKzt(sale || regular)));
+        node.innerHTML = singlePriceHtml(formatKzt(currentPriceOverride() || roundKzt(sale || regular)));
       }
     });
   }
@@ -903,7 +910,7 @@
     const regular = Number(variation.display_regular_price || sale || 0);
     if (!sale && !regular) return '';
 
-    const saleKzt = formatKzt(roundKzt(sale || regular));
+    const saleKzt = formatKzt(currentPriceOverride() || roundKzt(sale || regular));
     const regularKzt = formatKzt(roundOldKzt(regular));
     if (regular && sale && regular !== sale) {
       return salePriceHtml(regularKzt, saleKzt);

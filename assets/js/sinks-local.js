@@ -76,6 +76,9 @@
     wg: 'белое золото',
     wd: 'дерево'
   };
+  const CURRENT_PRICE_OVERRIDES = {
+    'pure-drop-2-1-4s': 218880
+  };
 
   window.paginationUrls = {};
 
@@ -94,6 +97,17 @@
 
   function roundOldKzt(value) {
     return roundKzt(value, 6.8);
+  }
+
+  function productSlugFromAmount(amount) {
+    const link = amount?.closest?.('li.product')?.querySelector?.('a[href*="/product/"]');
+    const href = link?.getAttribute('href') || '';
+    const match = href.match(/\/product\/([^/?#]+)/);
+    return match ? match[1] : '';
+  }
+
+  function currentPriceOverride(slug) {
+    return CURRENT_PRICE_OVERRIDES[slug] || 0;
   }
 
   function isRegularPriceNode(node) {
@@ -1100,7 +1114,7 @@
     if (!rub || rub > 10000000) return;
 
     amount.dataset.originalRub = String(rub);
-    amount.textContent = formatKzt(isRegularPriceNode(amount) ? roundOldKzt(rub) : roundKzt(rub));
+    amount.textContent = formatKzt(isRegularPriceNode(amount) ? roundOldKzt(rub) : (currentPriceOverride(productSlugFromAmount(amount)) || roundKzt(rub)));
   }
 
   function convertRangePriceLabel(node) {

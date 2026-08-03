@@ -270,7 +270,7 @@
     }
 
     .share-link-container {
-      display: flex;
+      display: none;
       align-items: center;
       gap: 10px;
       width: max-content;
@@ -280,6 +280,10 @@
       border-radius: 35px;
       background: #fff;
       cursor: pointer;
+    }
+
+    .share-link-container.has-share {
+      display: flex;
     }
 
     .copy-icon {
@@ -630,7 +634,7 @@
     <div class="export">
       <div class="share-link-container" id="copyShareLink">
         <span class="copy-icon" aria-hidden="true"></span>
-        <p id="shareLinkText">https://omoikiri.kz/favorites/</p>
+        <p id="shareLinkText"></p>
       </div>
       <button class="button dark" type="button" id="pdfButton">Экспорт в PDF</button>
       <button class="button dark" type="button" id="excelButton">Экспорт в Excel</button>
@@ -638,7 +642,7 @@
     <div class="print-total" id="printTotal"></div>
   </main>
 
-  <script src="../assets/js/favorites-local.js?v=20260721-05"></script>
+  <script src="../assets/js/favorites-local.js?v=20260803-04"></script>
   <script src="../assets/js/lang-switch.js?v=20260803-02" data-root="../"></script>
   <script src="../assets/js/local-router.js" data-root="../"></script>
 </body>

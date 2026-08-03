@@ -406,6 +406,7 @@
       const base = window.location.origin + window.location.pathname;
       const encoded = encodeShareItems(items);
       shareLinkText.textContent = encoded ? base + '?fav=' + encoded : base;
+      if (copyShareLink) copyShareLink.classList.toggle('has-share', Boolean(encoded));
     }
 
     repairFavorites(items);

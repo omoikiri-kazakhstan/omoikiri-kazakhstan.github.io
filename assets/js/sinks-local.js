@@ -976,8 +976,9 @@
         const variation = variations.find((item) => item.attributes?.attribute_pa_color === colorCode) || variations[0];
         details.sku = variation?.sku || '';
         details.variationId = variation?.variation_id || '';
-        details.image = variation?.variation_gallery_images?.[0]?.archive_src
-          || variation?.image?.thumb_src
+        details.image = variation?.image?.thumb_src
+          || variation?.variation_gallery_images?.find((item) => item?.archive_src && !/-[12]-300x300\./i.test(item.archive_src))?.archive_src
+          || variation?.variation_gallery_images?.[0]?.archive_src
           || variation?.image?.src
           || variation?.image?.url
           || '';
@@ -2071,14 +2072,16 @@
       if (!link?.href) continue;
 
       const localImage = localColorImageCandidate(product, colorCode);
+      let hasCatalogImage = false;
       if (localImage && await imageCanLoad(localImage)) {
         if (token !== productImageUpdateToken) return;
         setProductCardImage(product, localImage);
+        hasCatalogImage = true;
       }
 
       const details = await fetchProductDetails(link.href, colorCode);
       if (token !== productImageUpdateToken) return;
-      if (details.image) setProductCardImage(product, details.image);
+      if (!hasCatalogImage && details.image) setProductCardImage(product, details.image);
 
       product.querySelectorAll('.add-to-favorites-loop').forEach((button) => {
         if (details.sku) button.dataset.sku = details.sku;

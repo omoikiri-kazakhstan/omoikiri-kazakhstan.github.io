@@ -53,6 +53,14 @@
     return new Intl.NumberFormat('ru-KZ').format(value) + ' \u20b8';
   }
 
+  function markKztDone(node) {
+    if (!node) return;
+    node.dataset.kztDone = '1';
+    node.querySelectorAll?.('.woocommerce-Price-amount.amount').forEach((amount) => {
+      amount.dataset.kztDone = '1';
+    });
+  }
+
   function localizeOmoikiriUrl(value) {
     return String(value || '').replace(/^https?:\/\/omoikiri\.ru(?=\/)/i, '/assets/remote/omoikiri.ru');
   }
@@ -839,6 +847,10 @@
   function convertAmount(amount) {
     const original = amount.dataset.originalRub || amount.textContent;
     if (amount.dataset.kztDone === '1' && amount.textContent.includes('\u20b8')) return;
+    if (amount.textContent.includes('\u20b8')) {
+      amount.dataset.kztDone = '1';
+      return;
+    }
 
     const raw = numeric(original);
     if (!raw || raw > 10000000) return;
@@ -879,6 +891,10 @@
   function convertRrc(root) {
     (root || document).querySelectorAll('.rrc').forEach((node) => {
       if (node.dataset.kztDone === '1' && node.textContent.includes('\u20b8')) return;
+      if (node.textContent.includes('\u20b8')) {
+        markKztDone(node);
+        return;
+      }
 
       const saleNode = node.querySelector('.sale-price');
       const regularNode = node.querySelector('.regular-price');
@@ -887,13 +903,12 @@
 
       if (!regular && !sale) return;
 
-      node.dataset.kztDone = '1';
-
       if (regular && sale && regular !== sale) {
         node.innerHTML = salePriceHtml(formatKzt(roundOldKzt(regular)), formatKzt(roundKzt(sale)));
       } else {
         node.innerHTML = singlePriceHtml(formatKzt(currentPriceOverride() || roundKzt(sale || regular)));
       }
+      markKztDone(node);
     });
   }
 

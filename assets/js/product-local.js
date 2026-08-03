@@ -561,8 +561,8 @@
       }
 
       #add-to-favorites.dealer-favorite-active svg {
-        fill: transparent !important;
-        color: #e4003a !important;
+        fill: currentColor !important;
+        color: #111 !important;
       }
 
       .card_actions {
@@ -725,7 +725,7 @@
       }
 
       .fav_button[aria-pressed="true"] .dealer-favorite-label {
-        color: #e4003a !important;
+        color: #111 !important;
       }
 
       .card_actions .pin {
@@ -1771,11 +1771,11 @@
     const label = ensureFavoriteMarkup();
 
     button.classList.toggle('dealer-favorite-active', active);
-    button.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
-    button.closest('.fav_button')?.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
+    button.setAttribute('aria-label', active ? '\u0423\u0431\u0440\u0430\u0442\u044c \u0438\u0437 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u0433\u043e' : '\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u0435');
+    button.closest('.fav_button')?.setAttribute('aria-label', active ? '\u0423\u0431\u0440\u0430\u0442\u044c \u0438\u0437 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u0433\u043e' : '\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u0435');
     button.closest('.fav_button')?.setAttribute('aria-pressed', active ? 'true' : 'false');
 
-    if (label) label.textContent = 'в избранное';
+    if (label) label.textContent = active ? '\u0443\u0434\u0430\u043b\u0438\u0442\u044c' : '\u0432 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u0435';
   }
 
   function toggleFavorite() {

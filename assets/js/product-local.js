@@ -951,7 +951,9 @@
 
     const nextText = renderedPriceText(html);
     document.querySelectorAll('.woocommerce-variation-price, .card_actions .rrc').forEach((priceBox) => {
-      if (priceBox.dataset.dealerRenderedPrice === nextText || normalizedPriceLabel(priceBox.textContent) === nextText) {
+      const currentText = normalizedPriceLabel(priceBox.textContent);
+      const alreadyKzt = priceBox.textContent.includes('\u20b8');
+      if (alreadyKzt && (priceBox.dataset.dealerRenderedPrice === nextText || currentText === nextText)) {
         priceBox.dataset.dealerRenderedPrice = nextText;
         priceBox.dataset.kztDone = '1';
         priceBox.querySelectorAll('.woocommerce-Price-amount.amount').forEach((node) => {

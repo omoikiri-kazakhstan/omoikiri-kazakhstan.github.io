@@ -132,6 +132,39 @@
       white-space: nowrap;
     }
 
+    @media (min-width: 1001px) {
+      .site-nav {
+        height: auto;
+        min-height: 47px;
+        overflow-x: clip;
+      }
+
+      .site-nav ul {
+        height: auto;
+        min-height: 47px;
+        flex-wrap: wrap;
+        align-content: center;
+        row-gap: 0;
+      }
+
+      .site-nav li {
+        height: 47px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 1360px) and (min-width: 1001px) {
+      .site-nav ul {
+        gap: 0 22px;
+        padding: 0 16px;
+      }
+
+      .site-nav a {
+        font-size: 16px;
+      }
+    }
+
     .favorites-page {
       max-width: 1200px;
       margin: 0 auto 128px;

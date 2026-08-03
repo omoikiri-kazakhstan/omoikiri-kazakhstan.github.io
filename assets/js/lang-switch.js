@@ -337,9 +337,19 @@
         justify-content: center !important;
         width: 38px !important;
         height: 38px !important;
+        background: none !important;
         overflow: visible !important;
         transform: translateY(0) !important;
         vertical-align: middle !important;
+      }
+
+      .favorites-link::before {
+        content: "" !important;
+        display: block !important;
+        width: 28px !important;
+        height: 28px !important;
+        background: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 24.2C10.2 20.7 5 16.5 5 10.9C5 7.9 7.25 5.75 10.05 5.75C11.75 5.75 13.15 6.55 14 7.9C14.85 6.55 16.25 5.75 17.95 5.75C20.75 5.75 23 7.9 23 10.9C23 16.5 17.8 20.7 14 24.2Z' fill='none' stroke='%23111' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 28px 28px no-repeat !important;
+        pointer-events: none !important;
       }
 
       #favorites-count,

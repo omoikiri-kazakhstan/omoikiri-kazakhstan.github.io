@@ -26,9 +26,7 @@
   const OLD_PRICE_OVERRIDES = {
     'nagare-slim-500': 186880
   };
-  const CURRENT_PRICE_OVERRIDES = {
-    'pure-drop-2-1-4s': 218880
-  };
+  const CURRENT_PRICE_OVERRIDES = {};
   let applyingRequestedColor = false;
   let userChangedColor = false;
   const lastSelectedAttributes = {};

@@ -1,4 +1,5 @@
 window.OMOIKIRI_SEARCH_INDEX = [
+  {"title":"Nagare Light","slug":"nagare-light","url":"/product/nagare-light/index.html?attribute_pa_color=purple","sku":"4995057","image":"/assets/remote/omoikiri.ru/wp-content/uploads/2026/08/nagare-light-300x300.png","category":"Измельчители","price":"176 880 ₸"},
   {
     "title": "Akashi-S",
     "sku": "4994263",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T10:36:42.539Z",
+  "generatedAt": "2026-08-19T09:14:46.625Z",
   "source": "https://omoikiri-kazakhstan.pages.dev",
   "categories": [
     {
@@ -25,7 +25,7 @@
     {
       "category": "disposers",
       "pages": 1,
-      "cards": 6
+      "cards": 7
     },
     {
       "category": "dispenser",
@@ -1035,6 +1035,11 @@
     {
       "slug": "nagare-750",
       "url": "https://omoikiri-kazakhstan.pages.dev/product/nagare-750",
+      "category": "disposers"
+    },
+    {
+      "slug": "nagare-light",
+      "url": "https://omoikiri-kazakhstan.pages.dev/product/nagare-light",
       "category": "disposers"
     },
     {

@@ -5,7 +5,7 @@
     {
       "category": "sinks",
       "pages": 6,
-      "cards": 224
+      "cards": 223
     },
     {
       "category": "bathsinks",
@@ -43,7 +43,7 @@
       "cards": 26
     }
   ],
-  "count": 409,
+  "count": 408,
   "created": 177,
   "skipped": 232,
   "products": [
@@ -705,11 +705,6 @@
     {
       "slug": "kashiogawa-86",
       "url": "https://omoikiri-kazakhstan.pages.dev/product/kashiogawa-86",
-      "category": "sinks"
-    },
-    {
-      "slug": "kasumigaura-65",
-      "url": "https://omoikiri-kazakhstan.pages.dev/product/kasumigaura-65",
       "category": "sinks"
     },
     {

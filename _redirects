@@ -1,3 +1,8 @@
+/assets/remote/omoikiri.ru/product/:slug /product/:slug/ 301
+/assets/remote/omoikiri.ru/product/:slug/ /product/:slug/ 301
+/product/kasumigaura-65 /sinks/ 302
+/product/kasumigaura-65/ /sinks/ 302
+/product/kasumigaura-65/index.html /sinks/ 302
 /sinks /sinks/index.html 200
 /taps /taps/index.html 200
 /bathsinks /bathsinks/index.html 200

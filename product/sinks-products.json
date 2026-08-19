@@ -9,7 +9,7 @@
     "https://omoikiri.ru/sinks/page/5",
     "https://omoikiri.ru/sinks/page/6"
   ],
-  "count": 224,
+  "count": 223,
   "products": [
     {
       "slug": "akegata-51",
@@ -262,10 +262,6 @@
     {
       "slug": "kashiogawa-86",
       "url": "https://omoikiri-kazakhstan.pages.dev/product/kashiogawa-86"
-    },
-    {
-      "slug": "kasumigaura-65",
-      "url": "https://omoikiri-kazakhstan.pages.dev/product/kasumigaura-65"
     },
     {
       "slug": "kata-20-u",

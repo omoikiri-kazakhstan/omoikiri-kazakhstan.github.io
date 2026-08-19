@@ -19,6 +19,17 @@ Version: 1.5
     display:none;
 }
 
+body.single-product:not(.dealer-product-hydrated) .menu-top_menu-container,
+body.single-product:not(.dealer-product-hydrated) .search_line,
+body.single-product:not(.dealer-product-hydrated) .mob_menu,
+body.single-product:not(.dealer-product-hydrated) .side_menu,
+body.single-product:not(.dealer-product-hydrated) .bread,
+body.single-product:not(.dealer-product-hydrated) .card_info,
+body.single-product:not(.dealer-product-hydrated) .add_info,
+body.single-product:not(.dealer-product-hydrated) .add_info_att {
+    visibility: hidden !important;
+}
+
 /* product description margin */
 
 .sinks>div:last-of-type {

@@ -1907,6 +1907,10 @@
     }, true);
   }
 
+  function revealProductContent() {
+    if (document.body) document.body.classList.add('dealer-product-hydrated');
+  }
+
   function init() {
     addStyle();
     fixMojibake(document);
@@ -1925,6 +1929,7 @@
     bindCart();
     bindFavorite();
     updateCartCount();
+    revealProductContent();
 
     function refreshFavoriteState() {
       setFavoriteState(readFavorites().some((item) => item.id === favoriteId()));
@@ -2007,4 +2012,5 @@
   } else {
     init();
   }
+  window.setTimeout(revealProductContent, 2500);
 })();

@@ -810,13 +810,13 @@ jQuery(document).ready(function($) {
             </div>
             <div class="add_info_half water_half">
                 <div class="container">
-                    <h3>Р Р°СЃС…РѕРґ РІРѕРґС‹ <span class="tap_model">Nagano + Pure Drop Lite</span></h3>
+                    <h3>Расход воды <span class="tap_model">Nagano + Pure Drop Lite</span></h3>
                     <div id="loadingMessage" class="loading">
-                        Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…...
+                        Загрузка данных...
                     </div>
 
                     <div id="errorMessage" class="error" style="display: none;">
-                        РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С…
+                        Ошибка загрузки данных
                     </div>
 
                     <div class="chart-container" style="display: none;">
@@ -827,12 +827,12 @@ jQuery(document).ready(function($) {
                         <!--
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #3498db;"></div>
-                            <span>РҐРѕР»РѕРґРЅР°СЏ РІРѕРґР° (Р»/РјРёРЅ)</span>
+                            <span>Холодная вода (л/мин)</span>
                         </div>
 
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <span>РЎРјРµС€Р°РЅРЅР°СЏ РІРѕРґР° (Р»/РјРёРЅ)</span>
+                            <span>Смешанная вода (л/мин)</span>
                         </div>
                         -->
                     </div>
@@ -954,7 +954,7 @@ jQuery(document).ready(function($) {
                         datasets: [
                             /*
                             {
-                                label: ' РҐРѕР»РѕРґРЅР°СЏ РІРѕРґР°',
+                                label: 'Холодная вода',
                                 data: coldWaterFlow,
                                 borderColor: '#3498db',
                                 backgroundColor: 'rgba(52, 152, 219, 0.1)',
@@ -965,7 +965,7 @@ jQuery(document).ready(function($) {
                             },
                             */
                             {
-                                label: ' РЎРјРµС€Р°РЅРЅР°СЏ РІРѕРґР°',
+                                label: 'Смешанная вода',
                                 data: mixWaterFlow,
                                 borderColor: '#000',
                                 backgroundColor: 'rgba(231, 76, 60, 0.1)',
@@ -991,7 +991,7 @@ jQuery(document).ready(function($) {
                             x: {
                                 title: {
                                     display: true,
-                                    text: 'Р”Р°РІР»РµРЅРёРµ (Р±Р°СЂ)',
+                                    text: 'Давление (бар)',
                                     font: {
                                         size: 14,
                                         weight: 'bold'
@@ -1004,7 +1004,7 @@ jQuery(document).ready(function($) {
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Р Р°СЃС…РѕРґ РІРѕРґС‹ (Р»/РјРёРЅ)',
+                                    text: 'Расход воды (л/мин)',
                                     font: {
                                         size: 14,
                                         weight: 'bold'

@@ -7,8 +7,105 @@
   <link rel="canonical" href="https://omoikiri-kazakhstan.pages.dev/about/" />
   <link rel="stylesheet" href="../assets/css/menu.css">
   <link rel="stylesheet" href="../assets/css/info-pages.css?v=20260721-05">
+  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/elements.css">
+  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/about.css">
+  <style>
+    body.dealer-info-page.about-page {
+      background: #fff;
+    }
+
+    body.dealer-info-page.about-page .about_top_video {
+      appearance: none;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+    }
+
+    body.dealer-info-page.about-page .about_top_text {
+      top: 165px;
+    }
+
+    body.dealer-info-page.about-page .about_video_modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100050;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(0, 0, 0, .78);
+    }
+
+    body.dealer-info-page.about-page .about_video_modal.active {
+      display: flex;
+    }
+
+    body.dealer-info-page.about-page .about_video_frame {
+      position: relative;
+      width: min(960px, 100%);
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    body.dealer-info-page.about-page .about_video_frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    body.dealer-info-page.about-page .about_video_close {
+      position: absolute;
+      top: -46px;
+      right: 0;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: #111;
+      font: 28px/38px Arial, Helvetica, sans-serif;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      body.dealer-info-page.about-page {
+        overflow-x: hidden;
+      }
+
+      body.dealer-info-page.about-page .about_top {
+        padding-top: 145px;
+      }
+
+      body.dealer-info-page.about-page .about_top_text {
+        width: calc(100vw - 50px) !important;
+        top: auto;
+        max-width: 100%;
+        font-size: 12px !important;
+        line-height: 1.8 !important;
+        overflow-wrap: break-word;
+      }
+
+      body.dealer-info-page.about-page .about_top_text p {
+        overflow-wrap: anywhere;
+      }
+
+      body.dealer-info-page.about-page .year_line p,
+      body.dealer-info-page.about-page .about_ico p,
+      body.dealer-info-page.about-page .space_text p,
+      body.dealer-info-page.about-page .red_text li {
+        overflow-wrap: break-word;
+      }
+
+      body.dealer-info-page.about-page .route_year,
+      body.dealer-info-page.about-page .route_cont,
+      body.dealer-info-page.about-page .about_top_video {
+        box-sizing: border-box;
+      }
+    }
+  </style>
 </head>
-<body class="dealer-info-page">
+<body class="dealer-info-page about-page">
   <div class="top_nav">
     <div id="hamb"><span></span><span></span><span></span></div>
     <span><a href="tel:87077832888">8 (707) 783-28-88</a></span>
@@ -32,23 +129,199 @@
       <li><a href="../contact/index.html">Контакты</a></li>
     </ul></div>
   </div>
-  <main class="dealer-info-main">
-    <section class="dealer-info-wrap">
-      <p class="dealer-info-kicker">OMOIKIRI Kazakhstan</p>
-      <h1 class="dealer-info-title">О компании</h1>
-      <div class="dealer-info-grid">
-        <div class="dealer-info-copy">
-          <p>OMOIKIRI Kazakhstan представляет кухонные мойки, смесители, фильтры, измельчители, дозаторы и аксессуары OMOIKIRI для клиентов в Казахстане.</p>
-          <p>Эта локальная версия сайта собрана для удобного выбора товаров, работы с корзиной, избранным и ценами в тенге.</p>
+
+  <main>
+    <section class="about_top">
+      <div class="about_top_text">
+        <p>мировой производитель кухонных моек, смесителей, водоочистителей, измельчителей и различных аксессуаров для кухни</p>
+      </div>
+      <button class="about_top_video" type="button" aria-label="Смотреть видео о компании">
+        <p>о компании</p>
+        <div class="play"></div>
+        <p>видео</p>
+      </button>
+    </section>
+
+    <section class="about_route_cont">
+      <div class="about_route">
+        <div class="route_cont">
+          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/sinks.webp" alt="">
+          <div class="route_year">
+            <div class="v_line"></div>
+            <div class="year_line">
+              <div class="big_dot"></div>
+              <div class="big_year">2011</div>
+              <h3 id="hidden">2011</h3>
+              <p>Образование компании ARTEKEY в городе Санкт-Петербург. Компания ARTEKEY начинает сотрудничество с японской компанией OMOIKIRI</p>
+            </div>
+            <div class="year_line"><div class="dot"></div><h3>2012</h3><p>Мойки и смесители OMOIKIRI впервые представлены на выставке «Мебель-2012»</p></div>
+            <div class="year_line"><div class="dot"></div><h3>2014</h3><p>После 3 лет тесного взаимодействия с OMOIKIRI компания Artekey становится правообладателем бренда</p></div>
+            <div class="year_line"><div class="dot"></div><h3>2015</h3><p>Продукция OMOIKIRI выходит на рынок СНГ</p></div>
+            <div class="year_line"><div class="dot"></div><h3>2016</h3><p>OMOIKIRI становится генеральным Партнером студенческого Форума инноваций и дизайна «PUSHKA»</p></div>
+            <div class="year_line"><div class="dot"></div><h3>2019</h3><p>Компания OMOIKIRI презентует новый инновационный материал для кухонных моек ARTCERAMIC</p></div>
+            <div class="year_line"><div class="dot"></div><h3>2022</h3><p>Расширение производственных площадок OMOIKIRI, выпуск коллекции моек из NATCERAMIC</p></div>
+            <div class="year_line"><div class="dot"></div><h3>2024</h3><p>Запуск нового направления - сантехника для ванных комнат</p></div>
+          </div>
         </div>
-        <aside class="dealer-info-panel">
-          <div class="dealer-info-row"><b>Телефон</b><a href="tel:87077832888">8 (707) 783-28-88</a></div>
-          <div class="dealer-info-row"><b>Валюта</b><span>Цены указаны в тенге</span></div>
-          <div class="dealer-info-row"><b>Разделы</b><span>Каталог, корзина, избранное, поиск</span></div>
-        </aside>
+        <div class="route_cont">
+          <div class="num_line"><h3>1 500 000 +</h3><p>единиц проданной продукции</p></div>
+          <div class="num_line"><h3>30 000 +</h3><p>дизайнеров сотрудничает с OMOIKIRI</p></div>
+          <div class="num_line"><h3>9 000 +</h3><p>кухонных салонов продают<br> продукцию OMOIKIRI</p></div>
+          <div class="num_line"><h3>2 500 +</h3><p>партнеров по Казахстану и СНГ</p></div>
+          <div class="num_line"><h3>600 +</h3><p>проведенных<br> семинаров и вебинаров</p></div>
+          <div class="num_line"><h3>250 +</h3><p>вышедших ТВ передач<br> с продукцией OMOIKIRI</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about_mnf">
+      <div class="mnf_text">
+        <div class="mnf_text_top">
+          <h2>Производство</h2>
+          <div class="mnf_countries"><span>Япония</span><div class="dot"></div><span>Италия</span><div class="dot"></div><span>Турция</span><div class="dot"></div><span>Китай</span><div class="dot"></div><span>Россия</span></div>
+        </div>
+        <div class="mnf_text_body">
+          <p>Производство OMOIKIRI размещено на ведущих мировых площадках: в Японии, Италии, Турции, Китае и России. Компания изготавливает смесители и мойки из нержавеющей стали, искусственного гранита, керамики, композитных материалов, латуни, а также производит кухонные измельчители, водоочистители и другие аксессуары для кухни. Вся продукция компании отличается эксклюзивным дизайном и контролем качества, простотой и удобством в эксплуатации.</p>
+          <button class="about_top_video" type="button" aria-label="Смотреть видео о компании">
+            <p>о компании</p>
+            <div class="play"></div>
+            <p>видео</p>
+          </button>
+        </div>
+        <div class="mnf_text_bot">
+          <div class="num_line"><h3>100 +</h3><p>специалистов в команде</p></div>
+          <div class="num_line"><h3>8 000 м<div class="quad">2</div></h3><p>складские комплексы</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about_icos">
+      <div class="about_ico">
+        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico1.webp" alt="">
+        <h3>Партнеры</h3>
+        <p>Партнеры ценят нас за безупречное качество и эффектный дизайн нашей продукции, индивидуальный подход, поддержку в стимулирующих спрос акциях и наличие более 90% ассортимента в складской программе.</p>
+      </div>
+      <div class="about_ico">
+        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico2.webp" alt="">
+        <h3>Обучение</h3>
+        <p>Мы заинтересованы в том, чтобы наши партнеры успешно развивались и процветали, поэтому охотно делимся знаниями, накопленными за годы успешной деятельности OMOIKIRI.</p>
+      </div>
+      <div class="about_ico">
+        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico3.webp" alt="">
+        <h3>Гарантия</h3>
+        <p>Одна из ключевых особенностей OMOIKIRI - клиентоориентированный сервис. Специалисты сервисного отдела оказывают оперативную и персонализированную поддержку клиентам.</p>
+      </div>
+    </section>
+
+    <section class="about_space">
+      <div class="space_text">
+        <h2>Философия</h2>
+        <p>Современный интерьер - это уже не столько про стиль, сколько про заботу о человеке и его комфорте. Это уход от предметов ради предметов в сторону простых форм, функциональности и эргономичности пространства.</p>
+        <p>Среди всего многообразия товара на рынке каждый человек находится в поиске «своей компании», которая будет близка ему по духу и стилю.</p>
+        <p>OMOIKIRI непрерывно работает над своим развитием, чтобы соответствовать этим критериям.</p>
+      </div>
+      <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/space.webp" alt="">
+    </section>
+
+    <section class="about_red_cont">
+      <div class="about_red">
+        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/red.webp" alt="">
+        <div class="red_text">
+          <h2>Признание</h2>
+          <ul>
+            <li><strong>2016:</strong> Премия Russian Design Award за вклад в развитие дизайна.</li>
+            <li><strong>2017:</strong> Премия «Лучшее для жизни» за инновационные товары для кухни.</li>
+            <li><strong>2017-2019:</strong> Награды «За поддержку промышленного дизайна и образования».</li>
+            <li><strong>2019:</strong> Премия Red Dot Design Award за визуальную концепцию форума PUSHKA.</li>
+            <li><strong>2020, 2022, 2023, 2024:</strong> Статус «Лучшее предприятие отрасли» и высший уровень надежности.</li>
+            <li><strong>2022:</strong> Премия ECO BEST AWARD и Best For Life Design Award.</li>
+            <li><strong>2023:</strong> Премия «Качество обслуживания и права потребителей» за лучший сервис.</li>
+            <li><strong>2025:</strong> Победитель премии RR «Best of the Best» в сегменте индустрии роскоши.</li>
+            <li><strong>2025:</strong> Премиум-бренд N1 по продажам и производству кухонной сантехники.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="about_partners">
+      <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part1.webp" alt="">
+      <div class="partners_mid">
+        <h2>Сотрудничество</h2>
+        <h3>с топовыми блогерами<br> Instagram и YouTube</h3>
+        <div class="mid_img">
+          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part2.webp" alt="">
+          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part3.webp" alt="">
+        </div>
+      </div>
+      <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part4.webp" alt="">
+    </section>
+
+    <section class="about_tv_cont">
+      <div class="about_tv">
+        <div class="tv_half">
+          <h3>OMOIKIRI сотрудничает<br>со многими телевизионными программами</h3>
+          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part6.jpg" alt="">
+        </div>
+        <div class="tv_half">
+          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part5.jpg" alt="">
+          <h2>Телепроекты</h2>
+          <div class="tv_logos">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv1.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv2.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv3.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv4.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv5.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv6.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv7.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv8.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv9.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv10.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv11.png" alt="">
+            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv12.png" alt="">
+          </div>
+        </div>
       </div>
     </section>
   </main>
+
+  <div class="about_video_modal" id="about-video-modal" aria-hidden="true">
+    <div class="about_video_frame">
+      <button class="about_video_close" type="button" aria-label="Закрыть видео">×</button>
+      <iframe title="Видео о компании OMOIKIRI" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const modal = document.getElementById('about-video-modal');
+      const iframe = modal.querySelector('iframe');
+      const videoUrl = 'https://vkvideo.ru/video_ext.php?oid=-52606916&id=456239502&hd=2&autoplay=1';
+
+      function closeVideo() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        iframe.removeAttribute('src');
+      }
+
+      document.querySelectorAll('.about_top_video').forEach((button) => {
+        button.addEventListener('click', () => {
+          iframe.src = videoUrl;
+          modal.classList.add('active');
+          modal.setAttribute('aria-hidden', 'false');
+        });
+      });
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal || event.target.classList.contains('about_video_close')) {
+          closeVideo();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeVideo();
+      });
+    }());
+  </script>
   <script src="../assets/js/lang-switch.js?v=20260803-02" data-root="../"></script>
   <script src="../assets/js/local-router.js" data-root="../"></script>
 </body>

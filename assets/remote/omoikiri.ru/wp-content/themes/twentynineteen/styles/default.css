@@ -31,6 +31,10 @@
 	min-height: 100vh;
 }
 
+body.single-product:not(.dealer-product-hydrated) .default {
+	visibility: hidden;
+}
+
 .page-template-page-favorites>.default {
 	background-color: #ebebeb;
 }

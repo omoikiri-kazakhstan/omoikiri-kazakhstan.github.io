@@ -93,7 +93,6 @@
     return String(text || '')
       .replace(/\u0420\u040F/g, '\u0420\u045F')
       .replace(/\u0420\u040B/g, '\u0420\u045B')
-      .replace(/\u0420\u0408/g, '\u0420\u0458')
       .replace(/\u0420\u039C/g, '\u0420\u00B5')
       .replace(/\u0420\u0401/g, '\u0420\u0451');
   }
@@ -315,6 +314,22 @@
         </div>
       `;
     }
+  }
+
+  function normalizePhoneCountry() {
+    document.querySelectorAll('.forminator-field--phone, input[type="tel"], input[name*="phone" i]').forEach((input) => {
+      input.setAttribute('data-country', 'kz');
+      if (/^(?:С‚РµР»РµС„РѕРЅ|РўРµР»РµС„РѕРЅ|phone)$/i.test(input.getAttribute('placeholder') || '')) {
+        input.setAttribute('placeholder', 'телефон');
+      }
+    });
+
+    document.querySelectorAll('.iti__selected-flag .iti__flag, .iti__flag.iti__ru').forEach((flag) => {
+      if (flag.classList.contains('iti__ru') || !flag.classList.contains('iti__kz')) {
+        flag.classList.remove('iti__ru');
+        flag.classList.add('iti__kz');
+      }
+    });
   }
 
   function addStyle() {
@@ -1915,6 +1930,7 @@
     addStyle();
     fixMojibake(document);
     normalizeDealerChrome();
+    normalizePhoneCountry();
     addCartLink();
     removeDiscontinuedVariants();
     applyRequestedColor();
@@ -1970,6 +1986,7 @@
         pendingConvert = false;
         fixMojibake(document);
         normalizeDealerChrome();
+        normalizePhoneCountry();
         restoreCatalogBreadcrumbLinks();
         normalizeTitleAndButtons();
         ensureSimpleCartButton();
@@ -1994,6 +2011,7 @@
         applyRequestedColor();
         fixMojibake(document);
         normalizeDealerChrome();
+        normalizePhoneCountry();
         restoreCatalogBreadcrumbLinks();
         normalizeTitleAndButtons();
         ensureSimpleCartButton();

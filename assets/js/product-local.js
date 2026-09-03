@@ -1487,6 +1487,18 @@
       '';
   }
 
+  function variationGalleryImages(variation) {
+    const seen = new Set();
+    return (variation?.variation_gallery_images || [])
+      .map((image) => image?.src || image?.url || image?.full_src || image?.gallery_thumbnail_src || '')
+      .filter((source) => {
+        const value = String(source || '').trim();
+        if (!value || seen.has(value)) return false;
+        seen.add(value);
+        return true;
+      });
+  }
+
   function localizeImageElement(image) {
     if (!image) return;
 
@@ -1552,6 +1564,48 @@
       if (fallback && img.getAttribute('src') !== fallback) img.setAttribute('src', fallback);
     };
     container.appendChild(img);
+  }
+
+  function renderAdditionalProductImages() {
+    const container = document.querySelector('.second_image');
+    const view = document.querySelector('.second_image_cont .view');
+    const wrapper = document.querySelector('.second_image_cont');
+    if (!container) return;
+
+    const variation = variationData();
+    const images = variationGalleryImages(variation).slice(1, 3).map(localizeOmoikiriUrl);
+
+    if (!images.length) {
+      container.textContent = '';
+      if (view) view.style.display = 'none';
+      if (wrapper) wrapper.style.display = 'none';
+      return;
+    }
+
+    if (wrapper) wrapper.style.display = '';
+    if (view) view.style.display = images.length > 1 ? '' : 'none';
+
+    const currentSources = [...container.querySelectorAll('img')].map((image) => image.getAttribute('src') || '');
+    if (currentSources.length === images.length && currentSources.every((source, index) => source === images[index])) {
+      localizeProductImages(container);
+      return;
+    }
+
+    container.textContent = '';
+    images.forEach((source, index) => {
+      const img = document.createElement('img');
+      img.src = source;
+      img.alt = variation?.image?.alt || variation?.image?.title || document.querySelector('.prod_title, h1')?.textContent.trim() || '';
+      img.decoding = 'async';
+      if (index === 0) img.classList.add('active');
+      container.appendChild(img);
+    });
+    localizeProductImages(container);
+
+    document.querySelectorAll('.second_image_cont .select_view').forEach((button, index) => {
+      button.style.display = index < images.length ? '' : 'none';
+      button.classList.toggle('selected', index === 0);
+    });
   }
 
   function currentVariationId() {
@@ -1939,6 +1993,7 @@
     ensureSimpleCartButton();
     renderProductSku();
     renderProductImage();
+    renderAdditionalProductImages();
     localizeProductImages(document);
     updateVariationPriceDisplay();
     convertPrices(document);
@@ -1955,6 +2010,7 @@
       if (event.target.matches('select[name="attribute_pa_color"], input.variation_id')) {
         if (!applyingRequestedColor) userChangedColor = true;
         window.setTimeout(renderProductImage, 0);
+        window.setTimeout(renderAdditionalProductImages, 0);
         window.setTimeout(renderProductSku, 0);
         window.setTimeout(updateVariationPriceDisplay, 0);
         window.setTimeout(normalizeTitleAndButtons, 0);
@@ -1969,6 +2025,7 @@
         if (!applyingRequestedColor) userChangedColor = true;
         applyClickedAttribute(event.target);
         window.setTimeout(renderProductImage, 80);
+        window.setTimeout(renderAdditionalProductImages, 80);
         window.setTimeout(renderProductSku, 80);
         window.setTimeout(updateVariationPriceDisplay, 80);
         window.setTimeout(normalizeTitleAndButtons, 80);
@@ -1991,6 +2048,7 @@
         normalizeTitleAndButtons();
         ensureSimpleCartButton();
         renderProductSku();
+        renderAdditionalProductImages();
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);
@@ -2017,6 +2075,7 @@
         ensureSimpleCartButton();
         renderProductSku();
         renderProductImage();
+        renderAdditionalProductImages();
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);

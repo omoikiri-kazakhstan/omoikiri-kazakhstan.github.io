@@ -3,3 +3,6 @@ Thumbs.db
 *.log
 *.tmp
 .wrangler/
+.dev.vars*
+.env*
+.workers-types/

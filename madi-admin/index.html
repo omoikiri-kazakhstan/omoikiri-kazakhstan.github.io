@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Управление каталогом | OMOIKIRI Казахстан</title>
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+  <main class="shell">
+    <section id="loginView" class="login-view" aria-labelledby="loginTitle">
+      <div class="brand">OMOIKIRI <span>КАЗАХСТАН</span></div>
+      <form id="loginForm" class="login-card">
+        <p class="eyebrow">Управление каталогом</p>
+        <h1 id="loginTitle">Вход</h1>
+        <label>Пароль<input id="password" type="password" autocomplete="current-password" required autofocus></label>
+        <p id="loginError" class="form-error" aria-live="polite"></p>
+        <button type="submit">Войти</button>
+      </form>
+    </section>
+
+    <section id="adminView" class="admin-view" hidden>
+      <header class="topbar">
+        <div><div class="brand">OMOIKIRI <span>КАЗАХСТАН</span></div><p>Управление каталогом</p></div>
+        <div class="topbar-actions"><a href="/" target="_blank" rel="noopener">Открыть сайт</a><button id="logout" class="quiet" type="button">Выйти</button></div>
+      </header>
+      <div class="workspace">
+        <section class="panel editor-panel" aria-labelledby="editorTitle">
+          <div class="panel-heading"><div><p class="eyebrow">Позиция</p><h1 id="editorTitle">Новая позиция</h1></div><button id="resetForm" class="quiet" type="button">Очистить</button></div>
+          <form id="productForm" class="product-form">
+            <input id="itemId" type="hidden">
+            <div class="two"><label>Название<input id="name" required maxlength="160" placeholder="Например, AKISAME 59 GB"></label><label>Артикул<input id="sku" maxlength="40" placeholder="4997014"></label></div>
+            <div class="two"><label>URL позиции<input id="slug" required pattern="[a-z0-9-]+" maxlength="90" placeholder="akisame-59-gb"></label><label>Раздел<select id="category" required><option value="sinks">Мойки</option><option value="bathsinks">Раковины для ванной</option><option value="taps">Смесители</option><option value="filters">Фильтры</option><option value="disposers">Измельчители</option><option value="dispenser">Дозаторы</option><option value="acs">Аксессуары</option><option value="omoikiri-home">OMOIKIRI Home</option></select></label></div>
+            <div class="two"><label>Текущая цена, ₸<input id="price" type="number" min="0" step="1" placeholder="218880"></label><label>Старая цена, ₸<input id="oldPrice" type="number" min="0" step="1" placeholder=""></label></div>
+            <label>Изображение<input id="imageUrl" type="url" maxlength="1000" placeholder="https://... или /assets/uploads/... "></label>
+            <label>Описание<textarea id="description" maxlength="5000" rows="5" placeholder="Краткое описание для карточки позиции"></textarea></label>
+            <label class="switch"><input id="isCustom" type="checkbox" checked><span></span>Новая позиция, которой ещё нет на сайте</label>
+            <label class="switch"><input id="visible" type="checkbox" checked><span></span>Показывать на сайте</label>
+            <p id="formError" class="form-error" aria-live="polite"></p>
+            <div class="form-actions"><button id="saveProduct" type="submit">Добавить позицию</button><button id="deleteProduct" class="danger" type="button" hidden>Удалить</button></div>
+          </form>
+        </section>
+        <section class="panel list-panel" aria-labelledby="listTitle">
+          <div class="panel-heading"><div><p class="eyebrow">Каталог</p><h2 id="listTitle">Добавленные позиции</h2></div><span id="itemCount" class="count">0</span></div>
+          <label class="search">Поиск<input id="search" type="search" placeholder="Название, артикул или URL"></label>
+          <div id="items" class="items" aria-live="polite"></div>
+          <p id="emptyState" class="empty">Здесь появятся добавленные вами позиции.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="assets/admin.js" defer></script>
+</body>
+</html>

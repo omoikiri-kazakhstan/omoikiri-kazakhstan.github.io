@@ -19,6 +19,9 @@ export function normalizeItem(input, options = {}) {
   const category = text(input.category, 30);
   const imageUrl = text(input.imageUrl, 1000);
   const description = text(input.description, 5000);
+  const material = text(input.material, 160);
+  const colors = text(input.colors, 500);
+  const specifications = text(input.specifications, 5000);
   const itemPrice = price(input.price);
   const oldPrice = price(input.oldPrice);
   const visible = input.visible === false || input.visible === 0 || input.visible === '0' ? 0 : 1;
@@ -31,7 +34,7 @@ export function normalizeItem(input, options = {}) {
   if (oldPrice !== null && itemPrice !== null && oldPrice < itemPrice) return { error: 'Старая цена не может быть меньше текущей.' };
   if (imageUrl && !/^https:\/\/|^\//.test(imageUrl)) return { error: 'Ссылка на изображение должна начинаться с https:// или /.' };
 
-  return { value: { slug, name, sku, category, imageUrl, price: itemPrice, oldPrice, description, visible, isCustom } };
+  return { value: { slug, name, sku, category, imageUrl, price: itemPrice, oldPrice, description, material, colors, specifications, visible, isCustom } };
 }
 
 export function validationError(result) {
@@ -49,6 +52,9 @@ export function rowToItem(row) {
     price: row.price,
     oldPrice: row.old_price,
     description: row.description,
+    material: row.material,
+    colors: row.colors,
+    specifications: row.specifications,
     visible: Boolean(row.visible),
     isCustom: Boolean(row.is_custom),
     createdAt: row.created_at,

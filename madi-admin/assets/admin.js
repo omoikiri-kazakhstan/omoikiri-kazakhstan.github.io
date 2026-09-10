@@ -4,7 +4,7 @@
   const loginView = $('#loginView');
   const adminView = $('#adminView');
   const form = $('#productForm');
-  const fields = ['itemId', 'name', 'sku', 'slug', 'category', 'price', 'oldPrice', 'imageUrl', 'description', 'isCustom', 'visible'];
+  const fields = ['itemId', 'name', 'sku', 'slug', 'category', 'price', 'oldPrice', 'imageUrl', 'material', 'colors', 'specifications', 'description', 'isCustom', 'visible'];
   let items = [];
 
   const format = (value) => value == null || value === '' ? 'Цена не задана' : `${Number(value).toLocaleString('ru-RU')} ₸`;
@@ -41,7 +41,7 @@
   $('#showPassword').addEventListener('change', (event) => { $('#password').type = event.target.checked ? 'text' : 'password'; });
   $('#password').addEventListener('invalid', () => { $('#loginError').textContent = 'Введите пароль.'; });
   $('#loginForm').addEventListener('submit', async (event) => { event.preventDefault(); $('#loginError').textContent = ''; try { await request('/login', { method: 'POST', body: JSON.stringify({ login: $('#login').value.trim(), password: $('#password').value }) }); $('#password').value = ''; await showAdmin(); } catch (error) { $('#loginError').textContent = error.message; } });
-  form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
+  form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, material: $('#material').value, colors: $('#colors').value, specifications: $('#specifications').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
   $('#deleteProduct').addEventListener('click', async () => { const id = Number($('#itemId').value); if (!id || !confirm('Удалить эту позицию без возможности восстановления?')) return; try { await request(`/products/${id}`, { method: 'DELETE' }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
   $('#resetForm').addEventListener('click', resetForm); $('#search').addEventListener('input', render);
   $('#logout').addEventListener('click', async () => { await request('/logout', { method: 'POST' }); adminView.hidden = true; adminView.style.removeProperty('display'); loginView.hidden = false; loginView.style.removeProperty('display'); resetForm(); });

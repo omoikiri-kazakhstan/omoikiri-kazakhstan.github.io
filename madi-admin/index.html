@@ -36,6 +36,8 @@
             <div class="two"><label>URL позиции<input id="slug" required pattern="[a-z0-9-]+" maxlength="90" placeholder="akisame-59-gb"></label><label>Раздел<select id="category" required><option value="sinks">Мойки</option><option value="bathsinks">Раковины для ванной</option><option value="taps">Смесители</option><option value="filters">Фильтры</option><option value="disposers">Измельчители</option><option value="dispenser">Дозаторы</option><option value="acs">Аксессуары</option><option value="omoikiri-home">OMOIKIRI Home</option></select></label></div>
             <div class="two"><label>Текущая цена, ₸<input id="price" type="number" min="0" step="1" placeholder="218880"></label><label>Старая цена, ₸<input id="oldPrice" type="number" min="0" step="1" placeholder=""></label></div>
             <label>Изображение<input id="imageUrl" type="url" maxlength="1000" placeholder="https://... или /assets/uploads/... "></label>
+            <div class="two"><label>Материал<input id="material" maxlength="160" placeholder="Нержавеющая сталь"></label><label>Цвета<input id="colors" maxlength="500" placeholder="графит, черный, золото"></label></div>
+            <label>Характеристики<textarea id="specifications" maxlength="5000" rows="4" placeholder="Ширина: 500 мм&#10;Высота: 200 мм&#10;Монтаж: врезной"></textarea></label>
             <label>Описание<textarea id="description" maxlength="5000" rows="5" placeholder="Краткое описание для карточки позиции"></textarea></label>
             <label class="switch"><input id="isCustom" type="checkbox" checked><span></span>Новая позиция, которой ещё нет на сайте</label>
             <label class="switch"><input id="visible" type="checkbox" checked><span></span>Показывать на сайте</label>

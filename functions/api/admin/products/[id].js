@@ -20,9 +20,9 @@ export async function onRequestPut(context) {
     const item = normalized.value;
     const result = await context.env.CATALOG_DB.prepare(
       `UPDATE catalog_items
-       SET slug = ?, name = ?, sku = ?, category = ?, image_url = ?, price = ?, old_price = ?, description = ?, visible = ?, updated_at = CURRENT_TIMESTAMP
+       SET slug = ?, name = ?, sku = ?, category = ?, image_url = ?, price = ?, old_price = ?, description = ?, material = ?, colors = ?, specifications = ?, visible = ?, updated_at = CURRENT_TIMESTAMP
        WHERE id = ?`
-    ).bind(item.slug, item.name, item.sku, item.category, item.imageUrl, item.price, item.oldPrice, item.description, item.visible, id).run();
+    ).bind(item.slug, item.name, item.sku, item.category, item.imageUrl, item.price, item.oldPrice, item.description, item.material, item.colors, item.specifications, item.visible, id).run();
     if (!result.meta.changes) return json({ error: 'Позиция не найдена.' }, { status: 404 });
     const updated = await context.env.CATALOG_DB.prepare('SELECT * FROM catalog_items WHERE id = ?').bind(id).first();
     return json({ item: rowToItem(updated) });

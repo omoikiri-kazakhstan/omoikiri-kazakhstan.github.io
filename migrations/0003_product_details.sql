@@ -1,0 +1,3 @@
+ALTER TABLE catalog_items ADD COLUMN material TEXT NOT NULL DEFAULT '';
+ALTER TABLE catalog_items ADD COLUMN colors TEXT NOT NULL DEFAULT '';
+ALTER TABLE catalog_items ADD COLUMN specifications TEXT NOT NULL DEFAULT '';

@@ -19,9 +19,9 @@ export async function onRequestPost(context) {
     if (invalid) return invalid;
     const item = normalized.value;
     const result = await context.env.CATALOG_DB.prepare(
-      `INSERT INTO catalog_items (slug, name, sku, category, image_url, price, old_price, description, visible, is_custom, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`
-    ).bind(item.slug, item.name, item.sku, item.category, item.imageUrl, item.price, item.oldPrice, item.description, item.visible, item.isCustom).run();
+      `INSERT INTO catalog_items (slug, name, sku, category, image_url, price, old_price, description, material, colors, specifications, visible, is_custom, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`
+    ).bind(item.slug, item.name, item.sku, item.category, item.imageUrl, item.price, item.oldPrice, item.description, item.material, item.colors, item.specifications, item.visible, item.isCustom).run();
     const created = await context.env.CATALOG_DB.prepare('SELECT * FROM catalog_items WHERE id = ?').bind(result.meta.last_row_id).first();
     return json({ item: rowToItem(created) }, { status: 201 });
   } catch (error) {

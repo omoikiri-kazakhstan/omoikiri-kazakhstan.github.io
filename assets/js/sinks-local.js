@@ -5,21 +5,28 @@
   const DISCONTINUED_SKUS = new Set([
     '4993469', '4993459', '4993487', '4993744', '4993291',
     '4993935', '4993845', '4993875', '4993917', '4993247',
-    '4993508', '4973056', '4994174', '4994139', '4994270'
+    '4993508', '4973056', '4994174', '4994139', '4994270',
+    '4993342', '4993335', '4993416', '4993886', '4993562',
+    '4993567', '4997264', '4973080', '4994365'
   ]);
   const DISCONTINUED_BY_SLUG_COLOR = {
     'tasogare-86': ['bl', 'gr'],
     'tasogare-65': ['gr'],
+    'yonaka-65': ['be'],
+    'yonaka-78-lb': ['be', 'sa'],
     'tasogare-78': ['be'],
     'maru-86-2': ['ch'],
     'tedori-86-2-lb': ['wh'],
     'yasugata-100': ['be'],
     'yasugata-86': ['pl'],
-    'tedori-100': ['be'],
+    'tedori-100': ['be', 'gr'],
     'bosen-38-u': ['ch'],
     'miya-50-r': ['ch'],
-    'akisame-41': ['in'],
-    'tateyama-s': ['ca', 'ev'],
+    'akisame-41': ['in', 'lg'],
+    'sakaime-100': ['sa'],
+    'sakaime-100-2': ['gr'],
+    'yamakawa-55-integra': ['gr'],
+    'tateyama-s': ['ca', 'ev', 'gb'],
     'umi': ['bl']
   };
   const root = new URL(document.currentScript?.dataset.root || '../', window.location.href).href;
@@ -1658,6 +1665,13 @@
         delete button.dataset.variationId;
       }
     });
+
+    const slug = productSlug(product);
+    const defaultColor = hrefParam(product, 'attribute_pa_color');
+    const availableColors = listFromDataset(product, 'filterColors');
+    if (isDiscontinuedSlugColor(slug, defaultColor) && availableColors.length) {
+      setHrefColor(product, availableColors[0]);
+    }
   }
 
   function removeDiscontinuedProducts() {
@@ -1701,9 +1715,12 @@
     const colorFallback = hrefParam(product, 'attribute_pa_color');
     const title = normalizeTitle(product);
 
+    const catalogColors = (meta.colors || [colorFallback]).filter(Boolean);
+    const availableColors = catalogColors.filter((colorCode) => !isDiscontinuedSlugColor(productSlug(product), colorCode));
+
     product.dataset.filterProductCats = categoryFallback.join(',');
     product.dataset.filterMaterials = (meta.materials || materialFallback).join(',');
-    product.dataset.filterColors = (meta.colors || [colorFallback]).filter(Boolean).join(',');
+    product.dataset.filterColors = availableColors.join(',');
     product.dataset.filterBowlSizes = (meta.bowlSizes || []).join(',');
     product.dataset.filterTapFilter = (meta.filter || []).join(',');
     product.dataset.filterTapHose = (meta.hose || []).join(',');
@@ -1720,6 +1737,10 @@
 
     product.dataset.filterAsmbl = [...asmbl].join(',');
     product.dataset.filterShapes = (meta.shapes || shapeFallback(title, productSlug(product))).join(',');
+
+    if (isDiscontinuedSlugColor(productSlug(product), colorFallback) && availableColors.length) {
+      setHrefColor(product, availableColors[0]);
+    }
   }
 
   function hydrateCatalogMeta() {

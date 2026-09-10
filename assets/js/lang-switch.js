@@ -966,22 +966,36 @@
   }
 
   function loadSearchIndex() {
-    if (window.OMOIKIRI_SEARCH_INDEX) return Promise.resolve(window.OMOIKIRI_SEARCH_INDEX);
+    const discontinuedSkus = new Set([
+      '4993469', '4993459', '4993487', '4993744', '4993291',
+      '4993935', '4993845', '4993875', '4993917', '4993247',
+      '4993508', '4973056', '4994174', '4994139', '4994270',
+      '4993342', '4993335', '4993416', '4993886', '4993562',
+      '4993567', '4997264', '4973080', '4994365'
+    ]);
+    const availableSearchItems = (items) => (items || []).map((item) => {
+      const skus = [item.sku].concat(item.skus || [])
+        .map((sku) => String(sku || '').trim())
+        .filter((sku) => sku && !discontinuedSkus.has(sku));
+      return skus.length ? { ...item, sku: skus[0], skus: skus.slice(1) } : null;
+    }).filter(Boolean);
+
+    if (window.OMOIKIRI_SEARCH_INDEX) return Promise.resolve(availableSearchItems(window.OMOIKIRI_SEARCH_INDEX));
     if (searchIndexPromise) return searchIndexPromise;
 
     searchIndexPromise = new Promise((resolve, reject) => {
       const existing = document.querySelector('script[data-dealer-search-index]');
       if (existing) {
-        existing.addEventListener('load', () => resolve(window.OMOIKIRI_SEARCH_INDEX || []), { once: true });
+        existing.addEventListener('load', () => resolve(availableSearchItems(window.OMOIKIRI_SEARCH_INDEX)), { once: true });
         existing.addEventListener('error', reject, { once: true });
         return;
       }
 
       const script = document.createElement('script');
-      script.src = ROOT + 'assets/js/search-index.js?v=20260711-01';
+      script.src = ROOT + 'assets/js/search-index.js?v=20260910-01';
       script.async = true;
       script.dataset.dealerSearchIndex = '1';
-      script.onload = () => resolve(window.OMOIKIRI_SEARCH_INDEX || []);
+      script.onload = () => resolve(availableSearchItems(window.OMOIKIRI_SEARCH_INDEX));
       script.onerror = reject;
       document.head.appendChild(script);
     });

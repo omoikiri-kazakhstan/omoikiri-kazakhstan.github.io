@@ -221,6 +221,14 @@
   </main>
 
   <script>
+    const discontinuedSkus = new Set([
+      '4993469', '4993459', '4993487', '4993744', '4993291',
+      '4993935', '4993845', '4993875', '4993917', '4993247',
+      '4993508', '4973056', '4994174', '4994139', '4994270',
+      '4993342', '4993335', '4993416', '4993886', '4993562',
+      '4993567', '4997264', '4973080', '4994365'
+    ]);
+
     const products = [
       {
         id: 'akisame-100-2-r-gm',
@@ -282,7 +290,11 @@
 
     function readCart() {
       const stored = JSON.parse(localStorage.getItem('omoikiriCart') || 'null');
-      if (Array.isArray(stored) && stored.length) return stored;
+      if (Array.isArray(stored) && stored.length) {
+        const available = stored.filter((item) => !discontinuedSkus.has(String(item?.article || item?.sku || '').trim()));
+        if (available.length !== stored.length) localStorage.setItem('omoikiriCart', JSON.stringify(available));
+        return available;
+      }
       return [];
     }
 
@@ -385,6 +397,6 @@
     renderCart();
     updateCartCount();
   </script>
-<script src="assets/js/lang-switch.js?v=20260803-02" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20260910-03" data-root=""></script>
 </body>
 </html>

@@ -6,21 +6,28 @@
   const DISCONTINUED_SKUS = new Set([
     '4993469', '4993459', '4993487', '4993744', '4993291',
     '4993935', '4993845', '4993875', '4993917', '4993247',
-    '4993508', '4973056', '4994174', '4994139', '4994270'
+    '4993508', '4973056', '4994174', '4994139', '4994270',
+    '4993342', '4993335', '4993416', '4993886', '4993562',
+    '4993567', '4997264', '4973080', '4994365'
   ]);
   const DISCONTINUED_BY_SLUG_COLOR = {
     'tasogare-86': ['bl', 'gr'],
     'tasogare-65': ['gr'],
+    'yonaka-65': ['be'],
+    'yonaka-78-lb': ['be', 'sa'],
     'tasogare-78': ['be'],
     'maru-86-2': ['ch'],
     'tedori-86-2-lb': ['wh'],
     'yasugata-100': ['be'],
     'yasugata-86': ['pl'],
-    'tedori-100': ['be'],
+    'tedori-100': ['be', 'gr'],
     'bosen-38-u': ['ch'],
     'miya-50-r': ['ch'],
-    'akisame-41': ['in'],
-    'tateyama-s': ['ca', 'ev'],
+    'akisame-41': ['in', 'lg'],
+    'sakaime-100': ['sa'],
+    'sakaime-100-2': ['gr'],
+    'yamakawa-55-integra': ['gr'],
+    'tateyama-s': ['ca', 'ev', 'gb'],
     'umi': ['bl']
   };
   const OLD_PRICE_OVERRIDES = {

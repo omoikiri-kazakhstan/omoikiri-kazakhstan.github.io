@@ -27,7 +27,19 @@
         <div><div class="brand">OMOIKIRI <span>КАЗАХСТАН</span></div><p>Управление каталогом</p></div>
         <div class="topbar-actions"><a href="/" target="_blank" rel="noopener">Открыть сайт</a><button id="logout" class="quiet" type="button">Выйти</button></div>
       </header>
-      <div class="workspace">
+      <div class="admin-layout">
+        <nav class="sidebar" aria-label="Разделы админки">
+          <button class="nav-item active" type="button" data-view="overview">Обзор</button>
+          <button class="nav-item" type="button" data-view="catalog">Каталог <span id="navCount">0</span></button>
+          <button class="nav-item" type="button" data-view="editor">Новая позиция</button>
+        </nav>
+        <div class="content-area">
+          <section class="view active" data-view-panel="overview">
+            <p class="eyebrow">Панель управления</p><h1>Обзор каталога</h1>
+            <div class="metrics"><article><span id="metricTotal">0</span><p>позиций в управлении</p></article><article><span id="metricVisible">0</span><p>показываются на сайте</p></article><article><span id="metricHidden">0</span><p>скрыты из каталога</p></article></div>
+            <div class="overview-actions"><button type="button" data-open-view="editor">Добавить позицию</button><button type="button" class="quiet" data-open-view="catalog">Открыть каталог</button></div>
+          </section>
+          <section class="view" data-view-panel="editor">
         <section class="panel editor-panel" aria-labelledby="editorTitle">
           <div class="panel-heading"><div><p class="eyebrow">Позиция</p><h1 id="editorTitle">Новая позиция</h1></div><button id="resetForm" class="quiet" type="button">Очистить</button></div>
           <form id="productForm" class="product-form">
@@ -44,13 +56,14 @@
             <p id="formError" class="form-error" aria-live="polite"></p>
             <div class="form-actions"><button id="saveProduct" type="submit">Добавить позицию</button><button id="deleteProduct" class="danger" type="button" hidden>Удалить</button></div>
           </form>
-        </section>
-        <section class="panel list-panel" aria-labelledby="listTitle">
+        </section></section>
+          <section class="view" data-view-panel="catalog"><section class="panel list-panel" aria-labelledby="listTitle">
           <div class="panel-heading"><div><p class="eyebrow">Каталог</p><h2 id="listTitle">Добавленные позиции</h2></div><span id="itemCount" class="count">0</span></div>
           <label class="search">Поиск<input id="search" type="search" placeholder="Название, артикул или URL"></label>
           <div id="items" class="items" aria-live="polite"></div>
           <p id="emptyState" class="empty">Здесь появятся добавленные вами позиции.</p>
-        </section>
+        </section></section>
+        </div>
       </div>
     </section>
   </main>

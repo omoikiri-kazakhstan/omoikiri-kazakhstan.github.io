@@ -18,6 +18,11 @@
   let items = [];
 
   const format = (value) => value == null || value === '' ? 'Цена не задана' : `${Number(value).toLocaleString('ru-RU')} ₸`;
+  function activateView(view) {
+    document.querySelectorAll('[data-view-panel]').forEach((panel) => panel.classList.toggle('active', panel.dataset.viewPanel === view));
+    document.querySelectorAll('[data-view]').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   function parseSpecifications(value) {
     return String(value || '').split('\n').reduce((result, line) => {
       const [label, ...rest] = line.split(':');
@@ -45,12 +50,13 @@
   }
   function setForm(item) {
     fields.forEach((name) => { const field = $(`#${name}`); if (!field) return; field.type === 'checkbox' ? field.checked = item[name] : field.value = item[name] ?? ''; });
-    renderSpecificationFields(); $('#editorTitle').textContent = 'Редактирование позиции'; $('#saveProduct').textContent = 'Сохранить изменения'; $('#deleteProduct').hidden = false; $('#formError').textContent = ''; window.scrollTo({ top: 0, behavior: 'smooth' });
+    renderSpecificationFields(); $('#editorTitle').textContent = 'Редактирование позиции'; $('#saveProduct').textContent = 'Сохранить изменения'; $('#deleteProduct').hidden = false; $('#formError').textContent = ''; activateView('editor');
   }
   function render() {
     const query = $('#search').value.trim().toLowerCase();
     const filtered = items.filter((item) => `${item.name} ${item.sku} ${item.slug}`.toLowerCase().includes(query));
-    $('#itemCount').textContent = String(items.length); $('#emptyState').hidden = filtered.length > 0;
+    const visible = items.filter((item) => item.visible).length;
+    $('#itemCount').textContent = String(items.length); $('#navCount').textContent = String(items.length); $('#metricTotal').textContent = String(items.length); $('#metricVisible').textContent = String(visible); $('#metricHidden').textContent = String(items.length - visible); $('#emptyState').hidden = filtered.length > 0;
     $('#items').innerHTML = filtered.map((item) => `<article class="item"><div><h3>${escapeHtml(item.name)} ${item.visible ? '' : '<span class="badge hidden">скрыта</span>'}</h3><p>${escapeHtml(item.category)} · ${escapeHtml(item.sku || 'без артикула')} · /${escapeHtml(item.slug)}</p><p class="item-price">${format(item.price)}${item.oldPrice ? ` <s>${format(item.oldPrice)}</s>` : ''}</p></div><button type="button" data-edit="${item.id}">Изменить</button></article>`).join('');
     document.querySelectorAll('[data-edit]').forEach((button) => button.addEventListener('click', () => setForm(items.find((item) => item.id === Number(button.dataset.edit)))));
   }
@@ -61,14 +67,15 @@
     loginView.style.setProperty('display', 'none', 'important');
     adminView.hidden = false;
     adminView.style.setProperty('display', 'block', 'important');
+    activateView('overview');
     try { await loadItems(); } catch (error) { $('#emptyState').textContent = error.message; }
   }
   $('#showPassword').addEventListener('change', (event) => { $('#password').type = event.target.checked ? 'text' : 'password'; });
   $('#password').addEventListener('invalid', () => { $('#loginError').textContent = 'Введите пароль.'; });
   $('#loginForm').addEventListener('submit', async (event) => { event.preventDefault(); $('#loginError').textContent = ''; try { await request('/login', { method: 'POST', body: JSON.stringify({ login: $('#login').value.trim(), password: $('#password').value }) }); $('#password').value = ''; await showAdmin(); } catch (error) { $('#loginError').textContent = error.message; } });
-  form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; collectSpecifications(); const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, material: $('#material').value, colors: $('#colors').value, specifications: $('#specifications').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
+  form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; collectSpecifications(); const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, material: $('#material').value, colors: $('#colors').value, specifications: $('#specifications').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); activateView('catalog'); } catch (error) { $('#formError').textContent = error.message; } });
   $('#deleteProduct').addEventListener('click', async () => { const id = Number($('#itemId').value); if (!id || !confirm('Удалить эту позицию без возможности восстановления?')) return; try { await request(`/products/${id}`, { method: 'DELETE' }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
-  $('#resetForm').addEventListener('click', resetForm); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); renderSpecificationFields();
+  $('#resetForm').addEventListener('click', resetForm); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view))); document.querySelectorAll('[data-open-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.openView))); renderSpecificationFields();
   $('#logout').addEventListener('click', async () => { await request('/logout', { method: 'POST' }); adminView.hidden = true; adminView.style.removeProperty('display'); loginView.hidden = false; loginView.style.removeProperty('display'); resetForm(); });
   request('/session').then(({ authenticated }) => authenticated && showAdmin()).catch(() => {});
 }());

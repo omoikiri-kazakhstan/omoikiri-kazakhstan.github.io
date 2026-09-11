@@ -1,0 +1,39 @@
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background-image:linear-gradient(rgba(244,244,241,.88),rgba(244,244,241,.88)),url('acheron-background.jpg');
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  pointer-events:none;
+}
+
+.login-view{
+  position:relative;
+  isolation:isolate;
+  background:rgba(30,30,30,.92);
+}
+
+.admin-view{
+  position:relative;
+  isolation:isolate;
+  z-index:0;
+}
+
+.admin-view::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background-image:linear-gradient(rgba(244,244,241,.84),rgba(244,244,241,.84)),url('acheron-background.jpg');
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  pointer-events:none;
+}
+
+.panel,.sidebar,.metrics article{
+  background:rgba(255,255,255,.94);
+}

@@ -1782,7 +1782,7 @@
       catalogMetaPromise = Promise.all([
         loadMeta('assets/data/sinks-meta.json?v=20260711-13'),
         loadMeta('assets/data/taps-meta.json?v=20260711-03'),
-        loadMeta('assets/data/catalog-extra-meta.json?v=20260711-01')
+        loadMeta('assets/data/catalog-extra-meta.json?v=20260914-02')
       ])
         .then(([sinksMeta, tapsMeta, extraMeta]) => {
           catalogMeta = { ...(sinksMeta || {}), ...(tapsMeta || {}), ...(extraMeta || {}) };

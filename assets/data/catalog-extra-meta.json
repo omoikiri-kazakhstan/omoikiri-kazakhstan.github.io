@@ -4,9 +4,16 @@
       "ab-022",
       "be",
       "ca",
+      "ch",
+      "dc",
+      "ev",
+      "g",
       "gr",
+      "ma",
       "pa",
-      "sa"
+      "pl",
+      "sa",
+      "si"
     ],
     "functions": [
       "vstraivaemyj"
@@ -14,17 +21,26 @@
   },
   "om-02": {
     "colors": [
+      "ab-022",
       "az",
       "be",
       "bl",
       "bn",
+      "c",
+      "ch",
       "es",
+      "gb",
       "gm",
       "gr",
       "ib",
       "lg",
       "pa",
-      "sa"
+      "pl",
+      "rg",
+      "sa",
+      "sl",
+      "to",
+      "wh"
     ],
     "functions": [
       "vstraivaemyj"
@@ -33,9 +49,13 @@
   "om-03": {
     "colors": [
       "bl",
+      "bn",
+      "c",
+      "gb",
       "gm",
       "gr",
-      "lg"
+      "lg",
+      "wh"
     ],
     "functions": [
       "vstraivaemyj"
@@ -44,6 +64,8 @@
   "om-04": {
     "colors": [
       "bn",
+      "c",
+      "gb",
       "gm",
       "lg"
     ],
@@ -53,9 +75,12 @@
   },
   "om-05": {
     "colors": [
+      "bn",
+      "c",
       "gb",
       "gm",
-      "lg"
+      "lg",
+      "lg-gb"
     ],
     "functions": [
       "vstraivaemyj"
@@ -63,6 +88,8 @@
   },
   "om-06": {
     "colors": [
+      "bn",
+      "c",
       "gb",
       "lg"
     ],
@@ -73,6 +100,8 @@
   "om-07": {
     "colors": [
       "bn",
+      "c",
+      "gb",
       "lg"
     ],
     "functions": [
@@ -82,6 +111,9 @@
   },
   "om-08": {
     "colors": [
+      "bn",
+      "c",
+      "gb",
       "gm",
       "lg"
     ],
@@ -91,6 +123,9 @@
   },
   "om-09-sensor": {
     "colors": [
+      "bn",
+      "c",
+      "gb",
       "gm",
       "lg"
     ],
@@ -101,6 +136,9 @@
   },
   "om-10": {
     "colors": [
+      "bn",
+      "c",
+      "gb",
       "gm",
       "lg"
     ],

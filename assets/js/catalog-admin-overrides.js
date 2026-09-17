@@ -17,9 +17,41 @@
     card.innerHTML = `<a class="woocommerce-LoopProduct-link" href="/admin-product/?product=${encodeURIComponent(item.slug)}"><img loading="lazy" src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}"><h2 class="woocommerce-loop-product__title">${escapeHtml(item.name)}</h2><span class="price">${item.oldPrice ? `<del>${formatPrice(item.oldPrice)}</del> ` : ''}<ins>${formatPrice(item.price)}</ins></span></a>`;
     list.prepend(card);
   }
+  function applyProductOverrides(overrides) {
+    if (!productSlug) return;
+    const override = overrides.find((item) => item.slug === productSlug);
+    if (!override) return;
+    if (!override.visible) {
+      window.location.replace('/');
+      return;
+    }
+    const hiddenColors = new Set(override.hiddenColors || []);
+    if (!hiddenColors.size) return;
+    document.querySelectorAll('[data-value], option[value]').forEach((element) => {
+      const color = element.getAttribute('data-value') || element.getAttribute('value');
+      if (!hiddenColors.has(color)) return;
+      element.hidden = true;
+      element.setAttribute('aria-hidden', 'true');
+      if (element.tagName === 'OPTION') element.disabled = true;
+    });
+    const selected = new URLSearchParams(window.location.search).get('attribute_pa_color');
+    if (!hiddenColors.has(selected)) return;
+    const next = [...document.querySelectorAll('select[name="attribute_pa_color"] option:not([disabled])')]
+      .map((option) => option.value).find(Boolean);
+    if (next) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('attribute_pa_color', next);
+      window.location.replace(url);
+    }
+  }
   fetch(apiUrl, { credentials: 'same-origin' }).then((response) => response.ok ? response.json() : null).then((data) => {
     const items = data?.items || [];
-    const hidden = new Set(items.filter((item) => !item.visible && !item.isCustom).map((item) => item.slug));
+    const overrides = data?.overrides || [];
+    const hidden = new Set([
+      ...items.filter((item) => !item.visible && !item.isCustom).map((item) => item.slug),
+      ...overrides.filter((item) => !item.visible).map((item) => item.slug)
+    ]);
+    applyProductOverrides(overrides);
     const hiddenProduct = items.find((item) => !item.visible && !item.isCustom && item.slug === productSlug);
     if (hiddenProduct) {
       window.location.replace(`/${hiddenProduct.category}/`);

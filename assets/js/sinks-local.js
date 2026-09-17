@@ -42,6 +42,7 @@
   let allProductsLoadingPromise = null;
   let catalogMetaPromise = null;
   let catalogMeta = {};
+  let adminCatalogOverrides = new Map();
   let catalogMetaReady = false;
   let lastScrollY = window.scrollY || 0;
   let filterCompactAnchor = 0;
@@ -865,7 +866,13 @@
 
   function isDiscontinuedSlugColor(slug, colorCode) {
     const colors = DISCONTINUED_BY_SLUG_COLOR[slug] || [];
-    return colors.includes(String(colorCode || '').toLowerCase());
+    const override = adminCatalogOverrides.get(String(slug || '').toLowerCase());
+    return colors.includes(String(colorCode || '').toLowerCase())
+      || Boolean(override?.hiddenColors?.includes(String(colorCode || '').toLowerCase()));
+  }
+
+  function isAdminHiddenProduct(slug) {
+    return adminCatalogOverrides.get(String(slug || '').toLowerCase())?.visible === false;
   }
 
   function productSlugFromHref(href) {
@@ -1678,6 +1685,10 @@
     document.querySelectorAll('ul.products li.product').forEach((product) => {
       const slug = productSlug(product);
       if (!slug) return;
+      if (isAdminHiddenProduct(slug)) {
+        product.classList.add('dealer-discontinued-product');
+        return;
+      }
 
       const colors = listFromDataset(product, 'filterColors');
       const availableColors = colors.filter((colorCode) => !isDiscontinuedSlugColor(slug, colorCode));
@@ -1717,6 +1728,8 @@
 
     const catalogColors = (meta.colors || [colorFallback]).filter(Boolean);
     const availableColors = catalogColors.filter((colorCode) => !isDiscontinuedSlugColor(productSlug(product), colorCode));
+
+    product.classList.toggle('dealer-discontinued-product', isAdminHiddenProduct(productSlug(product)));
 
     product.dataset.filterProductCats = categoryFallback.join(',');
     product.dataset.filterMaterials = (meta.materials || materialFallback).join(',');
@@ -1778,14 +1791,20 @@
       const loadMeta = (file) => fetch(root + file)
         .then((response) => response.ok ? response.json() : {})
         .catch(() => ({}));
+      const loadAdminOverrides = () => fetch(root + 'api/catalog')
+        .then((response) => response.ok ? response.json() : {})
+        .then((data) => new Map((data.overrides || []).map((item) => [item.slug, item])))
+        .catch(() => new Map());
 
       catalogMetaPromise = Promise.all([
         loadMeta('assets/data/sinks-meta.json?v=20260711-13'),
         loadMeta('assets/data/taps-meta.json?v=20260711-03'),
-        loadMeta('assets/data/catalog-extra-meta.json?v=20260914-02')
+        loadMeta('assets/data/catalog-extra-meta.json?v=20260917-03'),
+        loadAdminOverrides()
       ])
-        .then(([sinksMeta, tapsMeta, extraMeta]) => {
+        .then(([sinksMeta, tapsMeta, extraMeta, overrides]) => {
           catalogMeta = { ...(sinksMeta || {}), ...(tapsMeta || {}), ...(extraMeta || {}) };
+          adminCatalogOverrides = overrides;
           catalogMetaReady = true;
           hydrateCatalogMeta();
         })

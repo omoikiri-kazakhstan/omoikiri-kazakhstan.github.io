@@ -7,6 +7,7 @@
   <title>Управление каталогом | OMOIKIRI Казахстан</title>
   <link rel="stylesheet" href="assets/admin.css">
   <link rel="stylesheet" href="assets/admin-background.css">
+  <link rel="stylesheet" href="assets/admin-full-catalog.css">
 </head>
 <body>
   <main class="shell">
@@ -32,6 +33,7 @@
         <nav class="sidebar" aria-label="Разделы админки">
           <button class="nav-item active" type="button" data-view="overview">Обзор</button>
           <button class="nav-item" type="button" data-view="catalog">Каталог <span id="navCount">0</span></button>
+          <button class="nav-item" type="button" data-view="fullCatalog">Полный каталог <span id="fullCatalogCount">0</span></button>
           <button class="nav-item" type="button" data-view="editor">Новая позиция</button>
         </nav>
         <div class="content-area">
@@ -64,6 +66,13 @@
           <div id="items" class="items" aria-live="polite"></div>
           <p id="emptyState" class="empty">Здесь появятся добавленные вами позиции.</p>
         </section></section>
+          <section class="view" data-view-panel="fullCatalog"><section class="panel full-catalog-panel" aria-labelledby="fullCatalogTitle">
+            <div class="panel-heading"><div><p class="eyebrow">Вся витрина</p><h2 id="fullCatalogTitle">Полный каталог товаров</h2></div><span id="fullCatalogCountLabel" class="count">0</span></div>
+            <p class="full-catalog-note">Скрытые позиции и цвета не показываются покупателям. Их можно вернуть в любой момент.</p>
+            <div class="catalog-controls"><label class="search">Поиск<input id="fullCatalogSearch" type="search" placeholder="Название, артикул или URL"></label><label>Раздел<select id="fullCatalogCategory"><option value="">Все разделы</option><option value="sinks">Мойки</option><option value="bathsinks">Раковины для ванной</option><option value="taps">Смесители</option><option value="filters">Фильтры</option><option value="disposers">Измельчители</option><option value="dispenser">Дозаторы</option><option value="acs">Аксессуары</option><option value="omoikiri-home">OMOIKIRI Home</option></select></label></div>
+            <div id="fullCatalogItems" class="full-catalog-items" aria-live="polite"></div>
+            <p id="fullCatalogEmpty" class="empty" hidden>Ничего не найдено.</p>
+          </section></section>
         </div>
       </div>
     </section>

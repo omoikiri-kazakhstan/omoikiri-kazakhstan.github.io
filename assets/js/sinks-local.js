@@ -1845,7 +1845,12 @@
 
     if (filter === 'pa_color') {
       const colors = listFromDataset(product, 'filterColors');
-      return values.some((value) => colors.includes(value) || hrefParam(product, 'attribute_pa_color') === value);
+      // The link's original color can be discontinued in the admin panel.
+      // Use it only for legacy cards that do not have catalogue metadata yet.
+      return values.some((value) => colors.includes(value)
+        || (!colors.length
+          && hrefParam(product, 'attribute_pa_color') === value
+          && !isDiscontinuedSlugColor(productSlug(product), value)));
     }
 
     if (filter === 'pa_bowl_size') {

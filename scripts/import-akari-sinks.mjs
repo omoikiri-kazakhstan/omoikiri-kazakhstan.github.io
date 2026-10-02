@@ -49,7 +49,7 @@ for (const product of products) {
   const initialImage = variations[0]?.variation_gallery_images?.[1]?.src || variations[0]?.image?.src || '';
   const initialImagePath = localize(initialImage);
   const page = localize(original)
-    .replace('</head>', '<link rel="stylesheet" href="../../assets/css/akari-dimensions.css?v=20261002-01">\n</head>')
+    .replace('</head>', '<link rel="stylesheet" href="../../assets/css/akari-dimensions.css?v=20261002-02">\n</head>')
     .replace('<div class="second_image"></div>', `<div class="second_image"><img class="active" src="${initialImagePath}" alt="${product.title}"></div>`)
     .replace(/<\/body>/i, `${scripts}\n</body>`);
   const pagePath = path.join(root, 'product', product.slug, 'index.html');

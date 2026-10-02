@@ -6,6 +6,23 @@ body.postid-29264 .second_image_cont {
   gap: 20px;
 }
 
+/* Keep the selected sink in view while its technical specifications are read. */
+@media screen and (min-width: 1301px) {
+  body.postid-29233 .card_grid,
+  body.postid-29261 .card_grid,
+  body.postid-29264 .card_grid {
+    overflow: visible;
+  }
+
+  body.postid-29233 .card_grid_half:first-of-type,
+  body.postid-29261 .card_grid_half:first-of-type,
+  body.postid-29264 .card_grid_half:first-of-type {
+    align-self: flex-start;
+    position: sticky;
+    top: 24px;
+  }
+}
+
 @media screen and (max-width: 1300px) {
   body.postid-29233 .second_image,
   body.postid-29261 .second_image,

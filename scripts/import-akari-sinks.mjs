@@ -46,7 +46,9 @@ for (const product of products) {
   }
   await Promise.all([...media].map(mirror));
   const scripts = '<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261002-01"></script>\n<script src="../../assets/js/lang-switch.js" data-root="../../"></script>\n<script src="../../assets/js/local-router.js" data-root="../../"></script>\n<script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>';
-  const page = localize(original).replace(/<\/body>/i, `${scripts}\n</body>`);
+  const page = localize(original)
+    .replace('</head>', '<link rel="stylesheet" href="../../assets/css/akari-dimensions.css?v=20261002-01">\n</head>')
+    .replace(/<\/body>/i, `${scripts}\n</body>`);
   const pagePath = path.join(root, 'product', product.slug, 'index.html');
   await mkdir(path.dirname(pagePath), { recursive: true });
   await writeFile(pagePath, page, 'utf8');

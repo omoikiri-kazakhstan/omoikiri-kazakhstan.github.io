@@ -1,0 +1,35 @@
+/* Akari has separate technical drawings; keep them visible in the single-column layout. */
+body.postid-29233 .second_image_cont,
+body.postid-29261 .second_image_cont,
+body.postid-29264 .second_image_cont {
+  display: flex;
+  gap: 20px;
+}
+
+@media screen and (max-width: 1300px) {
+  body.postid-29233 .second_image,
+  body.postid-29261 .second_image,
+  body.postid-29264 .second_image {
+    height: 320px;
+  }
+
+  body.postid-29233 .second_image img,
+  body.postid-29261 .second_image img,
+  body.postid-29264 .second_image img {
+    max-height: 320px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  body.postid-29233 .second_image,
+  body.postid-29261 .second_image,
+  body.postid-29264 .second_image {
+    height: 230px;
+  }
+
+  body.postid-29233 .second_image img,
+  body.postid-29261 .second_image img,
+  body.postid-29264 .second_image img {
+    max-height: 230px;
+  }
+}

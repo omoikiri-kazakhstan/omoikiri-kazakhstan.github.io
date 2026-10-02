@@ -46,8 +46,11 @@ for (const product of products) {
   }
   await Promise.all([...media].map(mirror));
   const scripts = '<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261002-01"></script>\n<script src="../../assets/js/lang-switch.js" data-root="../../"></script>\n<script src="../../assets/js/local-router.js" data-root="../../"></script>\n<script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>';
+  const initialImage = variations[0]?.variation_gallery_images?.[1]?.src || variations[0]?.image?.src || '';
+  const initialImagePath = localize(initialImage);
   const page = localize(original)
     .replace('</head>', '<link rel="stylesheet" href="../../assets/css/akari-dimensions.css?v=20261002-01">\n</head>')
+    .replace('<div class="second_image"></div>', `<div class="second_image"><img class="active" src="${initialImagePath}" alt="${product.title}"></div>`)
     .replace(/<\/body>/i, `${scripts}\n</body>`);
   const pagePath = path.join(root, 'product', product.slug, 'index.html');
   await mkdir(path.dirname(pagePath), { recursive: true });

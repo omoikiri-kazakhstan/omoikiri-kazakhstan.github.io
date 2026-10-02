@@ -1,5 +1,40 @@
 window.OMOIKIRI_SEARCH_INDEX = [
-  {"title":"Nagare Light","slug":"nagare-light","url":"/product/nagare-light/index.html?attribute_pa_color=purple","sku":"4995057","image":"/assets/remote/omoikiri.ru/wp-content/uploads/2026/08/nagare-light-300x300.png","category":"Измельчители","price":"176 880 ₸"},
+  {
+    "title": "Akari 79",
+    "slug": "akari-79",
+    "url": "/product/akari-79/index.html?attribute_pa_color=bl",
+    "sku": "4997371",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/09/akari_79-bl-300x300.png",
+    "category": "Мойки",
+    "price": "249 880 ₸"
+  },
+  {
+    "title": "Akari 57",
+    "slug": "akari-57",
+    "url": "/product/akari-57/index.html?attribute_pa_color=bl",
+    "sku": "4997366",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/09/akari_57-bl-300x300.png",
+    "category": "Мойки",
+    "price": "219 880 ₸"
+  },
+  {
+    "title": "Akari 45",
+    "slug": "akari-45",
+    "url": "/product/akari-45/index.html?attribute_pa_color=bl",
+    "sku": "4997361",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/09/akari_45-bl-300x300.png",
+    "category": "Мойки",
+    "price": "219 880 ₸"
+  },
+  {
+    "title": "Nagare Light",
+    "slug": "nagare-light",
+    "url": "/product/nagare-light/index.html?attribute_pa_color=purple",
+    "sku": "4995057",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2026/08/nagare-light-300x300.png",
+    "category": "Измельчители",
+    "price": "176 880 ₸"
+  },
   {
     "title": "Akashi-S",
     "sku": "4994263",

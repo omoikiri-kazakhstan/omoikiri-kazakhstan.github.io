@@ -19,6 +19,8 @@
   let fullCatalog = [];
   let catalogOverrides = new Map();
   const CATEGORY_LABELS = { sinks: 'Мойки', bathsinks: 'Раковины для ванной', taps: 'Смесители', filters: 'Фильтры', disposers: 'Измельчители', dispenser: 'Дозаторы', acs: 'Аксессуары', 'omoikiri-home': 'OMOIKIRI Home' };
+  const COLOR_LABELS = { az: 'Азур', be: 'Бежевый', bl: 'Черный', cc: 'Кофе', ch: 'Шоколад', cn: 'Карбон', dc: 'Темный шоколад', es: 'Эверест', ev: 'Эверест', gb: 'Графит', gm: 'Вороненая сталь', gr: 'Серый', ib: 'Индиго', in: 'Нержавеющая сталь', lg: 'Светлое золото', mo: 'Мокка', ol: 'Олива', pa: 'Пастила', pe: 'Жемчуг', pl: 'Платина', rg: 'Розовое золото', sa: 'Сахара', sb: 'Серо-бежевый', sl: 'Сицилийский лимон', wh: 'Белый', wg: 'Белое золото', wd: 'Дерево' };
+  let editorVariants = [];
 
   const format = (value) => value == null || value === '' ? 'Цена не задана' : `${Number(value).toLocaleString('ru-RU')} ₸`;
   function activateView(view) {
@@ -42,6 +44,14 @@
   function collectSpecifications() {
     $('#specifications').value = Array.from(document.querySelectorAll('[data-specification]')).map((input) => `${input.dataset.specification}: ${input.value.trim()}`).filter((line) => !line.endsWith(':')).join('\n');
   }
+  function renderVariantRows() {
+    $('#variantRows').innerHTML = editorVariants.length ? editorVariants.map((variant, index) => `<div class="variant-row"><label>Код цвета<input data-variant="color" data-index="${index}" maxlength="30" value="${escapeHtml(variant.color || '')}" placeholder="BL"></label><label>Название цвета<input data-variant="name" data-index="${index}" maxlength="80" value="${escapeHtml(variant.name || '')}" placeholder="Черный"></label><label>Артикул цвета<input data-variant="sku" data-index="${index}" maxlength="40" value="${escapeHtml(variant.sku || '')}" placeholder="4997361"></label><button class="quiet" type="button" data-remove-variant="${index}">Удалить</button></div>`).join('') : '<p class="variant-empty">Вариантов пока нет.</p>';
+    document.querySelectorAll('[data-variant]').forEach((input) => input.addEventListener('input', () => { editorVariants[Number(input.dataset.index)][input.dataset.variant] = input.value; }));
+    document.querySelectorAll('[data-remove-variant]').forEach((button) => button.addEventListener('click', () => { editorVariants.splice(Number(button.dataset.removeVariant), 1); renderVariantRows(); }));
+  }
+  function normalizedVariants() {
+    return editorVariants.map((variant) => ({ color: String(variant.color || '').trim().toLowerCase(), name: String(variant.name || '').trim(), sku: String(variant.sku || '').trim() })).filter((variant) => variant.color || variant.name || variant.sku);
+  }
   async function request(path, options) {
     const requestOptions = { credentials: 'same-origin', headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) }, ...options };
     let response;
@@ -62,11 +72,13 @@
   }
   function resetForm() {
     form.reset(); fields.forEach((name) => { const field = $(`#${name}`); if (field && field.type !== 'checkbox') field.value = ''; });
-    $('#visible').checked = true; $('#isCustom').checked = true; renderSpecificationFields(); $('#editorTitle').textContent = 'Новая позиция'; $('#saveProduct').textContent = 'Добавить позицию'; $('#deleteProduct').hidden = true; $('#formError').textContent = '';
+    $('#visible').checked = true; $('#isCustom').checked = true; editorVariants = []; renderVariantRows(); renderSpecificationFields(); $('#editorTitle').textContent = 'Новая позиция'; $('#saveProduct').textContent = 'Добавить позицию'; $('#deleteProduct').hidden = true; $('#formError').textContent = '';
   }
   function setForm(item) {
     fields.forEach((name) => { const field = $(`#${name}`); if (!field) return; field.type === 'checkbox' ? field.checked = item[name] : field.value = item[name] ?? ''; });
-    renderSpecificationFields(); $('#editorTitle').textContent = 'Редактирование позиции'; $('#saveProduct').textContent = 'Сохранить изменения'; $('#deleteProduct').hidden = false; $('#formError').textContent = ''; activateView('editor');
+    editorVariants = Array.isArray(item.variants) ? item.variants : [];
+    if (!editorVariants.length && item.colors) editorVariants = String(item.colors).split(',').map((color) => ({ color: color.trim(), name: COLOR_LABELS[color.trim().toLowerCase()] || '', sku: '' })).filter((variant) => variant.color);
+    renderVariantRows(); renderSpecificationFields(); $('#editorTitle').textContent = 'Редактирование позиции'; $('#saveProduct').textContent = 'Сохранить изменения'; $('#deleteProduct').hidden = false; $('#formError').textContent = ''; activateView('editor');
   }
   function render() {
     const query = $('#search').value.trim().toLowerCase();
@@ -89,7 +101,8 @@
     $('#fullCatalogItems').innerHTML = filtered.map((item) => {
       const override = currentOverride(item.slug);
       const hiddenColors = new Set(override.hiddenColors || []);
-      const colors = item.colors.length ? item.colors.map((color) => `<button class="color-toggle${hiddenColors.has(color) ? ' is-hidden' : ''}" type="button" data-color-slug="${escapeHtml(item.slug)}" data-color="${escapeHtml(color)}">${escapeHtml(color.toUpperCase())}</button>`).join('') : '<span class="full-catalog-meta">Без вариантов цвета</span>';
+      const variants = item.variations?.length ? item.variations : (item.colors || []).map((color) => ({ color, sku: '' }));
+      const colors = variants.length ? variants.map((variant) => { const color = String(variant.color || ''); const label = COLOR_LABELS[color] || color.toUpperCase(); return `<button class="color-toggle${hiddenColors.has(color) ? ' is-hidden' : ''}" type="button" data-color-slug="${escapeHtml(item.slug)}" data-color="${escapeHtml(color)}">${escapeHtml(label)} (${escapeHtml(color.toUpperCase())})${variant.sku ? ` · арт. ${escapeHtml(variant.sku)}` : ''}</button>`; }).join('') : '<span class="full-catalog-meta">Без вариантов цвета</span>';
       return `<article class="full-catalog-item${override.visible ? '' : ' is-hidden'}"><div><h3>${escapeHtml(item.name)}</h3><p class="full-catalog-meta">${escapeHtml(CATEGORY_LABELS[item.category] || item.category)} · ${escapeHtml(item.sku || 'без артикула')} · /${escapeHtml(item.slug)}</p><div class="color-management">${colors}</div></div><div class="full-catalog-actions"><p class="full-catalog-status${override.visible ? '' : ' hidden'}">${override.visible ? 'Показывается на сайте' : 'Скрыта с сайта'}</p><button class="${override.visible ? 'danger' : 'restore'}" type="button" data-product-slug="${escapeHtml(item.slug)}" data-visible="${override.visible ? '0' : '1'}">${override.visible ? 'Скрыть позицию' : 'Вернуть позицию'}</button></div></article>`;
     }).join('');
     document.querySelectorAll('[data-product-slug]').forEach((button) => button.addEventListener('click', async () => {
@@ -145,9 +158,9 @@
   $('#showPassword').addEventListener('change', (event) => { $('#password').type = event.target.checked ? 'text' : 'password'; });
   $('#password').addEventListener('invalid', () => { $('#loginError').textContent = 'Введите пароль.'; });
   $('#loginForm').addEventListener('submit', async (event) => { event.preventDefault(); $('#loginError').textContent = ''; try { await request('/login', { method: 'POST', body: JSON.stringify({ login: $('#login').value.trim(), password: $('#password').value }) }); $('#password').value = ''; await showAdmin(); } catch (error) { $('#loginError').textContent = error.message; } });
-  form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; collectSpecifications(); const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, material: $('#material').value, colors: $('#colors').value, specifications: $('#specifications').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); activateView('catalog'); } catch (error) { $('#formError').textContent = error.message; } });
+  form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; collectSpecifications(); const variants = normalizedVariants(); $('#colors').value = variants.map((variant) => variant.color).filter(Boolean).join(', '); const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, material: $('#material').value, colors: $('#colors').value, variants, specifications: $('#specifications').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); activateView('catalog'); } catch (error) { $('#formError').textContent = error.message; } });
   $('#deleteProduct').addEventListener('click', async () => { const id = Number($('#itemId').value); if (!id || !confirm('Удалить эту позицию без возможности восстановления?')) return; try { await request(`/products/${id}`, { method: 'DELETE' }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
-  $('#resetForm').addEventListener('click', resetForm); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); $('#fullCatalogSearch').addEventListener('input', renderFullCatalog); $('#fullCatalogCategory').addEventListener('change', renderFullCatalog); document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view))); document.querySelectorAll('[data-open-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.openView))); renderSpecificationFields();
+  $('#resetForm').addEventListener('click', resetForm); $('#addVariant').addEventListener('click', () => { editorVariants.push({ color: '', name: '', sku: '' }); renderVariantRows(); }); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); $('#fullCatalogSearch').addEventListener('input', renderFullCatalog); $('#fullCatalogCategory').addEventListener('change', renderFullCatalog); document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view))); document.querySelectorAll('[data-open-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.openView))); renderVariantRows(); renderSpecificationFields();
   $('#logout').addEventListener('click', async () => { await request('/logout', { method: 'POST' }); adminView.hidden = true; adminView.style.removeProperty('display'); loginView.hidden = false; loginView.style.removeProperty('display'); resetForm(); });
   request('/session').then(({ authenticated }) => authenticated && showAdmin()).catch(() => {});
 }());

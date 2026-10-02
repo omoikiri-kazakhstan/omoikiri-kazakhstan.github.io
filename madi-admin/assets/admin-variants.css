@@ -1,0 +1,9 @@
+.field-hint { margin: 0; color: #666; font-size: 12px; font-weight: 400; line-height: 1.45; }
+.variant-editor { padding: 16px; border: 1px solid #d9d9d5; border-radius: 7px; background: #fafaf9; }
+.variant-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+.variant-heading .quiet { padding: 9px 11px; white-space: nowrap; }
+.variant-rows { display: grid; gap: 10px; margin-top: 14px; }
+.variant-row { display: grid; grid-template-columns: 110px minmax(150px, 1fr) minmax(130px, 1fr) auto; gap: 10px; align-items: end; }
+.variant-row button { padding: 11px; }
+.variant-empty { margin: 0; color: #777; font-size: 13px; }
+@media (max-width: 800px) { .variant-row { grid-template-columns: 1fr; } .variant-row button { width: 100%; } }

@@ -22,7 +22,7 @@ const productDirectories = new Set((await readdir(join(root, 'product'), { withF
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name));
 
-async function variationColors(slug) {
+async function productVariations(slug) {
   if (!productDirectories.has(slug)) return [];
   const file = join(root, 'product', slug, 'index.html');
   try {
@@ -31,7 +31,11 @@ async function variationColors(slug) {
     const source = html.match(/data-product_variations="([\s\S]*?)"/)?.[1];
     if (!source) return [];
     const variations = JSON.parse(decodeEntities(source));
-    return [...new Set(variations.map((item) => item.attributes?.attribute_pa_color).filter(Boolean))].sort();
+    return variations.map((item) => ({
+      color: String(item.attributes?.attribute_pa_color || '').trim(),
+      sku: String(item.sku || '').trim(),
+      price: Number(item.display_price) || null
+    })).filter((item) => item.color);
   } catch {
     return [];
   }
@@ -41,12 +45,14 @@ const unique = new Map();
 for (const item of searchItems) {
   const slug = String(item.slug || '').trim().toLowerCase();
   if (!slug || unique.has(slug)) continue;
+  const variations = await productVariations(slug);
   unique.set(slug, {
     slug,
     name: String(item.title || slug).trim(),
     sku: String(item.sku || '').trim(),
     category: categoryMap[item.category] || 'acs',
-    colors: await variationColors(slug)
+    colors: variations.map((variation) => variation.color),
+    variations
   });
 }
 

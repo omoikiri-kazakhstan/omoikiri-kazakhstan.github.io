@@ -21,6 +21,12 @@ export function normalizeItem(input, options = {}) {
   const description = text(input.description, 5000);
   const material = text(input.material, 160);
   const colors = text(input.colors, 500);
+  const rawVariants = Array.isArray(input.variants) ? input.variants : [];
+  const variants = rawVariants.slice(0, 50).map((variant) => ({
+    color: text(variant?.color, 30).toLowerCase(),
+    name: text(variant?.name, 80),
+    sku: text(variant?.sku, 40)
+  })).filter((variant) => variant.color || variant.name || variant.sku);
   const specifications = text(input.specifications, 5000);
   const itemPrice = price(input.price);
   const oldPrice = price(input.oldPrice);
@@ -34,7 +40,7 @@ export function normalizeItem(input, options = {}) {
   if (oldPrice !== null && itemPrice !== null && oldPrice < itemPrice) return { error: 'Старая цена не может быть меньше текущей.' };
   if (imageUrl && !/^https:\/\/|^\//.test(imageUrl)) return { error: 'Ссылка на изображение должна начинаться с https:// или /.' };
 
-  return { value: { slug, name, sku, category, imageUrl, price: itemPrice, oldPrice, description, material, colors, specifications, visible, isCustom } };
+  return { value: { slug, name, sku, category, imageUrl, price: itemPrice, oldPrice, description, material, colors, variants: JSON.stringify(variants), specifications, visible, isCustom } };
 }
 
 export function validationError(result) {
@@ -54,6 +60,7 @@ export function rowToItem(row) {
     description: row.description,
     material: row.material,
     colors: row.colors,
+    variants: JSON.parse(row.variants || '[]'),
     specifications: row.specifications,
     visible: Boolean(row.visible),
     isCustom: Boolean(row.is_custom),

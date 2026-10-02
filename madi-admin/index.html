@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/admin.css">
   <link rel="stylesheet" href="assets/admin-background.css">
   <link rel="stylesheet" href="assets/admin-full-catalog.css">
+  <link rel="stylesheet" href="assets/admin-variants.css">
 </head>
 <body>
   <main class="shell">
@@ -47,11 +48,13 @@
           <div class="panel-heading"><div><p class="eyebrow">Позиция</p><h1 id="editorTitle">Новая позиция</h1></div><button id="resetForm" class="quiet" type="button">Очистить</button></div>
           <form id="productForm" class="product-form">
             <input id="itemId" type="hidden">
-            <div class="two"><label>Название<input id="name" required maxlength="160" placeholder="Например, AKISAME 59 GB"></label><label>Артикул<input id="sku" maxlength="40" placeholder="4997014"></label></div>
+            <div class="two"><label>Название<input id="name" required maxlength="160" placeholder="Например, AKISAME 59 GB"></label><label>Артикул модели<input id="sku" maxlength="40" placeholder="Необязательно"></label></div>
             <div class="two"><label>URL позиции<input id="slug" required pattern="[a-z0-9-]+" maxlength="90" placeholder="akisame-59-gb"></label><label>Раздел<select id="category" required><option value="sinks">Мойки</option><option value="bathsinks">Раковины для ванной</option><option value="taps">Смесители</option><option value="filters">Фильтры</option><option value="disposers">Измельчители</option><option value="dispenser">Дозаторы</option><option value="acs">Аксессуары</option><option value="omoikiri-home">OMOIKIRI Home</option></select></label></div>
             <div class="two"><label>Текущая цена, ₸<input id="price" type="number" min="0" step="1" placeholder="218880"></label><label>Старая цена, ₸<input id="oldPrice" type="number" min="0" step="1" placeholder=""></label></div>
             <label>Изображение<input id="imageUrl" type="url" maxlength="1000" placeholder="https://... или /assets/uploads/... "></label>
-            <div class="two"><label>Материал<input id="material" maxlength="160" placeholder="Нержавеющая сталь"></label><label>Цвета<input id="colors" maxlength="500" placeholder="графит, черный, золото"></label></div>
+            <label>Материал<input id="material" maxlength="160" placeholder="Нержавеющая сталь"></label>
+            <input id="colors" type="hidden">
+            <div class="variant-editor"><div class="variant-heading"><div><span class="field-label">Варианты цветов</span><p class="field-hint">У каждого цвета свой артикул. Он будет показан в карточке выбранного цвета.</p></div><button id="addVariant" class="quiet" type="button">Добавить цвет</button></div><div id="variantRows" class="variant-rows"></div></div>
             <div><span class="field-label">Характеристики</span><div id="specificationFields" class="two"></div><input id="specifications" type="hidden"></div>
             <label>Описание<textarea id="description" maxlength="5000" rows="5" placeholder="Краткое описание для карточки позиции"></textarea></label>
             <label class="switch"><input id="isCustom" type="checkbox" checked><span></span>Новая позиция, которой ещё нет на сайте</label>
@@ -77,6 +80,6 @@
       </div>
     </section>
   </main>
-  <script src="assets/admin.js?v=20261002-01" defer></script>
+  <script src="assets/admin.js?v=20261002-02" defer></script>
 </body>
 </html>

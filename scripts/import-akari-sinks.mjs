@@ -17,6 +17,7 @@ function localize(html) {
     .replace(/href=["']https:\/\/omoikiri\.ru\/product\/([^"'?/#]+)(\?[^"']*)?["']/g, 'href="/product/$1/index.html$2"')
     .replace(/href=["']https:\/\/omoikiri\.ru\/(sinks|bathsinks|taps|filters|disposers|dispenser|acs|omoikiri-home)\/?(\?[^"']*)?["']/g, 'href="/$1/index.html$2"')
     .replace(/https:\/\/omoikiri\.ru\/wp-content\//g, '/assets/remote/omoikiri.ru/wp-content/')
+    .replace(/https:\\\/\\\/omoikiri\.ru\\\/wp-content\\\//g, '/assets/remote/omoikiri.ru/wp-content/')
     .replace(/"priceCurrency":"RUB"/g, '"priceCurrency":"KZT"')
     .replace(/&#8381;|&amp;#8381;|₽/g, '₸');
 }
@@ -39,6 +40,9 @@ for (const product of products) {
     for (const image of [variation.image, ...(variation.variation_gallery_images || [])]) {
       for (const key of ['url', 'src', 'full_src', 'archive_src', 'gallery_thumbnail_src', 'thumb_src']) if (image?.[key]?.startsWith(source)) media.add(image[key]);
     }
+  }
+  for (const match of original.matchAll(/https:\\\/\\\/omoikiri\.ru\\\/wp-content\\\/[^"']+?\.(?:png|jpe?g|webp)/g)) {
+    media.add(match[0].replace(/\\\//g, '/'));
   }
   await Promise.all([...media].map(mirror));
   const scripts = '<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261002-01"></script>\n<script src="../../assets/js/lang-switch.js" data-root="../../"></script>\n<script src="../../assets/js/local-router.js" data-root="../../"></script>\n<script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>';

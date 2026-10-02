@@ -43,7 +43,19 @@
     $('#specifications').value = Array.from(document.querySelectorAll('[data-specification]')).map((input) => `${input.dataset.specification}: ${input.value.trim()}`).filter((line) => !line.endsWith(':')).join('\n');
   }
   async function request(path, options) {
-    const response = await fetch(`${api}${path}`, { credentials: 'same-origin', headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) }, ...options });
+    const requestOptions = { credentials: 'same-origin', headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) }, ...options };
+    let response;
+    try {
+      response = await fetch(`${api}${path}`, requestOptions);
+    } catch (firstError) {
+      // A short retry prevents a temporary network hiccup from blocking the admin login.
+      await new Promise((resolve) => window.setTimeout(resolve, 350));
+      try {
+        response = await fetch(`${api}${path}`, requestOptions);
+      } catch (secondError) {
+        throw new Error('Не удалось подключиться к админке. Проверьте интернет и повторите попытку.');
+      }
+    }
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || 'Не удалось выполнить действие.');
     return data;

@@ -1475,8 +1475,8 @@
       const matches = (variation, expected) => Object.entries(expected)
         .every(([name, value]) => !value || variation.attributes?.[name] === value);
 
-      return variations.find((variation) => matches(variation, attributes)) ||
-        variations.find((variation) => matches(variation, requested)) ||
+      return variations.find((variation) => matches(variation, requested)) ||
+        variations.find((variation) => matches(variation, attributes)) ||
         variations[0] ||
         null;
     } catch (error) {

@@ -254,10 +254,6 @@
       return String(value || '').replace(/^https?:\/\/omoikiri\.ru(?=\/)/i, '/assets/remote/omoikiri.ru');
     }
 
-    function publicImage(value) {
-      return String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, 'https://omoikiri.ru');
-    }
-
     function escapeHtml(value) {
       return String(value || '')
         .replace(/&/g, '&amp;')
@@ -346,7 +342,7 @@
           const safeProductName = escapeHtml(productName);
           const safeDetails = escapeHtml(details);
           const safeImage = escapeHtml(localizeImage(product.image));
-          const safeFallbackImage = escapeHtml(publicImage(product.image));
+          const safeFallbackImage = '/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/default/logo_black.svg';
           const safeId = escapeHtml(item.id);
           return `
             <article class="dealer-cart-row">

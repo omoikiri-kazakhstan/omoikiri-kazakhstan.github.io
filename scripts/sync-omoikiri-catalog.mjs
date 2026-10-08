@@ -92,7 +92,7 @@ function categoryScript(rootPrefix) {
 
 function productScript() {
   return `
-<script id="dealer-local-product-script" src="../../assets/js/product-local.js"></script>
+<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261008-01"></script>
 <script src="../../assets/js/lang-switch.js" data-root="../../"></script>
 <script src="../../assets/js/local-router.js" data-root="../../"></script>`;
 }
@@ -107,6 +107,11 @@ function normalizeCommon(html) {
   next = next.replace(/https:\/\/omoikiri\.ru\/cart/g, '/cart');
   next = next.replace(/https:\/\/omoikiri\.ru\/favorites/g, '/favorites');
   next = rewriteLocalLinks(next);
+  next = next.replace(/(?:https?:)?\/\/omoikiri\.ru(?=\/(?:wp-includes|wp-content|product\/sinks\/manual)\/)/g, '/assets/remote/omoikiri.ru');
+  next = next.replace(/https:\\\/\\\/omoikiri\.ru/g, 'https:\\/\\/omoikiri-kazakhstan.pages.dev');
+  next = next.replace(/https?:\/\/omoikiri\.ru/g, 'https://omoikiri-kazakhstan.pages.dev');
+  next = next.replace(/<script>\s*jQuery\(document\)\.ready\(function\(\$\)\s*\{[\s\S]*?get_variation_sku[\s\S]*?<\/script>/g, '');
+  next = next.replace(/<script id="favorites-js"[^>]*><\/script>/g, '');
   next = next.replace(/"priceCurrency":"RUB"/g, '"priceCurrency":"KZT"');
   next = next.replace(/&#8381;|&amp;#8381;|₽/g, '₸');
   return next;

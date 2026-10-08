@@ -66,6 +66,21 @@
     wd: 'дерево'
   };
 
+  function localizeHref(value) {
+    const href = String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, '');
+    try {
+      const url = new URL(href, window.location.href);
+      if (/^(?:www\.)?omoikiri\.ru$/i.test(url.hostname)) {
+        return url.pathname + url.search + url.hash;
+      }
+    } catch (error) {}
+    return href;
+  }
+
+  function localizeFavorite(item) {
+    return { ...item, href: localizeHref(item.href), image: localizeImage(item.image) };
+  }
+
   function readFavorites() {
     const cookieValue = document.cookie
       .split('; ')
@@ -76,11 +91,11 @@
 
     try {
       return JSON.parse(window.localStorage.getItem(FAVORITES_KEY) || cookieValue && decodeURIComponent(cookieValue) || '[]')
-        .filter((item) => !isDiscontinuedFavorite(item));
+        .filter((item) => !isDiscontinuedFavorite(item)).map(localizeFavorite);
     } catch (error) {
       try {
         return JSON.parse(cookieValue ? decodeURIComponent(cookieValue) : '[]')
-          .filter((item) => !isDiscontinuedFavorite(item));
+          .filter((item) => !isDiscontinuedFavorite(item)).map(localizeFavorite);
       } catch (cookieError) {
         return [];
       }
@@ -88,7 +103,7 @@
   }
 
   function writeFavorites(items) {
-    const value = JSON.stringify(items.filter((item) => !isDiscontinuedFavorite(item)));
+    const value = JSON.stringify(items.filter((item) => !isDiscontinuedFavorite(item)).map(localizeFavorite));
 
     try {
       window.localStorage.setItem(FAVORITES_KEY, value);
@@ -156,7 +171,7 @@
   }
 
   function localizeImage(value) {
-    return String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, 'https://omoikiri.ru');
+    return String(value || '').replace(/^https?:\/\/omoikiri\.ru(?=\/)/i, '/assets/remote/omoikiri.ru');
   }
 
   function cleanPrice(value) {

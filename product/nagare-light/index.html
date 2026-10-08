@@ -119,7 +119,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <script id="jquery-migrate-js" src="/assets/remote/omoikiri.ru/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
 <script data-wp-strategy="defer" id="jquery-blockui-js" src="/assets/remote/omoikiri.ru/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.7.0-wc.9.0.4"></script>
 <script id="wc-add-to-cart-js-extra">
-var wc_add_to_cart_params = {"ajax_url":"/wp-admin/admin-ajax.php","wc_ajax_url":"/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"/assets/remote/omoikiri.ru/cart","is_cart":"","cart_redirect_after_add":"no"};
+var wc_add_to_cart_params = {"ajax_url":"/wp-admin/admin-ajax.php","wc_ajax_url":"/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"/cart","is_cart":"","cart_redirect_after_add":"no"};
 //# sourceURL=wc-add-to-cart-js-extra
 </script>
 <script data-wp-strategy="defer" defer id="wc-add-to-cart-js" src="/assets/remote/omoikiri.ru/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=9.0.4"></script>
@@ -407,31 +407,7 @@ $(function() {
 
 	<section id="primary" class="content-area"><main id="main" class="site-main">
 					
-			<div class="woocommerce-notices-wrapper"></div>        <script>
-        jQuery(document).ready(function($) {     
-            $('input.variation_id').change( function(){
-                if( '' != $('input.variation_id').val() ) {
-
-                    jQuery.ajax( {
-
-                        url: '/assets/remote/omoikiri.ru/wp-admin/admin-ajax.php',
-                        type: 'post',
-                        data: { 
-                            action: 'get_variation_sku', 
-                            variation_id: $('input.variation_id').val()
-                        },
-                        success: function(data) {
-                            $('h1.prod_title').siblings('.sku').remove();
-                            if(data.length > 0) {
-                                $('h1.prod_title').after('<p class="sku">арт. ' + data + '</p>');
-                            }
-                        }
-                    });
-
-                }
-            });
-        });
-        </script>
+			<div class="woocommerce-notices-wrapper"></div>
     
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/gallery.css">
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/buttons.css">
@@ -1138,7 +1114,7 @@ var woo_variation_gallery_options = {"gallery_reset_on_variation_change":"1","en
 var favorites_ajax = {"ajax_url":"/assets/remote/omoikiri.ru/wp-admin/admin-ajax.php","nonce":"04b243ae12"};
 //# sourceURL=favorites-js-extra
 </script>
-<script id="favorites-js" src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/favorites.js"></script>
+
 <script id="jquery-ui-core-js" src="/assets/remote/omoikiri.ru/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3"></script>
 <script id="jquery-ui-mouse-js" src="/assets/remote/omoikiri.ru/wp-includes/js/jquery/ui/mouse.min.js?ver=1.13.3"></script>
 <script id="jquery-ui-resizable-js" src="/assets/remote/omoikiri.ru/wp-includes/js/jquery/ui/resizable.min.js?ver=1.13.3"></script>
@@ -1213,7 +1189,7 @@ var ForminatorFront = {"ajaxUrl":"/assets/remote/omoikiri.ru/wp-admin/admin-ajax
 			});
 		</script>
 		
-<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20260910-02"></script>
+<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261008-01"></script>
 <script src="../../assets/js/lang-switch.js?v=20260910-03" data-root="../../"></script>
 <script src="../../assets/js/local-router.js" data-root="../../"></script>
 <script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>

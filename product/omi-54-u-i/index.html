@@ -392,31 +392,7 @@ $(function() {
 
 	<section id="primary" class="content-area"><main id="main" class="site-main">
 
-			<div class="woocommerce-notices-wrapper"></div>        <script>
-        jQuery(document).ready(function($) {
-            $('input.variation_id').change( function(){
-                if( '' != $('input.variation_id').val() ) {
-
-                    jQuery.ajax( {
-
-                        url: '/assets/data/ajax-noop.json',
-                        type: 'post',
-                        data: {
-                            action: 'get_variation_sku',
-                            variation_id: $('input.variation_id').val()
-                        },
-                        success: function(data) {
-                            $('h1.prod_title').siblings('.sku').remove();
-                            if(data.length > 0) {
-                                $('h1.prod_title').after('<p class="sku">Р°СЂС‚. ' + data + '</p>');
-                            }
-                        }
-                    });
-
-                }
-            });
-        });
-        </script>
+			<div class="woocommerce-notices-wrapper"></div>
 
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/gallery.css">
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/buttons.css">
@@ -1406,7 +1382,7 @@ var ForminatorFront = {"ajaxUrl":"/assets/data/ajax-noop.json","cform":{"process
 			});
 		</script>
 
-<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20260910-02"></script>
+<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261008-01"></script>
 <script src="../../assets/js/lang-switch.js?v=20260910-03" data-root="../../"></script>
 <script src="../../assets/js/local-router.js" data-root="../../"></script>
 <script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>

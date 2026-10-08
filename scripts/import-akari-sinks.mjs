@@ -18,6 +18,11 @@ function localize(html) {
     .replace(/href=["']https:\/\/omoikiri\.ru\/(sinks|bathsinks|taps|filters|disposers|dispenser|acs|omoikiri-home)\/?(\?[^"']*)?["']/g, 'href="/$1/index.html$2"')
     .replace(/https:\/\/omoikiri\.ru\/wp-content\//g, '/assets/remote/omoikiri.ru/wp-content/')
     .replace(/https:\\\/\\\/omoikiri\.ru\\\/wp-content\\\//g, '/assets/remote/omoikiri.ru/wp-content/')
+    .replace(/(?:https?:)?\/\/omoikiri\.ru(?=\/(?:wp-includes|wp-content|product\/sinks\/manual)\/)/g, '/assets/remote/omoikiri.ru')
+    .replace(/https:\\\/\\\/omoikiri\.ru/g, 'https:\\/\\/omoikiri-kazakhstan.pages.dev')
+    .replace(/https?:\/\/omoikiri\.ru/g, 'https://omoikiri-kazakhstan.pages.dev')
+    .replace(/<script>\s*jQuery\(document\)\.ready\(function\(\$\)\s*\{[\s\S]*?get_variation_sku[\s\S]*?<\/script>/, '')
+    .replace(/<script id="favorites-js"[^>]*><\/script>/g, '')
     .replace(/"priceCurrency":"RUB"/g, '"priceCurrency":"KZT"')
     .replace(/&#8381;|&amp;#8381;|₽/g, '₸');
 }
@@ -45,7 +50,7 @@ for (const product of products) {
     media.add(match[0].replace(/\\\//g, '/'));
   }
   await Promise.all([...media].map(mirror));
-  const scripts = '<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261002-01"></script>\n<script src="../../assets/js/lang-switch.js" data-root="../../"></script>\n<script src="../../assets/js/local-router.js" data-root="../../"></script>\n<script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>';
+  const scripts = '<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261008-01"></script>\n<script src="../../assets/js/lang-switch.js" data-root="../../"></script>\n<script src="../../assets/js/local-router.js" data-root="../../"></script>\n<script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>';
   const initialImage = variations[0]?.variation_gallery_images?.[1]?.src || variations[0]?.image?.src || '';
   const initialImagePath = localize(initialImage);
   const page = localize(original)

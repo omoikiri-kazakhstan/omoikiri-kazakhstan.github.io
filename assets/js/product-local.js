@@ -70,10 +70,6 @@
     return String(value || '').replace(/^https?:\/\/omoikiri\.ru(?=\/)/i, '/assets/remote/omoikiri.ru');
   }
 
-  function publicOmoikiriUrl(value) {
-    return String(value || '').replace(/^\/assets\/remote\/omoikiri\.ru(?=\/)/i, 'https://omoikiri.ru');
-  }
-
   const CP1251_EXTRA_BYTES = {
     0x0402: 0x80, 0x0403: 0x81, 0x201A: 0x82, 0x0453: 0x83,
     0x201E: 0x84, 0x2026: 0x85, 0x2020: 0x86, 0x2021: 0x87,
@@ -1025,7 +1021,7 @@
 
   function productImage() {
     const image = document.querySelector('.prod_image img, .woocommerce-product-gallery img, .rtwpvg-single-image-container img, .product img');
-    return publicOmoikiriUrl(image?.currentSrc ||
+    return localizeOmoikiriUrl(image?.currentSrc ||
       image?.src ||
       '');
   }

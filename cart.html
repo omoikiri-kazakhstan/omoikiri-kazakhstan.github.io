@@ -156,6 +156,41 @@
       color: #777;
     }
 
+    .dealer-checkout-form {
+      max-width: 760px;
+      margin-top: 30px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(0, 0, 0, .14);
+    }
+
+    .dealer-checkout-form[hidden] { display: none; }
+    .dealer-checkout-form h2 { margin: 0 0 18px; font-size: 26px; }
+    .dealer-checkout-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .dealer-checkout-form label { display: grid; gap: 7px; font-size: 14px; font-weight: 700; }
+    .dealer-checkout-form input:not([type="checkbox"]),
+    .dealer-checkout-form textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid #aaa;
+      border-radius: 2px;
+      background: #fff;
+      color: #111;
+      font: inherit;
+    }
+    .dealer-checkout-form textarea { min-height: 90px; resize: vertical; }
+    .dealer-checkout-wide { grid-column: 1 / -1; }
+    .dealer-checkout-form .dealer-checkout-consent { display: flex; align-items: flex-start; gap: 9px; margin: 20px 0; font-weight: 400; }
+    .dealer-checkout-consent input { margin-top: 3px; }
+    .dealer-checkout-form button { min-height: 44px; padding: 0 24px; border: 0; background: #111; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+    .dealer-checkout-form button:disabled, .dealer-cart-checkout:disabled { opacity: .45; cursor: not-allowed; }
+    .dealer-checkout-status { margin: 16px 0 0; line-height: 1.5; }
+    .dealer-checkout-status[data-state="error"] { color: #b00020; }
+    .dealer-checkout-form.is-complete .dealer-checkout-fields,
+    .dealer-checkout-form.is-complete .dealer-checkout-consent,
+    .dealer-checkout-form.is-complete #checkout-turnstile,
+    .dealer-checkout-form.is-complete #checkout-submit { display: none; }
+
     .dealer-cart-payment {
       margin-top: 42px;
       padding: 24px;
@@ -190,6 +225,9 @@
         width: 84px;
         height: 84px;
       }
+
+      .dealer-checkout-fields { grid-template-columns: 1fr; }
+      .dealer-checkout-wide { grid-column: auto; }
     }
   </style>
 </head>
@@ -214,6 +252,21 @@
       <button class="dealer-cart-clear" type="button" id="cart-clear">Очистить</button>
       <button class="dealer-cart-checkout" type="button">Оформить заказ</button>
     </div>
+
+    <form class="dealer-checkout-form" id="checkout-form" hidden>
+      <h2>Контактные данные</h2>
+      <div class="dealer-checkout-fields">
+        <label>Ваше имя<input name="name" autocomplete="name" maxlength="100" required></label>
+        <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="32" placeholder="+7 777 123 45 67" required></label>
+        <label>Город<input name="city" autocomplete="address-level2" maxlength="100" required></label>
+        <label>Адрес доставки, если нужен<input name="address" autocomplete="street-address" maxlength="200"></label>
+        <label class="dealer-checkout-wide">Комментарий<textarea name="comment" maxlength="500" placeholder="Удобное время для звонка, пожелания по заказу"></textarea></label>
+      </div>
+      <label class="dealer-checkout-consent"><input name="consent" type="checkbox" required><span>Согласен на обработку контактных данных для оформления заказа.</span></label>
+      <div id="checkout-turnstile"></div>
+      <button id="checkout-submit" type="submit">Отправить заказ</button>
+      <p class="dealer-checkout-status" id="checkout-status" role="status" aria-live="polite"></p>
+    </form>
 
     <section class="dealer-cart-payment">
       <strong>Оплата:</strong> онлайн-оплата будет реализована через TipTopPay. На локальной копии кнопка оформления заказа пока не проводит платеж, чтобы не имитировать боевой процесс.
@@ -285,7 +338,8 @@
     }
 
     function readCart() {
-      const stored = JSON.parse(localStorage.getItem('omoikiriCart') || 'null');
+      let stored;
+      try { stored = JSON.parse(localStorage.getItem('omoikiriCart') || 'null'); } catch { stored = null; }
       if (Array.isArray(stored) && stored.length) {
         const available = stored.filter((item) => !discontinuedSkus.has(String(item?.article || item?.sku || '').trim()));
         if (available.length !== stored.length) localStorage.setItem('omoikiriCart', JSON.stringify(available));
@@ -369,6 +423,8 @@
       }, 0);
 
       document.querySelector('#cart-total').textContent = money(total);
+      document.querySelector('.dealer-cart-checkout').disabled = cart.length === 0;
+      if (!cart.length) document.querySelector('#checkout-form').hidden = true;
       document.querySelectorAll('.dealer-cart-row img[data-fallback-src]').forEach((image) => {
         image.addEventListener('error', () => {
           const fallback = image.dataset.fallbackSrc || '';
@@ -390,9 +446,98 @@
       renderCart();
     });
 
+    const checkoutForm = document.querySelector('#checkout-form');
+    const checkoutStatus = document.querySelector('#checkout-status');
+    const checkoutButton = document.querySelector('#checkout-submit');
+    let checkoutRequestId = '';
+    let turnstileWidgetId = null;
+    const checkoutMessage = (ru, kz) => localStorage.getItem('omoikiriDealerLang') === 'kz' ? kz : ru;
+
+    async function ensureTurnstile() {
+      if (turnstileWidgetId !== null) return;
+      if (!window.turnstile) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+          script.async = true;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+      turnstileWidgetId = window.turnstile.render('#checkout-turnstile', { sitekey: '0x4AAAAAAFR_mTc93kitTTkd' });
+    }
+
+    document.querySelector('.dealer-cart-checkout').addEventListener('click', () => {
+      if (!cart.length) return;
+      checkoutForm.classList.remove('is-complete');
+      checkoutForm.hidden = false;
+      checkoutForm.querySelector('[name="name"]').focus();
+      checkoutForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      ensureTurnstile().catch(() => {
+        checkoutStatus.dataset.state = 'error';
+        checkoutStatus.textContent = checkoutMessage('Не удалось загрузить проверку отправки. Обновите страницу.', 'Тексеруді жүктеу мүмкін болмады. Бетті жаңартыңыз.');
+      });
+    });
+
+    checkoutForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!cart.length || checkoutButton.disabled) return;
+      const turnstileToken = turnstileWidgetId === null ? '' : window.turnstile.getResponse(turnstileWidgetId);
+      if (!turnstileToken) {
+        checkoutStatus.dataset.state = 'error';
+        checkoutStatus.textContent = checkoutMessage('Дождитесь проверки отправки и попробуйте снова.', 'Тексеру аяқталғанша күтіп, қайта байқап көріңіз.');
+        return;
+      }
+      const fields = new FormData(checkoutForm);
+      checkoutRequestId ||= crypto.randomUUID();
+      const items = cart.map((entry) => {
+        const product = products.find((candidate) => candidate.id === entry.id) || entry;
+        return {
+          id: String(entry.id || ''),
+          name: String(product.name || product.title || ''),
+          sku: String(product.article || product.sku || ''),
+          color: normalizeDetail(product.detail || product.color || ''),
+          qty: Number(entry.qty),
+          price: Number(product.price)
+        };
+      });
+      checkoutButton.disabled = true;
+      checkoutStatus.dataset.state = '';
+      checkoutStatus.textContent = checkoutMessage('Отправляем заказ...', 'Тапсырыс жіберілуде...');
+      try {
+        const response = await fetch('/api/orders/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            requestId: checkoutRequestId,
+            name: fields.get('name'), phone: fields.get('phone'),
+            city: fields.get('city'), address: fields.get('address'),
+            comment: fields.get('comment'), consent: fields.get('consent') === 'on', turnstileToken, items
+          })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.error || 'Не удалось отправить заказ.');
+        cart = [];
+        saveCart();
+        renderCart();
+        checkoutForm.reset();
+        checkoutForm.classList.add('is-complete');
+        checkoutRequestId = '';
+        checkoutStatus.textContent = checkoutMessage(`Заказ №${result.orderId} принят. Мы свяжемся с вами для подтверждения цены и доставки.`, `№${result.orderId} тапсырыс қабылданды. Баға мен жеткізуді растау үшін сізге хабарласамыз.`);
+        checkoutForm.hidden = false;
+      } catch (error) {
+        checkoutStatus.dataset.state = 'error';
+        checkoutStatus.textContent = checkoutMessage(error.message || 'Не удалось отправить заказ. Попробуйте ещё раз.', 'Тапсырысты жіберу мүмкін болмады. Қайта байқап көріңіз немесе бізге қоңырау шалыңыз.');
+      } finally {
+        if (turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+        checkoutButton.disabled = false;
+      }
+    });
+
     renderCart();
     updateCartCount();
   </script>
-<script src="assets/js/lang-switch.js?v=20260910-03" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20261009-01" data-root=""></script>
 </body>
 </html>

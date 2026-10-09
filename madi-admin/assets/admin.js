@@ -28,6 +28,7 @@
     document.querySelectorAll('[data-view]').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (view === 'fullCatalog') loadFullCatalog();
+    if (view === 'orders') loadOrders();
   }
   function parseSpecifications(value) {
     return String(value || '').split('\n').reduce((result, line) => {
@@ -147,6 +148,26 @@
   }
   function escapeHtml(value) { const node = document.createElement('span'); node.textContent = String(value); return node.innerHTML; }
   async function loadItems() { const data = await request('/products'); items = data.items; render(); }
+  async function loadOrders() {
+    $('#ordersEmpty').textContent = 'Загружаем заказы...';
+    $('#ordersEmpty').hidden = false;
+    try {
+      const { orders } = await request('/orders');
+      $('#ordersEmpty').hidden = orders.length > 0;
+      if (!orders.length) $('#ordersEmpty').textContent = 'Заказов пока нет.';
+      $('#ordersList').innerHTML = orders.map((order) => `<article class="order-item">
+        <div class="order-head"><h3>Заказ №${order.id}</h3><span>${escapeHtml(order.createdAt)}</span></div>
+        <p><strong>${escapeHtml(order.name)}</strong> · <a href="tel:${escapeHtml(order.phone.replace(/[^+\d]/g, ''))}">${escapeHtml(order.phone)}</a> · ${escapeHtml(order.city)}</p>
+        ${order.address ? `<p>Адрес: ${escapeHtml(order.address)}</p>` : ''}
+        ${order.comment ? `<p>Комментарий: ${escapeHtml(order.comment)}</p>` : ''}
+        <ul>${order.items.map((item) => `<li>${escapeHtml(item.name)}${item.sku ? ` · арт. ${escapeHtml(item.sku)}` : ''}${item.color ? ` · ${escapeHtml(item.color)}` : ''} × ${item.qty} · ${format(item.price * item.qty)}</li>`).join('')}</ul>
+        <p><strong>Предварительная сумма: ${format(order.estimatedTotal)}</strong></p>
+        ${order.notificationStatus !== 'sent' ? '<p class="order-warning">Уведомление в Telegram не подтверждено. Заказ сохранён здесь.</p>' : ''}
+      </article>`).join('');
+    } catch (error) {
+      $('#ordersEmpty').textContent = error.message;
+    }
+  }
   async function showAdmin() {
     loginView.hidden = true;
     loginView.style.setProperty('display', 'none', 'important');
@@ -160,7 +181,7 @@
   $('#loginForm').addEventListener('submit', async (event) => { event.preventDefault(); $('#loginError').textContent = ''; try { await request('/login', { method: 'POST', body: JSON.stringify({ login: $('#login').value.trim(), password: $('#password').value }) }); $('#password').value = ''; await showAdmin(); } catch (error) { $('#loginError').textContent = error.message; } });
   form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; collectSpecifications(); const variants = normalizedVariants(); $('#colors').value = variants.map((variant) => variant.color).filter(Boolean).join(', '); const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, material: $('#material').value, colors: $('#colors').value, variants, specifications: $('#specifications').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); activateView('catalog'); } catch (error) { $('#formError').textContent = error.message; } });
   $('#deleteProduct').addEventListener('click', async () => { const id = Number($('#itemId').value); if (!id || !confirm('Удалить эту позицию без возможности восстановления?')) return; try { await request(`/products/${id}`, { method: 'DELETE' }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
-  $('#resetForm').addEventListener('click', resetForm); $('#addVariant').addEventListener('click', () => { editorVariants.push({ color: '', name: '', sku: '' }); renderVariantRows(); }); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); $('#fullCatalogSearch').addEventListener('input', renderFullCatalog); $('#fullCatalogCategory').addEventListener('change', renderFullCatalog); document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view))); document.querySelectorAll('[data-open-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.openView))); renderVariantRows(); renderSpecificationFields();
+  $('#resetForm').addEventListener('click', resetForm); $('#addVariant').addEventListener('click', () => { editorVariants.push({ color: '', name: '', sku: '' }); renderVariantRows(); }); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); $('#fullCatalogSearch').addEventListener('input', renderFullCatalog); $('#fullCatalogCategory').addEventListener('change', renderFullCatalog); $('#refreshOrders').addEventListener('click', loadOrders); document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view))); document.querySelectorAll('[data-open-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.openView))); renderVariantRows(); renderSpecificationFields();
   $('#logout').addEventListener('click', async () => { await request('/logout', { method: 'POST' }); adminView.hidden = true; adminView.style.removeProperty('display'); loginView.hidden = false; loginView.style.removeProperty('display'); resetForm(); });
   request('/session').then(({ authenticated }) => authenticated && showAdmin()).catch(() => {});
 }());

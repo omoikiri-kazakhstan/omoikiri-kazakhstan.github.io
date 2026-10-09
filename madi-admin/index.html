@@ -35,6 +35,7 @@
           <button class="nav-item active" type="button" data-view="overview">Обзор</button>
           <button class="nav-item" type="button" data-view="catalog">Каталог <span id="navCount">0</span></button>
           <button class="nav-item" type="button" data-view="fullCatalog">Полный каталог <span id="fullCatalogCount">0</span></button>
+          <button class="nav-item" type="button" data-view="orders">Заказы</button>
           <button class="nav-item" type="button" data-view="editor">Новая позиция</button>
         </nav>
         <div class="content-area">
@@ -76,10 +77,15 @@
             <div id="fullCatalogItems" class="full-catalog-items" aria-live="polite"></div>
             <p id="fullCatalogEmpty" class="empty" hidden>Ничего не найдено.</p>
           </section></section>
+          <section class="view" data-view-panel="orders"><section class="panel orders-panel" aria-labelledby="ordersTitle">
+            <div class="panel-heading"><div><p class="eyebrow">Продажи</p><h2 id="ordersTitle">Заказы с сайта</h2></div><button id="refreshOrders" class="quiet" type="button">Обновить</button></div>
+            <div id="ordersList" class="orders-list" aria-live="polite"></div>
+            <p id="ordersEmpty" class="empty">Загружаем заказы...</p>
+          </section></section>
         </div>
       </div>
     </section>
   </main>
-  <script src="assets/admin.js?v=20261002-02" defer></script>
+  <script src="assets/admin.js?v=20261009-01" defer></script>
 </body>
 </html>

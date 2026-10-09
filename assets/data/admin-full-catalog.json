@@ -1659,7 +1659,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 27880
   },
   {
     "slug": "bw-01",
@@ -3479,7 +3480,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 37880
   },
   {
     "slug": "grinder",
@@ -3487,7 +3489,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 28880
   },
   {
     "slug": "haruna-86",
@@ -4353,7 +4356,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 242880
   },
   {
     "slug": "kinaru-pro-86-u-i",
@@ -4895,7 +4899,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 17880
   },
   {
     "slug": "m-complex-5s",
@@ -4903,7 +4908,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 57880
   },
   {
     "slug": "makkari-2-plus-sb",
@@ -4979,7 +4985,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 20880
   },
   {
     "slug": "mikawa-2-plus-sb",
@@ -5551,7 +5558,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 60880
   },
   {
     "slug": "mod-2-0",
@@ -5559,7 +5567,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 48880
   },
   {
     "slug": "mod-3-0",
@@ -5567,7 +5576,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 53880
   },
   {
     "slug": "mori",
@@ -7749,7 +7759,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 30880
   },
   {
     "slug": "omoikane-sw",
@@ -7757,7 +7768,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 30880
   },
   {
     "slug": "omoikane-ww",
@@ -7765,7 +7777,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 30880
   },
   {
     "slug": "osaka",
@@ -8007,7 +8020,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 99880
   },
   {
     "slug": "pure-drop-2-1-4s",
@@ -8015,7 +8029,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 199880
   },
   {
     "slug": "pure-drop-lite",
@@ -8023,7 +8038,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 65880
   },
   {
     "slug": "pure-drop-soft",
@@ -8031,7 +8047,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 80880
   },
   {
     "slug": "re-01",
@@ -9289,7 +9306,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 18880
   },
   {
     "slug": "nabor-banok-dlya-sypuchih-produktov",
@@ -9297,7 +9315,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 17880
   },
   {
     "slug": "sr-01",
@@ -10285,7 +10304,8 @@
     "sku": "",
     "category": "omoikiri-home",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 211880
   },
   {
     "slug": "taki-20-u-if",
@@ -11795,7 +11815,8 @@
     "sku": "",
     "category": "filters",
     "colors": [],
-    "variations": []
+    "variations": [],
+    "price": 15880
   },
   {
     "slug": "wakayama",

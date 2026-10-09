@@ -495,6 +495,7 @@
         const product = products.find((candidate) => candidate.id === entry.id) || entry;
         return {
           id: String(entry.id || ''),
+          slug: String(entry.slug || (entry.href ? new URL(entry.href, location.href).pathname.split('/').filter(Boolean).at(-1) : '')),
           name: String(product.name || product.title || ''),
           sku: String(product.article || product.sku || ''),
           color: normalizeDetail(product.detail || product.color || ''),

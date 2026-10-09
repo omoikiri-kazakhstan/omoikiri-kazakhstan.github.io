@@ -1,9 +1,10 @@
 import { badRequest, json, methodNotAllowed, readJson } from '../../_lib/http.js';
+import { resolveOrderItems } from '../../_lib/order-catalog.js';
 
 const MAX_ITEMS = 30;
 
 function clean(value, max) {
-  return typeof value === 'string' ? value.trim().slice(0, max) : '';
+  return typeof value === 'string' ? value.replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max) : '';
 }
 
 function normalizeOrder(body) {
@@ -23,13 +24,14 @@ function normalizeOrder(body) {
 
   const items = sourceItems.map((item) => ({
     id: clean(item?.id, 120),
+    slug: clean(item?.slug, 90),
     name: clean(item?.name, 160),
     sku: clean(item?.sku, 40),
     color: clean(item?.color, 100),
     qty: Number(item?.qty),
     price: Number(item?.price)
   }));
-  if (items.some((item) => !item.id || !item.name || !Number.isInteger(item.qty) || item.qty < 1 || item.qty > 99 || !Number.isInteger(item.price) || item.price < 0 || item.price > 100000000)) {
+  if (items.some((item) => !item.id || !item.slug || !Number.isInteger(item.qty) || item.qty < 1 || item.qty > 99 || !Number.isInteger(item.price) || item.price < 0 || item.price > 100000000)) {
     return { error: 'В корзине есть некорректная позиция. Обновите страницу.' };
   }
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -102,6 +104,10 @@ export async function onRequestPost(context) {
   try {
     const existing = await context.env.CATALOG_DB.prepare('SELECT id FROM orders WHERE request_id = ?').bind(order.requestId).first();
     if (existing) return json({ ok: true, orderId: existing.id });
+    const resolved = await resolveOrderItems(context.env.CATALOG_DB, order.items);
+    if (resolved.error) return badRequest(resolved.error);
+    order.items = resolved.items;
+    order.total = resolved.items.reduce((sum, item) => sum + item.price * item.qty, 0);
     const result = await context.env.CATALOG_DB.prepare(
       'INSERT INTO orders (request_id, customer_name, phone, city, address, comment, items_json, estimated_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
     ).bind(order.requestId, order.name, order.phone, order.city, order.address, order.comment, JSON.stringify(order.items), order.total).run();

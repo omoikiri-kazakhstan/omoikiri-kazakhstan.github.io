@@ -22,22 +22,27 @@ const productDirectories = new Set((await readdir(join(root, 'product'), { withF
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name));
 
-async function productVariations(slug) {
-  if (!productDirectories.has(slug)) return [];
+async function productData(slug) {
+  if (!productDirectories.has(slug)) return { variations: [], price: null };
   const file = join(root, 'product', slug, 'index.html');
   try {
-    if (!(await stat(file)).isFile()) return [];
+    if (!(await stat(file)).isFile()) return { variations: [], price: null };
     const html = await readFile(file, 'utf8');
     const source = html.match(/data-product_variations="([\s\S]*?)"/)?.[1];
-    if (!source) return [];
-    const variations = JSON.parse(decodeEntities(source));
-    return variations.map((item) => ({
+    const variations = source ? JSON.parse(decodeEntities(source)) : [];
+    const parsedVariations = variations.map((item) => ({
       color: String(item.attributes?.attribute_pa_color || '').trim(),
       sku: String(item.sku || '').trim(),
       price: Number(item.display_price) || null
     })).filter((item) => item.color);
+    if (parsedVariations.length) return { variations: parsedVariations, price: null };
+    const priceHtml = html.match(/<span class="rrc">([\s\S]*?)<\/span>\s*<div class="fav_button">/)?.[1] || '';
+    const amounts = [...priceHtml.matchAll(/(?:^|>)\s*(\d[\d \u00a0]*)\s*</g)];
+    const rub = Number((amounts.at(-1)?.[1] || '').replace(/\D/g, ''));
+    const price = rub ? Math.ceil((rub * 6.1 - 880) / 1000) * 1000 + 880 : null;
+    return { variations: [], price };
   } catch {
-    return [];
+    return { variations: [], price: null };
   }
 }
 
@@ -45,14 +50,15 @@ const unique = new Map();
 for (const item of searchItems) {
   const slug = String(item.slug || '').trim().toLowerCase();
   if (!slug || unique.has(slug)) continue;
-  const variations = await productVariations(slug);
+  const { variations, price } = await productData(slug);
   unique.set(slug, {
     slug,
     name: String(item.title || slug).trim(),
     sku: String(item.sku || '').trim(),
     category: categoryMap[item.category] || 'acs',
     colors: variations.map((variation) => variation.color),
-    variations
+    variations,
+    ...(price === null ? {} : { price })
   });
 }
 

@@ -4,13 +4,17 @@ import { onRequestPost } from '../functions/api/orders/index.js';
 
 function database() {
   const rows = new Map();
+  const overrides = new Map();
   return {
     rows,
+    overrides,
     prepare(sql) {
       return {
         bind(...args) {
           return {
             async first() {
+              if (sql.includes('FROM catalog_items')) return null;
+              if (sql.includes('FROM catalog_visibility_overrides')) return overrides.get(args[0]) || null;
               const row = rows.get(args[0]);
               return row ? { id: row.id } : null;
             },
@@ -35,7 +39,7 @@ const sample = {
   requestId: '78e3732b-cfaf-43e6-b6ac-c88804a83700',
   name: 'Мади', phone: '+7 777 123 45 67', city: 'Алматы', address: '', comment: '', consent: true,
   turnstileToken: 'test-turnstile-token',
-  items: [{ id: 'akisame-100-2-r-gm', name: 'AKISAME 100-2-R', sku: '4990000', color: 'Графит', qty: 1, price: 615880 }]
+  items: [{ id: 'akisame-100-2-r-4973104', slug: 'akisame-100-2-r', name: 'AKISAME 100-2-R', sku: '4973104', color: 'Графит', qty: 1, price: 615880 }]
 };
 
 function context(db, body) {
@@ -53,7 +57,7 @@ test('saves order before notification and does not send twice', async () => {
     if (String(url).includes('siteverify')) return Response.json({ success: true });
     notifications += 1;
     const message = JSON.parse(options.body);
-    assert.match(message.text, /AKISAME 100-2-R/);
+    assert.match(message.text, /Akisame 100-2-R/i);
     assert.equal(db.rows.size, 1);
     return Response.json({ ok: true });
   };
@@ -108,6 +112,29 @@ test('rejects failed Turnstile verification', async () => {
   try {
     const response = await onRequestPost(context(db, sample));
     assert.equal(response.status, 400);
+    assert.equal(db.rows.size, 0);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('rejects forged price, unknown SKU, and hidden colors', async () => {
+  const db = database();
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => Response.json({ success: true });
+  try {
+    const invalid = [
+      { ...sample.items[0], price: 1 },
+      { ...sample.items[0], sku: '4990000' },
+      { ...sample.items[0], slug: 'missing-product' }
+    ];
+    for (const item of invalid) {
+      const response = await onRequestPost(context(db, { ...sample, items: [item] }));
+      assert.equal(response.status, 400);
+    }
+    db.overrides.set('akisame-100-2-r', { visible: 1, hidden_colors: '["gm"]' });
+    const hidden = await onRequestPost(context(db, sample));
+    assert.equal(hidden.status, 400);
     assert.equal(db.rows.size, 0);
   } finally {
     globalThis.fetch = originalFetch;

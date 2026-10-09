@@ -1681,6 +1681,7 @@
       name: displayTitle,
       article: productSku(),
       color,
+      colorCode: selectedColorCode(),
       detail: color ? '\u0426\u0432\u0435\u0442: ' + color : '',
       price,
       image: productImage(),

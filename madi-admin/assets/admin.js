@@ -19,6 +19,7 @@
   let fullCatalog = [];
   let catalogOverrides = new Map();
   const CATEGORY_LABELS = { sinks: 'Мойки', bathsinks: 'Раковины для ванной', taps: 'Смесители', filters: 'Фильтры', disposers: 'Измельчители', dispenser: 'Дозаторы', acs: 'Аксессуары', 'omoikiri-home': 'OMOIKIRI Home' };
+  const ORDER_STATUSES = { new: 'Новый', contacted: 'Связались', completed: 'Выполнен', cancelled: 'Отменён', test: 'Тестовый' };
   const COLOR_LABELS = { az: 'Азур', be: 'Бежевый', bl: 'Черный', cc: 'Кофе', ch: 'Шоколад', cn: 'Карбон', dc: 'Темный шоколад', es: 'Эверест', ev: 'Эверест', gb: 'Графит', gm: 'Вороненая сталь', gr: 'Серый', ib: 'Индиго', in: 'Нержавеющая сталь', lg: 'Светлое золото', mo: 'Мокка', ol: 'Олива', pa: 'Пастила', pe: 'Жемчуг', pl: 'Платина', rg: 'Розовое золото', sa: 'Сахара', sb: 'Серо-бежевый', sl: 'Сицилийский лимон', wh: 'Белый', wg: 'Белое золото', wd: 'Дерево' };
   let editorVariants = [];
 
@@ -155,7 +156,7 @@
       const { orders } = await request('/orders');
       $('#ordersEmpty').hidden = orders.length > 0;
       if (!orders.length) $('#ordersEmpty').textContent = 'Заказов пока нет.';
-      $('#ordersList').innerHTML = orders.map((order) => `<article class="order-item">
+      $('#ordersList').innerHTML = orders.map((order) => `<article class="order-item" data-order-id="${order.id}">
         <div class="order-head"><h3>Заказ №${order.id}</h3><span>${escapeHtml(order.createdAt)}</span></div>
         <p><strong>${escapeHtml(order.name)}</strong> · <a href="tel:${escapeHtml(order.phone.replace(/[^+\d]/g, ''))}">${escapeHtml(order.phone)}</a> · ${escapeHtml(order.city)}</p>
         ${order.address ? `<p>Адрес: ${escapeHtml(order.address)}</p>` : ''}
@@ -163,11 +164,35 @@
         <ul>${order.items.map((item) => `<li>${escapeHtml(item.name)}${item.sku ? ` · арт. ${escapeHtml(item.sku)}` : ''}${item.color ? ` · ${escapeHtml(item.color)}` : ''} × ${item.qty} · ${format(item.price * item.qty)}</li>`).join('')}</ul>
         <p><strong>Предварительная сумма: ${format(order.estimatedTotal)}</strong></p>
         ${order.notificationStatus !== 'sent' ? '<p class="order-warning">Уведомление в Telegram не подтверждено. Заказ сохранён здесь.</p>' : ''}
+        <div class="order-workflow">
+          <label>Статус<select data-order-status>${Object.entries(ORDER_STATUSES).map(([value, label]) => `<option value="${value}"${order.status === value ? ' selected' : ''}>${label}</option>`).join('')}</select></label>
+          <label>Внутренняя заметка<textarea data-order-note maxlength="1000" rows="2" placeholder="Что обсудили с клиентом">${escapeHtml(order.internalNote || '')}</textarea></label>
+          <button class="quiet" type="button" data-save-order>Сохранить</button><span class="order-save-message" role="status"></span>
+        </div>
       </article>`).join('');
     } catch (error) {
       $('#ordersEmpty').textContent = error.message;
     }
   }
+  $('#ordersList').addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-save-order]');
+    if (!button) return;
+    const row = button.closest('[data-order-id]');
+    const message = row.querySelector('.order-save-message');
+    button.disabled = true;
+    message.textContent = 'Сохраняем...';
+    try {
+      await request(`/orders/${row.dataset.orderId}`, { method: 'PUT', body: JSON.stringify({
+        status: row.querySelector('[data-order-status]').value,
+        internalNote: row.querySelector('[data-order-note]').value
+      }) });
+      message.textContent = 'Сохранено';
+    } catch (error) {
+      message.textContent = error.message;
+    } finally {
+      button.disabled = false;
+    }
+  });
   async function showAdmin() {
     loginView.hidden = true;
     loginView.style.setProperty('display', 'none', 'important');

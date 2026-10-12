@@ -2,7 +2,9 @@
   if (window.__omoikiriLangSwitchLoaded) return;
   window.__omoikiriLangSwitchLoaded = true;
 
-  const STORE_KEY = 'omoikiriDealerLang';
+  const STORE_KEY = window.matchMedia('(max-width: 780px)').matches
+    ? 'omoikiriDealerLangMobile'
+    : 'omoikiriDealerLang';
   const ROOT = document.currentScript?.dataset.root || '';
   const elementStore = new Map();
   const textStore = [];

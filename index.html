@@ -89,6 +89,9 @@
 </style>
 <script id="dealer-kz-layer-script">
 (function () {
+  const languageStoreKey = window.matchMedia('(max-width: 780px)').matches
+    ? 'omoikiriDealerLangMobile'
+    : 'omoikiriDealerLang';
   const elementStore = new Map();
   const textStore = [];
   let textStoreReady = false;
@@ -203,7 +206,7 @@
     document.querySelectorAll('.dealer-lang-switch button').forEach((button) => {
       button.classList.toggle('active', button.dataset.lang === 'ru');
     });
-    localStorage.setItem('omoikiriDealerLang', 'ru');
+    localStorage.setItem(languageStoreKey, 'ru');
   }
 
   function applyKz(showNote) {
@@ -214,7 +217,7 @@
     document.querySelectorAll('.dealer-lang-switch button').forEach((button) => {
       button.classList.toggle('active', button.dataset.lang === 'kz');
     });
-    localStorage.setItem('omoikiriDealerLang', 'kz');
+    localStorage.setItem(languageStoreKey, 'kz');
 
     if (showNote) {
       const note = document.querySelector('.dealer-kz-note');
@@ -246,7 +249,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     createSwitcher();
-    if (localStorage.getItem('omoikiriDealerLang') === 'kz') {
+    if (localStorage.getItem(languageStoreKey) === 'kz') {
       applyKz(false);
     }
   });
@@ -1664,5 +1667,5 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
   });
 })();
 </script>
-<script src="assets/js/lang-switch.js?v=20260910-03" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20261012-01" data-root=""></script>
 <script src="assets/js/local-router.js"></script>

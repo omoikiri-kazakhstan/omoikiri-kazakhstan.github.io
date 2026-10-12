@@ -400,6 +400,14 @@
         width: var(--dealer-price-width) !important;
       }
 
+      .dealer-static-catalog .prdctfltr_rng_price[data-dealer-local-slider="ion"] .irs-from {
+        left: var(--dealer-price-from-label) !important;
+      }
+
+      .dealer-static-catalog .prdctfltr_rng_price[data-dealer-local-slider="ion"] .irs-to {
+        left: var(--dealer-price-to-label) !important;
+      }
+
       .dealer-static-catalog .prdctfltr_rng_price .irs-min,
       .dealer-static-catalog .prdctfltr_rng_price .irs-max {
         display: none !important;
@@ -2194,6 +2202,18 @@
     if (fromLabel) fromLabel.textContent = fromText;
     if (toLabel) toLabel.textContent = toText;
     if (singleLabel) singleLabel.textContent = from === to ? fromText : fromText + ' \u2014 ' + toText;
+
+    const sliderWidth = filter.dataset.dealerLocalSlider === 'ion' ? filter.querySelector('.irs')?.clientWidth : 0;
+    if (sliderWidth) {
+      if (fromLabel) {
+        const labelWidth = fromLabel.offsetWidth;
+        filter.style.setProperty('--dealer-price-from-label', Math.max(0, Math.min(sliderWidth - labelWidth, sliderWidth * fromPercent / 100 - labelWidth / 2)) + 'px');
+      }
+      if (toLabel) {
+        const labelWidth = toLabel.offsetWidth;
+        filter.style.setProperty('--dealer-price-to-label', Math.max(0, Math.min(sliderWidth - labelWidth, sliderWidth * toPercent / 100 - labelWidth / 2)) + 'px');
+      }
+    }
 
     let mobileLabels = filter.querySelector('.dealer-price-mobile-labels');
     if (!mobileLabels) {

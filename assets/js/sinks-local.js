@@ -45,7 +45,7 @@
   let adminCatalogOverrides = new Map();
   let catalogMetaReady = false;
   let lastScrollY = window.scrollY || 0;
-  let filterCompactAnchor = 0;
+  let filterCompactAnchor = null;
   let filterFullHeight = 0;
   let menuFullHeight = 0;
   let productImageUpdateToken = 0;
@@ -385,6 +385,19 @@
 
       .dealer-static-catalog .prdctfltr_rng_price .irs-slider.to {
         margin-left: -9px !important;
+      }
+
+      .dealer-static-catalog .prdctfltr_rng_price[data-dealer-local-slider="ion"] .irs-slider.from {
+        left: var(--dealer-price-from) !important;
+      }
+
+      .dealer-static-catalog .prdctfltr_rng_price[data-dealer-local-slider="ion"] .irs-slider.to {
+        left: var(--dealer-price-to) !important;
+      }
+
+      .dealer-static-catalog .prdctfltr_rng_price[data-dealer-local-slider="ion"] .irs-bar {
+        left: var(--dealer-price-from) !important;
+        width: var(--dealer-price-width) !important;
       }
 
       .dealer-static-catalog .prdctfltr_rng_price .irs-min,
@@ -1270,13 +1283,13 @@
     if (menuHeight) menuFullHeight = Math.max(menuFullHeight, Math.round(menuHeight));
     const wasCompact = document.body.classList.contains('dealer-filter-compact');
 
-    if (filter && (!filterCompactAnchor || !wasCompact)) {
+    if (filter && (filterCompactAnchor === null || !wasCompact)) {
       const rect = filter.getBoundingClientRect();
       filterCompactAnchor = Math.max(0, rect.top + currentScrollY - topNavHeight);
       filterFullHeight = Math.max(filterFullHeight, Math.round(filter.offsetHeight || rect.height || 0));
     }
 
-    const compactThreshold = Math.max(140, filterCompactAnchor + 24);
+    const compactThreshold = Math.max(140, (filterCompactAnchor ?? 0) + 24);
     const compact = window.innerWidth > 1250 && currentScrollY > compactThreshold;
     const filterTop = compact ? Math.round(topNavHeight) + 'px' : '0px';
     const flowSpace = compact ? Math.max(84, Math.round(filterFullHeight || 0) + menuFullHeight) : 0;
@@ -2160,6 +2173,12 @@
     const fromPercent = ((from - minLimit) / (maxLimit - minLimit)) * 100;
     const toPercent = ((to - minLimit) / (maxLimit - minLimit)) * 100;
 
+    if (filter.dataset.dealerLocalSlider === 'ion') {
+      filter.style.setProperty('--dealer-price-from', fromPercent + '%');
+      filter.style.setProperty('--dealer-price-to', toPercent + '%');
+      filter.style.setProperty('--dealer-price-width', Math.max(0, toPercent - fromPercent) + '%');
+    }
+
     filter.dataset.currentMin = String(from);
     filter.dataset.currentMax = String(to);
     if (input) input.value = from + ';' + to;
@@ -2223,6 +2242,7 @@
       input_values_separator: ';',
       prettify_enabled: true,
       prettify,
+      postfix: '',
       onStart: (data) => applyIonPriceData(filter, data, false),
       onChange: (data) => applyIonPriceData(filter, data, false),
       onUpdate: (data) => applyIonPriceData(filter, data, false),

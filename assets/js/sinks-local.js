@@ -387,6 +387,11 @@
         margin-left: -9px !important;
       }
 
+      .dealer-static-catalog .prdctfltr_rng_price .irs-min,
+      .dealer-static-catalog .prdctfltr_rng_price .irs-max {
+        display: none !important;
+      }
+
       @media (max-width: 1450px) and (min-width: 1251px) {
         .dealer-static-catalog .prdctfltr_rng_price {
           min-width: 185px !important;

@@ -241,7 +241,7 @@
     </header>
 
     <p class="dealer-cart-note">
-      Локальная демонстрация корзины для будущей посадки на Bitrix. В рабочей версии товары, остатки, оформление заказа и TipTopPay будут подключены через штатные механизмы Bitrix. Все цены отображаются в тенге.
+      Стоимость товаров указана в тенге. Доставка в итоговую сумму не включена и согласовывается отдельно.
     </p>
 
     <div class="dealer-cart-list" id="cart-list"></div>
@@ -269,7 +269,7 @@
     </form>
 
     <section class="dealer-cart-payment">
-      <strong>Оплата:</strong> онлайн-оплата будет реализована через TipTopPay. На локальной копии кнопка оформления заказа пока не проводит платеж, чтобы не имитировать боевой процесс.
+      <strong>Оплата:</strong> доступные способы оплаты появятся после заполнения контактных данных.
     </section>
   </main>
 
@@ -349,6 +349,28 @@
     }
 
     let cart = readCart();
+
+    async function refreshCartPrices() {
+      const response = await fetch('/api/prices', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Не удалось проверить актуальные цены. Попробуйте позже.');
+      const { bySku = {} } = await response.json();
+      let changed = false;
+      for (const item of cart) {
+        const sku = String(item.article || item.sku || '');
+        const rub = Number(bySku[sku]);
+        if (!rub) continue;
+        const price = Math.ceil((rub * 6.1 - 880) / 1000) * 1000 + 880;
+        if (Number(item.price) !== price) {
+          item.price = price;
+          changed = true;
+        }
+      }
+      if (changed) {
+        saveCart();
+        renderCart();
+      }
+      return changed;
+    }
 
     function updateCartCount() {
       const count = cart.reduce((sum, item) => sum + (Number(item?.qty) || 0), 0);
@@ -453,6 +475,42 @@
     let turnstileWidgetId = null;
     const checkoutMessage = (ru, kz) => localStorage.getItem('omoikiriDealerLang') === 'kz' ? kz : ru;
 
+    function completeCheckout(message) {
+      cart = [];
+      saveCart();
+      renderCart();
+      checkoutForm.reset();
+      checkoutForm.classList.add('is-complete');
+      checkoutRequestId = '';
+      checkoutStatus.dataset.state = '';
+      checkoutStatus.textContent = message;
+      checkoutForm.hidden = false;
+    }
+
+    async function ensurePaymentWidget() {
+      if (window.tiptop?.Widget) return;
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://widget.tiptoppay.kz/bundles/widget.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+      if (!window.tiptop?.Widget) throw new Error('Не удалось открыть форму оплаты. Попробуйте позже.');
+    }
+
+    async function waitForPayment(requestId) {
+      for (let attempt = 0; attempt < 15; attempt++) {
+        const response = await fetch(`/api/orders/payment?requestId=${encodeURIComponent(requestId)}`, { cache: 'no-store' });
+        if (!response.ok) throw new Error('Не удалось проверить статус оплаты. Свяжитесь с нами перед повторной оплатой.');
+        const result = await response.json();
+        if (result.paymentStatus === 'paid') return result;
+        if (result.paymentStatus === 'expired') break;
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
+      return null;
+    }
+
     async function ensureTurnstile() {
       if (turnstileWidgetId !== null) return;
       if (!window.turnstile) {
@@ -483,6 +541,17 @@
     checkoutForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!cart.length || checkoutButton.disabled) return;
+      try {
+        if (await refreshCartPrices()) {
+          checkoutStatus.dataset.state = 'error';
+          checkoutStatus.textContent = 'Цена в корзине обновилась. Проверьте сумму и нажмите «Оформить заказ» ещё раз.';
+          return;
+        }
+      } catch (error) {
+        checkoutStatus.dataset.state = 'error';
+        checkoutStatus.textContent = error.message;
+        return;
+      }
       const turnstileToken = turnstileWidgetId === null ? '' : window.turnstile.getResponse(turnstileWidgetId);
       if (!turnstileToken) {
         checkoutStatus.dataset.state = 'error';
@@ -519,14 +588,30 @@
         });
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.error || 'Не удалось отправить заказ.');
-        cart = [];
-        saveCart();
-        renderCart();
-        checkoutForm.reset();
-        checkoutForm.classList.add('is-complete');
-        checkoutRequestId = '';
-        checkoutStatus.textContent = checkoutMessage(`Заказ №${result.orderId} принят. Мы свяжемся с вами для подтверждения цены и доставки.`, `№${result.orderId} тапсырыс қабылданды. Баға мен жеткізуді растау үшін сізге хабарласамыз.`);
-        checkoutForm.hidden = false;
+        if (result.paymentStatus === 'paid') {
+          completeCheckout(result.paymentTestMode ? 'Тестовая оплата подтверждена. Реального списания не было.' : checkoutMessage(`Заказ №${result.orderId} оплачен. Мы свяжемся с вами по доставке.`, `№${result.orderId} тапсырыс төленді. Жеткізу бойынша хабарласамыз.`));
+        } else if (result.payment) {
+          checkoutStatus.textContent = checkoutMessage('Открываем безопасную форму оплаты...', 'Қауіпсіз төлем формасын ашудамыз...');
+          await ensurePaymentWidget();
+          const widgetResult = await new window.tiptop.Widget().start(result.payment);
+          if (widgetResult?.status === 'success') {
+            checkoutStatus.textContent = checkoutMessage('Проверяем подтверждение оплаты...', 'Төлем расталуын тексерудеміз...');
+            const payment = await waitForPayment(checkoutRequestId);
+            if (payment) {
+              completeCheckout(payment.paymentTestMode ? 'Тестовая оплата подтверждена. Реального списания не было.' : checkoutMessage(`Заказ №${result.orderId} оплачен. Мы свяжемся с вами по доставке.`, `№${result.orderId} тапсырыс төленді. Жеткізу бойынша хабарласамыз.`));
+            } else {
+              checkoutStatus.textContent = checkoutMessage(`Платёж №${result.orderId} ещё подтверждается. Не оплачивайте повторно; свяжитесь с нами, если статус не изменится.`, `№${result.orderId} төлемі әлі расталуда. Қайта төлемеңіз; мәртебе өзгермесе, бізге хабарласыңыз.`);
+            }
+          } else {
+            checkoutStatus.textContent = checkoutMessage('Оплата не завершена. Товары остались в корзине, можно попробовать снова.', 'Төлем аяқталмады. Тауарлар себетте қалды, қайта көріңіз.');
+          }
+        } else if (result.paymentStatus === 'processing') {
+          checkoutStatus.textContent = checkoutMessage(`Оплата заказа №${result.orderId} обрабатывается. Не оплачивайте повторно; свяжитесь с нами, если статус не изменится.`, `№${result.orderId} тапсырысының төлемі өңделуде. Қайта төлемеңіз; мәртебе өзгермесе, бізге хабарласыңыз.`);
+        } else if (result.paymentStatus === 'not_required') {
+          completeCheckout(checkoutMessage(`Заказ №${result.orderId} принят. Мы свяжемся с вами для подтверждения доставки.`, `№${result.orderId} тапсырыс қабылданды. Жеткізу бойынша хабарласамыз.`));
+        } else {
+          throw new Error('Статус оплаты не получен. Свяжитесь с нами перед повторной оплатой.');
+        }
       } catch (error) {
         checkoutStatus.dataset.state = 'error';
         checkoutStatus.textContent = checkoutMessage(error.message || 'Не удалось отправить заказ. Попробуйте ещё раз.', 'Тапсырысты жіберу мүмкін болмады. Қайта байқап көріңіз немесе бізге қоңырау шалыңыз.');
@@ -538,7 +623,8 @@
 
     renderCart();
     updateCartCount();
+    refreshCartPrices().catch(() => {});
   </script>
-<script src="assets/js/lang-switch.js?v=20261012-01" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20261012-02" data-root=""></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="assets/admin-background.css">
   <link rel="stylesheet" href="assets/admin-full-catalog.css">
   <link rel="stylesheet" href="assets/admin-variants.css">
+  <link rel="stylesheet" href="assets/admin-stock.css?v=20261012-02">
 </head>
 <body>
   <main class="shell">
@@ -36,6 +37,7 @@
           <button class="nav-item" type="button" data-view="catalog">Каталог <span id="navCount">0</span></button>
           <button class="nav-item" type="button" data-view="fullCatalog">Полный каталог <span id="fullCatalogCount">0</span></button>
           <button class="nav-item" type="button" data-view="orders">Заказы</button>
+          <button class="nav-item" type="button" data-view="stock">Остатки</button>
           <button class="nav-item" type="button" data-view="editor">Новая позиция</button>
         </nav>
         <div class="content-area">
@@ -82,10 +84,19 @@
             <div id="ordersList" class="orders-list" aria-live="polite"></div>
             <p id="ordersEmpty" class="empty">Загружаем заказы...</p>
           </section></section>
+          <section class="view" data-view-panel="stock"><section class="panel stock-panel" aria-labelledby="stockTitle">
+            <div class="panel-heading"><div><p class="eyebrow">Складские данные</p><h2 id="stockTitle">Остатки OMOIKIRI</h2></div><div class="stock-actions"><button id="refreshStock" class="quiet" type="button">Перечитать таблицу</button><button id="syncStock" type="button">Обновить из Excel</button></div></div>
+            <p id="stockSummary" class="stock-summary" role="status">Загружаем остатки...</p>
+            <p id="stockSyncStatus" class="stock-sync-status" role="status" hidden></p>
+            <p class="stock-note">Москва и Санкт-Петербург по артикулам. Это остатки российских складов, не подтвержденное наличие в Казахстане. Отсутствие артикула в выгрузке не означает нулевой остаток.</p>
+            <div class="stock-controls"><label class="search">Поиск<input id="stockSearch" type="search" placeholder="Артикул или название"></label><label class="stock-filter"><input id="stockMatched" type="checkbox">Только товары каталога</label><span id="stockCount"></span></div>
+            <div class="stock-table-wrap"><table class="stock-table"><thead><tr><th scope="col">Артикул</th><th scope="col">Товар</th><th scope="col">Москва</th><th scope="col">СПб</th><th scope="col">Итого</th></tr></thead><tbody id="stockRows"></tbody></table></div>
+            <button id="stockMore" class="quiet stock-more" type="button" hidden>Показать еще</button>
+          </section></section>
         </div>
       </div>
     </section>
   </main>
-  <script src="assets/admin.js?v=20261009-02" defer></script>
+  <script src="assets/admin.js?v=20261012-06" defer></script>
 </body>
 </html>

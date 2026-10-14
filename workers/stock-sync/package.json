@@ -1,0 +1,17 @@
+{
+  "name": "omoikiri-stock-sync",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "fast-xml-parser": "5.11.2",
+    "fflate": "0.8.3"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
+  }
+}

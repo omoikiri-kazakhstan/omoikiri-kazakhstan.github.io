@@ -85,6 +85,20 @@
     wd: 'дерево'
   };
   const CURRENT_PRICE_OVERRIDES = {};
+  let livePricesBySlug = {};
+
+  async function loadLivePrices() {
+    try {
+      const response = await fetch('/api/prices');
+      if (!response.ok) return;
+      const data = await response.json();
+      livePricesBySlug = data.bySlug || {};
+      convertPriceText(document);
+      applyFilters();
+    } catch (error) {
+      // Static prices remain usable if the feed cannot be reached.
+    }
+  }
 
   window.paginationUrls = {};
 
@@ -1148,7 +1162,18 @@
   function convertPriceAmount(amount) {
     const original = amount.dataset.originalRub || amount.textContent;
     const raw = original.replace(/[^\d]/g, '');
-    const rub = Number(raw);
+    let rub = Number(raw);
+
+    if (!isRegularPriceNode(amount)) {
+      const link = amount.closest('li.product')?.querySelector('a[href*="/product/"]');
+      if (link) {
+        const url = new URL(link.href, window.location.href);
+        const slug = productSlugFromAmount(amount);
+        const color = url.searchParams.get('attribute_pa_color') ||
+          amount.closest('li.product')?.querySelector('[data-pa_color]')?.dataset.pa_color || '';
+        rub = Number(livePricesBySlug[slug]?.[color]?.rub) || rub;
+      }
+    }
 
     if (!rub || rub > 10000000) return;
 
@@ -2770,6 +2795,7 @@
     removeDiscontinuedProducts();
     removeDuplicateProducts();
     convertPriceText(document);
+    loadLivePrices();
     window.setInterval(() => convertPriceText(document), 300);
     bindFavoriteButtons(document);
     bindFilters();

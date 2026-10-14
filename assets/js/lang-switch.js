@@ -826,6 +826,11 @@
       }
     `;
     document.head.appendChild(style);
+
+    const mobileStyles = document.createElement('link');
+    mobileStyles.rel = 'stylesheet';
+    mobileStyles.href = ROOT + 'assets/css/mobile-site.css?v=20261012-01';
+    document.head.appendChild(mobileStyles);
   }
 
   function saveElement(el) {

@@ -480,4 +480,22 @@
 
   applySharedFavorites();
   render();
+  fetch('/api/prices').then((response) => response.ok ? response.json() : null).then((data) => {
+    if (!data?.bySku) return;
+    const items = readFavorites();
+    let changed = false;
+    for (const item of items) {
+      const rub = Number(data.bySku[article(item)]);
+      if (!rub) continue;
+      const price = formatKzt(Math.ceil((rub * 6.1 - 880) / 1000) * 1000 + 880);
+      if (cleanPrice(item.price) !== price) {
+        item.price = price;
+        changed = true;
+      }
+    }
+    if (changed) {
+      writeFavorites(items);
+      render();
+    }
+  }).catch(() => {});
 })();

@@ -1,5 +1,7 @@
 import { badRequest, json, methodNotAllowed, readJson } from '../../_lib/http.js';
+import { notifyTelegram } from '../../_lib/order-notifications.js';
 import { resolveOrderItems } from '../../_lib/order-catalog.js';
+import { paymentEnabled, paymentIntent } from '../../_lib/tiptop.js';
 
 const MAX_ITEMS = 30;
 
@@ -39,33 +41,6 @@ function normalizeOrder(body) {
   return { value: { requestId, name, phone, city, address, comment, items, total } };
 }
 
-function telegramText(orderId, order) {
-  const lines = [
-    `Новый заказ №${orderId}`,
-    '',
-    ...order.items.map((item) => `${item.name}${item.sku ? ` (арт. ${item.sku})` : ''}${item.color ? `, ${item.color}` : ''} × ${item.qty} — ${new Intl.NumberFormat('ru-KZ').format(item.price * item.qty)} ₸`),
-    '',
-    `Предварительная сумма: ${new Intl.NumberFormat('ru-KZ').format(order.total)} ₸`,
-    `Имя: ${order.name}`,
-    `Телефон: ${order.phone}`,
-    `Город: ${order.city}`
-  ];
-  if (order.address) lines.push(`Адрес: ${order.address}`);
-  if (order.comment) lines.push(`Комментарий: ${order.comment}`);
-  return lines.join('\n').slice(0, 3900);
-}
-
-async function notifyTelegram(env, orderId, order) {
-  const response = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: telegramText(orderId, order) })
-  });
-  if (!response.ok) throw new Error(`Telegram HTTP ${response.status}`);
-  const result = await response.json();
-  if (!result.ok) throw new Error('Telegram rejected the message');
-}
-
 async function verifyTurnstile(secret, token) {
   if (typeof token !== 'string' || !token || token.length > 2048) return false;
   const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
@@ -75,6 +50,17 @@ async function verifyTurnstile(secret, token) {
   if (!response.ok) return false;
   const result = await response.json();
   return result.success === true;
+}
+
+function orderResponse(env, row, status = 200) {
+  const result = { ok: true, orderId: row.id, paymentStatus: row.payment_status, paymentTestMode: row.payment_test_mode === 1 };
+  if (paymentEnabled(env) && row.payment_status === 'pending') {
+    if (Date.parse(row.payment_expires_at) <= Date.now()) {
+      return json({ error: 'Время на оплату этого заказа истекло. Обновите страницу и оформите заказ снова.' }, { status: 409 });
+    }
+    result.payment = paymentIntent(env, row);
+  }
+  return json(result, { status });
 }
 
 export async function onRequestPost(context) {
@@ -102,28 +88,45 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const existing = await context.env.CATALOG_DB.prepare('SELECT id FROM orders WHERE request_id = ?').bind(order.requestId).first();
-    if (existing) return json({ ok: true, orderId: existing.id });
     const resolved = await resolveOrderItems(context.env.CATALOG_DB, order.items);
     if (resolved.error) return badRequest(resolved.error);
     order.items = resolved.items;
     order.total = resolved.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const result = await context.env.CATALOG_DB.prepare(
-      'INSERT INTO orders (request_id, customer_name, phone, city, address, comment, items_json, estimated_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-    ).bind(order.requestId, order.name, order.phone, order.city, order.address, order.comment, JSON.stringify(order.items), order.total).run();
-    const orderId = result.meta.last_row_id;
-    try {
-      await notifyTelegram(context.env, orderId, order);
-      await context.env.CATALOG_DB.prepare("UPDATE orders SET notification_status = 'sent' WHERE id = ?").bind(orderId).run();
-    } catch (error) {
-      console.error(JSON.stringify({ scope: 'order-notification', orderId, error: String(error) }));
-      await context.env.CATALOG_DB.prepare("UPDATE orders SET notification_status = 'failed' WHERE id = ?").bind(orderId).run();
+    const existing = await context.env.CATALOG_DB.prepare(
+      'SELECT id, request_id, customer_name, phone, city, items_json, estimated_total, payment_status, payment_test_mode, payment_expires_at FROM orders WHERE request_id = ?'
+    ).bind(order.requestId).first();
+    if (existing) {
+      if (existing.items_json !== JSON.stringify(order.items) || existing.phone !== order.phone || existing.estimated_total !== order.total) {
+        return badRequest('Корзина изменилась. Обновите страницу и оформите новый заказ.');
+      }
+      return orderResponse(context.env, existing);
     }
-    return json({ ok: true, orderId }, { status: 201 });
+    const onlinePayment = paymentEnabled(context.env);
+    const expiresAt = onlinePayment ? new Date(Date.now() + 30 * 60 * 1000).toISOString() : '';
+    const result = await context.env.CATALOG_DB.prepare(
+      'INSERT INTO orders (request_id, customer_name, phone, city, address, comment, items_json, estimated_total, payment_status, payment_expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    ).bind(order.requestId, order.name, order.phone, order.city, order.address, order.comment, JSON.stringify(order.items), order.total, onlinePayment ? 'pending' : 'not_required', expiresAt).run();
+    const orderId = result.meta.last_row_id;
+    if (!onlinePayment) {
+      try {
+        await notifyTelegram(context.env, orderId, order);
+        await context.env.CATALOG_DB.prepare("UPDATE orders SET notification_status = 'sent' WHERE id = ?").bind(orderId).run();
+      } catch (error) {
+        console.error(JSON.stringify({ scope: 'order-notification', orderId, error: String(error) }));
+        await context.env.CATALOG_DB.prepare("UPDATE orders SET notification_status = 'failed' WHERE id = ?").bind(orderId).run();
+      }
+    }
+    return orderResponse(context.env, {
+      id: orderId, request_id: order.requestId, customer_name: order.name, phone: order.phone,
+      city: order.city, estimated_total: order.total,
+      payment_status: onlinePayment ? 'pending' : 'not_required', payment_expires_at: expiresAt
+    }, 201);
   } catch (error) {
     if (String(error).includes('UNIQUE constraint failed')) {
-      const existing = await context.env.CATALOG_DB.prepare('SELECT id FROM orders WHERE request_id = ?').bind(order.requestId).first();
-      if (existing) return json({ ok: true, orderId: existing.id });
+      const existing = await context.env.CATALOG_DB.prepare(
+        'SELECT id, request_id, customer_name, phone, city, estimated_total, payment_status, payment_test_mode, payment_expires_at FROM orders WHERE request_id = ?'
+      ).bind(order.requestId).first();
+      if (existing) return orderResponse(context.env, existing);
     }
     console.error(JSON.stringify({ scope: 'order-create', error: String(error) }));
     return json({ error: 'Не удалось сохранить заказ. Попробуйте ещё раз или позвоните нам.' }, { status: 500 });

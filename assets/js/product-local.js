@@ -47,6 +47,42 @@
     return CURRENT_PRICE_OVERRIDES[slug] || 0;
   }
 
+  async function loadLivePrices() {
+    try {
+      const response = await fetch('/api/prices');
+      if (!response.ok) return;
+      const { bySku = {} } = await response.json();
+      const form = document.querySelector('form.variations_form[data-product_variations]');
+      if (form) {
+        const variations = JSON.parse(form.getAttribute('data-product_variations') || '[]');
+        let changed = false;
+        for (const variation of variations) {
+          const rub = Number(bySku[variation.sku]);
+          if (!rub) continue;
+          variation.display_price = rub;
+          variation.display_regular_price = rub;
+          changed = true;
+        }
+        if (changed) {
+          form.setAttribute('data-product_variations', JSON.stringify(variations));
+          updateVariationPriceDisplay();
+        }
+      } else {
+        const rub = Number(bySku[productSku()]);
+        if (rub) {
+          const price = roundKzt(rub);
+          CURRENT_PRICE_OVERRIDES[productSlug()] = price;
+          document.querySelectorAll('.card_actions .rrc, .summary .rrc, .summary .price').forEach((node) => {
+            node.innerHTML = singlePriceHtml(formatKzt(price));
+            markKztDone(node);
+          });
+        }
+      }
+    } catch (error) {
+      // Keep the deployed price when the feed is temporarily unavailable.
+    }
+  }
+
   function isRegularPriceNode(node) {
     return Boolean(node?.closest?.('del, .regular-price'));
   }
@@ -1998,6 +2034,7 @@
     localizeProductImages(document);
     updateVariationPriceDisplay();
     convertPrices(document);
+    loadLivePrices();
     bindCart();
     bindFavorite();
     updateCartCount();

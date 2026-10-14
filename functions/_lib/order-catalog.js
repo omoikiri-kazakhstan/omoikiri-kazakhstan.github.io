@@ -1,4 +1,5 @@
 import catalog from '../../assets/data/admin-full-catalog.json' with { type: 'json' };
+import { kztPrice, loadLivePrices } from './live-prices.js';
 
 const products = new Map(catalog.map((product) => [product.slug, product]));
 const discontinuedSkus = new Set([
@@ -17,16 +18,13 @@ const discontinuedColors = {
   'yamakawa-55-integra': ['gr'], 'tateyama-s': ['ca', 'ev', 'gb'], 'umi': ['bl']
 };
 
-function kzt(rub) {
-  return Math.ceil((rub * 6.1 - 880) / 1000) * 1000 + 880;
-}
-
 function unavailable() {
   return { error: 'Один из товаров или цветов больше недоступен. Обновите корзину.' };
 }
 
 export async function resolveOrderItems(db, submitted) {
   const items = [];
+  const livePrices = await loadLivePrices(db);
   for (const item of submitted) {
     const slug = item.slug.toLowerCase();
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return unavailable();
@@ -59,7 +57,7 @@ export async function resolveOrderItems(db, submitted) {
       if (!variant) return unavailable();
       sku = variant.sku;
       colorCode = variant.color;
-      price = kzt(variant.price);
+      price = kztPrice(livePrices.bySku[sku] || variant.price);
     } else {
       price = product.price;
       if (sku && sku !== item.sku) return unavailable();

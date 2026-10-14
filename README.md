@@ -1,6 +1,7 @@
 # OMOIKIRI KZ New Final Beta
 
-Главный репозиторий для продолжения работы над статической beta-версией OMOIKIRI KZ.
+Репозиторий для продолжения работы над OMOIKIRI KZ. Текущий рабочий снимок
+хранится в ветке `wip-home-2026-10-14`; `main` не обновляется этим снимком.
 
 ## Что внутри
 
@@ -23,17 +24,31 @@
 C:\Users\madir\Desktop\omoikiri-kz-new-final-beta
 ```
 
-GitHub:
+GitHub (рабочая ветка):
 
 ```text
-https://github.com/x9230x/omoikiri-kz-new-final-beta
+https://github.com/omoikiri-kazakhstan/omoikiri-kazakhstan.github.io/tree/wip-home-2026-10-14
 ```
 
-Живое зеркало для просмотра сейчас опубликовано тут:
+Опубликованный сайт:
 
 ```text
-https://x9230x.github.io/
+https://omoikiri-kazakhstan.pages.dev/
 ```
+
+## Продолжить дома
+
+```powershell
+git clone --branch wip-home-2026-10-14 --single-branch https://github.com/omoikiri-kazakhstan/omoikiri-kazakhstan.github.io.git
+cd omoikiri-kazakhstan.github.io
+git status
+```
+
+Секреты Cloudflare (`TIPTOP_API_SECRET`, Telegram, Turnstile, админка) и локальные
+`.env`/`.dev.vars` намеренно не сохраняются в Git. Для локальной проверки
+серверных функций нужны отдельные тестовые значения и Wrangler. Не копируйте
+боевые ключи в репозиторий. Публикация этой ветки на GitHub сама по себе не
+включает оплату TipTop Pay на сайте.
 
 ## Как открыть локально
 
@@ -70,7 +85,7 @@ http://localhost:8080/
 
 ## Правило на будущее
 
-Чтобы дома и на этом компьютере не расходились версии, перед началом работы:
+Чтобы компьютеры не расходились, работать в `wip-home-2026-10-14` и перед началом:
 
 ```powershell
 git pull
@@ -85,4 +100,4 @@ git commit -m "Описание правок"
 git push
 ```
 
-Не продолжать работу из старых папок `omoikiri-local-copy` или `x9230x.github.io`, если цель именно разработка. Этот репозиторий теперь основной.
+Не продолжать работу из старых папок `omoikiri-local-copy` или `x9230x.github.io`.

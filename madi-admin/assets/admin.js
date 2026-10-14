@@ -17,6 +17,10 @@
   };
   let items = [];
   let fullCatalog = [];
+  let stockCatalog = [];
+  let stockData = null;
+  let stockLimit = 100;
+  let stockLoading = false;
   let catalogOverrides = new Map();
   const CATEGORY_LABELS = { sinks: 'Мойки', bathsinks: 'Раковины для ванной', taps: 'Смесители', filters: 'Фильтры', disposers: 'Измельчители', dispenser: 'Дозаторы', acs: 'Аксессуары', 'omoikiri-home': 'OMOIKIRI Home' };
   const ORDER_STATUSES = { new: 'Новый', contacted: 'Связались', completed: 'Выполнен', cancelled: 'Отменён', test: 'Тестовый' };
@@ -30,6 +34,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (view === 'fullCatalog') loadFullCatalog();
     if (view === 'orders') loadOrders();
+    if (view === 'stock') loadStock();
   }
   function parseSpecifications(value) {
     return String(value || '').split('\n').reduce((result, line) => {
@@ -149,6 +154,102 @@
   }
   function escapeHtml(value) { const node = document.createElement('span'); node.textContent = String(value); return node.innerHTML; }
   async function loadItems() { const data = await request('/products'); items = data.items; render(); }
+  function stockCatalogIndex() {
+    const index = new Map();
+    for (const item of stockCatalog) {
+      for (const variant of [item, ...(item.variations || [])]) {
+        const sku = String(variant.sku || '').trim();
+        if (sku && !index.has(sku)) index.set(sku, { name: item.name, url: `/product/${encodeURIComponent(item.slug)}/` });
+      }
+    }
+    for (const item of items) {
+      for (const variant of [item, ...(item.variants || [])]) {
+        const sku = String(variant.sku || '').trim();
+        if (sku) index.set(sku, { name: item.name, url: `/product/${encodeURIComponent(item.slug)}/` });
+      }
+    }
+    return index;
+  }
+  function stockQuantity(value, more) {
+    return value === null || value === undefined ? '—' : `${value}${more ? '+' : ''}`;
+  }
+  function renderStock() {
+    if (!stockData?.ready) return;
+    const catalog = stockCatalogIndex();
+    const query = $('#stockSearch').value.trim().toLocaleLowerCase('ru');
+    const matched = $('#stockMatched').checked;
+    const filtered = Object.entries(stockData.items).filter(([sku]) => {
+      const product = catalog.get(sku);
+      return (!matched || product) && (!query || sku.toLocaleLowerCase('ru').includes(query) || product?.name.toLocaleLowerCase('ru').includes(query) || stockData.items[sku].name?.toLocaleLowerCase('ru').includes(query));
+    });
+    filtered.sort(([a], [b]) => a.localeCompare(b, 'ru', { numeric: true }));
+    $('#stockCount').textContent = `Найдено: ${filtered.length}`;
+    $('#stockRows').innerHTML = filtered.slice(0, stockLimit).map(([sku, entry]) => {
+      const product = catalog.get(sku);
+      const label = escapeHtml(entry.name || product?.name || '—');
+      const name = product ? `<a href="${product.url}" target="_blank" rel="noopener">${label}</a>` : label;
+      return `<tr><td>${escapeHtml(sku)}</td><td>${name}</td><td>${stockQuantity(entry.moscow, entry.moscowMore)}</td><td>${stockQuantity(entry.spb, entry.spbMore)}</td><td>${stockQuantity(entry.total, entry.totalMore)}</td></tr>`;
+    }).join('');
+    $('#stockMore').hidden = filtered.length <= stockLimit;
+  }
+  async function loadStock() {
+    if (stockLoading) return;
+    stockLoading = true;
+    $('#refreshStock').disabled = true;
+    $('#stockSummary').textContent = 'Загружаем остатки...';
+    try {
+      const [data, catalog] = await Promise.all([
+        request('/stock'),
+        stockCatalog.length ? Promise.resolve(stockCatalog) : fetch('/assets/data/admin-full-catalog.json').then((response) => response.ok ? response.json() : []),
+      ]);
+      stockCatalog = catalog;
+      stockData = data;
+      $('#stockRows').replaceChildren();
+      $('#stockMore').hidden = true;
+      if (!data.ready) {
+        $('#stockSummary').textContent = 'Ждем первую выгрузку от сервера.';
+        $('#stockSummary').classList.remove('is-stale');
+        $('#stockCount').textContent = '';
+        return;
+      }
+      const latestSource = Math.min(...Object.values(data.sources).map((source) => Date.parse(source.modifiedAt || data.fetchedAt)));
+      const stale = !Number.isFinite(latestSource) || Date.now() - latestSource > 90 * 60_000;
+      const date = (value) => value ? new Date(value).toLocaleString('ru-RU', { timeZone: 'Asia/Qyzylorda' }) : 'неизвестно';
+      $('#stockSummary').textContent = `${data.articleCount} артикулов · Остатки: ${date(data.fetchedAt)} · Цены: ${data.priceFetchedAt ? date(data.priceFetchedAt) : 'ещё не проверены'} · Москва: ${date(data.sources.moscow.modifiedAt)} · СПб: ${date(data.sources.spb.modifiedAt)}${stale ? ' · данные устарели, наличие уточняйте' : ''}`;
+      $('#stockSummary').classList.toggle('is-stale', stale);
+      stockLimit = 100;
+      renderStock();
+      return true;
+    } catch (error) {
+      $('#stockSummary').textContent = error.message;
+      return false;
+    } finally {
+      stockLoading = false;
+      $('#refreshStock').disabled = false;
+    }
+  }
+  async function syncStockNow() {
+    const button = $('#syncStock');
+    const status = $('#stockSyncStatus');
+    button.disabled = true;
+    button.textContent = 'Обновляем...';
+    status.hidden = false;
+    status.classList.remove('is-error');
+    status.textContent = 'Загружаем две таблицы Excel. Это может занять до 30 секунд.';
+    try {
+      const result = await request('/stock-refresh', { method: 'POST' });
+      const loaded = await loadStock();
+      status.textContent = loaded
+        ? result.skipped ? 'Остатки проверялись менее двух минут назад. Таблица перечитана.' : 'Остатки обновлены из Excel.'
+        : 'Выгрузка обновлена, но таблицу не удалось загрузить. Нажмите «Перечитать таблицу».';
+    } catch (error) {
+      status.textContent = error.message;
+      status.classList.add('is-error');
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Обновить из Excel';
+    }
+  }
   async function loadOrders() {
     $('#ordersEmpty').textContent = 'Загружаем заказы...';
     $('#ordersEmpty').hidden = false;
@@ -162,8 +263,8 @@
         ${order.address ? `<p>Адрес: ${escapeHtml(order.address)}</p>` : ''}
         ${order.comment ? `<p>Комментарий: ${escapeHtml(order.comment)}</p>` : ''}
         <ul>${order.items.map((item) => `<li>${escapeHtml(item.name)}${item.sku ? ` · арт. ${escapeHtml(item.sku)}` : ''}${item.color ? ` · ${escapeHtml(item.color)}` : ''} × ${item.qty} · ${format(item.price * item.qty)}</li>`).join('')}</ul>
-        <p><strong>Предварительная сумма: ${format(order.estimatedTotal)}</strong></p>
-        ${order.notificationStatus !== 'sent' ? '<p class="order-warning">Уведомление в Telegram не подтверждено. Заказ сохранён здесь.</p>' : ''}
+        <p><strong>${order.paymentStatus === 'paid' ? 'Оплачено' : 'Сумма товаров'}: ${format(order.estimatedTotal)}</strong> · ${escapeHtml(({ paid: order.paymentTestMode ? 'Тестовая оплата' : 'Оплачен', pending: 'Ожидает оплаты', processing: 'Оплата обрабатывается', not_required: 'Оплата при оформлении не требовалась' })[order.paymentStatus] || order.paymentStatus || 'Статус оплаты неизвестен')}</p>
+        ${order.notificationStatus !== 'sent' && ['paid', 'not_required'].includes(order.paymentStatus) ? '<p class="order-warning">Уведомление в Telegram не подтверждено. Заказ сохранён здесь.</p>' : ''}
         <div class="order-workflow">
           <label>Статус<select data-order-status>${Object.entries(ORDER_STATUSES).map(([value, label]) => `<option value="${value}"${order.status === value ? ' selected' : ''}>${label}</option>`).join('')}</select></label>
           <label>Внутренняя заметка<textarea data-order-note maxlength="1000" rows="2" placeholder="Что обсудили с клиентом">${escapeHtml(order.internalNote || '')}</textarea></label>
@@ -206,7 +307,7 @@
   $('#loginForm').addEventListener('submit', async (event) => { event.preventDefault(); $('#loginError').textContent = ''; try { await request('/login', { method: 'POST', body: JSON.stringify({ login: $('#login').value.trim(), password: $('#password').value }) }); $('#password').value = ''; await showAdmin(); } catch (error) { $('#loginError').textContent = error.message; } });
   form.addEventListener('submit', async (event) => { event.preventDefault(); $('#formError').textContent = ''; collectSpecifications(); const variants = normalizedVariants(); $('#colors').value = variants.map((variant) => variant.color).filter(Boolean).join(', '); const payload = { name: $('#name').value, sku: $('#sku').value, slug: $('#slug').value, category: $('#category').value, price: $('#price').value, oldPrice: $('#oldPrice').value, imageUrl: $('#imageUrl').value, material: $('#material').value, colors: $('#colors').value, variants, specifications: $('#specifications').value, description: $('#description').value, isCustom: $('#isCustom').checked, visible: $('#visible').checked }; const id = Number($('#itemId').value); try { if (id) await request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }); else await request('/products', { method: 'POST', body: JSON.stringify(payload) }); await loadItems(); resetForm(); activateView('catalog'); } catch (error) { $('#formError').textContent = error.message; } });
   $('#deleteProduct').addEventListener('click', async () => { const id = Number($('#itemId').value); if (!id || !confirm('Удалить эту позицию без возможности восстановления?')) return; try { await request(`/products/${id}`, { method: 'DELETE' }); await loadItems(); resetForm(); } catch (error) { $('#formError').textContent = error.message; } });
-  $('#resetForm').addEventListener('click', resetForm); $('#addVariant').addEventListener('click', () => { editorVariants.push({ color: '', name: '', sku: '' }); renderVariantRows(); }); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); $('#fullCatalogSearch').addEventListener('input', renderFullCatalog); $('#fullCatalogCategory').addEventListener('change', renderFullCatalog); $('#refreshOrders').addEventListener('click', loadOrders); document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view))); document.querySelectorAll('[data-open-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.openView))); renderVariantRows(); renderSpecificationFields();
+  $('#resetForm').addEventListener('click', resetForm); $('#addVariant').addEventListener('click', () => { editorVariants.push({ color: '', name: '', sku: '' }); renderVariantRows(); }); $('#search').addEventListener('input', render); $('#category').addEventListener('change', renderSpecificationFields); $('#fullCatalogSearch').addEventListener('input', renderFullCatalog); $('#fullCatalogCategory').addEventListener('change', renderFullCatalog); $('#stockSearch').addEventListener('input', () => { stockLimit = 100; renderStock(); }); $('#stockMatched').addEventListener('change', () => { stockLimit = 100; renderStock(); }); $('#stockMore').addEventListener('click', () => { stockLimit += 100; renderStock(); }); $('#refreshStock').addEventListener('click', loadStock); $('#syncStock').addEventListener('click', syncStockNow); $('#refreshOrders').addEventListener('click', loadOrders); document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view))); document.querySelectorAll('[data-open-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.openView))); renderVariantRows(); renderSpecificationFields();
   $('#logout').addEventListener('click', async () => { await request('/logout', { method: 'POST' }); adminView.hidden = true; adminView.style.removeProperty('display'); loginView.hidden = false; loginView.style.removeProperty('display'); resetForm(); });
   request('/session').then(({ authenticated }) => authenticated && showAdmin()).catch(() => {});
 }());

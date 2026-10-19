@@ -370,6 +370,14 @@
       </div>
     </div>
 
+<script>
+window.addEventListener('pageshow', (event) => {
+  if (!event.persisted || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const intro = document.querySelector('body > .preloader');
+  if (intro) intro.replaceWith(intro.cloneNode(true));
+});
+</script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="top_nav">
@@ -665,11 +673,11 @@ $(function() {
 		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/wg.png" class="change_kin" id="img_wg" alt="">
 		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/cn.png" class="change_kin" id="img_cn" alt="">
 		<div class="kin_colors">
-			<div class="kin_color" id="gb"></div>
-			<div class="kin_color" id="wh"></div>
-			<div class="kin_color" id="do"></div>
-			<div class="kin_color active" id="cn"></div>
-			<div class="kin_color" id="wg"></div>
+			<button type="button" class="kin_color active" id="gb" aria-label="KINARU: GB"></button>
+			<button type="button" class="kin_color" id="wh" aria-label="KINARU: WH"></button>
+			<button type="button" class="kin_color" id="do" aria-label="KINARU: DO"></button>
+			<button type="button" class="kin_color" id="cn" aria-label="KINARU: CN"></button>
+			<button type="button" class="kin_color" id="wg" aria-label="KINARU: WG"></button>
 		</div>
 		<div class="sinks_text">
 			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/reddot.png" class="img3" alt="">
@@ -697,32 +705,20 @@ $(function() {
 					wg: 'img_wg'
 				};
 
-				// Назначение событий для каждой кнопки
-				Object.keys(mappings).forEach(function(buttonId) {
-					const imgId = mappings[buttonId];
-
-					// Найдем элемент кнопки
-					const button = document.getElementById(buttonId);
-
-					button.addEventListener('click', function() {
-						// Скрываем все изображения
-						document.querySelectorAll('.change_kin').forEach(img => img.style.display = 'none');
-
-						// Показываем соответствующее изображение
-						document.getElementById(imgId).style.display = 'block';
-
-						// Убираем класс active у всех кнопок
-						Object.keys(mappings).forEach(function(id) {
-							document.getElementById(id).classList.remove('active');
-						});
-
-						// Добавляем класс active к нажатой кнопке
-						button.classList.add('active');
+				const selectColor = (selected) => {
+					Object.entries(mappings).forEach(([code, imageId]) => {
+						const image = document.getElementById(imageId);
+						const button = document.getElementById(code);
+						image.style.display = code === selected ? 'block' : 'none';
+						button.classList.toggle('active', code === selected);
+						button.setAttribute('aria-pressed', String(code === selected));
 					});
-				});
+				};
 
-				// Убедимся, что основное изображение всегда видно
-				document.querySelector('.main_kin').style.display = 'block';
+				Object.keys(mappings).forEach((code) => {
+					document.getElementById(code).addEventListener('click', () => selectColor(code));
+				});
+				selectColor('gb');
 			});
 		</script>
 	</section>
@@ -1785,5 +1781,5 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
   });
 })();
 </script>
-<script src="assets/js/lang-switch.js?v=20261019-mobile2" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20261019-mobile3" data-root=""></script>
 <script src="assets/js/local-router.js"></script>

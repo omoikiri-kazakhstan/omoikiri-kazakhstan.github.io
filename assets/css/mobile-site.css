@@ -1,4 +1,29 @@
 @media (max-width: 700px) {
+  .num_cont {
+    height: min(58svh, 480px);
+  }
+
+  .num {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .eight {
+    font-size: 170px;
+    line-height: .85;
+  }
+
+  .eight_text {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .eight_text > span {
+    opacity: 1;
+  }
+
   .dealer-lang-switch {
     top: auto !important;
     right: auto !important;
@@ -58,6 +83,8 @@
     font-size: 14px !important;
     font-weight: 700;
     text-align: center;
+    line-height: 1.35 !important;
+    white-space: normal !important;
   }
 
   body.single-product .product_card {
@@ -74,7 +101,7 @@
   }
 
   body.single-product .prod_image {
-    height: min(62vw, 240px) !important;
+    height: min(72vw, 300px) !important;
   }
 
   body.single-product .second_image_cont {
@@ -141,5 +168,13 @@
   .products > .product > a > h2,
   .woocommerce-loop-product__title {
     font-size: 13px !important;
+  }
+
+  .eight {
+    font-size: 150px;
+  }
+
+  .eight_text {
+    font-size: 18px;
   }
 }

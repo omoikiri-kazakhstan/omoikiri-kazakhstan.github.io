@@ -821,8 +821,8 @@
         }
 
         body.single-product .card_info {
-          padding-left: 26px !important;
-          padding-right: 26px !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
         }
 
         body.single-product .prod_image,
@@ -844,6 +844,10 @@
         }
 
         body.single-product .card_actions {
+          display: grid !important;
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          align-items: stretch !important;
+          gap: 10px !important;
           width: 100% !important;
           max-width: 100% !important;
           white-space: normal !important;
@@ -854,25 +858,49 @@
         body.single-product .card_actions .fav_button,
         body.single-product .card_actions .pin,
         body.single-product .card_actions .dealer-simple-cart-button {
-          margin-right: 18px !important;
-          margin-bottom: 14px !important;
+          margin: 0 !important;
         }
 
         body.single-product .card_actions .rrc {
+          display: block !important;
+          grid-column: 1 / -1 !important;
+          line-height: normal !important;
           max-width: 100% !important;
-          flex: 0 1 auto !important;
+        }
+
+        body.single-product .card_actions .rrc .price {
+          display: inline-flex !important;
+          align-items: center !important;
+          min-height: 44px !important;
         }
 
         body.single-product .card_actions .fav_button,
         body.single-product .card_actions .pin {
-          flex: 0 1 auto !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 6px !important;
           min-width: 0 !important;
+          min-height: 44px !important;
+          padding: 5px !important;
+          border: 1px solid #d0d0d0 !important;
+          border-radius: 4px !important;
+          white-space: normal !important;
+        }
+
+        body.single-product .card_actions .dealer-simple-cart-button {
+          grid-column: 1 / -1 !important;
+          width: 100% !important;
+          min-height: 48px !important;
+          font-size: 14px !important;
         }
 
         body.single-product .dealer-favorite-label,
         body.single-product .card_actions .pin a,
         body.single-product .card_actions .pin span {
-          white-space: nowrap !important;
+          font-size: 12px !important;
+          white-space: normal !important;
+          text-align: center !important;
         }
       }
     `;

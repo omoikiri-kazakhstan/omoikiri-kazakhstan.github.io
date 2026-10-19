@@ -415,6 +415,87 @@
       }
     }
 
+    @media (max-width: 700px) {
+      .site-header {
+        position: relative;
+        z-index: 100;
+      }
+
+      .head-main {
+        grid-template-columns: 40px minmax(0, 1fr) 40px;
+        height: 68px;
+        gap: 8px;
+        padding: 0 16px;
+      }
+
+      .hamburger {
+        width: 30px;
+        height: 24px;
+        background-size: 30px 3px, 30px 3px, 30px 3px;
+        cursor: pointer;
+      }
+
+      .brand img {
+        width: min(160px, 100%);
+        margin: 0 auto;
+      }
+
+      .head-actions { gap: 0; }
+      .search-icon { display: none; }
+
+      .site-nav {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        max-height: calc(100svh - 68px);
+        overflow-y: auto;
+        background: #fff;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, .12);
+      }
+
+      .site-nav.is-open { display: block; }
+      .site-nav ul { display: block; padding: 8px 16px 20px; }
+      .site-nav a {
+        min-height: 44px;
+        border-bottom: 1px solid #eee;
+        font-size: 15px;
+        white-space: normal;
+      }
+
+      .favorites-page {
+        margin-bottom: 0;
+        padding: 24px 16px 80px;
+      }
+
+      .favorites-page h1 {
+        margin: 0 0 24px;
+        font-size: 30px;
+      }
+
+      .favorites-products tbody { gap: 12px; }
+      .favorites-products tbody tr { flex-basis: 100%; }
+      .empty { padding: 30px 0; font-size: 17px; }
+      .clear-row { margin-bottom: 18px; }
+
+      .export {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .share-link-container { grid-column: 1 / -1; }
+      .button.dark {
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        padding: 0 8px;
+        font-size: 13px;
+      }
+    }
+
     @media print {
       @page {
         size: A4;
@@ -579,7 +660,7 @@
   <header class="site-header">
     <div class="head-main">
       <div class="head-left">
-        <button class="hamburger" type="button" aria-label="Меню"></button>
+        <button class="hamburger" type="button" aria-label="Меню" aria-controls="favoritesNav" aria-expanded="false"></button>
         <a class="phone" href="tel:87077832888">8 (707) 783-28-88</a>
       </div>
       <a class="brand" href="../index.html">
@@ -592,7 +673,7 @@
         <span class="search-icon" aria-hidden="true"></span>
       </div>
     </div>
-    <nav class="site-nav" aria-label="Главное меню">
+    <nav class="site-nav" id="favoritesNav" aria-label="Главное меню">
       <ul>
         <li><a href="../sinks/index.html">Мойки</a></li>
         <li><a href="../bathsinks/index.html">Раковины для ванной</a></li>
@@ -645,5 +726,20 @@
   <script src="../assets/js/favorites-local.js?v=20261012-prices1"></script>
   <script src="../assets/js/lang-switch.js?v=20261012-02" data-root="../"></script>
   <script src="../assets/js/local-router.js" data-root="../"></script>
+  <script>
+    const favoritesMenuButton = document.querySelector('.hamburger');
+    const favoritesNav = document.querySelector('#favoritesNav');
+    favoritesMenuButton.addEventListener('click', () => {
+      if (!matchMedia('(max-width: 700px)').matches) return;
+      const open = favoritesNav.classList.toggle('is-open');
+      favoritesMenuButton.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        favoritesNav.classList.remove('is-open');
+        favoritesMenuButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+  </script>
 </body>
 </html>

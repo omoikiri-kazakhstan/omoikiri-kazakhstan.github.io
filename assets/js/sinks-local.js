@@ -652,13 +652,13 @@
           margin-bottom: 0 !important;
           padding: 0 !important;
           overflow: hidden !important;
-          background: none !important;
+          background: #fff !important;
           border: 0 !important;
           box-shadow: none !important;
         }
 
         .dealer-static-catalog .products {
-          padding-top: 64px !important;
+          padding-top: 52px !important;
         }
 
         .dealer-static-catalog .hidden_filter .hidden_button {
@@ -668,8 +668,14 @@
           z-index: 10002 !important;
           align-self: center !important;
           margin: 0 auto !important;
-          border-radius: 0 0 8px 8px !important;
+          width: 100% !important;
+          min-height: 52px !important;
+          justify-content: center !important;
+          margin-bottom: 0 !important;
+          border-bottom: 1px solid #e8e8e8 !important;
+          border-radius: 0 !important;
           background: #fff !important;
+          box-shadow: none !important;
         }
 
         .dealer-static-catalog .hidden_filter .widget-area,
@@ -697,7 +703,7 @@
 
         .dealer-static-catalog .hidden_filter .prdctfltr_wc .prdctfltr_woocommerce_ordering {
           margin: 0 !important;
-          padding: 0 44px 44px !important;
+          padding: 0 44px calc(96px + env(safe-area-inset-bottom)) !important;
         }
 
         .dealer-static-catalog .hidden_filter .prdctfltr_filter_inner {

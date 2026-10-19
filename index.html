@@ -1549,22 +1549,25 @@ if (pc.matches) {
 } else {
 
 	// анимация 8
-
-	gsap.timeline({
-		scrollTrigger: {
-			trigger: ".num_cont",
-			start: "top top",
-			endTrigger: ".sinks",
-			end: "+=50%",
-			scrub: 0.1,
-			pin: ".num_cont",
-		}
-	})
-	.to(".eight_text span", {
-		duration: 1,
-		opacity: 1,
-		stagger: 0.2,
-	})
+	if (window.matchMedia('(max-width: 700px)').matches) {
+		gsap.set('.eight_text span', { opacity: 1 });
+	} else {
+		gsap.timeline({
+			scrollTrigger: {
+				trigger: ".num_cont",
+				start: "top top",
+				endTrigger: ".sinks",
+				end: "+=50%",
+				scrub: 0.1,
+				pin: ".num_cont",
+			}
+		})
+		.to(".eight_text span", {
+			duration: 1,
+			opacity: 1,
+			stagger: 0.2,
+		})
+	}
 
 	//
 }

@@ -47,6 +47,39 @@
     left: 16px !important;
   }
 
+  body.dealer-home-page .dealer-lang-switch {
+    top: 76px !important;
+    right: 16px !important;
+    bottom: auto !important;
+    left: auto !important;
+  }
+
+  body.single-product .dealer-product-tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 14px 0 20px;
+  }
+
+  body.single-product .dealer-product-tools .dealer-lang-switch,
+  body.single-product .dealer-product-tools .dealer-local-cart-tab {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    flex: 0 0 auto;
+  }
+
+  body.single-product .dealer-product-tools .dealer-local-cart-tab {
+    display: inline-flex !important;
+    width: 48px !important;
+    height: 48px !important;
+    border: 1px solid #d0d0d0 !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
   .products > .product {
     width: 50% !important;
     min-height: 276px;
@@ -117,6 +150,42 @@
     max-height: 95px !important;
     max-width: 100%;
     object-fit: contain;
+  }
+}
+
+@media (max-width: 900px) {
+  body.dealer-home-page .anvideo_content {
+    display: block;
+    padding: 0 24px 36px;
+  }
+
+  body.dealer-home-page .anvideo_content > canvas,
+  body.dealer-home-page .anvideo_content > img {
+    display: none;
+  }
+
+  body.dealer-home-page .anvideo_text {
+    width: 100%;
+    max-width: 100%;
+    gap: 24px;
+  }
+
+  body.dealer-home-page .anvideo > h2 {
+    font-size: clamp(44px, 8vw, 80px);
+    line-height: 1;
+    overflow-wrap: anywhere;
+  }
+
+  body.dealer-home-page .disp_title {
+    font-size: clamp(24px, 4vw, 34px);
+    line-height: 1.2;
+  }
+
+  body.dealer-home-page .disp_text {
+    width: 100%;
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.55;
+    font-family: 'GothamProRegular', Arial, sans-serif;
   }
 }
 

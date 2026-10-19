@@ -829,7 +829,7 @@
 
     const mobileStyles = document.createElement('link');
     mobileStyles.rel = 'stylesheet';
-    mobileStyles.href = ROOT + 'assets/css/mobile-site.css?v=20261019-01';
+    mobileStyles.href = ROOT + 'assets/css/mobile-site.css?v=20261019-02';
     document.head.appendChild(mobileStyles);
   }
 
@@ -955,6 +955,32 @@
     link.title = 'Cart';
     link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 5h2.1l1.8 10.2a2 2 0 0 0 2 1.65h7.35a2 2 0 0 0 1.94-1.5L20.2 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20.15h.01M17 20.15h.01" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg><span class="dealer-local-cart-count" data-cart-count data-count-zero>0</span>';
     document.body.appendChild(link);
+  }
+
+  function placeProductMobileTools() {
+    if (!document.body.classList.contains('single-product')) return;
+    const actions = document.querySelector('.card_actions');
+    const switcher = document.querySelector('.dealer-lang-switch');
+    const cart = document.querySelector('.dealer-local-cart-tab');
+    if (!actions || !switcher || !cart) return;
+
+    let tools = document.querySelector('.dealer-product-tools');
+    if (!tools) {
+      tools = document.createElement('div');
+      tools.className = 'dealer-product-tools';
+      actions.insertAdjacentElement('afterend', tools);
+    }
+
+    const media = window.matchMedia('(max-width: 700px)');
+    const position = () => {
+      if (media.matches) {
+        tools.append(switcher, cart);
+      } else {
+        document.body.append(switcher, cart);
+      }
+    };
+    position();
+    media.addEventListener('change', position);
   }
 
   function readJsonList(key) {
@@ -1375,6 +1401,7 @@
     ensureInfoFooter();
     createSwitcher();
     addCartLink();
+    placeProductMobileTools();
     updateDealerHeaderCounts();
     bindSearchToggle();
     bindSearchState();

@@ -258,7 +258,7 @@
 </script>
 </head>
 
-<body>
+<body class="dealer-home-page">
 <div class="preloader" aria-hidden="true">
       <div class="home-preloader-loader">
         <div class="loader-icons">
@@ -842,6 +842,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateBackgroundAndVideo() {
         const newColor = colors[selectedColor] || '#ffffff'; // Фолбэк на белый цвет
         changeBg.style.backgroundColor = newColor;
+        const foreground = selectedColor === 'SL' ? '#111111' : '#ffffff';
+        changeBg.style.color = foreground;
+        changeBg.querySelector('.color_col h2').style.color = foreground;
 
         // Обновляем источник видео
         if (videoElement) {
@@ -1782,5 +1785,5 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
   });
 })();
 </script>
-<script src="assets/js/lang-switch.js?v=20261012-02" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20261019-mobile2" data-root=""></script>
 <script src="assets/js/local-router.js"></script>

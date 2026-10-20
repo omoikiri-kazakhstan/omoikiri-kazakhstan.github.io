@@ -7,3 +7,6 @@ Thumbs.db
 .env*
 .workers-types/
 node_modules/
+plesk/data/
+__pycache__/
+*.pyc

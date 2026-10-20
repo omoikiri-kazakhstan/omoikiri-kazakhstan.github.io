@@ -14,9 +14,9 @@ export async function onRequestGet(context) {
   if (!token || !context.env.ADMIN_SESSION_SECRET) return Response.redirect(new URL('/madi-admin/', context.request.url), 302);
   try {
     const used = await context.env.CATALOG_DB.prepare(
-      "DELETE FROM admin_magic_links WHERE token_hash = ? AND expires_at > CURRENT_TIMESTAMP RETURNING token_hash"
-    ).bind(await tokenHash(token)).first();
-    if (!used) return new Response('Ссылка недействительна или уже использована.', { status: 403 });
+      "DELETE FROM admin_magic_links WHERE token_hash = ? AND expires_at > CURRENT_TIMESTAMP"
+    ).bind(await tokenHash(token)).run();
+    if (used.meta.changes !== 1) return new Response('Ссылка недействительна или уже использована.', { status: 403 });
     const session = await createSession(context.env.ADMIN_SESSION_SECRET);
     return new Response(null, {
       status: 302,

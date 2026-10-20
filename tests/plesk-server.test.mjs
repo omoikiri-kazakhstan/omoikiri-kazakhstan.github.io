@@ -7,6 +7,7 @@ test('all API paths map to their existing handlers', () => {
   assert.equal(matchRoute('/api/admin/products/123').params.id, '123');
   assert.equal(matchRoute('/api/admin/orders/123').file, 'admin/orders/[id].js');
   assert.equal(matchRoute('/api/admin/catalog-overrides/akita').params.slug, 'akita');
+  assert.equal(matchRoute('/api/orders/').file, 'orders/index.js');
   assert.equal(matchRoute('/api/admin/products/x'), null);
 });
 
@@ -50,4 +51,9 @@ test('Node server runs existing API handler', async () => {
   const response = await fetch(`${base}/api/prices`);
   assert.equal(response.status, 200);
   assert.deepEqual(await response.json(), { bySku: {}, bySlug: {}, fetchedAt: null });
+  const orderResponse = await fetch(`${base}/api/orders/`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
+  });
+  assert.equal(orderResponse.status, 503);
+  assert.match(orderResponse.headers.get('content-type'), /application\/json/);
 });

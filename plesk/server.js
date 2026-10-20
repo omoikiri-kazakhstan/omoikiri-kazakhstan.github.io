@@ -40,6 +40,7 @@ const routes = new Map(Object.entries({
 }));
 
 export function matchRoute(pathname) {
+  pathname = pathname.replace(/\/+$/, '');
   const fixed = routes.get(pathname);
   if (fixed) return { file: fixed, params: {} };
   for (const [pattern, file, param] of [

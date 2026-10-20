@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "audit:product-encoding": "node scripts/repair-product-encoding.mjs --dry-run",
-    "audit:release-seo": "node scripts/release-seo.mjs --dry-run"
+    "audit:release-seo": "node scripts/release-seo.mjs --dry-run",
+    "sync:stock": "node plesk/sync-stock.js"
   },
   "devDependencies": {
     "parse5": "8.0.0"

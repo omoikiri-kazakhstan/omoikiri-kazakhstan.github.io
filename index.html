@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="assets/css/buttons.css">
 	<link rel="stylesheet" href="assets/css/favorites.css">
 	<link rel="stylesheet" href="assets/css/home-intro.css?v=20261012-original">
-	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020b">
+	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020c">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style id="dealer-kz-layer-style">
@@ -618,21 +618,24 @@ $(function() {
 	<a href="/omoikiri-home/index.html">OMOIKIRI Home</a>
 </nav>
 
-<section class="num_cont">
-	<div class="num">
-		<div class="eight">8</div>
-		<div class="eight_text">
-			<span>шагов</span>
-			<span>к идеальной</span>
-			<span>зоне кухни</span>
+<div class="intro_transition">
+	<section class="num_cont">
+		<div class="num_bg"></div>
+		<div class="num">
+			<div class="eight">8</div>
+			<div class="eight_text">
+				<span>шагов</span>
+				<span>к идеальной</span>
+				<span>зоне кухни</span>
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+	<div class="sinks_title"><h2 class="title1">sinks</h2></div>
+</div>
 
 
 	<section class="sinks">
 		<div class="sinks_left">
-			<h2 class="title1">sinks</h2>
 			<div class="sinks_text">
 				<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/natceramic.png" class="logo1" alt="">
 				<p class="text1">Коллекция моек из NATCERAMIC разработана специально для ценителей природных материалов, роскошных и неповторимых вещей. NATCERAMIC – это натуральный материал, состоящий из смеси глин, минералов и красящего пигмента.<br> Природные минералы, из которых делаются такие мойки, обладают прекрасными гигиеническими и экологическими свойствами. Безусловным достоинством данного материала также является его долговечность, прочность, удобство и легкий уход.</p>
@@ -654,14 +657,45 @@ $(function() {
 	</section>
 
 	<section class="home-art-collection" aria-labelledby="home-art-title">
-		<div class="home-art-copy">
-			<p class="home-art-eyebrow">Art Collection</p>
-			<h2 id="home-art-title">Мировые шедевры на вашей кухне</h2>
-			<p>Художественные мойки OMOIKIRI MIKURA с работами Сальвадора Дали и Винсента Ван Гога.</p>
-			<a class="home-showcase-link" href="/product/mikura-76-dali/">Подробнее <span aria-hidden="true">&#8594;</span></a>
+		<h2 class="home-art-heading" id="home-art-title"><strong>Art</strong> Collection</h2>
+		<div class="home-art-content">
+			<div class="home-art-copy">
+				<h3>Мировые шедевры<br>на вашей кухне</h3>
+				<p>Художественные мойки OMOIKIRI MIKURA с работами Сальвадора Дали и Винсента Ван Гога.</p>
+				<a class="home-showcase-link" href="/product/mikura-76-dali/">Подробнее <span aria-hidden="true">&#8594;</span></a>
+			</div>
+			<img src="/assets/img/home-refresh/dali.png" alt="Художественная мойка OMOIKIRI Art Collection" loading="lazy">
 		</div>
-		<img src="/assets/img/home-refresh/dali.png" alt="Художественная мойка OMOIKIRI Art Collection" loading="lazy">
 	</section>
+
+	<section class="home-elleci" aria-labelledby="home-elleci-title">
+		<img class="home-elleci-image" src="/assets/img/home-refresh/elleci/cn.png" alt="Мойка OMOIKIRI SINTESI" loading="lazy">
+		<div class="home-elleci-colors" role="group" aria-label="Цвет мойки SINTESI">
+			<button type="button" class="is-active" data-elleci-color="cn" aria-label="Коралловый" aria-pressed="true"></button>
+			<button type="button" data-elleci-color="gr" aria-label="Серый" aria-pressed="false"></button>
+			<button type="button" data-elleci-color="wg" aria-label="Светло-серый" aria-pressed="false"></button>
+			<button type="button" data-elleci-color="wh" aria-label="Белый" aria-pressed="false"></button>
+			<button type="button" data-elleci-color="gb" aria-label="Графит" aria-pressed="false"></button>
+		</div>
+		<div class="home-elleci-copy">
+			<p class="home-elleci-brand">OMOIKIRI x ELLECI</p>
+			<h2 id="home-elleci-title">SINTESI</h2>
+			<p>Коллекция моек из ARTCERAMIC для тех, кто ценит оригинальные дизайнерские решения и внимание к деталям.</p>
+			<a class="home-showcase-link" href="/product/sintesi-116/">Подробнее <span aria-hidden="true">&#8594;</span></a>
+		</div>
+	</section>
+	<script>
+		document.querySelectorAll('[data-elleci-color]').forEach((button) => {
+			button.addEventListener('click', () => {
+				document.querySelector('.home-elleci-image').src = `/assets/img/home-refresh/elleci/${button.dataset.elleciColor}.png`;
+				document.querySelectorAll('[data-elleci-color]').forEach((item) => {
+					const active = item === button;
+					item.classList.toggle('is-active', active);
+					item.setAttribute('aria-pressed', String(active));
+				});
+			});
+		});
+	</script>
 
 	<section class="sinks3">
 		<div class="kinaru_block">
@@ -680,7 +714,7 @@ $(function() {
 		</div>
 		<div class="sinks_text">
 			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/reddot.png" class="img3" alt="">
-			<h3 class="title4">Omoikiri x Elleci</h3>
+			<h3 class="title4">KINARU PRO</h3>
 			<p class="text3">Рабочая дизайнерская станция OMOIKIRI KINARU PRO - это место, где функциональность и детали определяют стандарты качества завтрашнего дня.</p>
 			<a href="/product/kinaru-pro-86-u-i/?attribute_pa_color=az" target="_blank">
 			<div class="btn btn3">
@@ -737,7 +771,7 @@ $(function() {
 				</div>
 				</a>
 			</div>
-			<img src="assets/img/custom/steel-collection-side.png?v=2" class="img2" alt="">
+			<img src="/assets/img/home-refresh/steel.jpg" class="img2" alt="Мойка Steel Collection">
 		</div>
 		<div class="sinks_right">
 			<div class="sinks_anim">
@@ -929,10 +963,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	</div>
 </section>
 <section class="home-dispenser-showcase" aria-labelledby="home-dispenser-title">
+	<p class="home-dispenser-heading">Dispensers</p>
 	<div class="home-dispenser-copy">
-		<p class="home-dispenser-eyebrow">Dispensers</p>
 		<h2 id="home-dispenser-title">Акцент на удобство</h2>
-		<p>Дозаторы OMOIKIRI сочетают функциональность и разнообразие дизайнерских решений. Их удобно наполнять сверху и легко подобрать к мойке и смесителю.</p>
+		<p>Дозаторы OMOIKIRI сочетают функциональность и разнообразие дизайнерских решений. Продуманная конструкция, удобная подача и возможность наполнения сверху обеспечивают комфорт в повседневном использовании.</p>
 		<a class="home-showcase-link" href="/dispenser/index.html">Подробнее <span aria-hidden="true">&#8594;</span></a>
 	</div>
 	<img src="/assets/img/home-refresh/dispenser.png" alt="Дозатор OMOIKIRI" loading="lazy">
@@ -1069,9 +1103,10 @@ document.addEventListener("DOMContentLoaded", function() {
 <section class="home">
 	<div class="home_bg_text">
 		<h2 class="title8">home</h2>
-		<p class="h_text">В разделе OMOIKIRI HOME размещены товары для дома, которые подчеркнут индивидуальность вашего интерьера. Благодаря декору любое пространство можно превратить в уютный дом. </p>
+		<p class="h_text">OMOIKIRI HOME - всё, что делает домашние ритуалы приятнее. Коллекция объединяет решения для приготовления, сервировки и повседневных дел.</p>
 	</div>
-	<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/home.jpg" alt="">
+	<img src="/assets/img/home-refresh/home_bg.jpg" id="home_pc" alt="Предметы OMOIKIRI HOME в интерьере">
+	<img src="/assets/img/home-refresh/home_bg_mob.jpg" id="home_mob" alt="Предметы OMOIKIRI HOME в интерьере">
 	<a href="/omoikiri-home/index.html" target="_blank">
 	<div class="btn h_btn">
 		<span>подробнее</span>
@@ -1093,29 +1128,36 @@ const pc = window.matchMedia('(min-width: 1050px');
 
 if (pc.matches) {
 
-	// анимация 8
-
 	gsap.timeline({
+		defaults: { ease: 'none' },
 		scrollTrigger: {
 			trigger: ".num_cont",
-			start: "top 114px",
-			endTrigger: ".sinks",
-			end: "+=200%",
+			start: "top 67px",
+			end: "+=100%",
 			scrub: 0.1,
-			pin: ".num_cont",
-			snap: true,
+			pin: true,
+			anticipatePin: 1,
 		}
 	})
-	.to(".eight_text span", {
-		duration: 1,
-		opacity: 1,
-		stagger: 0.2,
-	})
-	.to(".eight", {
-		duration: 1,
-		scale: 20,
-		rotation: 45,
-	})
+	.to('.num_bg', { opacity: 1, duration: 0.5 })
+	.fromTo('.eight', { scale: 0.9 }, { scale: 1, duration: 0.5 }, '<')
+	.fromTo('.eight_text span', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.15 })
+	.to({}, { duration: 0.3 });
+
+	gsap.fromTo('.sinks_title h2', { yPercent: 110 }, {
+		yPercent: 0,
+		ease: 'none',
+		scrollTrigger: { trigger: '.sinks_title', start: 'top 95%', end: 'top 60%', scrub: true },
+	});
+
+	['.home-art-heading', '.home-art-copy', '.home-art-content > img', '.home-elleci-copy', '.home-dispenser-heading', '.home-dispenser-copy'].forEach((selector) => {
+		gsap.from(selector, {
+			y: 70,
+			opacity: 0,
+			ease: 'power2.out',
+			scrollTrigger: { trigger: selector, start: 'top 90%', end: 'top 50%', scrub: true },
+		});
+	});
 
 	// анимация моек Natceramic
 
@@ -1136,18 +1178,6 @@ if (pc.matches) {
 				toggleActions: "play pause resume reverse"
 			}
 		});
-	});
-
-	gsap.from('.title1', {
-		scrollTrigger: {
-			trigger: '.sinks',
-			start: 'top 40%',
-			end: 'center center',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
 	});
 
 	gsap.from('.logo1', {
@@ -1554,29 +1584,7 @@ if (pc.matches) {
 		duration: 1,
 	});
 } else {
-
-	// анимация 8
-	if (window.matchMedia('(max-width: 700px)').matches) {
-		gsap.set('.eight_text span', { opacity: 1 });
-	} else {
-		gsap.timeline({
-			scrollTrigger: {
-				trigger: ".num_cont",
-				start: "top top",
-				endTrigger: ".sinks",
-				end: "+=50%",
-				scrub: 0.1,
-				pin: ".num_cont",
-			}
-		})
-		.to(".eight_text span", {
-			duration: 1,
-			opacity: 1,
-			stagger: 0.2,
-		})
-	}
-
-	//
+	gsap.set('.eight_text span', { opacity: 1 });
 }
 
 </script>

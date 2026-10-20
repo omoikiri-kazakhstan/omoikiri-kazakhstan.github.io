@@ -709,13 +709,13 @@
         display: inline !important;
         visibility: visible !important;
         opacity: 1 !important;
-        color: #e4003a !important;
+        color: var(--hover-link, #fe5000) !important;
         font-family: "Lato", Arial, Helvetica, sans-serif !important;
         font-size: 17px !important;
         font-weight: 400 !important;
         line-height: inherit !important;
         text-decoration-line: line-through !important;
-        text-decoration-color: #e4003a !important;
+        text-decoration-color: var(--hover-link, #fe5000) !important;
         text-decoration-thickness: 2px !important;
         user-select: text !important;
         -webkit-user-select: text !important;

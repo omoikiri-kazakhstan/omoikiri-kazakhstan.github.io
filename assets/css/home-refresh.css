@@ -75,32 +75,6 @@ body.dealer-home-page .main_block > img {
   opacity: 1;
 }
 
-.home-category-rail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  min-height: 64px;
-  padding: 10px 22px;
-  overflow-x: auto;
-  background: #fff;
-  white-space: nowrap;
-}
-
-.home-category-rail a {
-  flex: 0 0 auto;
-  font-family: var(--medium-font);
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #222;
-  transition: color .2s ease;
-}
-
-.home-category-rail a:hover,
-.home-category-rail a:focus-visible {
-  color: var(--hover-link);
-}
-
 .intro_transition {
   position: relative;
   z-index: 10;
@@ -401,7 +375,6 @@ body.dealer-home-page .main_block > img {
   }
 
   body.dealer-home-page .main_block > img { object-position: 54% center; }
-  .home-category-rail { justify-content: flex-start; gap: 22px; min-height: 56px; padding: 8px 18px; }
   .intro_transition .num_cont { height: 380px; }
   .intro_transition .eight { font-size: 320px; }
   .intro_transition .eight_text { font-size: 20px; }

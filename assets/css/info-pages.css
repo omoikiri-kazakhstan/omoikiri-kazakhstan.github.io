@@ -3,7 +3,7 @@ body.dealer-info-page {
   --primary-grey: #d7d7d7;
   --secondary-grey: #e8e8e8;
   --primary-black: #202020;
-  --hover-link: #c9001a;
+  --hover-link: #fe5000;
   --medium-font: "GothamProMedium", Arial, Helvetica, sans-serif;
 }
 
@@ -23,6 +23,11 @@ body.dealer-info-page .top_nav a,
 body.dealer-info-page #menu-top_menu a {
   color: #202020 !important;
   text-decoration: none !important;
+}
+
+body.dealer-info-page #menu-top_menu > li > a:hover,
+body.dealer-info-page #menu-top_menu > li > a:focus-visible {
+  color: var(--hover-link) !important;
 }
 
 body.dealer-info-page .top_nav > span > a[href^="tel:"] {

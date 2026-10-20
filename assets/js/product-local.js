@@ -592,7 +592,7 @@
         border: 0 !important;
         padding: 0 !important;
         background: transparent !important;
-        color: #111 !important;
+        color: var(--hover-link, #fe5000) !important;
         cursor: pointer !important;
         font-size: 0 !important;
         line-height: 0 !important;
@@ -611,7 +611,7 @@
 
       #add-to-favorites.dealer-favorite-active svg {
         fill: currentColor !important;
-        color: #111 !important;
+        color: var(--hover-link, #fe5000) !important;
       }
 
       .card_actions {
@@ -767,14 +767,14 @@
         align-items: center !important;
         flex: 0 0 auto !important;
         margin-left: 0 !important;
-        color: #111 !important;
+        color: var(--hover-link, #fe5000) !important;
         font: 700 14px/1.2 Arial, sans-serif !important;
         white-space: nowrap !important;
         vertical-align: middle !important;
       }
 
       .fav_button[aria-pressed="true"] .dealer-favorite-label {
-        color: #111 !important;
+        color: var(--hover-link, #fe5000) !important;
       }
 
       .card_actions .pin {

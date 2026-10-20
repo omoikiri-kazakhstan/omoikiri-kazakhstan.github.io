@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="assets/css/buttons.css">
 	<link rel="stylesheet" href="assets/css/favorites.css">
 	<link rel="stylesheet" href="assets/css/home-intro.css?v=20261012-original">
-	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020h">
+	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020l">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style id="dealer-kz-layer-style">
@@ -131,22 +131,18 @@
     'вытяжной/гибкий шланг': 'суырмалы/иілгіш шланг',
     'с функцией струя/душ': 'ағын/душ функциясымен',
     'смесители под окно': 'терезе астына арналған араластырғыштар',
-    'ЯРКОСТЬ, ЭМОЦИИ И\u00a0ВКУС ЖИЗНИ': 'ЖАРҚЫНДЫҚ, ЭМОЦИЯ ЖӘНЕ ӨМІР ДӘМІ',
     'ИЗМЕЛЬЧИТЕЛЬ ПИЩЕВЫХ ОТХОДОВ - ЗАБОТА ОБ ОКРУЖАЮЩЕМ МИРЕ': 'ТАҒАМ ҚАЛДЫҚТАРЫН ҰСАҚТАҒЫШ - ҚОРШАҒАН ОРТАҒА ҚАМҚОРЛЫҚ'
   };
 
   const selectorHtml = [
     ['.text1', 'NATCERAMIC мойкалар коллекциясы табиғи материалдарды, сәнді әрі ерекше заттарды бағалайтындар үшін арнайы әзірленген. NATCERAMIC - саз, минералдар және бояғыш пигмент қоспасынан тұратын табиғи материал.<br>Осы мойкалар жасалатын табиғи минералдар жоғары гигиеналық және экологиялық қасиеттерге ие. Материалдың басты артықшылықтары - ұзақ қызмет етуі, беріктігі, ыңғайлылығы және жеңіл күтім.'],
-    ['.text3', 'OMOIKIRI KINARU PRO дизайнерлік жұмыс станциясы - функционалдық пен ұсақ детальдар ертеңгі күн сапасының стандарттарын айқындайтын орын.'],
     ['.text2', 'Тот баспайтын болаттан жасалған мойкалар ұзақ жылдар бойы тартымды сыртқы көрінісін сақтайды, стилі жағынан әмбебап және кез келген интерьерге үйлеседі. SIDE шығару тесігі бүйірде орналасқан модельдер ерекше танымал.'],
-    ['.text4', 'Асүй кеңістігі жаңа бейнеге ие болады, ал оны түсіндірудің кілті - түс. Color Collection сәнді палитрасы асүйге жаңаша қарауға мүмкіндік береді: жаңа үйлесімдер, жаңа көңіл-күй және жаңа оқиғалар.'],
     ['#id1_text p', 'Кері осмос жүйесі, мембрана, минерализатор және 5 литрлік жинақтаушы багы бар жоғары деңгейлі су тазартқыш. Қаттылығы әртүрлі суға жарайды.'],
     ['#id2_text p', 'Суды терең тазартуға арналған ағынды су тазартқыш: механикалық қоспалардан және қақ түзілуінен толық қорғайды.'],
     ['#id3_text p', 'Жапондық жартылай талшықты мембранасы бар ағынды су тазартқыш суды терең тазартып, бактериялардың барлық түрінен сенімді қорғайды.'],
     ['.disp_text', 'Ұсақтағышты пайдалану асүй жинау уақытын қысқартады және тағам қалдықтарының полигонға түсуін азайтып, қоршаған ортаны қорғауға үлес қосады. Ылғалды қоқыс пакеттерін ұмытасыз. Сонымен қатар ұсақтағыш мойканы тазалау қажеттілігін азайтады және құбырлардың бітелуінен қорғайды. Табақтағы тамақ қалдықтары, шай, көкөніс пен жеміс қабықтары және басқа қалдықтар жай ғана су ағызғышқа шайылып, ұсақталады.'],
     ['.aces_text', 'OMOIKIRI аксессуарлары мойка аймағын толықтырып, оған жеке стиль береді, иесінің талғамын көрсетеді және кеңістікті функционалды пайдалануды кеңейтеді.'],
     ['.h_text', 'OMOIKIRI HOME бөлімінде интерьеріңіздің даралығын айқындайтын үйге арналған тауарлар орналастырылған. Декордың арқасында кез келген кеңістікті жайлы үйге айналдыруға болады.'],
-    ['.title7', 'ЖАРҚЫНДЫҚ, ЭМОЦИЯ ЖӘНЕ ӨМІР ДӘМІ'],
     ['.disp_title', 'ТАҒАМ ҚАЛДЫҚТАРЫН ҰСАҚТАҒЫШ - ҚОРШАҒАН ОРТАҒА ҚАМҚОРЛЫҚ']
   ];
 
@@ -686,7 +682,10 @@ $(function() {
 	</section>
 
 	<section class="home-elleci" aria-labelledby="home-elleci-title">
-		<img class="home-elleci-image" src="/assets/img/home-refresh/elleci/cn.png" alt="Мойка OMOIKIRI SINTESI" loading="lazy">
+		<picture class="home-elleci-media">
+			<source media="(max-width: 780px)" srcset="/assets/img/home-refresh/elleci/sintesi_mob.jpg">
+			<img class="home-elleci-image" src="/assets/img/home-refresh/elleci/cn.png" alt="Мойка OMOIKIRI SINTESI" loading="lazy">
+		</picture>
 		<img class="home-elleci-accessories" src="/assets/img/home-refresh/elleci/fakebg.png" alt="" loading="lazy">
 		<div class="home-elleci-colors" role="group" aria-label="Цвет мойки SINTESI">
 			<button type="button" data-elleci-color="gr" aria-label="Серый" aria-pressed="false"></button>
@@ -715,65 +714,6 @@ $(function() {
 		});
 	</script>
 
-	<section class="sinks3">
-		<div class="kinaru_block">
-		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/kin_gb.jpg" class="main_kin" alt="">
-		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/gb.png" class="change_kin" id="img_gb" alt="">
-		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/wh.png" class="change_kin" id="img_wh" alt="">
-		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/do.png" class="change_kin" id="img_do" alt="">
-		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/wg.png" class="change_kin" id="img_wg" alt="">
-		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/cn.png" class="change_kin" id="img_cn" alt="">
-		<div class="kin_colors">
-			<button type="button" class="kin_color active" id="gb" aria-label="KINARU: GB"></button>
-			<button type="button" class="kin_color" id="wh" aria-label="KINARU: WH"></button>
-			<button type="button" class="kin_color" id="do" aria-label="KINARU: DO"></button>
-			<button type="button" class="kin_color" id="cn" aria-label="KINARU: CN"></button>
-			<button type="button" class="kin_color" id="wg" aria-label="KINARU: WG"></button>
-		</div>
-		<div class="sinks_text">
-			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/reddot.png" class="img3" alt="">
-			<h3 class="title4">KINARU PRO</h3>
-			<p class="text3">Рабочая дизайнерская станция OMOIKIRI KINARU PRO - это место, где функциональность и детали определяют стандарты качества завтрашнего дня.</p>
-			<a href="/product/kinaru-pro-86-u-i/?attribute_pa_color=az" target="_blank">
-			<div class="btn btn3">
-				<span>подробнее</span>
-				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</div>
-			</a>
-		</div>
-		<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/kinaru.jpg" class="mob_kin" alt="">
-		</div>
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-				// Список всех кнопок и соответствующих id изображений
-				const mappings = {
-					gb: 'img_gb',
-					wh: 'img_wh',
-					do: 'img_do',
-					cn: 'img_cn',
-					wg: 'img_wg'
-				};
-
-				const selectColor = (selected) => {
-					Object.entries(mappings).forEach(([code, imageId]) => {
-						const image = document.getElementById(imageId);
-						const button = document.getElementById(code);
-						image.style.display = code === selected ? 'block' : 'none';
-						button.classList.toggle('active', code === selected);
-						button.setAttribute('aria-pressed', String(code === selected));
-					});
-				};
-
-				Object.keys(mappings).forEach((code) => {
-					document.getElementById(code).addEventListener('click', () => selectColor(code));
-				});
-				selectColor('gb');
-			});
-		</script>
-	</section>
-
 	<section class="sinks2">
 		<h2 class="title_hidden">sinks</h2>
 		<div class="sinks_left">
@@ -801,130 +741,8 @@ $(function() {
 		</div>
 	</section>
 
-<section class="color">
-	<div class="color_line">
-		<div class="color_half">
-			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/colors/Kanto_TO.jpg" id="TO" class="active" alt="">
-			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/colors/Akita_IB.jpg" id="IB" alt="">
-			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/colors/Nakagawa_SL.jpg" id="SL" alt="">
-			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/colors/Nagano_RG.jpg" id="RG" alt="">
-			<div class="tap_colors" id="menu1">
-				<div class="tap_color active" id="TO"></div>
-				<div class="tap_color" id="IB"></div>
-				<div class="tap_color" id="RG"></div>
-				<div class="tap_color" id="SL"></div>
-			</div>
-		</div>
-		<div class="color_half change_bg">
-			<div class="color_col">
-				<h2 class="title6"><i>Color</i> <span>collection</span></h2>
-			</div>
-			<div class="color_top">
-				<video class="tap_gif" width="100%" playsinline="" autoplay="" muted="" loop="" preload="auto">
-					<source class="vid_TO active" src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/to.mp4">
-					<source class="vid_IB" src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/ib.mp4">
-					<source class="vid_RG" src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/rg.mp4">
-					<source class="vid_SL" src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/sl.mp4">
-				</video>
-				<div class="color_text">
-					<h3 class="title7">ЯРКОСТЬ, ЭМОЦИИ И&nbsp;ВКУС ЖИЗНИ</h3>
-					<p class="text4">Кухонное пространство приобретает новый облик, и ключ к его интерпретации - это цвет. Роскошная цветовая палитра Color Collection позволит изменить взгляд на кухню, позволяя создавать новые интересные комбинации, а значит и новые истории.</p>
-					<div class="tap_menu">
-						<div class="tap_colors" id="menu2">
-							<div class="tap_color active" id="TO"></div>
-							<div class="tap_color" id="IB"></div>
-							<div class="tap_color" id="RG"></div>
-							<div class="tap_color" id="SL"></div>
-						</div>
-					</div>
-					<div class="btn btn4">
-					<span>подробнее</span>
-					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const colors = {
-        'TO': '#b82727',
-        'IB': '#3c5075',
-        'RG': '#236f4b',
-        'SL': '#feed01'
-    };
-
-    const changeBg = document.querySelector('.change_bg');
-    const tapColors = document.querySelectorAll('.tap_color');
-    const images = document.querySelectorAll('.color_half img');
-
-    const videoElement = document.querySelector('.tap_gif');
-    const videoSources = {
-        'TO': "/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/to.webm",
-        'IB': "/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/ib.webm",
-        'RG': "/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/rg.webm",
-        'SL': "/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/sl.webm"
-    };
-
-    // Инициализация выбранных параметров
-    let selectedColor = 'TO';
-
-    // Функция для обновления отображаемых изображений
-    function updateImages() {
-        const targetId = `${selectedColor}`;
-        images.forEach(img => {
-            if (img.id === targetId) {
-                img.classList.add('active');
-            } else {
-                img.classList.remove('active');
-            }
-        });
-    }
-
-    // Функция для обновления фона и видео
-    function updateBackgroundAndVideo() {
-        const newColor = colors[selectedColor] || '#ffffff'; // Фолбэк на белый цвет
-        changeBg.style.backgroundColor = newColor;
-        const foreground = selectedColor === 'SL' ? '#111111' : '#ffffff';
-        changeBg.style.color = foreground;
-        changeBg.querySelector('.color_col h2').style.color = foreground;
-
-        // Обновляем источник видео
-        if (videoElement) {
-            videoElement.querySelector('source').src = videoSources[selectedColor];
-            videoElement.load();  // Перезагрузка видео для применения нового источника
-        }
-    }
-
-    // Обработчик кликов по tap_colors
-    tapColors.forEach(tapColor => {
-        tapColor.addEventListener('click', function () {
-            // Обновление выбранного цвета
-            selectedColor = this.id;
-
-            // Удаляем класс active у всех tapColors и добавляем к текущему
-            tapColors.forEach(tc => tc.classList.remove('active'));
-            this.classList.add('active');
-
-            // Обновляем изображения, фон и видео
-            updateImages();
-            updateBackgroundAndVideo();
-        });
-    });
-
-    // Инициализация при загрузке
-    updateImages();
-    updateBackgroundAndVideo();
-});
-</script>
-
-<div class="white"></div>
+<div class="taps_title"><h2>Taps</h2></div>
 <section class="taps">
-	<h2>Taps</h2>
 	<div class="taps_grid">
 		<div class="tap_cont">
 			<div class="tap">
@@ -1138,10 +956,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	<img src="/assets/img/home-refresh/home_bg.jpg" id="home_pc" alt="Предметы OMOIKIRI HOME в интерьере">
 	<img src="/assets/img/home-refresh/home_bg_mob.jpg" id="home_mob" alt="Предметы OMOIKIRI HOME в интерьере">
 </section>
-<script>
-	const homeSection = document.querySelector('.default_main > .home');
-	homeSection.after(document.querySelector('.sinks3'), document.querySelector('.color'));
-</script>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -1313,111 +1127,13 @@ if (pc.matches) {
 				ease: "power2.out",
 				scrollTrigger: {
 					trigger: '.sinks_anim',
-					endTrigger: ".color",
+					endTrigger: ".taps",
 					end: "+=200%",
 					start: 'top 80%',
 					scrub: 1,
 				}
 			}
 		);
-	});
-
-	// анимация моек Kinaru
-
-	gsap.from('.title3', {
-		scrollTrigger: {
-			trigger: '.sinks3',
-			start: '-500 0',
-			end: '-200 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.title4', {
-		scrollTrigger: {
-			trigger: '.sinks3',
-			start: 'top 50%',
-			end: 'center center',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.text3', {
-		scrollTrigger: {
-			trigger: '.sinks3',
-			start: 'top 50%',
-			end: 'center center',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.btn3', {
-		scrollTrigger: {
-			trigger: '.sinks3',
-			start: 'top 50%',
-			end: 'center center',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.img3', {
-		scrollTrigger: {
-			trigger: '.sinks3',
-			start: '-350 0',
-			end: '-150 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.kin_colors', {
-		scrollTrigger: {
-			trigger: '.sinks3',
-			start: '-350 0',
-			end: '-150 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.title6 i', {
-		scrollTrigger: {
-			trigger: '.color_col',
-			start: '-850 0',
-			end: '-150 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.title6 span', {
-		scrollTrigger: {
-			trigger: '.color_col',
-			start: '-850 0',
-			end: '-150 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 300,
-		duration: 1,
 	});
 
 	gsap.from('.tap_cont', {
@@ -1432,66 +1148,6 @@ if (pc.matches) {
 		y: 50,
 		duration: 2,
 		ease: 'power2.out',
-	});
-
-	gsap.from('.title7', {
-		scrollTrigger: {
-			trigger: '.color',
-			start: '-700 0',
-			end: '150 0',
-			scrub: true,
-			markers: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.text4', {
-		scrollTrigger: {
-			trigger: '.color',
-			start: '-700 0',
-			end: '150 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.tap_gif', {
-		scrollTrigger: {
-			trigger: '.color',
-			start: '-700 0',
-			end: '150 0',
-			scrub: true,
-		},
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.color_text .tap_menu', {
-		scrollTrigger: {
-			trigger: '.color',
-			start: '-700 0',
-			end: '150 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
-	});
-
-	gsap.from('.btn4', {
-		scrollTrigger: {
-			trigger: '.color',
-			start: '-700 0',
-			end: '150 0',
-			scrub: true,
-		},
-		opacity: 0,
-		y: 200,
-		duration: 1,
 	});
 
 	gsap.from('.disp_title', {
@@ -1790,8 +1446,6 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
 
   html[lang="kk"] .text1,
   html[lang="kk"] .text2,
-  html[lang="kk"] .text3,
-  html[lang="kk"] .text4,
   html[lang="kk"] .disp_text,
   html[lang="kk"] .aces_text,
   html[lang="kk"] .h_text {

@@ -244,6 +244,8 @@ body.dealer-home-page .main_block > img {
   height: auto;
 }
 
+.home-elleci-media { display: block; }
+
 .home-elleci-accessories {
   position: absolute;
   inset: 0;
@@ -327,39 +329,62 @@ body.dealer-home-page .main_block > img {
 .home-dispenser-showcase {
   position: relative;
   overflow: hidden;
-  min-height: 650px;
-  padding: 35px 0 100px;
-  background: #000 url('/assets/img/home-refresh/dispenser.png') no-repeat left center / contain;
+  padding: 0 0 100px;
+  background: #000 url('/assets/img/home-refresh/dispenser.png') no-repeat left top / contain;
   color: #fff;
 }
 
 .home-dispenser-heading {
   position: relative;
   margin: 0;
-  padding-left: 7%;
+  padding: 25px 0;
   font-family: var(--light-font);
-  font-size: 112px;
-  line-height: 1.1;
+  font-size: 130px;
+  font-weight: 100;
+  line-height: 1;
   text-align: center;
   text-transform: uppercase;
 }
 
 .home-dispenser-copy {
   position: relative;
-  width: 38%;
-  margin-left: auto;
-  padding: 75px 8% 25px 0;
+  width: 40%;
+  max-width: 600px;
+  margin-left: 60%;
+  padding: 50px 100px 100px 0;
 }
 
 .home-dispenser-copy h2 {
   font-family: var(--title-font);
-  font-size: 46px;
+  font-size: 40px;
   line-height: 1.1;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .home-dispenser-showcase > img {
   display: none;
+}
+
+.taps_title {
+  padding: 25px 0;
+  overflow: hidden;
+  background: linear-gradient(90deg, #b44a1b, #e67c4e);
+  text-align: center;
+}
+
+.taps_title h2 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--light-font);
+  font-size: 130px;
+  font-weight: 100;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.taps {
+  padding-top: 100px;
+  background: #ecebe6;
 }
 
 .home #home_mob {
@@ -367,54 +392,69 @@ body.dealer-home-page .main_block > img {
 }
 
 .acs_title {
-  padding: 26px 0;
+  padding: 25px 0;
   overflow: hidden;
-  background: #ecebe6;
+  background: #000;
   text-align: center;
 }
 
 .acs_title h2 {
   margin: 0;
   font-family: var(--light-font);
-  font-size: 8vw;
-  font-weight: 400;
+  font-size: 130px;
+  font-weight: 100;
   line-height: 1;
   text-transform: uppercase;
+  color: #fff;
 }
 
 .home_bg_text {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  gap: 40px;
-  padding: 85px 7%;
-  background: #ecebe6;
+  display: flex;
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 100px;
+  padding: 150px 0 0;
+  background: none;
+}
+
+.home_bg_text > h2 {
+  margin: 0;
+  font-family: var(--light-font);
+  font-size: 130px;
+  font-weight: 100;
+  line-height: .8;
+  color: #000;
 }
 
 .home_text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 28px;
+  align-items: stretch;
+  gap: 50px;
 }
 
 .home-copy-link {
   display: inline-flex;
   align-items: center;
   gap: 24px;
-  padding: 12px 20px;
-  border: 1px solid #202020;
+  align-self: flex-end;
+  padding: 14px 25px;
+  border: 0;
   border-radius: 24px;
-  color: #202020;
+  background: #202020;
+  color: #fff;
   font-family: var(--medium-font);
   font-size: 13px;
   text-transform: uppercase;
-  transition: background-color .2s, color .2s;
+  transition: background-color .2s;
 }
 
 .home-copy-link:hover,
 .home-copy-link:focus-visible {
-  background: #202020;
+  background: #ff5c27;
   color: #fff;
 }
 
@@ -544,6 +584,20 @@ body.dealer-home-page .main_block > img {
 }
 
 @media (max-width: 1049px) {
+  .home-dispenser-showcase { padding-bottom: 50px; }
+  .home-dispenser-copy { padding-right: 50px; }
+  .home-dispenser-showcase { isolation: isolate; background-image: none; }
+  .home-dispenser-showcase::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: url('/assets/img/home-refresh/dispenser.png') center / cover no-repeat;
+    opacity: .3;
+    pointer-events: none;
+  }
+  .home_bg_text { gap: 40px; padding-top: 80px; }
+  .home_bg_text > h2 { font-size: 85px; }
   .intro_transition .num_cont {
     height: 520px;
     min-height: 0;
@@ -562,7 +616,21 @@ body.dealer-home-page .main_block > img {
   .home-elleci-copy { top: 17%; }
 }
 
+@media (max-width: 900px) {
+  .home_bg_text {
+    position: relative;
+    inset: auto;
+    align-items: center;
+    gap: 25px;
+    padding: 50px 25px;
+    background: #ecebe6;
+  }
+}
+
 @media (max-width: 780px) {
+  .taps_title { padding: 18px 0; }
+  .taps_title h2 { font-size: 48px; }
+  .taps { padding: 50px 0; }
   .filters_title { padding: 18px 0; }
   .filters_title h2 { font-size: 48px; }
   .filters_grid { width: calc(100% - 32px); padding: 100px 0 32px; }
@@ -572,7 +640,8 @@ body.dealer-home-page .main_block > img {
   .filter_text h3 { font-size: 28px; line-height: 1.1; }
   .filter_text p { font-size: 15px; }
   .swap { gap: 12px; }
-  .home_bg_text { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding: 48px 24px; }
+  .home_bg_text { display: flex; flex-direction: column; align-items: center; gap: 25px; padding: 50px 25px; }
+  .home_bg_text > h2 { font-size: 50px; line-height: 1; }
   .home_text { gap: 20px; }
   .acs_title { padding: 20px 0; }
   .acs_title h2 { font-size: 44px; }
@@ -597,20 +666,21 @@ body.dealer-home-page .main_block > img {
   .home-elleci-copy > p:last-of-type { font-size: 15px; }
   .home-art-content > img { width: 100%; margin-top: 0; }
 
-  .home-elleci { display: flex; flex-direction: column; background: #aaa09b; }
-  .home-elleci-image { height: 360px; object-fit: cover; object-position: left center; }
+  .home-elleci { display: flex; flex-direction: column; background: #fff; }
+  .home-elleci-media { order: 2; width: 100%; }
+  .home-elleci-image { height: auto; object-fit: cover; }
   .home-elleci-accessories { display: none; }
-  .home-elleci-colors { top: 315px; left: 20px; flex-direction: row; gap: 10px; }
+  .home-elleci-colors { display: none; }
   .home-elleci-colors button { width: 30px; height: 30px; }
-  .home-elleci-copy { position: relative; top: auto; left: auto; width: 100%; padding: 48px 24px 55px; }
+  .home-elleci-copy { position: relative; top: auto; left: auto; order: 1; width: 100%; padding: 48px 24px 55px; }
   .home-elleci-copy h2 { font-size: 36px; }
-  .home-elleci-award { width: 125px; }
+  .home-elleci-award { width: 165px; }
 
-  .home-dispenser-showcase { min-height: 0; padding: 45px 0 0; background-image: none; }
+  .home-dispenser-showcase { padding: 45px 0 50px; background-image: none; }
   .home-dispenser-heading { padding: 0 24px; font-size: 46px; text-align: left; }
-  .home-dispenser-copy { width: 100%; padding: 35px 24px 30px; }
+  .home-dispenser-copy { width: 100%; max-width: none; margin-left: 0; padding: 35px 24px 30px; }
   .home-dispenser-copy h2 { font-size: 32px; }
-  .home-dispenser-showcase > img { display: block; width: 100%; height: auto; }
+  .home-dispenser-showcase > img { display: none; }
 
   .home #home_pc { display: none; }
   .home #home_mob { display: block; }
@@ -623,8 +693,7 @@ body.dealer-home-page .main_block > img {
   .intro_transition .sinks_title h2 { font-size: 42px; }
   .home-art-heading { font-size: 32px; }
   .home-dispenser-heading { font-size: 39px; }
-  .home-elleci-image { height: 310px; }
-  .home-elleci-colors { top: 265px; }
+  .home-elleci-image { height: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {

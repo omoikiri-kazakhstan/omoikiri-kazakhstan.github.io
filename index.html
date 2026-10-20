@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="assets/css/buttons.css">
 	<link rel="stylesheet" href="assets/css/favorites.css">
 	<link rel="stylesheet" href="assets/css/home-intro.css?v=20261012-original">
-	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020c">
+	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020d">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style id="dealer-kz-layer-style">
@@ -592,6 +592,14 @@ $(function() {
 <div class="default_main">
 <div class="main_block">
 	<img src="/assets/img/home-refresh/home2027.png" alt="Мойка, смеситель, дозатор и измельчитель OMOIKIRI в интерьере" fetchpriority="high">
+	<div class="hero-hotspots" aria-label="Категории товаров на фото">
+		<div class="hero-hotspot-plane">
+			<a class="prod_pin hero-hotspot" style="--hotspot-x: 39%; --hotspot-y: 69%" href="/sinks/index.html" aria-label="Перейти к мойкам"><span>Мойки</span></a>
+			<a class="prod_pin hero-hotspot" style="--hotspot-x: 66%; --hotspot-y: 45%" href="/taps/index.html" aria-label="Перейти к смесителям"><span>Смесители</span></a>
+			<a class="prod_pin hero-hotspot" style="--hotspot-x: 47%; --hotspot-y: 26%" href="/dispenser/index.html" aria-label="Перейти к дозаторам"><span>Дозаторы</span></a>
+			<a class="prod_pin hero-hotspot" style="--hotspot-x: 75%; --hotspot-y: 69%" href="/disposers/index.html" aria-label="Перейти к измельчителям"><span>Измельчители</span></a>
+		</div>
+	</div>
 	<div class="arrow-container">
 		<div class="arrow">
 			<svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -600,6 +608,24 @@ $(function() {
 		</div>
 	</div>
 	<script>
+		const heroImage = document.querySelector('.main_block > img');
+		const heroPlane = document.querySelector('.hero-hotspot-plane');
+		function positionHeroHotspots() {
+			if (!heroImage.naturalWidth) return;
+			const frame = heroImage.getBoundingClientRect();
+			const scale = Math.max(frame.width / heroImage.naturalWidth, frame.height / heroImage.naturalHeight);
+			const width = heroImage.naturalWidth * scale;
+			const height = heroImage.naturalHeight * scale;
+			const xPosition = parseFloat(getComputedStyle(heroImage).objectPosition) / 100 || 0.5;
+			heroPlane.style.width = `${width}px`;
+			heroPlane.style.height = `${height}px`;
+			heroPlane.style.left = `${(frame.width - width) * xPosition}px`;
+			heroPlane.style.top = `${(frame.height - height) / 2}px`;
+		}
+		heroImage.addEventListener('load', positionHeroHotspots);
+		window.addEventListener('resize', positionHeroHotspots);
+		positionHeroHotspots();
+
 		document.querySelector(".arrow").addEventListener("click", function() {
 			const targetElement = document.querySelector(".num_cont");
 

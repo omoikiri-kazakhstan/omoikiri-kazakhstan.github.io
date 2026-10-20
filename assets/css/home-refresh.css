@@ -7,6 +7,74 @@ body.dealer-home-page .main_block > img {
   object-position: center;
 }
 
+.hero-hotspots {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-hotspot-plane {
+  position: absolute;
+  pointer-events: none;
+}
+
+.main_block .hero-hotspot {
+  position: absolute;
+  top: var(--hotspot-y);
+  left: var(--hotspot-x);
+  right: auto;
+  bottom: auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: auto;
+  text-decoration: none;
+}
+
+.main_block .hero-hotspot::before,
+.main_block .hero-hotspot::after {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px #0008;
+}
+
+.main_block .hero-hotspot::after {
+  width: 28px;
+  height: 28px;
+}
+
+.main_block .hero-hotspot span {
+  position: absolute;
+  top: 47px;
+  left: 50%;
+  padding: 7px 10px;
+  background: #fff;
+  color: #202020;
+  font: 12px var(--medium-font);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity .2s ease;
+  pointer-events: none;
+}
+
+.main_block .hero-hotspot:hover span,
+.main_block .hero-hotspot:focus-visible span {
+  opacity: 1;
+}
+
 .home-category-rail {
   display: flex;
   align-items: center;

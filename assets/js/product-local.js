@@ -1630,22 +1630,35 @@
   }
 
   function renderAdditionalProductImages() {
-    const container = document.querySelector('.second_image');
-    const view = document.querySelector('.second_image_cont .view');
     const wrapper = document.querySelector('.second_image_cont');
-    if (!container) return;
+    if (!wrapper) return;
 
     const variation = variationData();
     const images = variationGalleryImages(variation).slice(1, 3).map(localizeOmoikiriUrl);
+    let container = wrapper.querySelector('.second_image');
+    let view = wrapper.querySelector('.view');
 
     if (!images.length) {
-      container.textContent = '';
+      if (container) container.textContent = '';
       if (view) view.style.display = 'none';
-      if (wrapper) wrapper.style.display = 'none';
+      wrapper.style.display = 'none';
       return;
     }
 
-    if (wrapper) wrapper.style.display = '';
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'second_image';
+      wrapper.prepend(container);
+    }
+    if (!view) {
+      view = document.createElement('div');
+      view.className = 'view';
+      view.dataset.dealerGalleryCreated = '1';
+      view.innerHTML = '<button type="button" class="select_view selected" id="first" aria-label="Первое фото"></button><button type="button" class="select_view" id="second" aria-label="Второе фото"></button>';
+      wrapper.appendChild(view);
+    }
+
+    wrapper.style.display = 'block';
     if (view) view.style.display = images.length > 1 ? '' : 'none';
 
     const currentSources = [...container.querySelectorAll('img')].map((image) => image.getAttribute('src') || '');
@@ -2045,6 +2058,9 @@
   }
 
   function init() {
+    // Most product pages ship an empty .prod_image. Paint the selected variant
+    // before the more expensive catalog cleanup so the photo is never blank.
+    renderProductImage();
     addStyle();
     fixMojibake(document);
     normalizeDealerChrome();
@@ -2086,6 +2102,17 @@
     }, true);
 
     document.addEventListener('click', (event) => {
+      const galleryButton = event.target.closest('.view[data-dealer-gallery-created="1"] .select_view');
+      if (galleryButton) {
+        const index = galleryButton.id === 'second' ? 1 : 0;
+        const gallery = galleryButton.closest('.second_image_cont');
+        gallery?.querySelectorAll('.second_image img').forEach((image, imageIndex) => {
+          image.classList.toggle('active', imageIndex === index);
+        });
+        gallery?.querySelectorAll('.select_view').forEach((button, buttonIndex) => {
+          button.classList.toggle('selected', buttonIndex === index);
+        });
+      }
       if (event.target.closest('.thwvsf-wrapper-item-li, .thwvsf-selected, .rtwpvg-thumbnail, [data-value]')) {
         if (!applyingRequestedColor) userChangedColor = true;
         applyClickedAttribute(event.target);
@@ -2113,6 +2140,7 @@
         normalizeTitleAndButtons();
         ensureSimpleCartButton();
         renderProductSku();
+        renderProductImage();
         renderAdditionalProductImages();
         localizeProductImages(document);
         updateVariationPriceDisplay();

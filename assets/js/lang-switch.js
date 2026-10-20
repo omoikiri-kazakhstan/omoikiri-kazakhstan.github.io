@@ -2,13 +2,10 @@
   if (window.__omoikiriLangSwitchLoaded) return;
   window.__omoikiriLangSwitchLoaded = true;
 
-  const STORE_KEY = window.matchMedia('(max-width: 780px)').matches
-    ? 'omoikiriDealerLangMobile'
-    : 'omoikiriDealerLang';
+  const STORE_KEY = 'omoikiriDealerLang';
   const ROOT = document.currentScript?.dataset.root || '';
   const elementStore = new Map();
-  const textStore = [];
-  let textStoreReady = false;
+  const textStore = new Map();
   let searchIndexPromise = null;
 
   const exactMap = {
@@ -74,6 +71,26 @@
     'Цена': 'Баға',
     'Форма': 'Пішін',
     'Размер': 'Өлшем',
+    'цвет:': 'түс:',
+    'материал:': 'материал:',
+    'монтажное отверстие:': 'орнату тесігі:',
+    'картридж:': 'картридж:',
+    'аэратор:': 'аэратор:',
+    'подключение фильтра:': 'сүзгіні қосу:',
+    'вытяжной шланг:': 'тартылатын шланг:',
+    'подводка:': 'жалғау түтігі:',
+    'гарантия:': 'кепілдік:',
+    'белый': 'ақ',
+    'черный': 'қара',
+    'хром': 'хром',
+    'светлое золото': 'ашық алтын',
+    'да': 'иә',
+    'нет': 'жоқ',
+    'латунь': 'жез',
+    'пластик': 'пластик',
+    'схема': 'сызба',
+    'инструкция': 'нұсқаулық',
+    'в корзину': 'себетке',
     'Архивы Мойки': 'Мойкалар',
     'Архивы Смесители': 'Араластырғыштар',
     'Архивы Фильтры': 'Сүзгілер',
@@ -124,7 +141,7 @@
     style.textContent = `
       @font-face {
         font-family: "GothamProRegular";
-        src: url("/assets/fonts/GothamProRegular.woff") format("woff");
+        src: url("/assets/fonts/Montserrat-400.woff2") format("woff2");
         font-weight: 400;
         font-style: normal;
         font-display: swap;
@@ -132,7 +149,7 @@
 
       @font-face {
         font-family: "GothamProLight";
-        src: url("/assets/fonts/GothamProLight.woff") format("woff");
+        src: url("/assets/fonts/Montserrat-300.woff2") format("woff2");
         font-weight: 300;
         font-style: normal;
         font-display: swap;
@@ -140,7 +157,7 @@
 
       @font-face {
         font-family: "GothamProMedium";
-        src: url("/assets/fonts/GothamProMedium.woff") format("woff");
+        src: url("/assets/fonts/Montserrat-500.woff2") format("woff2");
         font-weight: 500;
         font-style: normal;
         font-display: swap;
@@ -148,9 +165,17 @@
 
       @font-face {
         font-family: "GothamProBold";
-        src: url("/assets/fonts/GothamProBold.woff") format("woff");
+        src: url("/assets/fonts/Montserrat-700.woff2") format("woff2");
         font-weight: 700;
         font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "GothamProItalic";
+        src: url("/assets/fonts/Montserrat-400-italic.woff2") format("woff2");
+        font-weight: 400;
+        font-style: italic;
         font-display: swap;
       }
 
@@ -866,17 +891,12 @@
     return nodes;
   }
 
-  function rememberTextNodes() {
-    if (textStoreReady) return;
-    textNodes().forEach((node) => textStore.push([node, node.nodeValue]));
-    textStoreReady = true;
-  }
-
   function replaceExactText() {
     textNodes().forEach((node) => {
       const value = node.nodeValue;
       const key = value.replace(/\s+/g, ' ').trim();
-      if (!key || !exactMap[key]) return;
+      if (!key || !exactMap[key] || exactMap[key] === key) return;
+      textStore.set(node, value);
       const leading = value.match(/^\s*/)[0];
       const trailing = value.match(/\s*$/)[0];
       node.nodeValue = leading + exactMap[key] + trailing;
@@ -893,51 +913,40 @@
     elementStore.forEach((html, el) => {
       if (el && el.isConnected) el.innerHTML = html;
     });
-    textStore.forEach(([node, value]) => {
+    textStore.forEach((value, node) => {
       if (node && node.isConnected) node.nodeValue = value;
     });
+    elementStore.clear();
+    textStore.clear();
     document.querySelectorAll('input[data-original-placeholder], textarea[data-original-placeholder]').forEach((input) => {
       input.setAttribute('placeholder', input.dataset.originalPlaceholder);
     });
     document.documentElement.lang = 'ru';
     document.querySelectorAll('.dealer-lang-switch button').forEach((button) => {
       button.classList.toggle('active', button.dataset.lang === 'ru');
+      button.setAttribute('aria-pressed', String(button.dataset.lang === 'ru'));
     });
     localStorage.setItem(STORE_KEY, 'ru');
   }
 
   function applyKz(showNote) {
-    rememberTextNodes();
     selectorHtml.forEach(([selector, html]) => setHtml(selector, html));
     replaceExactText();
     document.documentElement.lang = 'kk';
     document.querySelectorAll('.dealer-lang-switch button').forEach((button) => {
       button.classList.toggle('active', button.dataset.lang === 'kz');
+      button.setAttribute('aria-pressed', String(button.dataset.lang === 'kz'));
     });
     localStorage.setItem(STORE_KEY, 'kz');
 
-    if (showNote) {
-      const note = document.querySelector('.dealer-kz-note');
-      if (note) {
-        note.classList.add('show');
-        window.setTimeout(() => note.classList.remove('show'), 2600);
-      }
-    }
   }
 
   function createSwitcher() {
     if (!document.querySelector('.dealer-lang-switch')) {
       const switcher = document.createElement('div');
       switcher.className = 'dealer-lang-switch';
-      switcher.innerHTML = '<button type="button" data-lang="ru" class="active">RU</button><button type="button" data-lang="kz">KZ</button>';
+      switcher.innerHTML = '<button type="button" data-lang="ru" class="active" aria-pressed="true">RU</button><button type="button" data-lang="kz" aria-pressed="false">KZ</button>';
       document.body.appendChild(switcher);
-    }
-
-    if (!document.querySelector('.dealer-kz-note')) {
-      const note = document.createElement('div');
-      note.className = 'dealer-kz-note';
-      note.textContent = 'KZ-қабат қосылды: негізгі мәтіндер қазақшаға ауысты.';
-      document.body.appendChild(note);
     }
 
     document.addEventListener('click', (event) => {
@@ -1408,11 +1417,27 @@
     bindSearchState();
     bindLightboxState();
     bindLocalSearchSuggestions();
-    window.addEventListener('storage', updateDealerHeaderCounts);
+    let languageRefreshPending = false;
+    new MutationObserver((mutations) => {
+      if (document.documentElement.lang !== 'kk' || languageRefreshPending) return;
+      if (!mutations.some((mutation) => mutation.addedNodes.length || mutation.type === 'characterData')) return;
+      languageRefreshPending = true;
+      window.requestAnimationFrame(() => {
+        languageRefreshPending = false;
+        if (document.documentElement.lang === 'kk') replaceExactText();
+      });
+    }).observe(document.body, { childList: true, characterData: true, subtree: true });
+    window.addEventListener('storage', (event) => {
+      updateDealerHeaderCounts();
+      if (event.key === STORE_KEY) {
+        if (event.newValue === 'kz') applyKz(false);
+        else restoreRu();
+      }
+    });
     window.setTimeout(updateDealerHeaderCounts, 250);
     window.setTimeout(updateDealerHeaderCounts, 1200);
-    if (localStorage.getItem(STORE_KEY) === 'kz') {
-      window.setTimeout(() => applyKz(false), 0);
+    if ((localStorage.getItem(STORE_KEY) || localStorage.getItem('omoikiriDealerLangMobile')) === 'kz') {
+      applyKz(false);
     }
   }
 

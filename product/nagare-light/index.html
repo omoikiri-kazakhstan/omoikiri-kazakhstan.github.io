@@ -59,7 +59,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <link rel='stylesheet' id='dashicons-css' href='/assets/remote/omoikiri.ru/wp-includes/css/dashicons.min.css?ver=7.0.4' media='all' />
 <link rel='stylesheet' id='rtwpvg-css' href='/assets/remote/omoikiri.ru/wp-content/plugins/woo-product-variation-gallery/assets/css/rtwpvg.min.css?ver=1787130515' media='all' />
 <style id="rtwpvg-inline-css">
-		
+
 			:root {
 				--rtwpvg-thumbnail-gap: 0px;
 				--rtwpvg-gallery-margin-bottom: 30px;
@@ -75,7 +75,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			}
 
 			/* MD, Desktops */
-			
+
 			/* SM Devices, Tablets */
 						@media only screen and (max-width: 768px) {
 				.rtwpvg-images {
@@ -83,16 +83,16 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				}
 			}
 
-			
+
 			/* XSM Devices, Phones */
 						@media only screen and (max-width: 480px) {
 				.rtwpvg-images {
 					max-width: 100% !important;
 				}
 			}
-			
-					
-		
+
+
+
 /*# sourceURL=rtwpvg-inline-css */
 </style>
 <link rel='stylesheet' id='woo-variation-gallery-slider-css' href='/assets/remote/omoikiri.ru/wp-content/plugins/woo-variation-gallery/assets/css/slick.min.css?ver=1.8.1' media='all' />
@@ -192,7 +192,7 @@ var _wpUtilSettings = {"ajax":{"url":"/wp-admin/admin-ajax.php"}};
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="top_nav">
-  
+
 <div class="search_line">
   <div  class="dgwt-wcas-search-wrapp dgwt-wcas-has-submit woocommerce dgwt-wcas-style-pirx js-dgwt-wcas-layout-classic dgwt-wcas-layout-classic js-dgwt-wcas-mobile-overlay-enabled">
 		<form class="dgwt-wcas-search-form" role="search" action="/assets/remote/omoikiri.ru/" method="get">
@@ -224,11 +224,11 @@ var _wpUtilSettings = {"ajax":{"url":"/wp-admin/admin-ajax.php"}};
 					"/>
 				</svg>
 				</button>
-			
+
 			<input type="hidden" name="post_type" value="product"/>
 			<input type="hidden" name="dgwt_wcas" value="1"/>
 
-			
+
 					</div>
 	</form>
 </div>
@@ -236,7 +236,7 @@ var _wpUtilSettings = {"ajax":{"url":"/wp-admin/admin-ajax.php"}};
 
 <div id="hamb"><span></span><span></span><span></span></div>
   <div class="menu_ico" id="pin"></div>
-  
+
   <span><a href="tel:88007000432">8 (800) 700-04-32</a></span>
   <div class="logo">
     <a href="/"><img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/default/logo_black.svg" alt=""></a>
@@ -247,8 +247,8 @@ var _wpUtilSettings = {"ajax":{"url":"/wp-admin/admin-ajax.php"}};
         <span id="favorites-count" class="favorites-count">0</span> 
     </a>
 </div>
-  
-  
+
+
 
   <div class="menu_ico" id="search"></div>
 </div>
@@ -291,7 +291,7 @@ var _wpUtilSettings = {"ajax":{"url":"/wp-admin/admin-ajax.php"}};
 document.getElementById('search').addEventListener('click', function(event) {
     var searchLine = document.querySelector('.search_line');
     var inputField = document.querySelector('.dgwt-wcas-search-input');
-    
+
     if (searchLine.classList.contains('show')) {
         searchLine.classList.remove('show');
         setTimeout(() => {
@@ -311,7 +311,7 @@ document.getElementById('search').addEventListener('click', function(event) {
 document.addEventListener('click', function(event) {
     var searchLine = document.querySelector('.search_line');
     var inputField = document.querySelector('.dgwt-wcas-search-input');
-    
+
     if (!searchLine.contains(event.target) && searchLine.classList.contains('show')) {
         searchLine.classList.remove('show');
         setTimeout(() => {
@@ -406,9 +406,9 @@ $(function() {
 	<div id="content" class="site-content">
 
 	<section id="primary" class="content-area"><main id="main" class="site-main">
-					
+
 			<div class="woocommerce-notices-wrapper"></div>
-    
+
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles2/gallery.css">
 <link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles2/buttons.css">
 
@@ -427,10 +427,10 @@ $(function() {
 
     <!-- Блок карточка - фото -->
 
-    
+
 <div class="product_card product_card_acs">
     <div class="card_grid">
-        
+
         <div class="card_grid_half">
             <div class="bread">
                 <a href="/disposers">Измельчители</a>
@@ -455,46 +455,10 @@ $(function() {
                 </div>
             </div>
             <div class="card_colors">
-                        <script>
-			jQuery(function($) {
-				var jsonData = [],
-					inputVID = 'input.variation_id';
 
-                    $('form.variations_form').on('found_variation', function(event, variation) {
-                        var vid = variation.variation_id;
-                        if (vid) {
-                            var images = jsonData[vid] || [];
-                            displayImages(images, '.second_image');
-                            displayImages(images, '.second_pics');
-                        }
-                    });
 
-				/**
-				 * Function to display images in the specified container
-				 * 
-				 * @param {Array} images - Array of image URLs
-				 * @param {String} container - Selector for the container where images should be displayed
-				 */
-				function displayImages(images, container) {
-					var imageCounter = 0;
-					$(container).empty(); // Clear the existing content
-
-					$.each(images, function(index, imageUrl) {
-						if (imageCounter < 2) {
-							var img = $('<img>').attr('src', imageUrl); // Create img element with src attribute set to the image URL
-							if (imageCounter === 0) {
-								img.addClass('active'); // Add 'active' class to the first image
-							}
-							$(container).append(img); // Append image to the container
-							imageCounter++; // Increment image counter
-						}
-					});
-				}
-			});
-        </script>
-        
 <form class="variations_form cart" action="/product/nagare-light" method="post" enctype='multipart/form-data' data-product_id="29164" data-product_variations="[{&quot;attributes&quot;:{&quot;attribute_pa_color&quot;:&quot;purple&quot;},&quot;availability_html&quot;:&quot;&quot;,&quot;backorders_allowed&quot;:false,&quot;dimensions&quot;:{&quot;length&quot;:&quot;&quot;,&quot;width&quot;:&quot;&quot;,&quot;height&quot;:&quot;&quot;},&quot;dimensions_html&quot;:&quot;N\/A&quot;,&quot;display_price&quot;:28888,&quot;display_regular_price&quot;:28888,&quot;image&quot;:{&quot;title&quot;:&quot;Nagare-Light&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light.png&quot;,&quot;alt&quot;:&quot;Nagare-Light&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light-600x600.png&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light.png&quot;,&quot;full_src_w&quot;:1000,&quot;full_src_h&quot;:1000,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light.png&quot;,&quot;gallery_thumbnail_src_w&quot;:1000,&quot;gallery_thumbnail_src_h&quot;:1000,&quot;thumb_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light-300x300.png&quot;,&quot;thumb_src_w&quot;:300,&quot;thumb_src_h&quot;:300,&quot;src_w&quot;:600,&quot;src_h&quot;:600},&quot;image_id&quot;:29167,&quot;is_downloadable&quot;:false,&quot;is_in_stock&quot;:true,&quot;is_purchasable&quot;:true,&quot;is_sold_individually&quot;:&quot;no&quot;,&quot;is_virtual&quot;:false,&quot;max_qty&quot;:&quot;&quot;,&quot;min_qty&quot;:1,&quot;price_html&quot;:&quot;&quot;,&quot;sku&quot;:&quot;4995057&quot;,&quot;variation_description&quot;:&quot;&quot;,&quot;variation_id&quot;:29165,&quot;variation_is_active&quot;:true,&quot;variation_is_visible&quot;:true,&quot;weight&quot;:&quot;&quot;,&quot;weight_html&quot;:&quot;N\/A&quot;,&quot;stock_status&quot;:&quot;instock&quot;,&quot;variation_gallery_images&quot;:[{&quot;image_id&quot;:29167,&quot;title&quot;:&quot;Nagare-Light&quot;,&quot;caption&quot;:&quot;&quot;,&quot;url&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;full_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light.png&quot;,&quot;full_src_w&quot;:&quot;1000&quot;,&quot;full_src_h&quot;:&quot;1000&quot;,&quot;full_class&quot;:&quot;attachment-full size-full&quot;,&quot;gallery_thumbnail_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light.png&quot;,&quot;gallery_thumbnail_src_w&quot;:&quot;1000&quot;,&quot;gallery_thumbnail_src_h&quot;:&quot;1000&quot;,&quot;gallery_thumbnail_class&quot;:&quot;attachment-bottom size-bottom&quot;,&quot;archive_src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light-300x300.png&quot;,&quot;archive_src_w&quot;:&quot;300&quot;,&quot;archive_src_h&quot;:&quot;300&quot;,&quot;archive_class&quot;:&quot;attachment-woocommerce_thumbnail size-woocommerce_thumbnail&quot;,&quot;src&quot;:&quot;\/assets\/remote\/omoikiri.ru\/wp-content\/uploads\/2026\/08\/nagare-light-600x600.png&quot;,&quot;class&quot;:&quot;wp-post-image wvg-post-image attachment-woocommerce_single size-woocommerce_single &quot;,&quot;src_w&quot;:&quot;600&quot;,&quot;src_h&quot;:&quot;600&quot;,&quot;srcset&quot;:false,&quot;sizes&quot;:&quot;(max-width: 600px) 100vw, 600px&quot;,&quot;extra_params&quot;:&quot;&quot;}]}]">
-	
+
 			<table class="variations" cellspacing="0" role="presentation">
 			<tbody>
 									<tr>
@@ -502,17 +466,17 @@ $(function() {
 						<td class="value">
 							<div class="thwvs_fields thwvs-accvalue thwvs_variation_pa_color"> <div class= "thwvs_attr_description  attr_swatch_design_default"></div><select id="pa_color" class="thwvs-image-type   attribute_pa_color  " name="attribute_pa_color" data-attribute_name = "attribute_pa_color"  style ='display:none'  data-design_type="swatch_design_default" data-show_option_none="yes"><option value="">Choose an option</option><option value="purple"  selected='selected'>фиолетовый</option></select><ul class="thwvs-wrapper-ul ">
 			<li class="thwvs-wrapper-item-li thwvs-image-li thwvs-div  thwvs-checkbox attribute_pa_color purple attr_swatch_design_default thwvs-selected " data-attribute_name="attribute_pa_color" data-value="purple" title="фиолетовый">
-				
+
 				<img class="swatch-preview swatch-image "  src="/assets/remote/omoikiri.ru/wp-content/uploads/2026/08/67.jpg " width="44px" height="44px" alt="фиолетовый">
-				
+
 			</li></ul> </div><a class="reset_variations thwvs-variation-link" href="#">Clear</a>						</td>
 					</tr>
 							</tbody>
 		</table>
-		
+
 		<div class="single_variation_wrap">
 			<div class="woocommerce-variation single_variation"></div><div class="woocommerce-variation-add-to-cart variations_button">
-	
+
 	        <script>
         jQuery(function($) {
             var jsonData = {"29165":"28 888"},
@@ -546,7 +510,7 @@ $(function() {
                         $('.rrc').html('<span>' + vprice + '</span> <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/rub.svg">');
                         $('.regular-price').html(''); // Очищаем, если нет обычной цены
                     }
-                    
+
                 }
             });
         });
@@ -572,42 +536,42 @@ $(function() {
 
 	<button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
 
-	
+
 	<input type="hidden" name="add-to-cart" value="29164" />
 	<input type="hidden" name="product_id" value="29164" />
 	<input type="hidden" name="variation_id" class="variation_id" value="0" />
 </div>
 		</div>
-	
+
 	</form>
 
             </div>
-            
+
             <div class="add_info_att">
                 <p><strong>цвет: </strong><span class="color_text"></span></p>
 
-                
-                
-                
-                
-                
+
+
+
+
+
                                     <p><strong>тип мотора: </strong>магнитный мотор</p>
                                                     <p><strong>мощность: </strong>0,5 л.с.</p>
-                
+
                                     <p><strong>скорость вращения диска: </strong>2600 об/мин</p>
-                
+
                                     <p><strong>напряжение: </strong>220-240 V</p>
-                
+
                                     <p><strong>способ переработки отходов: </strong>проточный</p>
-                
+
                                     <p><strong>потребляемая мощность: </strong>370 ВТ/час</p>
-                
+
                                     <p><strong>материал дробильного кольца: </strong>нержавеющая сталь</p>
-                
+
                                     <p><strong>материал дробильных кулачков: </strong>литая нержавеющая сталь</p>
-                
+
                                     <p><strong>защита от перегрузок: </strong>автоматическая</p>
-                
+
                                     <p><strong>звукоизоляция: </strong>полная</p>
                                                     <p><strong>крышка-толкатель/сливная: </strong>пластик</p>
                                                     <p><strong>гарантия: </strong>5 лет</p>
@@ -622,8 +586,8 @@ $(function() {
                             <span>схема</span>
                         </div>
                     </a>
-                
-                
+
+
                             </div>
 
         </div>
@@ -631,39 +595,7 @@ $(function() {
 </div>
 
 <script>
-	jQuery(document).ready(function($) {
-		$(document).on('found_variation', 'form.cart', function(event, variation) {
-			if (variation.image && variation.image.full_src && variation.image.full_src.length > 1) {
-				var $img_container = $('.prod_image');
-				var $current_img = $img_container.find('img');
-				
-				// Создаем новый элемент img для нового изображения
-				var $new_img = $('<img>', {
-					src: variation.image.full_src,
-					alt: variation.image.alt,
-					css: {
-						opacity: 0 // сразу делаем его невидимым
-					}
-				});
-				
-				// Добавляем новый img в контейнер
-				$img_container.append($new_img);
 
-				// Даем новое изображение для загрузки и установим тайм-аут для анимации
-				setTimeout(function() {
-					$new_img.css('opacity', 1); // Делает новое изображение видимым
-					$current_img.addClass('hidden'); // Прячет старое изображение
-
-					// Удаляем старое изображение после завершения анимации
-					setTimeout(function() {
-						$current_img.remove();
-					}, 500); // 500 мс соответствует времени перехода в CSS
-				}, 50); // Небольшой таймаут для дозагрузки изображения
-			}
-		});
-	});
-</script><script>
-	
 jQuery(document).ready(function($) {
 
 	// Функция для установки выбранного цвета при загрузке страницы
@@ -734,7 +666,7 @@ jQuery(document).ready(function($) {
 		} else {
 			$('.current_color').text(selectedAttribute);
 		}
-		
+
 		$('.color_text').text(colorTitle);
 	});
 	});
@@ -742,8 +674,8 @@ jQuery(document).ready(function($) {
 </script>
     <!-- Блок карточка - характеристики -->
 
-    
-    
+
+
 </div>
 
 <!-- Блок карточка общая -->
@@ -831,16 +763,16 @@ document.getElementById('second')?.addEventListener('click', function() {
 				method="post"
 				data-forminator-render="0"
 				data-form-id="21310"
-				
+
 				data-design="flat"
-				
-				
-				
+
+
+
 				data-grid="open"
-				
-				
+
+
 				style="display: none;"
-				
+
 				data-uid="6a85729454262"
 			><div role="alert" aria-live="polite" class="forminator-response-message forminator-error" aria-hidden="true"></div><div class="forminator-row"><div id="name-1" class="forminator-field-name forminator-col forminator-col-4  custom-field"><div class="forminator-row forminator-no-margin" data-multiple="true"><div class="forminator-col forminator-col-md-6"><div class="forminator-field"><input type="text" name="name-1-first-name" placeholder="имя" id="forminator-field-first-name-1_6a85729454262" class="forminator-input" aria-required="true" data-multi="1" value="" /></div></div></div></div><div id="email-1" class="forminator-field-email forminator-col forminator-col-4  custom-field"><div class="forminator-field"><input type="email" name="email-1" value="" placeholder="e-mail" id="forminator-field-email-1_6a85729454262" class="forminator-input forminator-email--field" data-required="true" aria-required="true" /></div></div><div id="phone-1" class="forminator-field-phone forminator-col forminator-col-4  custom-field"><div class="forminator-field"><input type="text" name="phone-1" value="" placeholder="телефон" id="forminator-field-phone-1_6a85729454262" class="forminator-input forminator-field--phone" data-required="" aria-required="false" autocomplete="off" data-national_mode="enabled" data-country="kz" data-validation="standard" /></div></div></div><div class="forminator-row"><div id="textarea-1" class="forminator-field-textarea forminator-col forminator-col-12  custom-field"><div class="forminator-field"><textarea name="textarea-1" placeholder="напишите Ваш вопрос" id="forminator-field-textarea-1_6a85729454262" class="forminator-textarea" rows="6" style="min-height:140px;" ></textarea></div></div></div><div class="forminator-row"><div id="captcha-1" class="forminator-field-captcha forminator-col forminator-col-12  row_captcha"><div class="forminator-captcha-right forminator-hcaptcha" data-theme="light"  data-sitekey="e7d4fa80-628c-4cb8-b87c-294e48f65c08" data-size="invisible"></div> <div class="forminator-checkbox__label"></div></div></div><div class="forminator-row forminator-hidden"><input type="hidden" id="hidden-1_6a85729454262" name="hidden-1" value="/product/nagare-light" /></div><input type="hidden" name="referer_url" value="" /><div class="forminator-row forminator-row-last"><div class="forminator-col"><div class="forminator-field"><button class="forminator-button forminator-button-submit btn_submit">отправить</button></div></div></div><input type="hidden" id="forminator_nonce" name="forminator_nonce" value="1a45223277" /><input type="hidden" name="_wp_http_referer" value="/product/nagare-light/" /><input type="hidden" name="form_id" value="21310"><input type="hidden" name="page_id" value="29164"><input type="hidden" name="form_type" value="default"><input type="hidden" name="current_url" value="/product/nagare-light"><input type="hidden" name="render_id" value="0"><input type="hidden" name="action" value="forminator_submit_form_custom-forms"><label for="input_6" class="forminator-hidden" aria-hidden="true">Please do not fill in this field. <input id="input_6" type="text" name="input_6" value="" autocomplete="off"></label></form>    </div>
 </div>
@@ -892,14 +824,14 @@ $(document).ready(function(){
        });
    });
 </script>
-		
+
 
 	</div><!-- #content -->
 </div>
 
 	<div class="footer">
 		<div class="footer_cont">
-			
+
 			<div class="footer_col">
 				<a href="/"><div class="footer_logo"> </div></a>
 				<div class="social">
@@ -1188,9 +1120,9 @@ var ForminatorFront = {"ajaxUrl":"/assets/remote/omoikiri.ru/wp-admin/admin-ajax
 				}
 			});
 		</script>
-		
-<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261020-pixel"></script>
-<script src="../../assets/js/lang-switch.js?v=20261020-styles2c" data-root="../../"></script>
+
+<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261021-colors"></script>
+<script src="../../assets/js/lang-switch.js?v=20261021-unified" data-root="../../"></script>
 <script src="../../assets/js/local-router.js" data-root="../../"></script>
 <script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>
 </body>

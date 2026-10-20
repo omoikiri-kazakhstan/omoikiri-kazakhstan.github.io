@@ -460,38 +460,6 @@ $(function() {
 </div>
 
 <script>
-	jQuery(document).ready(function($) {
-		$(document).on('found_variation', 'form.cart', function(event, variation) {
-			if (variation.image && variation.image.full_src && variation.image.full_src.length > 1) {
-				var $img_container = $('.prod_image');
-				var $current_img = $img_container.find('img');
-
-				// РЎРѕР·РґР°РµРј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ img РґР»СЏ РЅРѕРІРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
-				var $new_img = $('<img>', {
-					src: variation.image.full_src,
-					alt: variation.image.alt,
-					css: {
-						opacity: 0 // СЃСЂР°Р·Сѓ РґРµР»Р°РµРј РµРіРѕ РЅРµРІРёРґРёРјС‹Рј
-					}
-				});
-
-				// Р”РѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Р№ img РІ РєРѕРЅС‚РµР№РЅРµСЂ
-				$img_container.append($new_img);
-
-				// Р”Р°РµРј РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РґР»СЏ Р·Р°РіСЂСѓР·РєРё Рё СѓСЃС‚Р°РЅРѕРІРёРј С‚Р°Р№Рј-Р°СѓС‚ РґР»СЏ Р°РЅРёРјР°С†РёРё
-				setTimeout(function() {
-					$new_img.css('opacity', 1); // Р”РµР»Р°РµС‚ РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІРёРґРёРјС‹Рј
-					$current_img.addClass('hidden'); // РџСЂСЏС‡РµС‚ СЃС‚Р°СЂРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
-
-					// РЈРґР°Р»СЏРµРј СЃС‚Р°СЂРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё
-					setTimeout(function() {
-						$current_img.remove();
-					}, 500); // 500 РјСЃ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РІСЂРµРјРµРЅРё РїРµСЂРµС…РѕРґР° РІ CSS
-				}, 50); // РќРµР±РѕР»СЊС€РѕР№ С‚Р°Р№РјР°СѓС‚ РґР»СЏ РґРѕР·Р°РіСЂСѓР·РєРё РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
-			}
-		});
-	});
-</script><script>
 
 jQuery(document).ready(function($) {
 
@@ -1020,8 +988,8 @@ var ForminatorFront = {"ajaxUrl":"/assets/data/ajax-noop.json","cform":{"process
 		</script>
 
 
-<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261020-pixel"></script>
-<script src="../../assets/js/lang-switch.js?v=20261020-styles2c" data-root="../../"></script>
+<script id="dealer-local-product-script" src="../../assets/js/product-local.js?v=20261021-colors"></script>
+<script src="../../assets/js/lang-switch.js?v=20261021-unified" data-root="../../"></script>
 <script src="../../assets/js/local-router.js" data-root="../../"></script>
 <script src="../../assets/js/catalog-admin-overrides.js?v=20260917-04"></script>
 </body>

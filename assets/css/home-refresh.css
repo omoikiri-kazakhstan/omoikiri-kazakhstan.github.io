@@ -235,39 +235,53 @@ body.dealer-home-page .main_block > img {
 .home-elleci {
   position: relative;
   overflow: hidden;
-  min-height: 650px;
   background: #a99c96;
 }
 
 .home-elleci-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.home-elleci-accessories {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .home-elleci-copy {
-  position: relative;
-  z-index: 1;
-  width: 43%;
-  margin-left: auto;
-  padding: 135px 7% 80px 2%;
+  position: absolute;
+  top: 20%;
+  left: 42%;
+  z-index: 2;
+  width: 32%;
   color: #202020;
 }
 
-.home-elleci-brand {
-  font-family: var(--medium-font);
-  font-size: 20px;
-  text-transform: uppercase;
+.home-elleci-award {
+  display: block;
+  width: clamp(120px, 11vw, 205px);
+  height: auto;
 }
 
 .home-elleci-copy h2 {
-  margin-top: 22px;
+  margin-top: 24px;
   font-family: var(--title-font);
-  font-size: 52px;
-  line-height: 1;
+  font-size: clamp(29px, 2.65vw, 52px);
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.home-elleci-copy > p:last-of-type {
+  margin-top: 24px;
+  font-family: var(--medium-font);
+  font-size: clamp(13px, 1vw, 18px);
+  line-height: 1.5;
 }
 
 .home-elleci-copy .home-showcase-link {
@@ -283,10 +297,11 @@ body.dealer-home-page .main_block > img {
 .home-elleci-colors {
   position: absolute;
   z-index: 2;
-  bottom: 65px;
-  left: 7%;
+  top: 65%;
+  left: 33%;
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .home-elleci-colors button {
@@ -299,10 +314,10 @@ body.dealer-home-page .main_block > img {
   cursor: pointer;
 }
 
-.home-elleci-colors button[data-elleci-color="gr"] { background: #67696b; }
-.home-elleci-colors button[data-elleci-color="wg"] { background: #c6c7c1; }
-.home-elleci-colors button[data-elleci-color="wh"] { background: #f3f0e9; }
-.home-elleci-colors button[data-elleci-color="gb"] { background: #333236; }
+.home-elleci-colors button[data-elleci-color="gr"] { background: linear-gradient(140deg, #8a9294, #4d5758); }
+.home-elleci-colors button[data-elleci-color="wg"] { background: linear-gradient(140deg, #eef0ec, #869191); }
+.home-elleci-colors button[data-elleci-color="wh"] { background: linear-gradient(140deg, #fff, #c6cfcd); }
+.home-elleci-colors button[data-elleci-color="gb"] { background: linear-gradient(140deg, #555e60, #11191a); }
 .home-elleci-colors button.is-active,
 .home-elleci-colors button:focus-visible { border-color: #fff; outline: 1px solid #222; }
 
@@ -348,6 +363,58 @@ body.dealer-home-page .main_block > img {
   display: none;
 }
 
+.acs_title {
+  padding: 26px 0;
+  overflow: hidden;
+  background: #ecebe6;
+  text-align: center;
+}
+
+.acs_title h2 {
+  margin: 0;
+  font-family: var(--light-font);
+  font-size: 8vw;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.home_bg_text {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+  padding: 85px 7%;
+  background: #ecebe6;
+}
+
+.home_text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.home-copy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 20px;
+  border: 1px solid #202020;
+  border-radius: 24px;
+  color: #202020;
+  font-family: var(--medium-font);
+  font-size: 13px;
+  text-transform: uppercase;
+  transition: background-color .2s, color .2s;
+}
+
+.home-copy-link:hover,
+.home-copy-link:focus-visible {
+  background: #202020;
+  color: #fff;
+}
+
 @media (max-width: 1049px) {
   .intro_transition .num_cont {
     height: 520px;
@@ -364,11 +431,14 @@ body.dealer-home-page .main_block > img {
   .home-dispenser-heading { font-size: 76px; }
   .home-art-content { min-height: 400px; }
   .home-art-copy h3 { font-size: 32px; }
-  .home-elleci { min-height: 560px; }
-  .home-elleci-copy { padding-top: 100px; }
+  .home-elleci-copy { top: 17%; }
 }
 
 @media (max-width: 780px) {
+  .home_bg_text { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding: 48px 24px; }
+  .home_text { gap: 20px; }
+  .acs_title { padding: 20px 0; }
+  .acs_title h2 { font-size: 44px; }
   body.dealer-home-page .main_block {
     height: calc(100svh - 67px);
     min-height: 360px;
@@ -390,13 +460,14 @@ body.dealer-home-page .main_block > img {
   .home-elleci-copy > p:last-of-type { font-size: 15px; }
   .home-art-content > img { width: 100%; margin-top: 0; }
 
-  .home-elleci { display: flex; flex-direction: column; min-height: 0; background: #aaa09b; }
-  .home-elleci-image { position: static; height: 360px; object-fit: cover; object-position: left center; }
-  .home-elleci-colors { top: 315px; bottom: auto; left: 20px; gap: 10px; }
+  .home-elleci { display: flex; flex-direction: column; background: #aaa09b; }
+  .home-elleci-image { height: 360px; object-fit: cover; object-position: left center; }
+  .home-elleci-accessories { display: none; }
+  .home-elleci-colors { top: 315px; left: 20px; flex-direction: row; gap: 10px; }
   .home-elleci-colors button { width: 26px; height: 26px; }
-  .home-elleci-copy { width: 100%; padding: 35px 24px 55px; }
+  .home-elleci-copy { position: relative; top: auto; left: auto; width: 100%; padding: 48px 24px 55px; }
   .home-elleci-copy h2 { font-size: 36px; }
-  .home-elleci-brand { font-size: 16px; }
+  .home-elleci-award { width: 125px; }
 
   .home-dispenser-showcase { min-height: 0; padding: 45px 0 0; background-image: none; }
   .home-dispenser-heading { padding: 0 24px; font-size: 46px; text-align: left; }

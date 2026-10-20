@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="assets/css/buttons.css">
 	<link rel="stylesheet" href="assets/css/favorites.css">
 	<link rel="stylesheet" href="assets/css/home-intro.css?v=20261012-original">
+	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020b">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style id="dealer-kz-layer-style">
@@ -590,27 +591,7 @@ $(function() {
 </script>
 <div class="default_main">
 <div class="main_block">
-	<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/top.jpg" alt="">
-	<a href="taps/index.html" target="_blank"><div class="prod_pin" id="tap"></div></a>
-	<a href="sinks/index.html" target="_blank"><div class="prod_pin" id="sink"></div></a>
-	<a href="disposers/index.html" target="_blank"><div class="prod_pin" id="disposer"></div></a>
-	<a href="filters/index.html" target="_blank"><div class="prod_pin" id="filter"></div></a>
-	<a href="acs/index.html" target="_blank"><div class="prod_pin" id="acs"></div></a>
-	<a href="omoikiri-home/index.html" target="_blank"><div class="prod_pin" id="home"></div></a>
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			const pins = document.querySelectorAll('.prod_pin');
-
-			pins.forEach(pin => {
-				pin.addEventListener('mouseenter', () => {
-					pin.classList.add('paused');
-				});
-				pin.addEventListener('mouseleave', () => {
-					pin.classList.remove('paused');
-				});
-			});
-		});
-	</script>
+	<img src="/assets/img/home-refresh/home2027.png" alt="Мойка, смеситель, дозатор и измельчитель OMOIKIRI в интерьере" fetchpriority="high">
 	<div class="arrow-container">
 		<div class="arrow">
 			<svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -628,6 +609,14 @@ $(function() {
 		});
 	</script>
 </div>
+<nav class="home-category-rail" aria-label="Категории товаров">
+	<a href="/sinks/index.html">Мойки</a>
+	<a href="/taps/index.html">Смесители</a>
+	<a href="/disposers/index.html">Измельчители</a>
+	<a href="/filters/index.html">Фильтры</a>
+	<a href="/acs/index.html">Аксессуары</a>
+	<a href="/omoikiri-home/index.html">OMOIKIRI Home</a>
+</nav>
 
 <section class="num_cont">
 	<div class="num">
@@ -662,6 +651,16 @@ $(function() {
 			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/mikura/mikura2.png" alt="">
 			<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/mikura/mikura3.png" alt="">
 		</div>
+	</section>
+
+	<section class="home-art-collection" aria-labelledby="home-art-title">
+		<div class="home-art-copy">
+			<p class="home-art-eyebrow">Art Collection</p>
+			<h2 id="home-art-title">Мировые шедевры на вашей кухне</h2>
+			<p>Художественные мойки OMOIKIRI MIKURA с работами Сальвадора Дали и Винсента Ван Гога.</p>
+			<a class="home-showcase-link" href="/product/mikura-76-dali/">Подробнее <span aria-hidden="true">&#8594;</span></a>
+		</div>
+		<img src="/assets/img/home-refresh/dali.png" alt="Художественная мойка OMOIKIRI Art Collection" loading="lazy">
 	</section>
 
 	<section class="sinks3">
@@ -928,6 +927,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			</a>
 		</div>
 	</div>
+</section>
+<section class="home-dispenser-showcase" aria-labelledby="home-dispenser-title">
+	<div class="home-dispenser-copy">
+		<p class="home-dispenser-eyebrow">Dispensers</p>
+		<h2 id="home-dispenser-title">Акцент на удобство</h2>
+		<p>Дозаторы OMOIKIRI сочетают функциональность и разнообразие дизайнерских решений. Их удобно наполнять сверху и легко подобрать к мойке и смесителю.</p>
+		<a class="home-showcase-link" href="/dispenser/index.html">Подробнее <span aria-hidden="true">&#8594;</span></a>
+	</div>
+	<img src="/assets/img/home-refresh/dispenser.png" alt="Дозатор OMOIKIRI" loading="lazy">
 </section>
 <section class="filters">
 	<video autoplay muted loop playsinline id="video_filter">
@@ -1781,5 +1789,5 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
   });
 })();
 </script>
-<script src="assets/js/lang-switch.js?v=20261019-mobile3" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20261020-art" data-root=""></script>
 <script src="assets/js/local-router.js"></script>

@@ -1,0 +1,219 @@
+body.dealer-home-page .main_block {
+  height: min(86svh, 860px);
+  min-height: 460px;
+}
+
+body.dealer-home-page .main_block > img {
+  object-position: center center;
+}
+
+.home-category-rail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2.3vw, 36px);
+  min-height: 64px;
+  padding: 10px 22px;
+  overflow-x: auto;
+  background: #fff;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.home-category-rail a {
+  flex: 0 0 auto;
+  align-self: center;
+  font-family: var(--medium-font);
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #222;
+}
+
+.home-category-rail a:hover,
+.home-category-rail a:focus-visible {
+  color: #bd4b2e;
+}
+
+.home-art-collection,
+.home-dispenser-showcase {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 44%) minmax(0, 56%);
+  min-height: 610px;
+  overflow: hidden;
+}
+
+.home-art-collection {
+  background: #402a26;
+  color: #fff;
+}
+
+.home-art-copy,
+.home-dispenser-copy {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  padding: clamp(36px, 6vw, 100px);
+}
+
+.home-art-eyebrow,
+.home-dispenser-eyebrow {
+  margin-bottom: 28px;
+  font-family: var(--medium-font);
+  font-size: clamp(24px, 3vw, 46px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.home-art-copy h2,
+.home-dispenser-copy h2 {
+  max-width: 520px;
+  font-family: var(--title-font);
+  font-size: clamp(26px, 3.2vw, 48px);
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.home-art-copy > p:not(.home-art-eyebrow),
+.home-dispenser-copy > p:not(.home-dispenser-eyebrow) {
+  max-width: 540px;
+  margin-top: 24px;
+  font-family: var(--regular-font);
+  font-size: clamp(15px, 1.25vw, 18px);
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.home-showcase-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  width: max-content;
+  min-height: 44px;
+  margin-top: 30px;
+  padding: 8px 18px;
+  border: 1px solid currentColor;
+  border-radius: 24px;
+  color: inherit;
+  font-family: var(--medium-font);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.home-showcase-link:hover,
+.home-showcase-link:focus-visible {
+  background: #fff;
+  border-color: #fff;
+  color: #222;
+}
+
+.home-showcase-link span {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.home-art-collection > img {
+  align-self: end;
+  justify-self: end;
+  width: min(100%, 900px);
+  max-height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+.home-dispenser-showcase {
+  grid-template-columns: minmax(0, 56%) minmax(0, 44%);
+  min-height: 540px;
+  background: #000;
+  color: #fff;
+}
+
+.home-dispenser-copy {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.home-dispenser-showcase > img {
+  align-self: center;
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.home-dispenser-showcase .home-showcase-link {
+  background: #fff;
+  border-color: #fff;
+  color: #222;
+}
+
+.home-dispenser-showcase .home-showcase-link:hover,
+.home-dispenser-showcase .home-showcase-link:focus-visible {
+  background: transparent;
+  color: #fff;
+}
+
+@media (max-width: 780px) {
+  body.dealer-home-page .main_block {
+    height: min(73svh, 680px);
+    min-height: 350px;
+  }
+
+  body.dealer-home-page .main_block > img {
+    object-position: 54% center;
+  }
+
+  .home-category-rail {
+    justify-content: flex-start;
+    min-height: 56px;
+    padding: 8px 18px;
+    gap: 22px;
+  }
+
+  .home-art-collection,
+  .home-dispenser-showcase {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .home-art-copy,
+  .home-dispenser-copy {
+    width: 100%;
+    padding: 46px 24px 18px;
+  }
+
+  .home-art-eyebrow,
+  .home-dispenser-eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .home-art-copy h2,
+  .home-dispenser-copy h2 {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .home-art-copy > p:not(.home-art-eyebrow),
+  .home-dispenser-copy > p:not(.home-dispenser-eyebrow) {
+    margin-top: 16px;
+    font-size: 15px;
+  }
+
+  .home-showcase-link {
+    margin-top: 22px;
+  }
+
+  .home-art-collection > img {
+    align-self: center;
+    width: min(100%, 640px);
+    max-height: 500px;
+  }
+
+  .home-dispenser-showcase > img {
+    order: 1;
+    width: 100%;
+    margin: 0 0 22px;
+  }
+}

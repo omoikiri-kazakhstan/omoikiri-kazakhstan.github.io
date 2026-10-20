@@ -700,3 +700,76 @@ body.dealer-home-page .main_block > img {
   .intro_transition .num_bg { opacity: 1; }
   .intro_transition .eight_text span { opacity: 1; }
 }
+
+.home-footer {
+  position: relative;
+  z-index: 2;
+  background: #000;
+  color: #adadad;
+  font-family: var(--regular-font);
+}
+
+.home-footer-inner {
+  display: grid;
+  grid-template-columns: minmax(210px, 1.15fr) minmax(250px, 1.4fr) minmax(155px, .85fr) minmax(130px, .75fr);
+  gap: 40px;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.home-footer-brand img {
+  display: block;
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+}
+
+.home-footer-brand p {
+  margin-top: 24px;
+  font-size: 11px;
+}
+
+.home-footer-col,
+.home-footer-locations > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.home-footer-locations { gap: 20px; }
+
+.home-footer h2 {
+  margin: 0 0 3px;
+  color: #fff;
+  font-family: var(--medium-font);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.home-footer p,
+.home-footer a {
+  margin: 0;
+  color: #adadad;
+  font-size: 12px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.home-footer a:hover,
+.home-footer a:focus-visible { color: #ff5c27; }
+
+@media (max-width: 1100px) {
+  .home-footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+  .home-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 30px 25px 40px;
+  }
+}

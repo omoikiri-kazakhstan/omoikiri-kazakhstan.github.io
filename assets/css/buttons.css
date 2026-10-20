@@ -1,4 +1,4 @@
-﻿.btn {
+.btn {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -13,6 +13,7 @@
 .btn>span {
     font-size: 13px;
     font-family: 'GothamProMedium';
+    text-transform: uppercase;
     color: #fff;
     letter-spacing: 1px;
 }
@@ -28,6 +29,86 @@
 .btn:hover {
     background-color: var(--hover-link);
     transition-duration: .5s;
+}
+
+.btn_orange {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--hover-link);
+    padding: 7px 14px 7px 24px;
+    border-radius: 35px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    cursor: pointer;
+    transition-duration: .3s;
+    display: none;
+}
+
+.btn_orange>span {
+    font-size: 13px;
+    font-family: 'GothamProMedium';
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.btn_orange>svg {
+    height: 34px;
+}
+
+.btn_orange>svg path {
+    stroke: #fff;
+}
+
+.btn_orange:hover {
+    background-color: var(--primary-black);
+    transition-duration: .5s;
+}
+
+.btn_white {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff;
+    padding: 7px 14px 7px 24px;
+    border-radius: 35px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    box-shadow: none;
+    cursor: pointer;
+    transition-duration: .3s;
+}
+
+.btn_white>span {
+    color: #000;
+    transition-duration: .3s;
+}
+
+.btn_white>svg {
+    height: 34px;
+}
+
+.btn_white>svg path {
+    stroke: #000;
+}
+
+.btn_white:hover {
+    background-color: var(--hover-link);
+    transition-duration: .5s;
+    border-color: var(--hover-link);
+}
+
+.btn_white:hover span {
+    color: #fff;
+    transition-duration: .5s;
+}
+
+.btn_white:hover svg path {
+    stroke: #fff;
+    transition-duration: .5s;
+}
+
+.btns_white:hover svg path {
+    fill: #fff;
 }
 
 .btn_empty {
@@ -232,7 +313,7 @@
     align-items: center !important;
     gap: 10px;
     background-color: var(--primary-black) !important;
-    padding: var(--btn-empty-padding) !important;
+    padding: 15px 24px 14px 24px !important;
     border-radius: 35px !important;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
     cursor: pointer !important;
@@ -242,10 +323,12 @@
     margin-bottom: 0 !important;
     font-family: 'GothamProMedium' !important;
     letter-spacing: 1px !important;
+    text-transform: uppercase!important;
     font-size: 13px !important;
     line-height: normal !important;
     align-self: flex-start !important;
     width: auto !important;
+    font-weight: 900!important;
 }
 
 .btn_submit:hover {
@@ -253,13 +336,19 @@
     transition-duration: .5s !important;
 }
 
-/* ÐºÐ½Ð¾Ð¿ÐºÐ¸ ÑÐºÐ°ÑÐ¸Ð²Ð°Ð½Ð¸Ñ - ÐºÐ°ÑÑÐ¾ÑÐºÐ° ÑÐ¾Ð²Ð°ÑÐ° */
+/* кнопки скачивания - карточка товара */
 
 .btns_download {
     width: 600px;
     display: flex;
     gap: 25px;
     flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1350px) {
+    .btn_orange {
+        display: flex;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -284,7 +373,4 @@
     font-size: 13px;
 }
 
-/* ÐºÐ½Ð¾Ð¿ÐºÐ¸ ÑÐºÐ°ÑÐ¸Ð²Ð°Ð½Ð¸Ñ - ÐºÐ°ÑÑÐ¾ÑÐºÐ° ÑÐ¾Ð²Ð°ÑÐ° */
-
-
-
+/* кнопки скачивания - карточка товара */

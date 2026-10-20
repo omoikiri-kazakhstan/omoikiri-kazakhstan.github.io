@@ -214,7 +214,7 @@
         font-family: "GothamProLight", "GothamProRegular", Arial, sans-serif !important;
         font-size: 24px !important;
         font-weight: 500 !important;
-        line-height: 1.12 !important;
+        line-height: 1.1 !important;
         letter-spacing: 0 !important;
         text-transform: uppercase !important;
       }
@@ -448,6 +448,7 @@
       .dealer-local-empty.is-visible {
         display: block;
       }
+
 
       .dealer-static-catalog .hidden_filter {
         position: relative !important;
@@ -818,6 +819,38 @@
 
         .dealer-static-catalog .prdctfltr_rng_price .dealer-price-mobile-labels span:last-child {
           text-align: right !important;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .dealer-static-catalog .products { padding-top: 0 !important; }
+
+        .dealer-static-catalog ul.products li.product .woocommerce-loop-product__title {
+          font-size: 20px !important;
+          line-height: 22px !important;
+        }
+
+        .dealer-static-catalog:not(.dealer-filter-expanded) .hidden_filter {
+          top: var(--dealer-nav-height, 55px) !important;
+          height: 58px !important;
+          min-height: 0 !important;
+          overflow: visible !important;
+          background: transparent !important;
+          border: 0 !important;
+          box-shadow: none !important;
+          pointer-events: none !important;
+        }
+
+        .dealer-static-catalog:not(.dealer-filter-expanded) .hidden_filter .hidden_button {
+          position: relative !important;
+          width: auto !important;
+          min-height: 48px !important;
+          margin: 0 auto 10px !important;
+          padding: 15px 20px !important;
+          border: 0 !important;
+          border-radius: 0 0 8px 8px !important;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, .13) !important;
+          pointer-events: auto !important;
         }
       }
 
@@ -2592,6 +2625,7 @@
     const message = ensureEmptyMessage();
     if (message) message.classList.toggle('is-visible', visible === 0);
   }
+
 
   function normalizeClearFilterButtons() {
     const resetContainers = [...document.querySelectorAll('.prdctfltr_buttons')];

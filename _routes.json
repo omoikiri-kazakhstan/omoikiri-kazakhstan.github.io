@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "include": [
+    "/api/*",
+    "/workers/*",
+    "/scripts/*",
+    "/tests/*",
+    "/migrations/*",
+    "/test-results/*",
+    "/README.md",
+    "/wrangler.toml",
+    "/vercel.json"
+  ],
+  "exclude": []
+}

@@ -1,6 +1,6 @@
 <html lang="ru-RU">
 <head>
-  <meta name="robots" content="noindex">
+  
 	<title>OMOIKIRI KZ</title>
 	<meta charset="UTF-8" />
 	<link rel="canonical" href="https://omoikiri.kz/" />
@@ -10,11 +10,11 @@
 	<link rel="stylesheet" href="assets/css/index.css">
 	<link rel="stylesheet" href="assets/css/menu.css">
     <link rel="stylesheet" href="assets/css/default.css">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<link rel="stylesheet" href="assets/css/buttons.css">
+	<link rel="stylesheet" href="assets/css/main.css?v=20261020-pixel">
+	<link rel="stylesheet" href="assets/css/buttons.css?v=20261020-pixel">
 	<link rel="stylesheet" href="assets/css/favorites.css">
 	<link rel="stylesheet" href="assets/css/home-intro.css?v=20261012-original">
-	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020m">
+	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020-pixel">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <style id="dealer-kz-layer-style">
@@ -673,77 +673,166 @@ $(function() {
 		</div>
 	</section>
 
-	<section class="home-art-collection" aria-labelledby="home-art-title">
-		<h2 class="home-art-heading" id="home-art-title"><strong>Art</strong> Collection</h2>
-		<div class="home-art-content">
-			<div class="home-art-copy">
-				<h3>Мировые шедевры<br>на вашей кухне</h3>
-				<p>Мойки, на которые нанесены произведения Сальвадора Дали, Густава Климта, Энди Уорхола и Винсента Ван Гога.</p>
-				<a class="home-showcase-link" href="/product/mikura-76-dali/">Подробнее <span aria-hidden="true">&#8594;</span></a>
-			</div>
-			<img src="/assets/img/home-refresh/dali.png" alt="Художественная мойка OMOIKIRI Art Collection" loading="lazy">
-		</div>
-	</section>
+<section class="color">
+	<h2 class="title6"><i>Art</i><span>collection</span></h2>
+    <div class="color_split">
+        <div class="color_text">
+            <h3>Мировые шедевры<br> на вашей кухне</h3>
+            <p class="text1"> Мойки, на которые нанесены произведения культовых художников - Сальвадора Дали, Густава Климта, Энди&nbsp;Уорхола, Винсента&nbsp;Ван&nbsp;Гога.</p>
+            <a href="/sinks/?product_cat=sinks&amp;pa_material=natceramic" target="_blank" class="link1">
+            <div class="btn btn_white">
+                <span>подробнее</span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            </a>
+        </div>
+        <div class="color_img">
+            <img src="/assets/img/home-refresh/dali.png" alt="">
+        </div>
+    </div>
+</section>
+<section class="sinks3">
+    <div class="kinaru_block">
+    <img src="/assets/img/home-refresh/elleci/cn.png" class="main_kin" alt="">
+	<img src="/assets/img/home-refresh/elleci/fakebg.png" class="main_kin_fake" alt="">
+    <img src="/assets/img/home-refresh/elleci/gr.png" class="change_kin" id="img_gr" alt="">
+    <img src="/assets/img/home-refresh/elleci/wg.png" class="change_kin" id="img_wg" alt="">
+	<img src="/assets/img/home-refresh/elleci/wh.png" class="change_kin" id="img_wh" alt="">
+	<img src="/assets/img/home-refresh/elleci/gb.png" class="change_kin" id="img_gb" alt="">
+	<img src="/assets/img/home-refresh/elleci/cn.png" class="change_kin" id="img_cn" alt="">
 
-	<section class="home-elleci" aria-labelledby="home-elleci-title">
-		<picture class="home-elleci-media">
-			<source media="(max-width: 780px)" srcset="/assets/img/home-refresh/elleci/sintesi_mob.jpg">
-			<img class="home-elleci-image" src="/assets/img/home-refresh/elleci/cn.png" alt="Мойка OMOIKIRI SINTESI" loading="lazy">
-		</picture>
-		<img class="home-elleci-accessories" src="/assets/img/home-refresh/elleci/fakebg.png" alt="" loading="lazy">
-		<div class="home-elleci-colors" role="group" aria-label="Цвет мойки SINTESI">
-			<button type="button" data-elleci-color="gr" aria-label="Серый" aria-pressed="false"></button>
-			<button type="button" data-elleci-color="wg" aria-label="Светло-серый" aria-pressed="false"></button>
-			<button type="button" class="is-active" data-elleci-color="cn" aria-label="Коралловый" aria-pressed="true"></button>
-			<button type="button" data-elleci-color="wh" aria-label="Белый" aria-pressed="false"></button>
-			<button type="button" data-elleci-color="gb" aria-label="Графит" aria-pressed="false"></button>
+    <div class="kin_colors">
+        <div class="kin_color" id="gr"></div>
+        <div class="kin_color" id="wg"></div>
+		<div class="kin_color active" id="cn"></div>
+        <div class="kin_color" id="wh"></div>
+        <div class="kin_color" id="gb"></div>
+    </div>
+    <div class="sinks_text">
+        <img src="/assets/img/home-refresh/elleci/reddot22.png" class="img3" alt="">
+        <h3 class="title4">Omoikiri x Elleci</h3>
+        <p class="text3">OMOIKIRI SINTESI — коллекция моек из ARTCERAMIC, созданная для тех, кто ценит оригинальные дизайнерские решения и внимание к деталям. Самобытные формы и точная геометрия подчёркивают характер моделей, а разнообразие размеров позволяет подобрать мойку под индивидуальный проект кухни.</p>
+		<div class="buttons">
+			<a href="/product/sintesi-116" target="_blank">
+			<div class="btn btn3">
+				<span>подробнее</span>
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+				</svg>
+			</div>
+			</a>
+			<div class="btn_orange" id="elleci_video">
+				<span>видео</span>
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+				</svg>
+			</div>
 		</div>
-		<div class="home-elleci-copy">
-			<img class="home-elleci-award" src="/assets/img/home-refresh/elleci/reddot22.png" alt="Red Dot Winner 2022" loading="lazy">
-			<h2 id="home-elleci-title">OMOIKIRI x ELLECI</h2>
-			<p>OMOIKIRI SINTESI — коллекция моек из ARTCERAMIC, созданная для тех, кто ценит оригинальные дизайнерские решения и внимание к деталям. Самобытные формы и точная геометрия подчёркивают характер моделей, а разнообразие размеров позволяет подобрать мойку под индивидуальный проект кухни.</p>
-			<a class="home-showcase-link" href="/product/sintesi-116/">Подробнее <span aria-hidden="true">&#8594;</span></a>
-		</div>
-	</section>
+    </div>
+	<div class="elleci_video" role="button" tabindex="0" aria-label="Смотреть видео OMOIKIRI x ELLECI">
+        <p>OMOIKIRI<br> x Elleci</p>
+        <div class="play"></div>
+        <p>видео</p>
+    </div>
+    <img src="/assets/img/home-refresh/elleci/sintesi_mob.jpg" class="mob_kin" alt="">
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Список всех кнопок и соответствующих id изображений
+            const mappings = {
+                gr: 'img_gr',
+                wg: 'img_wg',
+                cn: 'img_cn',
+                wh: 'img_wh',
+                gb: 'img_gb'
+            };
+
+            // Назначение событий для каждой кнопки
+            Object.keys(mappings).forEach(function(buttonId) {
+                const imgId = mappings[buttonId];
+
+                // Найдем элемент кнопки
+                const button = document.getElementById(buttonId);
+
+                button.addEventListener('click', function() {
+                    // Скрываем все изображения
+                    document.querySelectorAll('.change_kin').forEach(img => img.style.display = 'none');
+
+                    // Показываем соответствующее изображение
+                    document.getElementById(imgId).style.display = 'block';
+
+                    // Убираем класс active у всех кнопок
+                    Object.keys(mappings).forEach(function(id) {
+                        document.getElementById(id).classList.remove('active');
+                    });
+
+                    // Добавляем класс active к нажатой кнопке
+                    button.classList.add('active');
+                });
+            });
+
+            // Убедимся, что основное изображение всегда видно
+            document.querySelector('.main_kin').style.display = 'block';
+        });
+    </script>
+	<dialog class="elleci-video-dialog" aria-label="Видео OMOIKIRI x ELLECI">
+		<button type="button" class="elleci-video-close" aria-label="Закрыть видео">&times;</button>
+		<iframe title="Видео OMOIKIRI x ELLECI" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+	</dialog>
 	<script>
-		document.querySelectorAll('[data-elleci-color]').forEach((button) => {
-			button.addEventListener('click', () => {
-				document.querySelector('.home-elleci-image').src = `/assets/img/home-refresh/elleci/${button.dataset.elleciColor}.png`;
-				document.querySelectorAll('[data-elleci-color]').forEach((item) => {
-					const active = item === button;
-					item.classList.toggle('is-active', active);
-					item.setAttribute('aria-pressed', String(active));
-				});
+		(() => {
+			const trigger = document.querySelector('.elleci_video');
+			const dialog = document.querySelector('.elleci-video-dialog');
+			const frame = dialog.querySelector('iframe');
+			const videoUrl = 'https://vkvideo.ru/video_ext.php?oid=-52606916&id=456239649&hash=a37e56382c3729d3&hd=4&autoplay=1';
+			const open = () => {
+				frame.src = videoUrl;
+				dialog.showModal();
+			};
+			trigger.addEventListener('click', open);
+			trigger.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter' || event.key === ' ') {
+					event.preventDefault();
+					open();
+				}
 			});
-		});
+			dialog.querySelector('.elleci-video-close').addEventListener('click', () => dialog.close());
+			dialog.addEventListener('click', (event) => {
+				if (event.target === dialog) dialog.close();
+			});
+			dialog.addEventListener('close', () => { frame.removeAttribute('src'); });
+		})();
 	</script>
+</section>
 
-	<section class="sinks2">
-		<h2 class="title_hidden">sinks</h2>
-		<div class="sinks_left">
-			<div class="sinks_text">
-				<h3 class="title5">Steel Collection</h3>
-				<p class="text2">Коллекцию моек из нержавеющей стали дополнили модели с текстурой Microdecor, которая благодаря особой фактуре поверхности делает менее заметными следы повседневного использования, а также модели с NANO-покрытием, придающим поверхности благородный матовый вид и обеспечивающим дополнительную защиту от микроцарапин и отпечатков пальцев.</p>
-				<a href="/sinks/index.html?product_cat=sinks&pa_material=steel" target="_blank">
-				<div class="btn btn2">
-					<span>подробнее</span>
-					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</div>
-				</a>
-			</div>
-			<img src="/assets/img/home-refresh/steel.jpg" class="img2" alt="Мойка Steel Collection">
-		</div>
-		<div class="sinks_right">
-			<div class="sinks_anim">
-				<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/1.png" alt="">
-				<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/2.png" alt="">
-				<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/3.png" alt="">
-				<img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/1.png" alt="">
-			</div>
-		</div>
-	</section>
+<section class="sinks2">
+    <h2 class="title_hidden">sinks</h2>
+    <div class="sinks_left">
+        <div class="sinks_text">
+            <h3 class="title5">Steel Collection</h3>
+            <p class="text2">Коллекцию моек из нержавеющей стали дополнили модели с текстурой Microdecor, которая благодаря особой фактуре поверхности делает менее заметными следы повседневного использования, а также модели с NANO-покрытием, придающим поверхности благородный матовый вид и обеспечивающим дополнительную защиту от микроцарапин и отпечатков пальцев.</p>
+            <a href="/sinks/?product_cat=sinks&amp;pa_material=steel" target="_blank">
+            <div class="btn btn2">
+                <span>подробнее</span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            </a>
+        </div>
+        <img src="/assets/img/home-refresh/steel.jpg" class="img2" alt="">
+    </div>
+    <div class="sinks_right">
+        <div class="sinks_anim">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/1.png" alt="">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/2.png" alt="">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/3.png" alt="">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/1.png" alt="">
+        </div>
+    </div>
+</section>
 
 <div class="taps_title"><h2>Taps</h2></div>
 <section class="taps">
@@ -802,14 +891,27 @@ $(function() {
 		</div>
 	</div>
 </section>
-<section class="home-dispenser-showcase" aria-labelledby="home-dispenser-title">
-	<p class="home-dispenser-heading">Dispensers</p>
-	<div class="home-dispenser-copy">
-		<h2 id="home-dispenser-title">Акцент на удобство</h2>
-		<p>Дозаторы OMOIKIRI сочетают функциональность и разнообразие дизайнерских решений. Продуманная конструкция, удобная подача и возможность наполнения сверху обеспечивают комфорт в повседневном использовании.</p>
-		<a class="home-showcase-link" href="/dispenser/index.html">Подробнее <span aria-hidden="true">&#8594;</span></a>
+<section class="dispenser">
+	<div class="dispenser_title">
+		<h2 class="title3">dispensers</h2>
 	</div>
-	<img src="/assets/img/home-refresh/dispenser.png" alt="Дозатор OMOIKIRI" loading="lazy">
+	<div class="dispenser_text_cont">
+		<div class="dispenser_text">
+			<h3>Акцент на удобство</h3>
+			<p>Дозаторы OMOIKIRI сочетают функциональность и разнообразие дизайнерских решений. Продуманная конструкция, удобная подача и возможность наполнения сверху обеспечивают комфорт в повседневном использовании.</p>
+			<a href="/dispenser/index.html" target="_blank" class="link1">
+            <div class="btn btn_white">
+                <span>подробнее</span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            </a>
+		</div>
+	</div>
+	<div class="dispenser_mob">
+		<img src="/assets/img/home-refresh/dispenser.png" alt="">
+	</div>
 </section>
 <div class="filters_title"><h2>filters</h2></div>
 <section class="filters">
@@ -836,7 +938,7 @@ $(function() {
 				</ul>
 				</div>
 				<div class="filter_text active" id="id1_text" >
-					<h3>Pure Drop<br>2.1.4S</h3>
+					<h3>Pure Drop 2.1.4S</h3>
 					<p>Водоочиститель с системой обратного осмоса, минерализатором и накопительным баком на 5&nbsp;л. Подходит для воды любой степени жесткости и обогащает её минералами.</p>
 					<a href="/product/pure-drop-2-1-4s/index.html">
 					<div class="btn">
@@ -952,13 +1054,20 @@ document.addEventListener("DOMContentLoaded", function() {
 <section class="home">
 	<div class="home_bg_text">
 		<h2 class="title8">home</h2>
-		<div class="home_text">
-			<p class="h_text">OMOIKIRI HOME — всё, что делает домашние ритуалы приятнее. Коллекция объединяет решения для приготовления, сервировки и повседневных дел, превращая привычные процессы в удовольствие.</p>
-			<a href="/omoikiri-home/index.html" class="home-copy-link">Подробнее <span aria-hidden="true">&#8594;</span></a>
-		</div>
+        <div class="home_text">
+            <p class="h_text">OMOIKIRI HOME — всё, что делает домашние ритуалы приятнее. Коллекция объединяет решения для приготовления, сервировки и повседневных дел, превращая привычные процессы в удовольствие.</p>
+            <a href="/omoikiri-home/index.html" target="_blank">
+            <div class="btn">
+                <span>подробнее</span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            </a>
+        </div>
 	</div>
-	<img src="/assets/img/home-refresh/home_bg.jpg" id="home_pc" alt="Предметы OMOIKIRI HOME в интерьере">
-	<img src="/assets/img/home-refresh/home_bg_mob.jpg" id="home_mob" alt="Предметы OMOIKIRI HOME в интерьере">
+	<img src="/assets/img/home-refresh/home_bg.jpg" alt="" id="home_pc">
+	<img src="/assets/img/home-refresh/home_bg_mob.jpg" alt="" id="home_mob">
 </section>
 </div>
 
@@ -1529,5 +1638,5 @@ Served from: omoikiri.ru @ 2026-07-05 23:13:34 by W3 Total Cache
   });
 })();
 </script>
-<script src="assets/js/lang-switch.js?v=20261020-art" data-root=""></script>
+<script src="assets/js/lang-switch.js?v=20261020-pixel" data-root=""></script>
 <script src="assets/js/local-router.js"></script>

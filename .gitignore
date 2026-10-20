@@ -6,3 +6,4 @@ Thumbs.db
 .dev.vars*
 .env*
 .workers-types/
+node_modules/

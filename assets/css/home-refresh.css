@@ -1,9 +1,53 @@
+@font-face {
+  font-family: GothamProItalic;
+  src: url('/assets/fonts/GothamProItalic.woff') format('woff');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.elleci_video[role="button"] { cursor: pointer; }
+.elleci_video[role="button"]:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+.elleci-video-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(960px, calc(100vw - 32px));
+  max-width: none;
+  height: auto;
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 0;
+  background: #000;
+  color: #fff;
+}
+.elleci-video-dialog::backdrop { background: rgba(0, 0, 0, .82); }
+.elleci-video-dialog iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+.elleci-video-close {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: #fff;
+  color: #111;
+  font: 30px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
 body.dealer-home-page .main_block {
   height: calc(100svh - 67px);
   min-height: 520px;
 }
 
+body.dealer-home-page .default_main { padding-top: 110px; }
+
 body.dealer-home-page .main_block > img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-position: center;
 }
 
@@ -127,7 +171,7 @@ body.dealer-home-page .main_block > img {
 
 .intro_transition .sinks_title {
   overflow: hidden;
-  padding: 22px 0;
+  padding: 25px 0;
   background: #000;
   text-align: center;
 }
@@ -136,9 +180,9 @@ body.dealer-home-page .main_block > img {
   margin: 0;
   color: #fff;
   font-family: var(--light-font);
-  font-size: 108px;
+  font-size: 8vw;
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 
@@ -376,9 +420,9 @@ body.dealer-home-page .main_block > img {
   margin: 0;
   color: #fff;
   font-family: var(--light-font);
-  font-size: 130px;
+  font-size: 8vw;
   font-weight: 100;
-  line-height: 1;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 
@@ -401,9 +445,9 @@ body.dealer-home-page .main_block > img {
 .acs_title h2 {
   margin: 0;
   font-family: var(--light-font);
-  font-size: 130px;
+  font-size: 8vw;
   font-weight: 100;
-  line-height: 1;
+  line-height: 1.1;
   text-transform: uppercase;
   color: #fff;
 }
@@ -423,7 +467,7 @@ body.dealer-home-page .main_block > img {
 .home_bg_text > h2 {
   margin: 0;
   font-family: var(--light-font);
-  font-size: 130px;
+  font-size: 8vw;
   font-weight: 100;
   line-height: .8;
   color: #000;
@@ -469,9 +513,9 @@ body.dealer-home-page .main_block > img {
   margin: 0;
   color: #000;
   font-family: var(--light-font);
-  font-size: 130px;
+  font-size: 8vw;
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 
@@ -499,7 +543,7 @@ body.dealer-home-page .main_block > img {
 
 .filters_grid {
   display: block;
-  width: min(calc(100% - 200px), 1300px);
+  width: 80%;
   margin-left: 100px;
   padding: 200px 0 100px;
 }
@@ -529,7 +573,7 @@ body.dealer-home-page .main_block > img {
 .filter_text {
   width: min(560px, 100%);
   min-width: 0;
-  padding: 50px 50px 50px 0;
+  padding: 50px;
   color: #fff;
 }
 
@@ -628,33 +672,38 @@ body.dealer-home-page .main_block > img {
 }
 
 @media (max-width: 780px) {
-  .taps_title { padding: 18px 0; }
-  .taps_title h2 { font-size: 48px; }
+  body.dealer-home-page .default_main { padding-top: 110px; }
+  .taps_title { padding: 25px 0; }
+  .taps_title h2 { font-size: 8vw; line-height: 1.1; }
   .taps { padding: 50px 0; }
-  .filters_title { padding: 18px 0; }
-  .filters_title h2 { font-size: 48px; }
-  .filters_grid { width: calc(100% - 32px); padding: 100px 0 32px; }
-  .filter_item > .left_half > img { height: 240px; margin-top: -65px; }
-  .filter_item .left_half { gap: 14px; }
-  .filter_text { gap: 22px; padding: 25px 24px 32px; }
-  .filter_text h3 { font-size: 28px; line-height: 1.1; }
-  .filter_text p { font-size: 15px; }
-  .swap { gap: 12px; }
+  .filters_title { padding: 25px 0; }
+  .filters_title h2 { font-size: 8vw; line-height: 1.1; }
+  .filters { padding: 0 25px; }
+  #video_filter { opacity: 0; }
+  .filters_grid { display: flex; flex-direction: column; gap: 150px; width: 100%; margin: 0; padding: 50px 0; }
+  .filter_item { height: auto; flex-direction: column; align-items: center; gap: 50px; }
+  .filter_item .left_half { min-width: 0; padding: 0; gap: 50px; }
+  .filter_item > .left_half > img { height: 400px; margin: 25px auto 0; }
+  .filter_text { width: 100%; max-width: 500px; gap: 30px; padding: 0 25px 25px; }
+  .filter_text h3 { font-size: 26px; line-height: 1.1; }
+  .filter_text p { font-size: 14px; }
+  .swap { gap: 15px; }
   .home_bg_text { display: flex; flex-direction: column; align-items: center; gap: 25px; padding: 50px 25px; }
   .home_bg_text > h2 { font-size: 50px; line-height: 1; }
-  .home_text { gap: 20px; }
-  .acs_title { padding: 20px 0; }
-  .acs_title h2 { font-size: 44px; }
+  .home_text { gap: 50px; }
+  .acs_title { padding: 25px 0; }
+  .acs_title h2 { font-size: 8vw; line-height: 1.1; }
   body.dealer-home-page .main_block {
     height: calc(100svh - 67px);
     min-height: 360px;
   }
 
-  body.dealer-home-page .main_block > img { object-position: 54% center; }
-  .intro_transition .num_cont { height: 380px; }
-  .intro_transition .eight { font-size: 320px; }
-  .intro_transition .eight_text { font-size: 20px; }
-  .intro_transition .sinks_title h2 { font-size: 48px; }
+  body.dealer-home-page .main_block > img { object-position: center; }
+  .intro_transition .num_cont { height: calc(100svh - 67px); min-height: 0; }
+  .intro_transition .eight { font-size: 50vw; line-height: .7; }
+  .intro_transition .eight_text { margin-left: 10px; font-size: 24px; }
+  .intro_transition .sinks_title { padding: 25px 0; }
+  .intro_transition .sinks_title h2 { font-size: 8vw; line-height: 1.1; }
 
   .home-art-collection { padding: 48px 0 0; }
   .home-art-heading { padding: 0 18px; font-size: 38px; white-space: normal; text-align: left; }
@@ -687,10 +736,6 @@ body.dealer-home-page .main_block > img {
 }
 
 @media (max-width: 420px) {
-  .intro_transition .num_cont { height: 330px; }
-  .intro_transition .eight { font-size: 250px; }
-  .intro_transition .eight_text { margin-left: 4px; font-size: 17px; }
-  .intro_transition .sinks_title h2 { font-size: 42px; }
   .home-art-heading { font-size: 32px; }
   .home-dispenser-heading { font-size: 39px; }
   .home-elleci-image { height: auto; }

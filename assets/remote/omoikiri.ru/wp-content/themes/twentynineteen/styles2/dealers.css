@@ -1,0 +1,909 @@
+.dealers_header {
+    width: 100%;
+    background-color: var(--secondary-grey);
+    padding-top: 50px;
+}
+
+.dealers_info {
+    max-width: 70%;
+    gap: 150px;
+    margin: 0 auto;
+    display: flex;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 50px;
+}
+
+.info_half:first-of-type {
+    line-height: 1.6em;
+}
+
+.info_half:last-of-type p {
+    line-height: 1.6em;
+}
+
+.dealers_contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.phone_line {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.phone_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 1.5em;
+}
+
+.cont_line {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dealers_title {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+.dealers_title h2 {
+    font-size: 48px;
+    font-family: 'GothamProBold';
+    text-transform: uppercase;
+    line-height: 1.1em;
+}
+
+.dealers_select_cont {
+    width: 100%;
+    background-color: #ebebeb;
+    margin-bottom: 50px;
+}
+
+.dealers_select {
+    width: 70%;
+    display: flex;
+    margin: 0 auto;
+    gap: 100px;
+    padding-bottom: 15px;
+}
+
+.dealers_select a {
+    font-family: 'GothamProRegular';
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+/* */
+
+.map_cont {
+    width: 100%;
+    float: left;
+    overflow: hidden;
+    margin-top: 50px;
+}
+
+.cluster-balloon__left-column {
+    width: 150px;
+    float: left;
+    padding: 15px;
+}
+
+.cluster-balloon__left-column ul {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    border-right: 1px solid #efefef;
+}
+
+.cluster-balloon__right-column {
+    width: 200px;
+    float: left;
+    padding: 15px;
+}
+
+.cluster-balloon__right-column h3 {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.2em;
+    margin-bottom: 5px;
+    font-family: 'GothamProBold';
+}
+
+.cluster-balloon__right-column p {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.2em;
+}
+
+.cluster-balloon__list-item {
+    margin-bottom: 5px;
+    line-height: 1.2em;
+}
+
+.cluster-balloon__list-item a {
+    color: #333;
+}
+
+.cluster-balloon__list-item a:hover {
+    color: #c54d4e;
+}
+
+.cluster-balloon__list-item .active {
+    font-weight: bold;
+
+}
+
+.map_category {
+    padding-bottom: 25px;
+    padding-left: 50px;
+    box-sizing: border-box;
+    list-style: none;
+    overflow: hidden;
+}
+
+.map_category li {
+    float: left;
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.map_category li input {
+    margin-right: 5px;
+}
+
+#map {
+    width: calc(100% - 400px);
+    height: 700px;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+#markers-container {
+    width: 400px;
+    height: 700px;
+    overflow-y: auto;
+    float: left;
+    padding: 0;
+}
+
+.marker-item {
+    padding: 15px 20px;
+    font-size: 12px;
+    border-bottom: 1px solid #efefef;
+    cursor: pointer;
+}
+
+.marker-item:hover {
+    background-color: #efefef;
+}
+
+.marker-item.active {
+    background-color: #efefef;
+}
+
+.marker-item h3 {
+    font-size: 15px;
+    line-height: 1.2em;
+    margin-bottom: 5px;
+}
+
+.marker-item-location {
+    line-height: 1.2em;
+    margin-bottom: 5px;
+}
+
+.my-hint {
+    position: relative;
+    width: 280px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 2px 7px 1px rgb(0 0 0 / 30%);
+    -moz-box-shadow: 0 2px 7px 1px rgba(0, 0, 0, .3);
+    box-shadow: 0 2px 7px 1px rgb(0 0 0 / 30%);
+    top: -15px;
+}
+
+.title {
+    font-size: 15px;
+    font-family: 'GothamProBold';
+    margin-bottom: 10px;
+}
+
+.my-hint p {
+    margin-bottom: 5px;
+    font-size: 11px;
+    line-height: 1.2em;
+}
+
+.my-hint p a {
+    border-bottom: 1px solid #333;
+}
+
+.close {
+    width: 15px;
+    height: 15px;
+    background-color: #000;
+    right: 5px;
+    top: 5px;
+    position: absolute;
+    -webkit-mask-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%206.41L17.59%205%2012%2010.59%206.41%205%205%206.41%2010.59%2012%205%2017.59%206.41%2019%2012%2013.41%2017.59%2019%2019%2017.59%2013.41%2012z%22/%3E%3Cpath%20d%3D%22M0%200h24v24H0z%22%20fill%3D%22none%22/%3E%3C/svg%3E);
+}
+
+.partner_category {
+    color: green;
+    margin-top: 10px !important;
+    padding: 0;
+    overflow: hidden;
+    margin: 0;
+    font-size: 10px;
+}
+
+.partner_category li {
+    list-style: none;
+    float: left;
+    margin-right: 10px;
+}
+
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff;
+    position: absolute;
+    z-index: 1;
+    bottom: -10px;
+    left: calc(50% - 10px);
+    box-sizing: border-box;
+}
+
+
+
+
+#map-canvas {
+    width: -moz-calc(100% - 350px);
+    width: -webkit-calc(100% - 350px);
+    width: calc(100% - 350px);
+    /*width: 200px;*/
+}
+
+#map-canvas,
+#map-control {
+    vertical-align: top;
+    display: inline-block;
+    font-size: 0;
+}
+
+#map-control {
+    /*background-color: red;*/
+    width: 350px;
+    height: 100%;
+    overflow: auto;
+}
+
+#map-control .red {}
+
+#map-control>div {
+    font-size: 12px;
+    cursor: pointer;
+    padding: 20px;
+}
+
+#map-control>div:hover {
+    background-color: #eee;
+}
+
+#map-control>div p {
+    font-size: 12px;
+    /*background-color: #eee;*/
+}
+
+/*dropdown*/
+
+.delivery_block {
+    width: 270px;
+    /*padding: 24px 0 0;*/
+    /*color: #8c8c8c;*/
+    /*font-size: 11px;*/
+    margin: 50px 15px;
+    display: inline-block;
+}
+
+.delivery_block .delivery_list {
+    padding: 5px 10px;
+    height: 32px;
+    width: 100%;
+    /*cursor: pointer;*/
+    /*border-radius: 4px;*/
+    /*margin: 0 20px 0 0;*/
+    /*color: #ed4226;*/
+    border: 1px solid #aaa;
+    /*width: 237px;*/
+    z-index: 11;
+    background: #fff;
+}
+
+/*
+  .delivery_list #btn {
+      background: url(dropdown.png);
+      width: 17px;
+      height: 18px;
+      float: right;
+  }
+  */
+.delivery_list span {
+    /*padding: 2px 0 0 2px;*/
+    display: block;
+    /*font-weight: bold;*/
+}
+
+.delivery_block ul.cities_list {
+    margin-top: 32px;
+    z-index: 10;
+    background: #fcfcfc;
+    position: absolute;
+    border-radius: 3px;
+    width: 270px;
+    padding: 0;
+    border: 1px solid #eee;
+    display: none;
+
+    max-height: 300px;
+    min-height: 28px;
+
+    overflow-y: auto;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+ul.cities_list li {
+    /*padding: 6px 9px;*/
+    list-style-type: none;
+    border-top: 1px solid #efefef;
+    font-family: 'GothamProRegular';
+    font-size: 12px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+ul.cities_list li:hover {
+    cursor: pointer;
+    background: #fff;
+}
+
+button.delivery_list {
+    text-align: left;
+    cursor: pointer;
+}
+
+/*.noselect {
+      text-align: left;
+  }*/
+
+.noselect h4 {
+    margin-top: 0;
+}
+
+/*.gm-style-iw a {
+      cursor: pointer;
+      color: #000;
+      padding-bottom: 1px;
+      box-sizing: border-box;
+      border-bottom: 1px dashed #c8102e;
+      text-decoration: none;
+  }*/
+
+.opt {
+    width: 60%;
+    margin-left: 20%;
+    text-align: left;
+    float: left;
+    margin-bottom: 50px;
+}
+
+.opt a {
+    cursor: pointer;
+    color: #000;
+    padding-bottom: 1px;
+    box-sizing: border-box;
+    border-bottom: 1px dashed #c8102e;
+    text-decoration: none;
+}
+
+.opt a:hover {
+    color: #c8102e;
+}
+
+.opt .zayavka {
+    width: 100%;
+    margin: 0;
+}
+
+.opt .form {
+    padding-bottom: 30px;
+}
+
+.opt .form br {
+    display: none;
+}
+
+/* */
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: flex;
+}
+
+.dealer_select {
+    width: 70%;
+    max-width: 1920px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    display: flex;
+    gap: 50px;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+#city-selector {
+    width: 400px;
+    border: none;
+    background: none;
+    padding: 10px;
+    font-size: 20px;
+    font-family: 'GothamProRegular';
+    border-bottom: 2px solid var(--primary-black);
+    color: var(--primary-black);
+}
+
+#city-selector>option {
+    font-size: 14px;
+}
+
+#city-selector:focus {
+    outline: none;
+}
+
+#monobrands {
+    width: 70%;
+    max-width: 1920px;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.mono_item {
+    display: flex;
+    gap: 50px;
+}
+
+.mono_cont {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    justify-content: space-between;
+}
+
+.mono_title>h2 {
+    font-size: 24px;
+    font-family: 'GothamProBold';
+    min-width: 300px;
+}
+
+.mono_title {
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+}
+
+.mono_info>a {
+    font-family: 'GothamProMedium';
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+    transition-duration: .3s;
+}
+
+.mono_info>a:hover {
+    color: var(--hover-link);
+    transition-duration: .5s;
+}
+
+.mono_item>a>img {
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.mono_video_cont {
+    position: relative;
+    width: 500px;
+    height: 300px;
+}
+
+.mono_video {
+    position: relative;
+    padding-top: 56.25%;
+    width: 100%
+}
+
+.mono_info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mono_links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-weight: bold;
+    font-family: 'GothamProMedium';
+    font-size: 20px;
+    margin-left: auto;
+}
+
+.mono_phone {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.mono_phone>img {
+    width: 21px;
+}
+
+.mono_split {
+    width: 85%;
+    height: 2px;
+    background-color: #ebebeb;
+    margin-left: auto;
+}
+
+.black_list {
+    width: 70%;
+    padding: 50px 100px;
+    margin: 50px auto;
+    display: flex;
+    gap: 150px;
+    align-items: center;
+    background-color: var(--secondary-grey);
+    border-radius: 25px;
+}
+
+.black_list>p {
+    font-size: 14px;
+    line-height: 1.6em;
+}
+
+.black_list>p strong {
+    font-family: 'GothamProMedium';
+}
+
+.mono_map {
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    display: flex;
+    transition: opacity 0.5s ease;
+    opacity: 1;
+}
+
+.mono_map.visible {
+    display: flex;
+    opacity: 1;
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 0s ease;
+}
+
+#list {
+    width: 300px;
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#list>div {
+    border-bottom: 1px solid #efefef;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#list>div p {
+    font-size: 12px;
+    line-height: 1.3em;
+}
+
+#list>div span {
+    font-size: 14px;
+    font-family: 'GothamProMedium';
+}
+
+#mono {
+    width: calc(100% - 300px);
+    height: 400px;
+}
+
+@media screen and (max-width: 1700px) {
+
+    #monobrands {
+        width: 100%;
+        padding: 0 50px;
+    }
+
+    .dealer_select {
+        width: 100%;
+        padding: 0 50px;
+    }
+
+    .mono_map {
+        width: 100%;
+        padding: 0 50px;
+    }
+
+}
+
+@media screen and (max-width: 1500px) {
+
+    .dealers_info {
+        max-width: 100%;
+        min-width: auto;
+        gap: 100px;
+    }
+
+    .dealers_header {
+        padding: 50px;
+    }
+
+    .dealers_title {
+        width: 100%;
+        text-align: center;
+        padding-bottom: 0;
+    }
+
+    .dealers_select {
+        width: 100%;
+        justify-content: space-evenly;
+    }
+
+    .black_list {
+        width: calc(100% - 100px);
+
+    }
+
+}
+
+@media screen and (max-width: 1400px) {
+
+    .mono_title {
+        flex-direction: column;
+    }
+
+    .mono_title>a {
+        margin-left: 0;
+    }
+
+    .mono_cont {
+        flex-direction: row;
+        gap: 50px;
+    }
+
+    .mono_links {
+        margin-top: auto;
+    }
+
+}
+
+@media screen and (max-width: 1200px) {
+
+    .mono_cont {
+        flex-direction: column;
+    }
+
+}
+
+@media screen and (max-width: 1100px) {
+
+    .black_list {
+        padding: 50px;
+    }
+
+    #markers-container {
+        display: none;
+    }
+
+    #map {
+        width: 100%;
+        height: 300px;
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+
+    .dealers_info {
+        flex-direction: column;
+        gap: 25px;
+        padding: 25px;
+    }
+
+    .dealers_title {
+        padding: 0;
+    }
+
+    .dealers_select {
+        padding: 0 50px 15px 50px;
+    }
+
+    .black_list {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .mono_item {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+    #list {
+        display: none;
+    }
+
+    #mono {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .dealer_select {
+        flex-direction: column;
+        gap: 25px;
+        align-items: flex-start;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .dealers_header {
+        padding: 25px;
+    }
+
+    .mono_title {
+        padding: 0;
+        gap: 25px;
+    }
+
+    #monobrands {
+        padding: 0 25px;
+    }
+
+    .mono_split {
+        width: 100%;
+    }
+
+    .dealers_title h2 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .dealers_select {
+        padding: 0 25px 15px 25px;
+    }
+
+    .dealers_select a {
+        font-size: 20px;
+    }
+
+    .dealers_select {
+        gap: 25px;
+    }
+
+    .black_list {
+        width: calc(100% - 50px);
+        padding: 25px;
+    }
+
+    .dealer_select {
+        width: 100%;
+        padding: 0 25px;
+        margin-bottom: 25px;
+    }
+
+    .mono_map {
+        width: 100%;
+        padding: 0 25px;
+    }
+
+}
+
+@media screen and (max-width: 650px) {
+
+    .mono_item>a>img {
+        width: 100%;
+        height: auto;
+    }
+
+    .mono_video_cont {
+        width: calc(100vw - 65px);
+        height: auto;
+    }
+
+    .mono_item>a>iframe {
+        width: 100%!important;
+        height: auto;
+    }
+
+    .mono_title>h2 {
+        font-size: 17px;
+    }
+
+    .mono_info>a {
+        font-size: 16px;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .dealers_select {
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .dealers_select a {
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+
+    #city-selector {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+
+    .mono_links {
+        margin-left: 0;
+        align-items: center;
+    }
+
+}

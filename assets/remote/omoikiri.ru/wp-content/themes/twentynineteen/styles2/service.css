@@ -1,0 +1,318 @@
+.service_top {
+    width: 100%;
+    background-color: var(--secondary-grey);
+    padding: 50px;
+}
+
+.service_top_text {
+    max-width: 70%;
+    min-width: 1000px;
+    margin: 0 auto;
+    padding: 50px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+    border-radius: 25px;
+    background-color: #fff;
+}
+
+.service_top_text h2 {
+    font-size: 48px;
+    font-family: 'GothamProBold';
+    text-transform: uppercase;
+    line-height: 1.1em;
+    margin-bottom: 20px;
+}
+
+.service_top_text h3 {
+    font-family: 'GothamProRegular';
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: none;
+    font-family: 'GothamProBold';
+}
+
+.service_top_text_half>p {
+    width: 400px;
+    font-size: 14px;
+    line-height: 1.6em;
+}
+
+.service_top_text_half:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hours {
+    padding-left: 38px;
+    line-height: 1.6em;
+}
+
+.hours>p:first-of-type {
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+
+.cont_line {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    line-height: 1.5em;
+}
+
+.cont_line>p>span {
+    font-weight: 900;
+    border: none;
+    border-bottom: 1px solid #cbcaca;
+}
+
+.service_select {
+    width: 600px;
+    margin: 0 auto;
+}
+
+#service-select {
+    width: 100%;
+    margin-bottom: 25px;
+    border: none;
+    background: none;
+    padding: 10px;
+    font-size: 30px;
+    font-family: 'GothamProRegular';
+    border-bottom: 2px solid var(--primary-black);
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    color: var(--primary-black);
+}
+
+#service-select:focus {
+    border: none;
+    border-bottom: 2px solid var(--primary-black);
+    outline: none;
+}
+
+#service-select>option {
+    font-size: 16px;
+}
+
+#service-select>select {
+    border: 1px solid #ccc;
+    /* Граница */
+    border-radius: 0;
+    /* Радиус закругления углов */
+}
+
+#service_item {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+#name {
+    font-family: 'GothamProBold';
+    font-size: 22px;
+}
+
+.phone_row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+#phone {
+    font-family: 'GothamProRegular';
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.warranty {
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+.warranty_line {
+    display: flex;
+    align-items: center;
+}
+
+.warranty_text_cont {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    padding: 0 25px;
+}
+
+.warranty_text {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.warranty_line img {
+    height: 400px;
+    width: 50%;
+    object-fit: cover;
+}
+
+.text_p {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    font-family: 'GothamProBold';
+    font-size: 16px;
+}
+
+.text_p>img {
+    width: 60px;
+    heighT: 60px;
+}
+
+.warranty_line:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.text_p p {
+    line-height: 1.5em;
+}
+
+.custom-select {
+    position: relative;
+    width: 100%;
+    /* Измените ширину по необходимости */
+    cursor: pointer;
+}
+
+.selected {
+    padding: 10px;
+    border-bottom: 2px solid var(--primary-black);
+    font-family: 'GothamProRegular';
+    text-transform: uppercase;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.options {
+    display: none;
+    /* Скрываем по умолчанию */
+    position: absolute;
+    background-color: white;
+    /* Цвет фона опций */
+    width: 100%;
+    border: 1px solid #ccc;
+    /* Граница */
+    z-index: 1000;
+    max-height: 300px;
+    /* Устанавливаем максимальную высоту */
+    overflow-y: auto;
+    /* Добавляем вертикальную прокрутку при переполнении */
+}
+
+.option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #e0e0e0;
+    /* Цвет фона при наведении */
+}
+
+#content-area {
+    margin-top: 20px;
+    /* Отступ сверху для контента */
+}
+
+.arrow_down {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 5px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+@media screen and (max-width: 1500px) {
+
+    .service_top_text {
+        max-width: 100%;
+        min-width: auto;
+    }
+
+}
+
+@media screen and (max-width: 1200px) {
+
+    .service_top_text {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .service_top_text_half>p {
+        width: 100%;
+    }
+
+    .warranty_line {
+        flex-direction: column-reverse;
+    }
+
+    .warranty_text_cont {
+        padding: 50px 25px;
+    }
+
+    .warranty_line>img {
+        width: 100%;
+        height: 300px;
+        object-position: center;
+    }
+
+    .warranty_text_cont {
+        width: 100%;
+    }
+
+    .warranty_line:nth-child(even) {
+        flex-direction: column-reverse;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+
+    .service_select {
+        width: 100%;
+    }
+
+    .service_top_text h2 {
+        font-size: 32px;
+    }
+
+    .service_top {
+        padding: 25px 25px 50px 25px;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    #name {
+        font-size: 18px;
+    }
+
+    .service_top_text {
+        padding: 25px;
+    }
+
+    .service_top_text h3 {
+        font-size: 24px;
+    }
+
+    #service-select {
+        font-size: 20px;
+    }
+
+}

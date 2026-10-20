@@ -219,7 +219,7 @@
       ul.products li.product .woocommerce-loop-product__title,
       .products .product .woocommerce-loop-product__title {
         font-family: "GothamProLight", Arial, Helvetica, sans-serif !important;
-        font-size: 24px !important;
+        font-size: 24px;
         font-weight: 500 !important;
         line-height: 22px !important;
         letter-spacing: 0 !important;
@@ -417,6 +417,7 @@
 
       @media (max-width: 780px) {
         .dealer-lang-switch {
+          position: absolute;
           top: 72px;
           right: 12px;
           transform: none;
@@ -833,7 +834,7 @@
 
     const mobileStyles = document.createElement('link');
     mobileStyles.rel = 'stylesheet';
-    mobileStyles.href = ROOT + 'assets/css/mobile-site.css?v=20261019-03';
+    mobileStyles.href = ROOT + 'assets/css/mobile-site.css?v=20261020-styles2c';
     document.head.appendChild(mobileStyles);
   }
 
@@ -963,28 +964,11 @@
 
   function placeProductMobileTools() {
     if (!document.body.classList.contains('single-product')) return;
-    const actions = document.querySelector('.card_actions');
     const switcher = document.querySelector('.dealer-lang-switch');
     const cart = document.querySelector('.dealer-local-cart-tab');
-    if (!actions || !switcher || !cart) return;
-
-    let tools = document.querySelector('.dealer-product-tools');
-    if (!tools) {
-      tools = document.createElement('div');
-      tools.className = 'dealer-product-tools';
-      actions.insertAdjacentElement('afterend', tools);
-    }
-
-    const media = window.matchMedia('(max-width: 700px)');
-    const position = () => {
-      if (media.matches) {
-        tools.append(switcher, cart);
-      } else {
-        document.body.append(switcher, cart);
-      }
-    };
-    position();
-    media.addEventListener('change', position);
+    if (!switcher || !cart) return;
+    document.body.append(switcher, cart);
+    document.querySelector('.dealer-product-tools')?.remove();
   }
 
   function readJsonList(key) {
@@ -1404,7 +1388,7 @@
     footer.innerHTML = [
       '<section><h2>АСТАНА</h2><p>улица Акмешит, 19/1</p><p>тел.: <a href="tel:87010688828">8 (701) 068-88-28</a></p></section>',
       '<section><h2>АЛМАТЫ</h2><p>ТЦ Жибек Жолы, проспект Жибек Жолы, 135</p><p>тел.: <a href="tel:87076206888">8 (707) 620-68-88</a></p></section>',
-      '<section><h2>АЛМАТЫ</h2><p>улица Турар Рыскулов, 3</p><p>тел.: <a href="tel:87077832888">8 (707) 783-28-88</a></p></section>',
+      '<section><h2>АСТАНА</h2><p>улица Турар Рыскулов, 3</p><p>тел.: <a href="tel:87077832888">8 (707) 783-28-88</a></p></section>',
       '<section><h2>КАРАГАНДА</h2><p>Букетова 3/2, ЖК Атамура</p><p>тел.: <a href="tel:87004685588">8 (700) 468-55-88</a></p></section>'
     ].join('');
     document.body.appendChild(footer);

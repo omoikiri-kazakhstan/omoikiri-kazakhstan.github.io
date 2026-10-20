@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
-const ignored = new Set(['.git', '.wrangler', 'node_modules', 'scripts', 'migrations', 'functions']);
+const ignored = new Set(['.git', '.wrangler', 'node_modules', 'scripts', 'migrations', 'functions', 'workers']);
 const publicFiles = [];
 
 function walk(dir) {
@@ -29,12 +29,13 @@ for (const file of publicFiles) {
     externalPages.push(relative);
   }
 
-  if (!relative.endsWith('.html')) continue;
-  const references = [
+  if (!/\.(?:html|css)$/.test(relative)) continue;
+  const references = relative.endsWith('.html') ? [
     ...[...content.matchAll(/\/assets\/remote\/omoikiri\.ru\/[^\s"'<>`),;]+/g)].map((match) => match[0]),
     ...[...content.matchAll(/\b(?:src|href|poster)=["']([^"']+)["']/g)].map((match) => match[1])
       .filter((value) => value.includes('assets/remote/omoikiri.ru/')),
-  ];
+  ] : [...content.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/url\(\s*['"]?([^)'"\s]+)['"]?\s*\)/g)]
+    .map((match) => match[1]).filter((value) => !/^(?:data:|https?:)/i.test(value));
   for (const reference of references) {
     const value = reference.replace(/\\\//g, '/').replace(/&amp;/g, '&');
     if (value.includes('${') || value.includes('{{')) continue;

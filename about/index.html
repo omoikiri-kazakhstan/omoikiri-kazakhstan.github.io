@@ -6,103 +6,31 @@
   <title>О компании - OMOIKIRI KZ</title>
   <link rel="canonical" href="https://omoikiri.kz/about/" />
   <link rel="stylesheet" href="../assets/css/menu.css">
-  <link rel="stylesheet" href="../assets/css/info-pages.css?v=20260721-05">
-  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/elements.css">
-  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles/about.css">
+  <link rel="stylesheet" href="../assets/css/info-pages.css?v=20261020">
+  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles2/elements.css">
+  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles2/about.css">
+  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles2/buttons.css">
+  <link rel="stylesheet" href="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/styles2/faq.css">
   <style>
-    body.dealer-info-page.about-page {
-      background: #fff;
-    }
-
-    body.dealer-info-page.about-page .about_top_video {
-      appearance: none;
-      background: transparent;
-      color: #fff;
-      text-align: left;
-    }
-
-    body.dealer-info-page.about-page .about_top_text {
-      top: 165px;
-    }
-
-    body.dealer-info-page.about-page .about_video_modal {
-      position: fixed;
-      inset: 0;
-      z-index: 100050;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: rgba(0, 0, 0, .78);
-    }
-
-    body.dealer-info-page.about-page .about_video_modal.active {
-      display: flex;
-    }
-
-    body.dealer-info-page.about-page .about_video_frame {
-      position: relative;
-      width: min(960px, 100%);
-      aspect-ratio: 16 / 9;
-      background: #000;
-    }
-
-    body.dealer-info-page.about-page .about_video_frame iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-    }
-
-    body.dealer-info-page.about-page .about_video_close {
-      position: absolute;
-      top: -46px;
-      right: 0;
-      width: 38px;
-      height: 38px;
-      border: 0;
-      border-radius: 50%;
-      background: #fff;
-      color: #111;
-      font: 28px/38px Arial, Helvetica, sans-serif;
-      cursor: pointer;
-    }
-
-    @media (max-width: 800px) {
-      body.dealer-info-page.about-page {
-        overflow-x: hidden;
-      }
-
-      body.dealer-info-page.about-page .about_top {
-        padding-top: 145px;
-      }
-
-      body.dealer-info-page.about-page .about_top_text {
-        width: calc(100vw - 50px) !important;
-        top: auto;
-        max-width: 100%;
-        font-size: 12px !important;
-        line-height: 1.8 !important;
-        overflow-wrap: break-word;
-      }
-
-      body.dealer-info-page.about-page .about_top_text p {
-        overflow-wrap: anywhere;
-      }
-
-      body.dealer-info-page.about-page .year_line p,
-      body.dealer-info-page.about-page .about_ico p,
-      body.dealer-info-page.about-page .space_text p,
-      body.dealer-info-page.about-page .red_text li {
-        overflow-wrap: break-word;
-      }
-
-      body.dealer-info-page.about-page .route_year,
-      body.dealer-info-page.about-page .route_cont,
-      body.dealer-info-page.about-page .about_top_video {
-        box-sizing: border-box;
-      }
-    }
+    @font-face { font-family: 'GothamProBlackItalic'; src: url('../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/fonts/GothamProBlackItalic/GothamProBlackItalic.ttf') format('truetype'); font-display: swap; }
+    body.about-page { overflow-x: hidden; color: #222; font-size: 14px; }
+    body.about-page main, body.about-page main * { box-sizing: border-box; }
+    body.about-page .faq_add h2 { font: 30px/1.1 'GothamProBold', Arial, sans-serif; text-transform: uppercase; }
+    :where(body.about-page main h1, body.about-page main h2, body.about-page main h3, body.about-page main h4, body.about-page main p, body.about-page main ul, body.about-page main li) { margin: 0; }
+    body.about-page main { padding-top: 110px; }
+    body.about-page .about_top { background-image: url('../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/about_main.jpg?v=20261020'); }
+    body.about-page .about_top_text, body.about-page .about_route *, body.about-page .about_mnf *, body.about-page .about_space *, body.about-page .about_ico * { box-sizing: border-box; }
+    body.about-page .about_video_modal { position: fixed; inset: 0; z-index: 100050; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,.78); }
+    body.about-page .about_video_modal.active { display: flex; }
+    body.about-page .about_video_frame { position: relative; width: min(960px,100%); aspect-ratio: 16/9; background: #000; }
+    body.about-page .about_video_frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+    body.about-page .about_video_close { position: absolute; top: -46px; right: 0; width: 38px; height: 38px; border: 0; border-radius: 50%; background: #fff; color: #111; font: 28px/38px Arial,sans-serif; cursor: pointer; }
+    body.about-page .about-kz-contact { padding: 70px 25px; background: #ecebe6; text-align: center; }
+    body.about-page .about-kz-contact h2 { margin: 0 0 25px; font: 32px/1.2 'GothamProBold',Arial,sans-serif; text-transform: uppercase; }
+    body.about-page .about-kz-contact a { display: inline-flex; gap: 20px; align-items: center; padding: 16px 22px; border-radius: 4px; background: #202020; color: #fff; font: 13px 'GothamProBold',Arial,sans-serif; text-decoration: none; text-transform: uppercase; }
+    body.about-page .about-kz-contact a:hover { background: #fe5000; }
+    @media(max-width:800px) { body.about-page main { padding-top:55px; } body.about-page .about_top { width:100%; } body.about-page .about_top_text { max-width:100%; overflow-wrap:anywhere; } body.about-page .faq_add h2 { font-size:24px; } body.about-page .about-kz-contact { padding:50px 25px; } body.about-page .about-kz-contact h2 { font-size:24px; } }
+    @media(max-width:360px) { body.about-page .top_nav .logo { left:46%; } body.about-page .top_nav .logo img { width:120px !important; } }
   </style>
 </head>
 <body class="dealer-info-page about-page">
@@ -131,157 +59,524 @@
   </div>
 
   <main>
-    <section class="about_top">
-      <div class="about_top_text">
-        <p>мировой производитель кухонных моек, смесителей, водоочистителей, измельчителей и различных аксессуаров для кухни</p>
-      </div>
-      <button class="about_top_video" type="button" aria-label="Смотреть видео о компании">
-        <p>о компании</p>
-        <div class="play"></div>
-        <p>видео</p>
-      </button>
-    </section>
-
-    <section class="about_route_cont">
-      <div class="about_route">
+<div class="about_top">
+    <div class="about_black"></div>
+    <div class="about_top_text">
+        <p>мировой производитель кухонных моек, смесителей, водоочистителей, измельчителей и различных аксессуаров&#160;для&#160;кухни</p>
+    </div>
+</div>
+<div class="about_route_cont">
+    <div class="about_route">
         <div class="route_cont">
-          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/sinks.webp" alt="">
-          <div class="route_year">
-            <div class="v_line"></div>
-            <div class="year_line">
-              <div class="big_dot"></div>
-              <div class="big_year">2011</div>
-              <h3 id="hidden">2011</h3>
-              <p>Образование компании ARTEKEY в городе Санкт-Петербург. Компания ARTEKEY начинает сотрудничество с японской компанией OMOIKIRI</p>
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/sinks.jpg" alt="">
+            <div class="route_year">
+                <div class="route_story">
+                    <div class="route_years">
+                        <div class="route2011">
+                            <h3>2011</h3>
+                            <p>Компания работает и развивается на российском рынке уже 15 лет. За это время Omoikiri стала лидером в разработке, производстве и продаже премиального оборудования и аксессуаров для кухни. На сегодняшний день Omoikiri – крупнейший производитель кухонных моек из гранита методом горячего литья в России. Технология производства Tetogranit заключается в том, что частицы гранита, кварцевый песок и акриловую смолу запекают при высокой температуре.</p>
+                            <p>История компании началась в 2011 году с создания в Санкт-Петербурге компании Artekey. С самого начала Artekey наладила сотрудничество с японской мануфактурной компанией, работавшей под брендом Omoikiri, приобрела лицензии на ряд секретов производства и стала важным игроком на рынке сантехники и аксессуаров: уже в 2012 году мойки и смесители для кухни Omoikiri были впервые представлены широкой публике на 24-ой международной выставке «Мебель-2012» в Москве, что стало важным шагом на пути к успеху. Тогда же с согласия иностранных партнеров в России была подана заявка на регистрацию одноименного товарного знака, чтобы дополнительно обеспечить защиту при поставке продукции высочайшего качества.</p>
+                        </div>
+                        <div class="route2014">
+                            <h3>2014</h3>
+                            <p>В 2014 году, после трех лет тесного взаимодействия с Omoikiri и в связи со значительным объемом заказываемой продукции и высоким спросом потребителей Artekey стала полноправным правообладателем бренда, укрепив свои позиции на рынке. Компания сфокусировалась на собственной разработке и дизайне продуктов, размещая производство на мощностях ведущих специализированных заводов-партнеров в разных странах. Год спустя продукция Omoikiri вышла на рынок стран СНГ, завоевывая популярность благодаря высокому качеству и инновационным решениям.</p>
+                        </div>
+                        <div class="route2016">
+                            <h3>2016</h3>
+                            <p>В 2016 году компания Omoikiri стала генеральным партнером Форума инноваций и дизайна PUSHKA, взяв курс на поддержку молодых специалистов в сфере дизайна и технологий. Со временем проект вырос в масштабное событие индустрии. В 2019 году, в рамках своего 5-го участия в 31-й международной выставке «Мебель», Omoikiri провела на своей площадке трехдневный IV Международный арт-форум PUSHKA 2019, объединив экспертизу бренда и творческий потенциал нового поколения дизайнеров. Визуальная концепция форума удостоилась премии Red Dot Design Award в номинации: «Brands&amp;Communication Design»‎ с проектом фирменного стиля. На выставке был представлен новый инновационный материал для кухонных моек — ARTCERAMIC, который сразу же привлек внимание профессионального сообщества благодаря своей прочности и устойчивости к повреждениям.</p>
+                        </div>
+                        <div class="route2016">
+                            <h3>2021-2022</h3>
+                            <p>В 2021 году в рамках мероприятия OMOIKIRI STELLE DELLA COSTA ITALIANA состоялся V Международный форум инноваций в промышленном дизайне PUSHKA. Форум является уникальной площадкой, где талантливые студенты - дизайнеры встречаются с реальными заказчиками и получают возможность воплотить в жизнь свои самые смелые проекты.</p>
+                            <p>2022 год ознаменовался стремительным масштабированием бизнеса и глобальной перестройкой логистики. Начался постепенный перенос производственных комплексов на передовые заводы КНР, где строгие стандарты контроля и инженерные достижения в совокупности с приобретенными в начале пути секретами производства гарантировали безупречное исполнение каждого изделия. Контрактное производство на ведущих фабриках позволило Omoikiri сохранять бескомпромиссное качество, активно внедрять инновации и обеспечивать стабильные поставки премиального оборудования в любых современных реалиях.</p>
+                            <p>Благодаря гибкой стратегии и адаптации к внешним вызовам выручка компании за 2022 год выросла на 75,7%. Закрепляя успех, к концу года бренд расширил пул производственных партнеров и объемы выпуска, запустив эксклюзивную коллекцию итальянских моек из материала NATCERAMIC, тем самым продолжив традицию инноваций и технологического совершенства.</p>
+                        </div>
+                        <div class="route2023">
+                            <h3>2023-2024</h3>
+                            <p>2023–2024 годы стали для Omoikiri временем официального признания экспертным сообществом и выходом в новые рыночные ниши. В 2023 году высокий уровень клиентского сервиса бренда был подтвержден на государственном уровне: отдел сервиса Omoikiri стал лауреатом престижной премии «Качество обслуживания и права потребителей» в номинации «Сервисное обслуживание года» (категория «Розничные услуги. Кухонные мойки и смесители»). Два года подряд — в 2023 и 2024 годах — Центр аналитических исследований признавал Omoikiri «Лучшим предприятием отрасли», присвоив компании почетный статус «Предприятие высшего уровня надежности». Экспертная оценка официально закрепила за брендом статус безупречного партнера для долгосрочного сотрудничества и инвестиций. Закономерным этапом этого мощного подъема стал 2024 год, когда Omoikiri сделала стратегический шаг за рамки привычного сегмента. Компания запустила производство сантехники для ванных комнат, открыв новую амбициозную главу в своей истории и трансформировавшись в комплексного эксперта для всего дома.</p>
+                        </div>
+                        <div class="route2026">
+                            <h3>2026</h3>
+                            <p>2026 год стал для Omoikiri юбилейным — компания отметила 15 лет работы на российском рынке. За эти годы бренд значительно расширил ассортимент, который сегодня включает 8 товарных категорий, 5 различных материалов моек и более 60 вариантов цветового исполнения. Знаковым событием года стало активное масштабирование направления Omoikiri Home, в рамках которого компания представила премиальные товары для кухни: посуду, ножи, емкости для сыпучих продуктов и текстиль.</p>
+                            <p>Свой юбилейный статус Omoikiri подтвердила и на культурной арене, выступив партнером международной выставки мебели, интерьерных решений и искусств ARTDOM 2026. Компания взяла на себя кураторство ключевых пространств мероприятия, оформив зоны регистрации, Welcome и VIP-Lounge. Главными дизайн-заявлениями года стали две эксклюзивные линии, подчеркивающие узнаваемый творческий почерк Omoikiri — работу с уникальной палитрой и фактурами. Наряду с коллекцией моек с репродукциями работ известных художников, бренд выпустил инновационную серию смесителей и дозаторов. Ее главной особенностью стал рельефный узор, вдохновлённый культовым гильошированным рисунком Tapisserie с циферблата легендарных часов Audemars Piguet Royal Oak, созданных дизайнером Джеральдом Джентой в 1972 году. Коллекция Omoikiri интерпретирует часовой «гобелен» в металле, нанося точный рисунок на поверхность изделий из нержавеющей стали и латуни. Эта серия дополнила широкую палитру бренда, где представлены оттенки от насыщенных и ярких до сдержанных пастельных, в то время как базовые черный и белый цвета остаются неизменной классикой компании, сохраняющей в качестве дани уважения людям, стоявшим у истоков, своё название - Omoikiri.</p>
+                        </div>
+                    </div>
+                    <div class="route_controls">
+                        <div class="route_prev">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <path d="M501.333,245.325H10.667C4.779,245.325,0,250.104,0,255.992s4.779,10.667,10.667,10.667h490.667
+                                                c5.888,0,10.667-4.779,10.667-10.667S507.221,245.325,501.333,245.325z" />
+                                        </g>
+                                    </g>
+                                <g>
+                                    <g>
+                                        <path d="M508.864,248.461L338.197,77.795c-4.16-4.16-10.923-4.16-15.083,0c-4.16,4.16-4.16,10.923,0,15.083l170.667,170.667
+                                                c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path d="M508.864,248.461c-4.16-4.16-10.923-4.16-15.083,0L323.115,419.128c-4.16,4.16-4.16,10.923,0,15.083
+                                                c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115l170.667-170.667
+                                                C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                                    </g>
+                                </g>
+                                </svg>
+                        </div>
+                        <div class="route_next">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <path d="M501.333,245.325H10.667C4.779,245.325,0,250.104,0,255.992s4.779,10.667,10.667,10.667h490.667
+                                                c5.888,0,10.667-4.779,10.667-10.667S507.221,245.325,501.333,245.325z" />
+                                        </g>
+                                    </g>
+                                <g>
+                                    <g>
+                                        <path d="M508.864,248.461L338.197,77.795c-4.16-4.16-10.923-4.16-15.083,0c-4.16,4.16-4.16,10.923,0,15.083l170.667,170.667
+                                                c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path d="M508.864,248.461c-4.16-4.16-10.923-4.16-15.083,0L323.115,419.128c-4.16,4.16-4.16,10.923,0,15.083
+                                                c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115l170.667-170.667
+                                                C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                                    </g>
+                                </g>
+                                </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="v_line"></div>
+                <div class="year_line">
+                    <div class="big_dot"></div>
+                    <div class="dot"></div>
+                    <div class="big_year">2011</div>
+                    <h3>2011</h3>
+                    <p>Образование компании ARTEKEY в городе Санкт-Петербург. Компания ARTEKEY начинает сотрудничество с японской компанией OMOIKIRI</p>
+                </div>
+                <div class="year_line">
+                    <div class="dot"></div>
+                    <h3>2014</h3>
+                    <p>После 3 лет тесного взаимодействия с OMOIKIRI компания Artekey становится правообладателем бренда</p>
+                </div>
+                <div class="year_line">
+                    <div class="dot"></div>
+                    <h3>2016</h3>
+                    <p>OMOIKIRI становится генеральным Партнером студенческого Форума инноваций и дизайна «PUSHKA», взяв курс на поддержку молодых специалистов в сфере дизайна и технологий.</p>
+                </div>
+                <div class="year_line">
+                    <div class="dot"></div>
+                    <h3>2022</h3>
+                    <p>Стремительное масштабирование бизнеса и глобальная перестройка логистики</p>
+                </div>
+                <div class="year_line">
+                    <div class="dot"></div>
+                    <h3>2023</h3>
+                    <p>Признание экспертным сообществом и выход в новые рыночные ниши</p>
+                </div>
+                <div class="year_line">
+                    <div class="dot"></div>
+                    <h3>2026</h3>
+                    <p>OMOIKIRI отмечает 15 лет на российском рынке. За годы работы компания значительно расширила ассортимент, который сегодня включает 8 товарных категорий, 5 различных материалов моек и более 60 вариантов цветового исполнения. С 2026 года идет активное масштабирование направления OMOIKIRI HOME.</p>
+                </div>
             </div>
-            <div class="year_line"><div class="dot"></div><h3>2012</h3><p>Мойки и смесители OMOIKIRI впервые представлены на выставке «Мебель-2012»</p></div>
-            <div class="year_line"><div class="dot"></div><h3>2014</h3><p>После 3 лет тесного взаимодействия с OMOIKIRI компания Artekey становится правообладателем бренда</p></div>
-            <div class="year_line"><div class="dot"></div><h3>2015</h3><p>Продукция OMOIKIRI выходит на рынок СНГ</p></div>
-            <div class="year_line"><div class="dot"></div><h3>2016</h3><p>OMOIKIRI становится генеральным Партнером студенческого Форума инноваций и дизайна «PUSHKA»</p></div>
-            <div class="year_line"><div class="dot"></div><h3>2019</h3><p>Компания OMOIKIRI презентует новый инновационный материал для кухонных моек ARTCERAMIC</p></div>
-            <div class="year_line"><div class="dot"></div><h3>2022</h3><p>Расширение производственных площадок OMOIKIRI, выпуск коллекции моек из NATCERAMIC</p></div>
-            <div class="year_line"><div class="dot"></div><h3>2024</h3><p>Запуск нового направления - сантехника для ванных комнат</p></div>
-          </div>
         </div>
         <div class="route_cont">
-          <div class="num_line"><h3>1 500 000 +</h3><p>единиц проданной продукции</p></div>
-          <div class="num_line"><h3>30 000 +</h3><p>дизайнеров сотрудничает с OMOIKIRI</p></div>
-          <div class="num_line"><h3>9 000 +</h3><p>кухонных салонов продают<br> продукцию OMOIKIRI</p></div>
-          <div class="num_line"><h3>2 500 +</h3><p>партнеров по Казахстану и СНГ</p></div>
-          <div class="num_line"><h3>600 +</h3><p>проведенных<br> семинаров и вебинаров</p></div>
-          <div class="num_line"><h3>250 +</h3><p>вышедших ТВ передач<br> с продукцией OMOIKIRI</p></div>
+            <div class="num_line">
+                <h3>2 000 000 +</h3>
+                <p>единиц проданной продукции</p>
+            </div>
+            <div class="num_line">
+                <h3>35 000 +</h3>
+                <p>дизайнеров кухонных студий, работающих с OMOIKIRI</p>
+            </div>
+            <div class="num_line">
+                <h3>11 000 +</h3>
+                <p>кухонных студий продают<br> продукцию OMOIKIRI</p>
+            </div>
+            <div class="num_line">
+                <h3>2 500 +</h3>
+                <p>партнеров в России и СНГ</p>
+            </div>
+            <div class="num_line">
+                <h3>800 +</h3>
+                <p>семинаров и вебинаров,<br> проведенных за последние годы</p>
+            </div>
+            <div class="num_line">
+                <h3>320 +</h3>
+                <p>телепрограмм, в которых<br> мы размещали нашу продукцию</p>
+            </div>
+            <div class="num_line">
+                <h3>50 +</h3>
+                <p>монобрендовых шоурумов, в России и странах СНГ</p>
+            </div>
         </div>
-      </div>
-    </section>
-
-    <section class="about_mnf">
-      <div class="mnf_text">
+    </div>
+</div>
+<div class="about_mnf">
+    <div class="mnf_text">
         <div class="mnf_text_top">
-          <h2>Производство</h2>
-          <div class="mnf_countries"><span>Япония</span><div class="dot"></div><span>Италия</span><div class="dot"></div><span>Турция</span><div class="dot"></div><span>Китай</span><div class="dot"></div><span>Россия</span></div>
+            <h2>Производство</h2>
+            <div class="mnf_countries">
+                <span>Италия</span>
+                <div class="dot"></div>
+                <span>Китай</span>
+                <div class="dot"></div>
+                <span>Турция</span>
+                <div class="dot"></div>
+                <span>Россия</span>
+                <div class="dot"></div>
+                <span>Япония</span>
+            </div>
         </div>
         <div class="mnf_text_body">
-          <p>Производство OMOIKIRI размещено на ведущих мировых площадках: в Японии, Италии, Турции, Китае и России. Компания изготавливает смесители и мойки из нержавеющей стали, искусственного гранита, керамики, композитных материалов, латуни, а также производит кухонные измельчители, водоочистители и другие аксессуары для кухни. Вся продукция компании отличается эксклюзивным дизайном и контролем качества, простотой и удобством в эксплуатации.</p>
-          <button class="about_top_video" type="button" aria-label="Смотреть видео о компании">
-            <p>о компании</p>
-            <div class="play"></div>
-            <p>видео</p>
-          </button>
+            <div class="mnf_description">
+                <p>Производство Omoikiri сейчас размещено на ведущих мировых площадках: в Италии, Китае, Турции и России. С каждым из заводов-партнеров бренд связывают многолетние доверительные отношения, переросшие в глубокое стратегическое партнерство. Мы выбираем производственные комплексы в тех странах, где стандарты контроля и инженерные достижения гарантируют безупречное исполнение каждого изделия и соблюдение технологических инструкций заказчика. Наш подход позволяет совмещать передовые технологии разных регионов в единой экосистеме бренда. Под брендом Omoikiri выпускаются смесители и мойки из нержавеющей стали, искусственного гранита, керамики, композитных материалов, латуни, а также кухонные измельчители, водоочистители и другие аксессуары для кухни. Вся продукция компании отличается эксклюзивным дизайном и контролем качества, простотой и удобством в эксплуатации.</p>
+                <p>Для обеспечения стабильного уровня надежности Omoikiri использует международный подход к выбору элементов. Комплектующие для моек, смесителей, водоочистителей и измельчителей закупаются у ведущих производителей из стран Японии, Южной Кореи и стран ЕС через оптимизированные каналы поставок. Интеграция передовых азиатских технологий и европейских стандартов гарантирует безупречную и долговечную работу каждого изделия в любой детали.</p>
+            </div>
+            <div class="about_top_video">
+                <p>о компании</p>
+                <div class="play"></div>
+                <p>видео</p>
+            </div>
         </div>
         <div class="mnf_text_bot">
-          <div class="num_line"><h3>100 +</h3><p>специалистов в команде</p></div>
-          <div class="num_line"><h3>8 000 м<div class="quad">2</div></h3><p>складские комплексы</p></div>
+            <div class="num_line">
+                <h3>100 +</h3>
+                <p>специалистов в команде</p>
+            </div>
+            <div class="num_line">
+                <h3>11 000 м<div class="quad">2</div></h3>
+                <p>складские комплексы</p>
+            </div>
         </div>
-      </div>
-    </section>
-
-    <section class="about_icos">
-      <div class="about_ico">
-        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico1.webp" alt="">
-        <h3>Партнеры</h3>
-        <p>Партнеры ценят нас за безупречное качество и эффектный дизайн нашей продукции, индивидуальный подход, поддержку в стимулирующих спрос акциях и наличие более 90% ассортимента в складской программе.</p>
-      </div>
-      <div class="about_ico">
-        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico2.webp" alt="">
-        <h3>Обучение</h3>
-        <p>Мы заинтересованы в том, чтобы наши партнеры успешно развивались и процветали, поэтому охотно делимся знаниями, накопленными за годы успешной деятельности OMOIKIRI.</p>
-      </div>
-      <div class="about_ico">
-        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico3.webp" alt="">
-        <h3>Гарантия</h3>
-        <p>Одна из ключевых особенностей OMOIKIRI - клиентоориентированный сервис. Специалисты сервисного отдела оказывают оперативную и персонализированную поддержку клиентам.</p>
-      </div>
-    </section>
-
-    <section class="about_space">
-      <div class="space_text">
+    </div>
+</div>
+<div class="about_space_cont">
+    <div class="about_space">
         <h2>Философия</h2>
-        <p>Современный интерьер - это уже не столько про стиль, сколько про заботу о человеке и его комфорте. Это уход от предметов ради предметов в сторону простых форм, функциональности и эргономичности пространства.</p>
-        <p>Среди всего многообразия товара на рынке каждый человек находится в поиске «своей компании», которая будет близка ему по духу и стилю.</p>
-        <p>OMOIKIRI непрерывно работает над своим развитием, чтобы соответствовать этим критериям.</p>
-      </div>
-      <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/space.webp" alt="">
-    </section>
-
-    <section class="about_red_cont">
-      <div class="about_red">
-        <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/red.webp" alt="">
+        <div class="fil_grid">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/fil1.png" alt="" id="fil1">
+            <div class="fil1">
+                <h3>Дизайн с часовым наследием</h3>
+                <p>Дизайн OMOIKIRI рождается на пересечении архитектуры, моды и искусства. Культурные символы, знаковые образы и художественные открытия становятся отправной точкой для создания предметов, в которых отражается индивидуальный взгляд на пространство кухни.</p>
+                <p>Источником вдохновения для эксклюзивного паттерна OMOIKIRI стали легендарные часы Audemars Piguet Royal Oak 39 Jumbo и узор Tapisserie на их циферблате, созданный Джеральдом Джентой. Рельефный рисунок украшает смесители и дозаторы, подчёркивая выразительность форм и благородство материалов.</p>
+            </div>
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/fil2.png" alt="" id="fil2">
+            <div class="fil2">
+                <h3>Коллекция моек Art Collection</h3>
+                <p>Картины Сальвадора Дали, Густава Климта, Энди Уорхола и Винсента Ван Гога обретают новое воплощение в коллекции моек из NATCERAMIC. Каждая модель превращает знакомые шедевры и образы мировой культуры в необычный акцент кухонного интерьера.</p>
+            </div>
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/fil3.png" alt="" id="fil3">
+            <div class="fil3">
+                <h3>На стыке моды и искусства</h3>
+                <p>Опираясь на эстетику выдающихся произведений искусства, великолепие природы и каноны мира роскоши, мы создали свою, идеальную палитру OMOIKIRI. В широкой палитре представлены цвета от сдержанных и пастельных до насыщенных и ярких, каждый из которых тщательно подобран и разработан множественными экспериментами.</p>
+                <p>Коллекция эксклюзивных цветов регулярно актуализируется, при этом базовые чёрный и белый остаются неизменной классикой. Следуя модным тенденциям и личным предпочтениям, каждый сможет подобрать именно тот цвет OMOIKIRI, который идеально подойдет для интерьера и подчеркнет персональность владельца.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="about_icos_cont">
+    <h2>Преимущества</h2>
+    <div class="about_ico_cont">
+        <div class="about_ico">
+            <div class="about_ico_title">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico3.webp" alt="">
+                <h3>Гарантия</h3>
+                <p>Одной из ключевых особенностей компании OMOIKIRI является самый клиентоориентированный Сервис в нише. Специалисты Сервисного отдела всегда оказывают оперативную и персонализированную поддержку клиентам.</p>
+            </div>
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/warranty.png" alt="">
+        </div>
+    </div>
+    <div class="about_ico_cont">
+        <div class="about_ico">
+            <div class="about_ico_title">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico2.webp" alt="">
+                <h3>Обучение</h3>
+                <p>Мы крайне заинтересованы в том, чтобы наши партнеры успешно развивались и процветали, поэтому охотно делимся с ними нашими знаниями, накопленными за годы успешной деятельности OMOIKIRI.</p>
+            </div>
+            <div class="seminar_imgs">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/seminar1.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/seminar2.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="about_ico_cont">
+        <div class="about_ico">
+            <div class="about_ico_title">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/ico1.webp" alt="">
+                <h3>Партнеры</h3>
+                <p>Партнеры ценят нас за безупречное качество и эффектный дизайн нашей продукции, индивидуальный подход, поддержку в стимулирующих спрос акциях и наличие более 90% ассортимента в складской программе. Уже на протяжении нескольких лет мы являемся надежным партнёром таких кухонных фабрик как: «Мария», «Верона»,«Стильные кухни», «Атлас-Люкс», «Дриада», «Анонс», «Лорена», «Кухонный двор» и многих других.</p>
+            </div>
+            <div class="partners_ico">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/1.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/2.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/3.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/4.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/5.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/6.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/7.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/8.jpg" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/partners/9.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="about_red_cont">
+    <div class="about_red">
+        <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/prizes.png" alt="">
         <div class="red_text">
-          <h2>Признание</h2>
-          <ul>
-            <li><strong>2016:</strong> Премия Russian Design Award за вклад в развитие дизайна.</li>
-            <li><strong>2017:</strong> Премия «Лучшее для жизни» за инновационные товары для кухни.</li>
-            <li><strong>2017-2019:</strong> Награды «За поддержку промышленного дизайна и образования».</li>
-            <li><strong>2019:</strong> Премия Red Dot Design Award за визуальную концепцию форума PUSHKA.</li>
-            <li><strong>2020, 2022, 2023, 2024:</strong> Статус «Лучшее предприятие отрасли» и высший уровень надежности.</li>
-            <li><strong>2022:</strong> Премия ECO BEST AWARD и Best For Life Design Award.</li>
-            <li><strong>2023:</strong> Премия «Качество обслуживания и права потребителей» за лучший сервис.</li>
-            <li><strong>2025:</strong> Победитель премии RR «Best of the Best» в сегменте индустрии роскоши.</li>
-            <li><strong>2025:</strong> Премиум-бренд N1 по продажам и производству кухонной сантехники.</li>
-          </ul>
+            <h2>Признание</h2>
+            <ul>
+                <li><strong>2016:</strong> Премия Russian Design Award за вклад в развитие дизайна в России.</li>
+                <li><strong>2017:</strong> Премия «Лучшее для жизни» за инновационные товары для кухни.</li>
+                <li><strong>2017–2019:</strong> Награды «За поддержку российского промышленного дизайна и образования».</li>
+                <li><strong>2019:</strong> Премия Red Dot Design Award за визуальную концепцию форума PUSHKA.</li>
+                <li><strong>2020, 2022, 2023, 2024:</strong> Статус «Лучшее предприятие отрасли» и высший уровень надежности.</li>
+                <li><strong>2020:</strong> Звание «Продукт года» за систему ручки «2в1 Multi» у смесителей.</li>
+                <li><strong>2022:</strong> Премия ECO BEST AWARD (измельчители Nagare и Nagare Slim) и Best For Life Design Award (мойки Side).</li>
+                <li><strong>2023:</strong> Премия «Качество обслуживания и права потребителей» за лучший сервис.</li>
+                <li><strong>2025:</strong> Победитель премии RR «Best of the Best» в сегменте индустрии роскоши.</li>
+                <li><strong>2025:</strong> Премиум-бренд №1 по продажам и производству кухонной сантехники (рейтинг ИД «Коммерсантъ»).</li>
+            </ul>
         </div>
-      </div>
-    </section>
-
-    <section class="about_partners">
-      <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part1.webp" alt="">
-      <div class="partners_mid">
+    </div>
+</div>
+<div class="about_partners">
+    <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part1.webp" alt="">
+    <div class="partners_mid">
         <h2>Сотрудничество</h2>
-        <h3>с топовыми блогерами<br> Instagram и YouTube</h3>
+        <h3>С ТОПОВЫМИ БЛОГЕРАМИ<br> INSTAGRAM И YOUTUBE</h3>
         <div class="mid_img">
-          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part2.webp" alt="">
-          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part3.webp" alt="">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part2.webp" alt="">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part3.jpg" alt="">
         </div>
-      </div>
-      <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part4.webp" alt="">
-    </section>
+    </div>
+    <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part4.jpg" alt="">
+</div>
+<div class="about_tv_cont">
+    <div class="about_tv">
+        <div class="tv_half">
+            <h3>OMOIKIRI СОТРУДНИЧАЕТ<br>СО МНОГИМИ ТЕЛЕВИЗИОННЫМИ ПРОГРАММАМИ</h3>
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part6.jpg" alt="">
+        </div>
+        <div class="tv_half">
+            <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part5.jpg" alt="">
+            <h2>Телепроекты</h2>
+            <div class="tv_logos">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv1.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv2.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv3.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv4.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv5.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv6.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv7.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv8.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv9.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv10.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv11.png" alt="">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv12.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="stars_cont">
+    <div class="stars_text">
+        <p>СРЕДИ ЗВЕЗДНЫХ ВЛАДЕЛЬЦЕВ ПРОДУКЦИИ OMOIKIRI - ОЛИМПИЙСКИЕ ЧЕМПИОНЫ, АКТЕРЫ И ПЕВЦЫ, ТЕЛЕВЕДУЩИЕ И ПИСАТЕЛИ.</p>
+        <div class="stars_controls">
+            <div class="stars_prev">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+						<g>
+                            <g>
+                                <path d="M501.333,245.325H10.667C4.779,245.325,0,250.104,0,255.992s4.779,10.667,10.667,10.667h490.667
+									c5.888,0,10.667-4.779,10.667-10.667S507.221,245.325,501.333,245.325z" />
+                            </g>
+                        </g>
+                    <g>
+                        <g>
+                            <path d="M508.864,248.461L338.197,77.795c-4.16-4.16-10.923-4.16-15.083,0c-4.16,4.16-4.16,10.923,0,15.083l170.667,170.667
+									c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                        </g>
+                    </g>
+                    <g>
+                        <g>
+                            <path d="M508.864,248.461c-4.16-4.16-10.923-4.16-15.083,0L323.115,419.128c-4.16,4.16-4.16,10.923,0,15.083
+									c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115l170.667-170.667
+									C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                        </g>
+                    </g>
+					</svg>
+            </div>
+            <div class="stars_next">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+						<g>
+                            <g>
+                                <path d="M501.333,245.325H10.667C4.779,245.325,0,250.104,0,255.992s4.779,10.667,10.667,10.667h490.667
+									c5.888,0,10.667-4.779,10.667-10.667S507.221,245.325,501.333,245.325z" />
+                            </g>
+                        </g>
+                    <g>
+                        <g>
+                            <path d="M508.864,248.461L338.197,77.795c-4.16-4.16-10.923-4.16-15.083,0c-4.16,4.16-4.16,10.923,0,15.083l170.667,170.667
+									c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                        </g>
+                    </g>
+                    <g>
+                        <g>
+                            <path d="M508.864,248.461c-4.16-4.16-10.923-4.16-15.083,0L323.115,419.128c-4.16,4.16-4.16,10.923,0,15.083
+									c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115l170.667-170.667
+									C513.024,259.384,513.024,252.621,508.864,248.461z" />
+                        </g>
+                    </g>
+					</svg>
+            </div>
+        </div>
+    </div>
 
-    <section class="about_tv_cont">
-      <div class="about_tv">
-        <div class="tv_half">
-          <h3>OMOIKIRI сотрудничает<br>со многими телевизионными программами</h3>
-          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part6.jpg" alt="">
+    <div class="stars_slider">
+        <div class="stars_gallery">
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/2.jpg" alt="">
+                <div class="star_name">
+                    <p>Ксения Собчак</p>
+                    <span>журналист, телеведущая</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/3.jpeg" alt="">
+                <div class="star_name">
+                    <p>Сергей Лазарев</p>
+                    <span>певец</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/5.jpg" alt="">
+                <div class="star_name">
+                    <p>Ирина Горбачева</p>
+                    <span>актриса</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/4.jpeg" alt="">
+                <div class="star_name">
+                    <p>Митя Фомин</p>
+                    <span>певец</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/1.jpeg" alt="">
+                <div class="star_name">
+                    <p>Екатерина Климова</p>
+                    <span>актриса</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/6.jpg" alt="">
+                <div class="star_name">
+                    <p>Саша Спилберг</p>
+                    <span>блогер</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/7.jpg" alt="">
+                <div class="star_name">
+                    <p>Лариса Гузеева</p>
+                    <span>актриса, телеведущая</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/8.png" alt="">
+                <div class="star_name">
+                    <p>Мария Миронова</p>
+                    <span>актриса</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/9.jpg" alt="">
+                <div class="star_name">
+                    <p>Андрей Глазунов</p>
+                    <span>блогер</span>
+                </div>
+            </div>
+            <div class="star">
+                <img src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/stars/10.jpg" alt="">
+                <div class="star_name">
+                    <p>Алексей Ягудин</p>
+                    <span>фигурист, олимпийский чемпион</span>
+                </div>
+            </div>
         </div>
-        <div class="tv_half">
-          <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/part5.jpg" alt="">
-          <h2>Телепроекты</h2>
-          <div class="tv_logos">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv1.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv2.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv3.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv4.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv5.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv6.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv7.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv8.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv9.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv10.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv11.png" alt="">
-            <img src="../assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/about/tv/tv12.png" alt="">
-          </div>
+    </div>
+</div>
+<div class="faq_add_cont">
+    <div class="faq_add" id="faq">
+        <div class="faq_add_content">
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq__item is-open">
+                <h3 class="faq__heading">
+                <button class="faq__question" type="button" id="faq-q1" aria-expanded="true" aria-controls="faq-a1">
+                    <span>В каком направлении развивается Omoikiri сегодня?</span>
+                    <span class="faq__icon" aria-hidden="true"></span>
+                </button>
+                </h3>
+                <div class="faq__answer" id="faq-a1" role="region" aria-labelledby="faq-q1">
+                <div class="faq__answer-inner">
+                    <p>Сегодня премиальный бренд Omoikiri развивается по концепции «эволюционного совершенствования» кухонного пространства, одновременно выходя на новые рынки и в новые продуктовые сегменты. Главным вектором расширения ассортимента стал выход в сегмент сантехники для ванных комнат. Omoikiri больше не ограничивается только кухонной зоной: в каталоге появились фирменные раковины для ванной и коллекция товаров Omoikiri Home. Бренд стремится закрывать потребности клиентов в единой премиальной эстетике для всего дома. Компания сохраняет статус главного партнера для профессионалов, проводя регулярные обучающие семинары для интерьерных дизайнеров и кухонных салонов по всей стране. </p>
+                </div>
+                </div>
+            </div>
+
+            <div class="faq__item">
+                <h3 class="faq__heading">
+                <button class="faq__question" type="button" id="faq-q2" aria-expanded="false" aria-controls="faq-a2">
+                    <span>Как Omoikiri выбирает производственные площадки?</span>
+                    <span class="faq__icon" aria-hidden="true"></span>
+                </button>
+                </h3>
+                <div class="faq__answer" id="faq-a2" role="region" aria-labelledby="faq-q2">
+                <div class="faq__answer-inner">
+                    <p>Компания Omoikiri выбирает лучшие заводы по всему миру. География производства - это ставка на безупречное качество. Размещение заказов осуществляется на ведущих предприятиях стран, лидирующих в своих сегментах. На текущий момент производственные мощности Omoikiri сосредоточены в Италии, Китае, Турции и России. Контрактное производство на передовых мировых площадках позволяет сохранять бескомпромиссное качество продукции, активно внедрять инновации и гарантировать стабильные поставки премиального оборудования в любых современных реалиях.  Подробнее можно посмотреть в разделе: "Производство" на странице <a href="/about" class="linked">О компании</a>.</p>
+                </div>
+                </div>
+            </div>
+
+            <div class="faq__item">
+                <h3 class="faq__heading">
+                <button class="faq__question" type="button" id="faq-q3" aria-expanded="false" aria-controls="faq-a3">
+                    <span>Что формирует уникальность Omoikiri?</span>
+                    <span class="faq__icon" aria-hidden="true"></span>
+                </button>
+                </h3>
+                <div class="faq__answer" id="faq-a3" role="region" aria-labelledby="faq-q3">
+                <div class="faq__answer-inner">
+                    <p>Каждое изделие Omoikiri - это плод глубоких исследований и разработок. Бренд активно сотрудничает с талантливыми дизайнерами, чтобы создать продукцию, которая не только функциональна, но и эстетически привлекательна. Мы делаем не просто мойки и смесители - мы добавляем краски и индивидуальность к каждой детали.</p>
+                    <p>Философия Omoikiri транслирует не просто функционал кухни, а образ жизни. В концепции бренда сантехника - это центр домашнего уюта, кулинарного искусства и визуальной гармонии, и это находит отклик у аудитории, ценящей комфорт и дизайн. Процесс покупки сопровождается экспертной поддержкой. Шоурумы бренда и авторизованные точки продаж спроектированы так, чтобы клиент мог тактильно и визуально оценить все типы материалов и посмотреть вживую многообразие цветовых решений. В Москве 10 монобрендовых салонов, а всего по России уже более 40. Монобрендовые салоны и флагманские шоурумы - это ключевой элемент в цепочке впечатлений от бренда Omoikiri:  в них пространство проектируется не как классический магазин сантехники, а как галерея интерьерных решений, где можно вживую оценить эстетику и эргономику продукции. Сервисная поддержка, длительная официальная гарантия и доступность комплектующих обеспечивают покупателям максимальную надежность и безопасность.</p>
+                </div>
+                </div>
+            </div>
+
+            <a href="../contact/index.html">
+				<div class="btn">
+					<span>подробнее</span>
+					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+				</div>
+			</a>
         </div>
-      </div>
-    </section>
+    </div>
+</div>
+
+  <div class="form_cont about-kz-contact">
+    <div class="form_block">
+      <h2>Остались вопросы? Напишите нам!</h2>
+      <a href="../contact/index.html">Контакты OMOIKIRI Казахстан <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
   </main>
 
   <div class="about_video_modal" id="about-video-modal" aria-hidden="true">
@@ -322,7 +617,8 @@
       });
     }());
   </script>
-  <script src="../assets/js/lang-switch.js?v=20261019-mobile3" data-root="../"></script>
+  <script src="../assets/js/about-ru.js?v=20261020"></script>
+  <script src="../assets/js/lang-switch.js?v=20261020-styles2c" data-root="../"></script>
   <script src="../assets/js/local-router.js" data-root="../"></script>
 </body>
 </html>

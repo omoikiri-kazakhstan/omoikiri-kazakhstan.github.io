@@ -9,23 +9,27 @@ function database() {
     rows,
     overrides,
     prepare(sql) {
+      if (sql.includes('FROM stock_snapshot')) return { async first() { return null; } };
       return {
         bind(...args) {
           return {
             async first() {
               if (sql.includes('FROM catalog_items')) return null;
               if (sql.includes('FROM catalog_visibility_overrides')) return overrides.get(args[0]) || null;
-              const row = rows.get(args[0]);
-              return row ? { id: row.id } : null;
+              return rows.get(args[0]) || null;
             },
             async run() {
               if (sql.startsWith('INSERT')) {
                 const id = rows.size + 1;
-                rows.set(args[0], { id, status: 'pending', items: args[6], total: args[7] });
+                rows.set(args[0], {
+                  id, request_id: args[0], customer_name: args[1], phone: args[2], city: args[3],
+                  items_json: args[6], estimated_total: args[7], payment_status: args[8],
+                  payment_expires_at: args[9], notification_status: 'pending'
+                });
                 return { meta: { last_row_id: id } };
               }
               const row = [...rows.values()].find((entry) => entry.id === args[0]);
-              if (row) row.status = sql.includes("'sent'") ? 'sent' : 'failed';
+              if (row) row.notification_status = sql.includes("'sent'") ? 'sent' : 'failed';
               return {};
             }
           };
@@ -64,11 +68,11 @@ test('saves order before notification and does not send twice', async () => {
   try {
     const first = await onRequestPost(context(db, sample));
     assert.equal(first.status, 201);
-    assert.deepEqual(await first.json(), { ok: true, orderId: 1 });
+    assert.deepEqual(await first.json(), { ok: true, orderId: 1, paymentStatus: 'not_required', paymentTestMode: false });
     const second = await onRequestPost(context(db, sample));
     assert.equal(second.status, 200);
     assert.equal(notifications, 1);
-    assert.equal(db.rows.get(sample.requestId).status, 'sent');
+    assert.equal(db.rows.get(sample.requestId).notification_status, 'sent');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -83,7 +87,7 @@ test('keeps the order if Telegram fails', async () => {
   try {
     const response = await onRequestPost(context(db, sample));
     assert.equal(response.status, 201);
-    assert.equal(db.rows.get(sample.requestId).status, 'failed');
+    assert.equal(db.rows.get(sample.requestId).notification_status, 'failed');
   } finally {
     globalThis.fetch = originalFetch;
     console.error = originalError;

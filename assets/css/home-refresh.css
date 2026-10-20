@@ -308,18 +308,21 @@ body.dealer-home-page .main_block > img {
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 2px solid transparent;
+  border: 0;
   border-radius: 50%;
-  background: #df7053;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   cursor: pointer;
 }
 
-.home-elleci-colors button[data-elleci-color="gr"] { background: linear-gradient(140deg, #8a9294, #4d5758); }
-.home-elleci-colors button[data-elleci-color="wg"] { background: linear-gradient(140deg, #eef0ec, #869191); }
-.home-elleci-colors button[data-elleci-color="wh"] { background: linear-gradient(140deg, #fff, #c6cfcd); }
-.home-elleci-colors button[data-elleci-color="gb"] { background: linear-gradient(140deg, #555e60, #11191a); }
-.home-elleci-colors button.is-active,
-.home-elleci-colors button:focus-visible { border-color: #fff; outline: 1px solid #222; }
+.home-elleci-colors button[data-elleci-color="gr"] { background-image: url('/assets/img/home-refresh/elleci/colors/gr.png'); }
+.home-elleci-colors button[data-elleci-color="wg"] { background-image: url('/assets/img/home-refresh/elleci/colors/wg.png'); }
+.home-elleci-colors button[data-elleci-color="cn"] { background-image: url('/assets/img/home-refresh/elleci/colors/cn.png'); }
+.home-elleci-colors button[data-elleci-color="wh"] { background-image: url('/assets/img/home-refresh/elleci/colors/wh.png'); }
+.home-elleci-colors button[data-elleci-color="gb"] { background-image: url('/assets/img/home-refresh/elleci/colors/gb.png'); }
+.home-elleci-colors button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 .home-dispenser-showcase {
   position: relative;
@@ -464,7 +467,7 @@ body.dealer-home-page .main_block > img {
   .home-elleci-image { height: 360px; object-fit: cover; object-position: left center; }
   .home-elleci-accessories { display: none; }
   .home-elleci-colors { top: 315px; left: 20px; flex-direction: row; gap: 10px; }
-  .home-elleci-colors button { width: 26px; height: 26px; }
+  .home-elleci-colors button { width: 30px; height: 30px; }
   .home-elleci-copy { position: relative; top: auto; left: auto; width: 100%; padding: 48px 24px 55px; }
   .home-elleci-copy h2 { font-size: 36px; }
   .home-elleci-award { width: 125px; }

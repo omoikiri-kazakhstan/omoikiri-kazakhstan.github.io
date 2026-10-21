@@ -23,6 +23,7 @@ const mime = new Map(Object.entries({
 const routes = new Map(Object.entries({
   '/api/catalog': 'catalog.js',
   '/api/prices': 'prices.js',
+  '/api/stock-public': 'stock-public.js',
   '/api/orders': 'orders/index.js',
   '/api/orders/payment': 'orders/payment.js',
   '/api/payments/tiptop/pay': 'payments/tiptop/pay.js',
@@ -38,6 +39,16 @@ const routes = new Map(Object.entries({
   '/api/admin/stock': 'admin/stock.js',
   '/api/admin/stock-refresh': 'admin/stock-refresh.js',
 }));
+
+const STOCK_SITE_ORIGIN = 'https://stock.omoikiri.kz';
+export function stockSiteCors(origin, pathname) {
+  if (origin !== STOCK_SITE_ORIGIN || pathname.replace(/\/+$/, '') !== '/api/stock-public') return null;
+  return {
+    'Access-Control-Allow-Origin': STOCK_SITE_ORIGIN,
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    Vary: 'Origin',
+  };
+}
 
 export function matchRoute(pathname) {
   pathname = pathname.replace(/\/+$/, '');
@@ -133,6 +144,10 @@ export function createApp(env = process.env, pool = createMariaDbPool(env)) {
         res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }).end('{"ok":true}');
         return;
       }
+      if (/^\/product\/wk-1-5-s(?:\/|\/index\.html)?$/.test(url.pathname)) {
+        res.writeHead(410, { 'Content-Type': 'text/plain; charset=UTF-8', 'Cache-Control': 'no-store' }).end('Product no longer available');
+        return;
+      }
       if (url.pathname === '/refresh') {
         const worker = (await import('../workers/stock-sync/src/index.js')).default;
         const request = new Request(url, { method: req.method, headers: req.headers,
@@ -141,6 +156,11 @@ export function createApp(env = process.env, pool = createMariaDbPool(env)) {
         return;
       }
       if (url.pathname.startsWith('/api/')) {
+        const cors = stockSiteCors(req.headers.origin, url.pathname);
+        if (cors) {
+          for (const [key, value] of Object.entries(cors)) res.setHeader(key, value);
+          if (req.method === 'OPTIONS') { res.writeHead(204).end(); return; }
+        }
         const route = matchRoute(url.pathname);
         if (!route) { res.writeHead(404).end(); return; }
         const handlers = await import(new URL(`../functions/api/${route.file}`, import.meta.url));

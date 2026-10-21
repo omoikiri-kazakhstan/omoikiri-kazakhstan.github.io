@@ -636,13 +636,6 @@ jQuery(document).ready(function($) {
 		var selectedAttribute = $('.thwvs-wrapper-item-li[data-value="' + $('#pa_color').val() + '"]').attr('data-value');
 		var colorTitle = $('.thwvs-wrapper-item-li[data-value="' + $('#pa_color').val() + '"]').attr('title');
 		var title = $('.prod_title').text();
-
-		$.ajax({
-			url: '/wp-content/themes/twentynineteen/check.php',
-			type: 'POST',
-			data: { selectedAttribute: selectedAttribute },
-		});
-
 		if (!colorTitle || colorTitle.toLowerCase() === 'РѕСЂР°РЅР¶РµРІС‹Р№' || colorTitle.toLowerCase() === 'РІРµРЅРіРµ' || colorTitle.toLowerCase() === 'СЃРµСЂС‹Р№') {
 			$('.current_color').text(''); // РћСЃС‚Р°РІРёС‚СЊ РїСѓСЃС‚С‹Рј
 		} else if (!colorTitle || colorTitle.toLowerCase() === 'wood') {

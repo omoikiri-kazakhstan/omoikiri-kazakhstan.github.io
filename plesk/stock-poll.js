@@ -1,7 +1,7 @@
 import { syncStock } from '../workers/stock-sync/src/index.js';
 
-const HOUR_MS = 60 * 60 * 1000;
-const FRESH_MS = 23 * HOUR_MS;
+const CHECK_MS = 5 * 60 * 1000;
+const FRESH_MS = 30 * 60 * 1000;
 
 export function startStockPoll(db, { sync = syncStock, now = Date.now, log = console } = {}) {
   let running = false;
@@ -11,7 +11,7 @@ export function startStockPoll(db, { sync = syncStock, now = Date.now, log = con
     const current = now();
     if (running || current < retryAfter) return;
     running = true;
-    retryAfter = current + HOUR_MS;
+    retryAfter = current + CHECK_MS;
     try {
       const snapshot = await db.prepare('SELECT fetched_at FROM stock_snapshot WHERE id = 1').first();
       const fetchedAt = snapshot?.fetched_at ? Date.parse(snapshot.fetched_at) : NaN;
@@ -26,8 +26,8 @@ export function startStockPoll(db, { sync = syncStock, now = Date.now, log = con
   }
 
   const initial = setTimeout(check, 1000);
-  const hourly = setInterval(check, HOUR_MS);
+  const interval = setInterval(check, CHECK_MS);
   initial.unref();
-  hourly.unref();
-  return { check, stop() { clearTimeout(initial); clearInterval(hourly); } };
+  interval.unref();
+  return { check, stop() { clearTimeout(initial); clearInterval(interval); } };
 }

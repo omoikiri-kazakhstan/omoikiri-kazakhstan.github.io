@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { after, test } from 'node:test';
-import { createApp, matchRoute } from '../plesk/server.js';
+import { createApp, matchRoute, stockSiteCors } from '../plesk/server.js';
 import { createD1Adapter, translateSql } from '../plesk/d1-mariadb.js';
 
 test('all API paths map to their existing handlers', () => {
@@ -9,6 +9,13 @@ test('all API paths map to their existing handlers', () => {
   assert.equal(matchRoute('/api/admin/catalog-overrides/akita').params.slug, 'akita');
   assert.equal(matchRoute('/api/orders/').file, 'orders/index.js');
   assert.equal(matchRoute('/api/admin/products/x'), null);
+});
+
+test('stock subdomain can reach only the public stock API', () => {
+  assert.equal(stockSiteCors('https://stock.omoikiri.kz', '/api/stock-public')['Access-Control-Allow-Origin'], 'https://stock.omoikiri.kz');
+  assert.equal(stockSiteCors('https://stock.omoikiri.kz', '/api/admin/stock'), null);
+  assert.equal(stockSiteCors('https://stock.omoikiri.kz', '/api/admin/orders'), null);
+  assert.equal(stockSiteCors('https://other.example', '/api/stock-public'), null);
 });
 
 test('SQLite upserts become MariaDB upserts', () => {
@@ -46,6 +53,8 @@ test('Node server serves public files and blocks repository internals', async ()
   assert.equal((await partial.arrayBuffer()).byteLength, 16);
   assert.equal((await fetch(`${base}/functions/api/orders/index.js`)).status, 404);
   assert.equal((await fetch(`${base}/plesk/mariadb-schema.sql`)).status, 404);
+  assert.equal((await fetch(`${base}/product/wk-1-5-s/`)).status, 410);
+  assert.equal((await fetch(`${base}/product/wk-1-5-s/index.html?attribute_pa_color=in`)).status, 410);
 });
 
 test('Node server runs existing API handler', async () => {
@@ -57,4 +66,16 @@ test('Node server runs existing API handler', async () => {
   });
   assert.equal(orderResponse.status, 503);
   assert.match(orderResponse.headers.get('content-type'), /application\/json/);
+});
+
+test('stock subdomain preflight is restricted to the stock API', async () => {
+  const allowed = await fetch(`${base}/api/stock-public`, {
+    method: 'OPTIONS', headers: { Origin: 'https://stock.omoikiri.kz', 'Access-Control-Request-Method': 'GET' }
+  });
+  assert.equal(allowed.status, 204);
+  assert.equal(allowed.headers.get('access-control-allow-origin'), 'https://stock.omoikiri.kz');
+  const blocked = await fetch(`${base}/api/admin/stock`, {
+    method: 'OPTIONS', headers: { Origin: 'https://stock.omoikiri.kz' }
+  });
+  assert.equal(blocked.headers.get('access-control-allow-origin'), null);
 });

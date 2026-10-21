@@ -3385,22 +3385,6 @@
   {
     "slug": "fp-07-pro",
     "name": "FP-07-Pro",
-    "sku": "4999154",
-    "category": "acs",
-    "colors": [
-      "gb"
-    ],
-    "variations": [
-      {
-        "color": "gb",
-        "sku": "4999154",
-        "price": 17588
-      }
-    ]
-  },
-  {
-    "slug": "fp-08-pro",
-    "name": "FP-08-Pro",
     "sku": "4999153",
     "category": "acs",
     "colors": [
@@ -3410,6 +3394,22 @@
       {
         "color": "gb",
         "sku": "4999153",
+        "price": 17588
+      }
+    ]
+  },
+  {
+    "slug": "fp-08-pro",
+    "name": "FP-08-Pro",
+    "sku": "4999154",
+    "category": "acs",
+    "colors": [
+      "gb"
+    ],
+    "variations": [
+      {
+        "color": "gb",
+        "sku": "4999154",
         "price": 12788
       }
     ]

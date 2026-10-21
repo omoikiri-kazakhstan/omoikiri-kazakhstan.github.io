@@ -579,13 +579,6 @@ jQuery(document).ready(function($) {
 		var selectedAttribute = $('.thwvs-wrapper-item-li[data-value="' + $('#pa_color').val() + '"]').attr('data-value');
 		var colorTitle = $('.thwvs-wrapper-item-li[data-value="' + $('#pa_color').val() + '"]').attr('title');
 		var title = $('.prod_title').text();
-
-		$.ajax({
-			url: '/wp-content/themes/twentynineteen/check.php',
-			type: 'POST',
-			data: { selectedAttribute: selectedAttribute },
-		});
-
 		if (!colorTitle || colorTitle.toLowerCase() === 'оранжевый' || colorTitle.toLowerCase() === 'фиолетовый' || colorTitle.toLowerCase() === 'венге' || colorTitle.toLowerCase() === 'серый') {
 			$('.current_color').text(''); // Оставить пустым
 		} else if (!colorTitle || colorTitle.toLowerCase() === 'wood') {

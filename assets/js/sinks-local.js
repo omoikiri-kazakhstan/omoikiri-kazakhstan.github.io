@@ -11,7 +11,8 @@
     '4993968', '4993918', '4993885', '4993874', '4993750', '4993746',
     '4993026', '4993049', '4911263', '4911264', '4911265', '4993134',
     '4911262', '4911261', '4993169', '4993041', '4911258', '4911259',
-    '4911257', '4994221', '4995010', '4995013'
+    '4911257', '4994221', '4995010', '4995013',
+    '4997011', '4997151', '4993913', '4993198', '4994526', '4998039'
   ]);
   const DISCONTINUED_BY_SLUG_COLOR = {
     'tasogare-86': ['bl', 'gr'],
@@ -2095,7 +2096,7 @@
       const filter = filterNode.dataset.filter;
       if (!filterDatasetKey(filter)) return;
 
-      if (!hasActiveFilters) {
+      if (!hasActiveFilters && (!paginationDone || !catalogMetaReady)) {
         filterNode.querySelectorAll('label').forEach((label) => {
           const input = label.querySelector('input[type="checkbox"]');
           if (input) input.disabled = false;
@@ -2928,7 +2929,7 @@
       updatePriceSliderForColor(selectedFilters());
       applyFilters();
     });
-    if (document.body.classList.contains('term-taps')) {
+    if (document.body.classList.contains('term-taps') || document.body.classList.contains('term-sinks')) {
       window.setTimeout(() => {
         ensureAllLocalProductsLoaded().then(() => {
           hydrateCatalogMeta();

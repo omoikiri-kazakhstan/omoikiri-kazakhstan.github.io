@@ -1752,7 +1752,7 @@
       const inCatalog = Boolean(node.parentElement?.closest('.product_card, .prdctfltr_filter, .single-product'));
       const cabinetSize = inCatalog && key.match(/^Монтажная тумба ([\d, ]+ см)$/);
       const cutoutSize = inCatalog && key.match(/^вырез (\d+x\d+)\s*мм$/);
-      const translated = (inCatalog && catalogOverrides[key]) || exactMap[key] || (inCatalog && catalogMap[key]) ||
+      const translated = (inCatalog && catalogOverrides[key]) || window.omoikiriAboutKzMap?.[key] || exactMap[key] || (inCatalog && catalogMap[key]) ||
         (cabinetSize && `Орнату шкафы ${cabinetSize[1]}`) ||
         (cutoutSize && `ойық ${cutoutSize[1]} мм`);
       if (!key || !translated || translated === key) return;

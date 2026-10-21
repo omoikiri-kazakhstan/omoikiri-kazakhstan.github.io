@@ -4,7 +4,7 @@ import { startStockPoll } from '../plesk/stock-poll.js';
 
 test('stock poll skips a fresh snapshot and refreshes a stale one once', async () => {
   let current = Date.parse('2026-10-20T12:00:00Z');
-  let fetchedAt = new Date(current - 2 * 60 * 60 * 1000).toISOString();
+  let fetchedAt = new Date(current - 20 * 60 * 1000).toISOString();
   let calls = 0;
   const db = { prepare: () => ({ first: async () => ({ fetched_at: fetchedAt }) }) };
   const poll = startStockPoll(db, {
@@ -15,7 +15,7 @@ test('stock poll skips a fresh snapshot and refreshes a stale one once', async (
   try {
     await poll.check();
     assert.equal(calls, 0);
-    current += 24 * 60 * 60 * 1000;
+    current += 10 * 60 * 1000;
     await poll.check();
     await poll.check();
     assert.equal(calls, 1);
@@ -38,7 +38,7 @@ test('stock poll logs a source failure and allows a later retry', async () => {
     await poll.check();
     await poll.check();
     assert.equal(attempts, 1);
-    current += 60 * 60 * 1000;
+    current += 5 * 60 * 1000;
     await poll.check();
     assert.equal(attempts, 2);
     assert.equal(errors.length, 2);

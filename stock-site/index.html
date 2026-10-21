@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Остатки | OMOIKIRI</title>
+  <link rel="stylesheet" href="assets/stock.css">
+  <script src="assets/stock.js?v=20261021-prices" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner"><strong>OMOIKIRI</strong><span>Остатки</span></div>
+  </header>
+  <main>
+    <section id="stockView" class="stock-view" aria-labelledby="stockTitle">
+      <div class="heading-row">
+        <div><p class="eyebrow">Складские данные</p><h1 id="stockTitle">Остатки OMOIKIRI</h1></div>
+        <div class="actions"><button id="reload" class="secondary" type="button">Перечитать</button></div>
+      </div>
+      <p id="summary" class="summary" role="status">Загрузка данных...</p>
+      <p class="note">Москва и Санкт-Петербург. Это остатки российских складов, не подтверждённое наличие в Казахстане. Цены в тенге указаны только для товаров каталога. Отсутствие артикула в выгрузке не означает нулевой остаток.</p>
+      <div class="toolbar"><label>Поиск<input id="search" type="search" placeholder="Артикул или название"></label><label class="check"><input id="available" type="checkbox"> Только с остатком</label><span id="count"></span></div>
+      <div class="table-scroll"><table><thead><tr><th scope="col">Артикул</th><th scope="col">Товар</th><th scope="col">Москва</th><th scope="col">СПб</th><th scope="col">Итого</th><th scope="col">Цена, ₸</th></tr></thead><tbody id="rows"></tbody></table><div id="loadSentinel" aria-hidden="true"></div></div>
+    </section>
+  </main>
+</body>
+</html>

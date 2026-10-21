@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "GothamProRegular";
+  src: url("../remote/omoikiri.ru/wp-content/themes/twentynineteen/fonts/GothamProRegular/GothamProRegular.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GothamProLight";
+  src: url("../remote/omoikiri.ru/wp-content/themes/twentynineteen/fonts/GothamProLight/GothamProLight.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GothamProMedium";
+  src: url("../remote/omoikiri.ru/wp-content/themes/twentynineteen/fonts/GothamProMedium/GothamProMedium.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GothamProBold";
+  src: url("../remote/omoikiri.ru/wp-content/themes/twentynineteen/fonts/GothamProBold/GothamProBold.woff") format("woff");
+  font-display: swap;
+}
+
 body.dealer-info-page {
   --white: #fff;
   --primary-grey: #d7d7d7;
@@ -474,6 +498,27 @@ body.dealer-contact-page .dealer-location-card h2 {
 @media (max-width: 560px) {
   .dealer-info-main {
     padding: 95px 16px 48px;
+  }
+
+  body.dealer-service-page .dealer-info-main {
+    position: relative;
+    padding: 135px 25px 48px;
+  }
+
+  body.dealer-service-page .dealer-info-main::before {
+    content: "";
+    position: absolute;
+    top: 55px;
+    right: 0;
+    left: 0;
+    height: 55px;
+    background: #fff;
+  }
+
+  body.dealer-service-page .dealer-info-wrap {
+    position: relative;
+    padding: 25px;
+    border-radius: 26px;
   }
 
   .dealer-info-wrap {

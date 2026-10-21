@@ -113,14 +113,12 @@ window.OMOIKIRI_SEARCH_INDEX = [
   },
   {
     "title": "Akisame 41",
-    "sku": "4997011",
+    "sku": "4973094",
     "skus": [
-      "4973094",
-      "4973056",
-      "4973080"
+      "4973094"
     ],
     "category": "Мойки",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/akisame-41-gb.png",
+    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/10/akisame-41-gm.png",
     "url": "product/akisame-41/index.html",
     "slug": "akisame-41"
   },
@@ -1403,7 +1401,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
   },
   {
     "title": "FP-07-Pro",
-    "sku": "4999154",
+    "sku": "4999153",
     "skus": [],
     "category": "Аксессуары",
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/fp-08-pro-gb.png",
@@ -1412,7 +1410,7 @@ window.OMOIKIRI_SEARCH_INDEX = [
   },
   {
     "title": "FP-08-Pro",
-    "sku": "4999153",
+    "sku": "4999154",
     "skus": [],
     "category": "Аксессуары",
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/fp-07-pro-gb.png",
@@ -2624,7 +2622,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
       "4993169",
       "4997147",
       "4997148",
-      "4997151",
       "4997145"
     ],
     "category": "Мойки",
@@ -3302,7 +3299,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "4993909",
     "skus": [
       "4993908",
-      "4993913",
       "4993554",
       "4993915",
       "4993910",
@@ -3362,7 +3358,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "4993115",
     "skus": [
       "4993114",
-      "4993198",
       "4993559",
       "4993199",
       "4993116",
@@ -3502,7 +3497,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "sku": "4994516",
     "skus": [
       "4994531",
-      "4994526",
       "4994538",
       "4994517",
       "4994518"
@@ -4779,15 +4773,6 @@ window.OMOIKIRI_SEARCH_INDEX = [
     "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/WK-15-CL-R-A-AB.png",
     "url": "product/wk-1-5-cl-r-a/index.html",
     "slug": "wk-1-5-cl-r-a"
-  },
-  {
-    "title": "WK-1.5-S",
-    "sku": "4998039",
-    "skus": [],
-    "category": "Аксессуары",
-    "image": "/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/WK-15-S-IN.png",
-    "url": "product/wk-1-5-s/index.html",
-    "slug": "wk-1-5-s"
   },
   {
     "title": "WK-1.5-UN",

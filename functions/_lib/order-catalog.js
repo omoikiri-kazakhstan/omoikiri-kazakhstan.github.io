@@ -11,7 +11,8 @@ const discontinuedSkus = new Set([
   '4993968', '4993918', '4993885', '4993874', '4993750', '4993746',
   '4993026', '4993049', '4911263', '4911264', '4911265', '4993134',
   '4911262', '4911261', '4993169', '4993041', '4911258', '4911259',
-  '4911257', '4994221', '4995010', '4995013'
+  '4911257', '4994221', '4995010', '4995013',
+  '4997011', '4997151', '4993913', '4993198', '4994526', '4998039'
 ]);
 const discontinuedColors = {
   'tasogare-86': ['bl', 'gr'], 'tasogare-65': ['gr'], 'yonaka-65': ['be'],
@@ -26,6 +27,10 @@ const discontinuedColors = {
   'okinoshima-76-u-i': ['g-matt', 'g-glossy'],
   'mikura-61': ['to', 'to-glossy'], 'tonami': ['ca'], 'om-01': ['be', 'sa']
 };
+
+export function isDiscontinuedVariant(slug, sku, colorCode = '') {
+  return discontinuedSkus.has(String(sku || '')) || Boolean(discontinuedColors[slug]?.includes(colorCode));
+}
 
 function unavailable() {
   return { error: 'Один из товаров или цветов больше недоступен. Обновите корзину.' };
@@ -73,7 +78,7 @@ export async function resolveOrderItems(db, submitted) {
       if (sku && sku !== item.sku) return unavailable();
     }
 
-    if (discontinuedSkus.has(sku) || discontinuedColors[slug]?.includes(colorCode)) return unavailable();
+    if (isDiscontinuedVariant(slug, sku, colorCode)) return unavailable();
     const hiddenColors = override ? JSON.parse(override.hidden_colors || '[]') : [];
     if (hiddenColors.includes(colorCode)) return unavailable();
     if (!Number.isSafeInteger(price) || price <= 0) return unavailable();

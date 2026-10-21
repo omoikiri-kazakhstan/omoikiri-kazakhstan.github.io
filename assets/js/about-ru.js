@@ -41,7 +41,8 @@
         };
 
         function selectCountry(button) {
-            const country = countries[button.textContent.trim()];
+            const countryName = button.dataset.countryRu;
+            const country = countries[countryName];
             if (!country) return;
 
             const imageUrl = new URL(country.image, document.baseURI);
@@ -79,7 +80,6 @@
                         'Япония': 'завод в Японии'
                     };
 
-                    const countryName = button.textContent.trim();
                     const videoLabel = videoButton.querySelector('p');
 
                     if (videoLabel) {
@@ -99,6 +99,7 @@
         }
 
         countryButtons.forEach(function (button) {
+            button.dataset.countryRu = button.textContent.trim();
             // Поддержка клавиатуры без изменения текущей HTML-разметки.
             button.setAttribute('role', 'button');
             button.setAttribute('tabindex', '0');

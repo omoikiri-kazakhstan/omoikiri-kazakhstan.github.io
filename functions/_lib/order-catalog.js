@@ -7,15 +7,24 @@ const discontinuedSkus = new Set([
   '4993935', '4993845', '4993875', '4993917', '4993247',
   '4993508', '4973056', '4994174', '4994139', '4994270',
   '4993342', '4993335', '4993416', '4993886', '4993562',
-  '4993567', '4997264', '4973080', '4994365'
+  '4993567', '4997264', '4973080', '4994365',
+  '4993968', '4993918', '4993885', '4993874', '4993750', '4993746',
+  '4993026', '4993049', '4911263', '4911264', '4911265', '4993134',
+  '4911262', '4911261', '4993169', '4993041', '4911258', '4911259',
+  '4911257', '4994221', '4995010', '4995013'
 ]);
 const discontinuedColors = {
   'tasogare-86': ['bl', 'gr'], 'tasogare-65': ['gr'], 'yonaka-65': ['be'],
-  'yonaka-78-lb': ['be', 'sa'], 'tasogare-78': ['be'], 'maru-86-2': ['ch'],
+  'yonaka-78-lb': ['be', 'sa'], 'tasogare-78': ['be', 'bl', 'pa'], 'maru-86-2': ['ch'],
   'tedori-86-2-lb': ['wh'], 'yasugata-100': ['be'], 'yasugata-86': ['pl'],
-  'tedori-100': ['be', 'gr'], 'bosen-38-u': ['ch'], 'miya-50-r': ['ch'],
-  'akisame-41': ['in', 'lg'], 'sakaime-100': ['sa'], 'sakaime-100-2': ['gr'],
-  'yamakawa-55-integra': ['gr'], 'tateyama-s': ['ca', 'ev', 'gb'], 'umi': ['bl']
+  'tedori-100': ['be', 'gr', 'sa'], 'bosen-38-u': ['ch'], 'miya-50-r': ['ch'],
+  'akisame-41': ['in', 'lg'], 'sakaime-100': ['sa', 'be'], 'sakaime-100-2': ['gr'],
+  'yamakawa-55-integra': ['gr'], 'tateyama-s': ['ca', 'ev', 'gb'], 'umi': ['bl'],
+  'tedori-68': ['dc'],
+  'kitagawa-86-lb': ['az'],
+  'okinoshima-61-u-i': ['ib', 'rg-glossy', 'sl', 'to-glossy', 'ib-glossy'],
+  'okinoshima-76-u-i': ['g-matt', 'g-glossy'],
+  'mikura-61': ['to', 'to-glossy'], 'tonami': ['ca'], 'om-01': ['be', 'sa']
 };
 
 function unavailable() {

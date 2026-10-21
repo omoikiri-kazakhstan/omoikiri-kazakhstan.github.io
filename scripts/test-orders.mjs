@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { onRequestPost } from '../functions/api/orders/index.js';
+import { resolveOrderItems } from '../functions/_lib/order-catalog.js';
+import { kztPrice } from '../functions/_lib/live-prices.js';
+import catalog from '../assets/data/admin-full-catalog.json' with { type: 'json' };
 
 function database() {
   const rows = new Map();
@@ -143,4 +146,36 @@ test('rejects forged price, unknown SKU, and hidden colors', async () => {
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test('rejects withdrawn articles while keeping other colors orderable', async () => {
+  const withdrawn = new Set([
+    '4993968', '4993918', '4993885', '4993874', '4993750', '4993746',
+    '4993026', '4993049', '4911263', '4911264', '4911265', '4993134',
+    '4911262', '4911261', '4993169', '4993041', '4911258', '4911259',
+    '4911257', '4994221', '4995010', '4995013'
+  ]);
+  const db = database();
+  let found = 0;
+  for (const product of catalog) {
+    for (const variant of product.variations || []) {
+      if (!withdrawn.has(variant.sku)) continue;
+      found++;
+      const result = await resolveOrderItems(db, [{ slug: product.slug, sku: variant.sku,
+        qty: 1, price: kztPrice(variant.price) }]);
+      assert.match(result.error, /недоступен/, variant.sku);
+    }
+  }
+  assert.equal(found, 18);
+  for (const [slug, sku, price] of [
+    ['tedori-100', '4993567', 47188],
+    ['sakaime-100', '4993886', 46888],
+    ['tasogare-78', '4993744', 32088]
+  ]) {
+    const result = await resolveOrderItems(db, [{ slug, sku, qty: 1, price: kztPrice(price) }]);
+    assert.match(result.error, /недоступен/, sku);
+  }
+  const available = await resolveOrderItems(db, [{ slug: 'tedori-68', sku: '4993964',
+    qty: 1, price: kztPrice(42988) }]);
+  assert.equal(available.items[0].sku, '4993964');
 });

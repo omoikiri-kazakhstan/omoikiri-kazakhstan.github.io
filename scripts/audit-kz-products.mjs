@@ -20,6 +20,7 @@ let pages = 0;
 
 function isExpectedUnchanged(text) {
   return /^тел\.: 8 \(\d{3}\)/.test(text) ||
+    /^арт\. \d{6,}$/.test(text) ||
     ['АСТАНА', 'АЛМАТЫ'].includes(text) ||
     /^Монтажная тумба [\d, ]+ см$/.test(text) ||
     /^вырез \d+x\d+\s*мм$/.test(text);

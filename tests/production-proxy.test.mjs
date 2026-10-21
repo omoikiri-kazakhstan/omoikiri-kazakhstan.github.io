@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { after, before, test } from 'node:test';
 import { createServer } from 'node:http';
-import { createProxy } from '../production-proxy/app.js';
+import { createProxy } from '../production-proxy/server.js';
 
 let upstream;
 let proxy;

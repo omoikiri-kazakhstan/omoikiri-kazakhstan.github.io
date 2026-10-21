@@ -1908,25 +1908,17 @@
       return skus.length ? { ...item, sku: skus[0], skus: skus.slice(1) } : null;
     }).filter(Boolean);
 
-    if (window.OMOIKIRI_SEARCH_INDEX) return Promise.resolve(availableSearchItems(window.OMOIKIRI_SEARCH_INDEX));
     if (searchIndexPromise) return searchIndexPromise;
-
-    searchIndexPromise = new Promise((resolve, reject) => {
-      const existing = document.querySelector('script[data-dealer-search-index]');
-      if (existing) {
-        existing.addEventListener('load', () => resolve(availableSearchItems(window.OMOIKIRI_SEARCH_INDEX)), { once: true });
-        existing.addEventListener('error', reject, { once: true });
-        return;
-      }
-
-      const script = document.createElement('script');
-      script.src = ROOT + 'assets/js/search-index.js?v=20260910-01';
-      script.async = true;
-      script.dataset.dealerSearchIndex = '1';
-      script.onload = () => resolve(availableSearchItems(window.OMOIKIRI_SEARCH_INDEX));
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
+    searchIndexPromise = fetch(ROOT + 'assets/js/search-index.json?v=20261021-search-fix')
+      .then((response) => {
+        if (!response.ok) throw new Error('Search index unavailable');
+        return response.json();
+      })
+      .then((items) => availableSearchItems(items))
+      .catch((error) => {
+        searchIndexPromise = null;
+        throw error;
+      });
 
     return searchIndexPromise;
   }
@@ -2032,18 +2024,18 @@
     input.addEventListener('focus', update);
     input.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter') return;
-      const first = document.querySelector('.dealer-search-suggestion');
-      if (!first) return;
       event.preventDefault();
-      window.location.href = first.href;
+      const first = document.querySelector('.dealer-search-suggestion');
+      if (first) window.location.href = first.href;
+      else update();
     });
 
     if (form) {
       form.addEventListener('submit', (event) => {
-        const first = document.querySelector('.dealer-search-suggestion');
-        if (!first) return;
         event.preventDefault();
-        window.location.href = first.href;
+        const first = document.querySelector('.dealer-search-suggestion');
+        if (first) window.location.href = first.href;
+        else update();
       });
     }
 

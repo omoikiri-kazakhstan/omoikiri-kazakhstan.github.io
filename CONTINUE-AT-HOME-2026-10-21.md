@@ -15,6 +15,7 @@
 - Public byte comparison matched 29 of 32 follow-up package paths; the remaining three are private server modules and correctly return 404 on the public web. It matched 418 of 419 legacy product pages; `/product/wk-1-5-s/` intentionally returns 410 as a discontinued product.
 - Live `/healthz`, `/api/catalog`, `/api/prices`, About, and favorites responded 200 after deployment. The prices endpoint contained 1,462 SKUs. The Akashi-S WH cart displayed 173,880 ₸; the owner submitted a staging test order and confirmed that the Telegram message arrived.
 - Browser checks passed: About RU/KZ/RU and dynamic country text; Kinaru color photos; Akashi-S black-to-white photo change; long sinks catalog scroll to the bottom (232 product links); RU/KZ/RU across category and product; mobile product, category, and About without horizontal overflow. No browser console error was observed in the checked About view.
+- Follow-up check on 21 October confirmed staging order №12 in the cart and the owner's Telegram receipt. Home RU/KZ/RU, About RU/KZ/RU, EC-01 KZ description, Akashi-S color/photo change, mobile catalog scroll to the bottom, and matching RU/KZ fonts passed. Search was found broken: suggestions did not appear and Enter reopened the homepage with a query string. It now loads a same-origin JSON index; searching Akashi displays Akashi-S and opens its product page. A test favorite was added, shown with its 173,880 ₸ price, then removed. Only staging received this search fix.
 - The Kazakh About copy is still a draft requiring a fluent editor. These checks cover representative flows, not every product and viewport.
 
 ## Changes included in the deployed packages
@@ -27,7 +28,7 @@
 
 ## Next steps
 
-1. Review the Kazakh About copy with a fluent editor; spot-check remaining product translations, search/favorites behavior, public stock dashboard, and more mobile viewports against the current RU storefront.
+1. Review the Kazakh About copy with a fluent editor; spot-check remaining product translations, public stock dashboard, and more mobile viewports against the current RU storefront.
 2. Check remaining obsolete WordPress requests including `ajax-noop.json` by function; investigate mobile-homepage performance and browser network errors.
 3. Solve the main-domain Node/Passenger routing with Hoster support ticket #2709962. A prior `/production-proxy/public` attempt yielded 403/404 and was reverted. Do not repeat the toggle on live traffic without a tested configuration and immediate rollback.
 4. Before cutover, preserve the working new-site release and settings; after cutover, verify `omoikiri.kz` serves without staging redirect or `noindex`, then place one marked test order and confirm admin and Telegram.

@@ -8,6 +8,7 @@ const paths = [
   'functions/_lib/live-prices.js',
   'assets/data/admin-full-catalog.json',
   'assets/js/search-index.js',
+  'assets/js/search-index.json',
   'assets/js/about-ru.js',
   'assets/js/about-kz.js',
   'assets/js/lang-switch.js',
@@ -39,6 +40,12 @@ const paths = [
 
 const files = {};
 const manifest = [];
+const searchScript = await fs.readFile(new URL('../assets/js/search-index.js', import.meta.url), 'utf8');
+const searchJson = await fs.readFile(new URL('../assets/js/search-index.json', import.meta.url), 'utf8');
+const searchItems = JSON.parse(searchScript.replace(/^window\.OMOIKIRI_SEARCH_INDEX\s*=\s*/, '').replace(/;\s*$/, ''));
+if (JSON.stringify(searchItems) !== searchJson.trim()) {
+  throw new Error('search-index.json is out of sync with search-index.js');
+}
 for (const file of paths) {
   const data = await fs.readFile(new URL(`../${file}`, import.meta.url));
   files[file] = new Uint8Array(data);

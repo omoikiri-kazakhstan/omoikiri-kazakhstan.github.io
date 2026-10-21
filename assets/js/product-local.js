@@ -375,6 +375,10 @@
     const style = document.createElement('style');
     style.id = 'dealer-local-product-style';
     style.textContent = `
+      body.single-product .second_image_cont {
+        display: none !important;
+      }
+
       @font-face {
         font-family: "GothamProRegular";
         src: url("${assetRoot}fonts/GothamProRegular.woff") format("woff");
@@ -1554,18 +1558,6 @@
       '';
   }
 
-  function variationGalleryImages(variation) {
-    const seen = new Set();
-    return (variation?.variation_gallery_images || [])
-      .map((image) => image?.src || image?.url || image?.full_src || image?.gallery_thumbnail_src || '')
-      .filter((source) => {
-        const value = String(source || '').trim();
-        if (!value || seen.has(value)) return false;
-        seen.add(value);
-        return true;
-      });
-  }
-
   function localizeImageElement(image) {
     if (!image) return;
 
@@ -1631,61 +1623,6 @@
       if (fallback && img.getAttribute('src') !== fallback) img.setAttribute('src', fallback);
     };
     container.appendChild(img);
-  }
-
-  function renderAdditionalProductImages() {
-    const wrapper = document.querySelector('.second_image_cont');
-    if (!wrapper) return;
-
-    const variation = variationData();
-    const images = variationGalleryImages(variation).slice(1, 3).map(localizeOmoikiriUrl);
-    let container = wrapper.querySelector('.second_image');
-    let view = wrapper.querySelector('.view');
-
-    if (!images.length) {
-      if (container) container.textContent = '';
-      if (view) view.style.display = 'none';
-      wrapper.style.display = 'none';
-      return;
-    }
-
-    if (!container) {
-      container = document.createElement('div');
-      container.className = 'second_image';
-      wrapper.prepend(container);
-    }
-    if (!view) {
-      view = document.createElement('div');
-      view.className = 'view';
-      view.dataset.dealerGalleryCreated = '1';
-      view.innerHTML = '<button type="button" class="select_view selected" id="first" aria-label="Первое фото"></button><button type="button" class="select_view" id="second" aria-label="Второе фото"></button>';
-      wrapper.appendChild(view);
-    }
-
-    wrapper.style.display = 'block';
-    if (view) view.style.display = images.length > 1 ? '' : 'none';
-
-    const currentSources = [...container.querySelectorAll('img')].map((image) => image.getAttribute('src') || '');
-    if (currentSources.length === images.length && currentSources.every((source, index) => source === images[index])) {
-      localizeProductImages(container);
-      return;
-    }
-
-    container.textContent = '';
-    images.forEach((source, index) => {
-      const img = document.createElement('img');
-      img.src = source;
-      img.alt = variation?.image?.alt || variation?.image?.title || document.querySelector('.prod_title, h1')?.textContent.trim() || '';
-      img.decoding = 'async';
-      if (index === 0) img.classList.add('active');
-      container.appendChild(img);
-    });
-    localizeProductImages(container);
-
-    document.querySelectorAll('.second_image_cont .select_view').forEach((button, index) => {
-      button.style.display = index < images.length ? '' : 'none';
-      button.classList.toggle('selected', index === 0);
-    });
   }
 
   function currentVariationId() {
@@ -2077,7 +2014,6 @@
     ensureSimpleCartButton();
     renderProductSku();
     renderProductImage();
-    renderAdditionalProductImages();
     localizeProductImages(document);
     updateVariationPriceDisplay();
     convertPrices(document);
@@ -2095,7 +2031,6 @@
       if (event.target.matches('select[name="attribute_pa_color"], input.variation_id')) {
         if (!applyingRequestedColor) userChangedColor = true;
         window.setTimeout(renderProductImage, 0);
-        window.setTimeout(renderAdditionalProductImages, 0);
         window.setTimeout(renderProductSku, 0);
         window.setTimeout(updateVariationPriceDisplay, 0);
         window.setTimeout(normalizeTitleAndButtons, 0);
@@ -2106,22 +2041,10 @@
     }, true);
 
     document.addEventListener('click', (event) => {
-      const galleryButton = event.target.closest('.view[data-dealer-gallery-created="1"] .select_view');
-      if (galleryButton) {
-        const index = galleryButton.id === 'second' ? 1 : 0;
-        const gallery = galleryButton.closest('.second_image_cont');
-        gallery?.querySelectorAll('.second_image img').forEach((image, imageIndex) => {
-          image.classList.toggle('active', imageIndex === index);
-        });
-        gallery?.querySelectorAll('.select_view').forEach((button, buttonIndex) => {
-          button.classList.toggle('selected', buttonIndex === index);
-        });
-      }
       if (event.target.closest('.thwvsf-wrapper-item-li, .thwvsf-selected, .rtwpvg-thumbnail, [data-value]')) {
         if (!applyingRequestedColor) userChangedColor = true;
         applyClickedAttribute(event.target);
         window.setTimeout(renderProductImage, 80);
-        window.setTimeout(renderAdditionalProductImages, 80);
         window.setTimeout(renderProductSku, 80);
         window.setTimeout(updateVariationPriceDisplay, 80);
         window.setTimeout(normalizeTitleAndButtons, 80);
@@ -2145,7 +2068,6 @@
         ensureSimpleCartButton();
         renderProductSku();
         renderProductImage();
-        renderAdditionalProductImages();
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);
@@ -2172,7 +2094,6 @@
         ensureSimpleCartButton();
         renderProductSku();
         renderProductImage();
-        renderAdditionalProductImages();
         localizeProductImages(document);
         updateVariationPriceDisplay();
         convertPrices(document);

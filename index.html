@@ -600,7 +600,7 @@ $(function() {
 		<div class="tap_cont">
 			<div class="tap">
 				<span>one</span>
-				<video autoplay muted loop playsinline id="video">
+				<video muted loop playsinline preload="none" poster="/assets/img/home-refresh/tap-1-poster.jpg" id="video">
 					<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/1.mp4" type="video/mp4">
 				</video>
 			</div>
@@ -613,7 +613,7 @@ $(function() {
 		<div class="tap_cont">
 			<div class="tap">
 				<span>two</span>
-				<video autoplay muted loop playsinline id="video">
+				<video muted loop playsinline preload="none" poster="/assets/img/home-refresh/tap-2-poster.jpg" id="video">
 					<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/2.mp4" type="video/mp4">
 				</video>
 			</div>
@@ -626,7 +626,7 @@ $(function() {
 		<div class="tap_cont">
 			<div class="tap">
 				<span>three</span>
-				<video autoplay muted loop playsinline id="video">
+				<video muted loop playsinline preload="none" poster="/assets/img/home-refresh/tap-3-poster.jpg" id="video">
 					<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/3.mp4" type="video/mp4">
 				</video>
 			</div>
@@ -639,7 +639,7 @@ $(function() {
 		<div class="tap_cont">
 			<div class="tap">
 				<span>four</span>
-				<video autoplay muted loop playsinline id="video">
+				<video muted loop playsinline preload="none" poster="/assets/img/home-refresh/tap-4-poster.jpg" id="video">
 					<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/4.mp4" type="video/mp4">
 				</video>
 			</div>
@@ -675,7 +675,7 @@ $(function() {
 </section>
 <div class="filters_title"><h2>filters</h2></div>
 <section class="filters">
-	<video autoplay muted loop playsinline id="video_filter">
+	<video muted loop playsinline preload="none" id="video_filter">
 		<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_id1.mp4" id="id1_video" class="active" type="video/mp4">
 		<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_id2.mp4" id="id2_video" class="" type="video/mp4">
 		<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_id3.mp4" id="id3_video" class="" type="video/mp4">
@@ -768,11 +768,40 @@ document.addEventListener("DOMContentLoaded", function() {
             // Обновляем атрибут 'src' и переигрываем видео
             const newSrc = `/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_${id}.mp4`;
             videoSource.setAttribute("src", newSrc);
-            videoElement.load();
-            videoElement.play();
+            if (window.matchMedia('(min-width: 781px)').matches) {
+                videoElement.load();
+                videoElement.play().catch(() => {});
+            }
         });
     });
 });
+</script>
+
+<script>
+// Load each decorative video when it approaches the viewport. This prevents
+// four tap videos and the desktop-only filter video competing for bandwidth.
+(() => {
+  const filterVideo = document.getElementById('video_filter');
+  const videos = [...document.querySelectorAll('.taps video'), filterVideo];
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const video = entry.target;
+      if (entry.isIntersecting && (video !== filterVideo || window.matchMedia('(min-width: 781px)').matches)) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    }
+  }, { rootMargin: '300px 0px' });
+  videos.forEach(video => observer.observe(video));
+  window.matchMedia('(min-width: 781px)').addEventListener('change', (event) => {
+    if (!event.matches) filterVideo.pause();
+    else if (filterVideo.getBoundingClientRect().top < innerHeight + 300 && filterVideo.getBoundingClientRect().bottom > -300) {
+      filterVideo.load();
+      filterVideo.play().catch(() => {});
+    }
+  });
+})();
 </script>
 
 <div class="anvideo">
@@ -1195,12 +1224,20 @@ if (pc.matches) {
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-let sectiones = gsap.utils.toArray(".anvideo");
-
-sectiones.forEach((section) => {
-  let canvas = section.querySelector("canvas");
-  canvas ? initCanvas(section, canvas) : initOther(section);
-});
+// The canvas is hidden on mobile; loading all 99 frames there stalls the
+// visible tap videos and images on slower staging connections.
+const disposerCanvasMedia = window.matchMedia('(min-width: 501px)');
+let disposerCanvasInitialized = false;
+function initializeDisposerCanvas() {
+  if (!disposerCanvasMedia.matches || disposerCanvasInitialized) return;
+  disposerCanvasInitialized = true;
+  gsap.utils.toArray(".anvideo").forEach((section) => {
+    const canvas = section.querySelector("canvas");
+    if (canvas) initCanvas(section, canvas);
+  });
+}
+initializeDisposerCanvas();
+disposerCanvasMedia.addEventListener('change', initializeDisposerCanvas);
 
 function initCanvas(section, canvas) {
   let context = canvas.getContext("2d");

@@ -379,6 +379,12 @@
         display: none !important;
       }
 
+      @media (min-width: 1301px) {
+        body.single-product.dealer-sink-gallery .second_image_cont {
+          display: flex !important;
+        }
+      }
+
       @font-face {
         font-family: "GothamProRegular";
         src: url("${assetRoot}fonts/GothamProRegular.woff") format("woff");
@@ -1558,6 +1564,41 @@
       '';
   }
 
+  function productGalleryImages(variation) {
+    const color = variation?.attributes?.attribute_pa_color;
+    if (productSlug() === 'kinaru-pro-86-u-i' && ['cn', 'wg', 'wh', 'gb', 'mo'].includes(color)) {
+      const base = '/assets/remote/omoikiri.ru/wp-content/uploads/2024/09/kinaru-pro-' + color;
+      return [base + '.png', base + '-1.png', base + '-2.png'];
+    }
+
+    return (variation?.variation_gallery_images || [])
+      .map((image) => image.src || image.full_src || image.url)
+      .filter(Boolean);
+  }
+
+  function renderProductGallery(variation) {
+    if (productCatalogKey() !== 'sinks') return;
+
+    const container = document.querySelector('.second_image');
+    if (!container) return;
+
+    const images = productGalleryImages(variation).slice(1, 3);
+    document.body.classList.toggle('dealer-sink-gallery', images.length > 0);
+    const key = images.join('|');
+    if (container.dataset.dealerGalleryKey === key) return;
+    container.dataset.dealerGalleryKey = key;
+    container.replaceChildren(...images.map((src, index) => {
+      const image = document.createElement('img');
+      image.src = src;
+      image.alt = variation?.image?.alt || document.querySelector('.prod_title')?.textContent.trim() || '';
+      image.classList.toggle('active', index === 0);
+      image.loading = 'lazy';
+      return image;
+    }));
+    document.querySelector('.select_view#first')?.classList.add('selected');
+    document.querySelector('.select_view#second')?.classList.remove('selected');
+  }
+
   function localizeImageElement(image) {
     if (!image) return;
 
@@ -1587,7 +1628,8 @@
     if (!container) return;
 
     const variation = variationData();
-    const image = variationImage(variation);
+    const image = productGalleryImages(variation)[0] || variationImage(variation);
+    renderProductGallery(variation);
     if (!image) return;
 
     const current = container.querySelector('img');

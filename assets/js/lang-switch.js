@@ -1744,6 +1744,7 @@
   }
 
   function restoreRu() {
+    document.documentElement.lang = 'ru';
     elementStore.forEach((html, el) => {
       if (el && el.isConnected) el.innerHTML = html;
     });
@@ -1754,13 +1755,18 @@
       if (!element || !element.isConnected) return;
       for (const [name, value] of Object.entries(attributes)) element.setAttribute(name, value);
     });
+    const selectedColor = document.querySelector('select[name="attribute_pa_color"] option:checked')?.textContent?.trim();
+    if (selectedColor) {
+      document.querySelectorAll('.single-product .color_text, .single-product .current_color_text').forEach((el) => {
+        el.textContent = selectedColor;
+      });
+    }
     elementStore.clear();
     textStore.clear();
     attributeStore.clear();
     document.querySelectorAll('input[data-original-placeholder], textarea[data-original-placeholder]').forEach((input) => {
       input.setAttribute('placeholder', input.dataset.originalPlaceholder);
     });
-    document.documentElement.lang = 'ru';
     document.querySelectorAll('.dealer-lang-switch button').forEach((button) => {
       button.classList.toggle('active', button.dataset.lang === 'ru');
       button.setAttribute('aria-pressed', String(button.dataset.lang === 'ru'));

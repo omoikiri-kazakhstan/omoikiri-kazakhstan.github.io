@@ -213,7 +213,7 @@
         return;
       }
       const latestSource = Math.min(...Object.values(data.sources).map((source) => Date.parse(source.modifiedAt || data.fetchedAt)));
-      const stale = !Number.isFinite(latestSource) || Date.now() - latestSource > 90 * 60_000;
+      const stale = !Number.isFinite(latestSource) || Date.now() - latestSource > 26 * 60 * 60_000;
       const date = (value) => value ? new Date(value).toLocaleString('ru-RU', { timeZone: 'Asia/Qyzylorda' }) : 'неизвестно';
       $('#stockSummary').textContent = `${data.articleCount} артикулов · Остатки: ${date(data.fetchedAt)} · Цены: ${data.priceFetchedAt ? date(data.priceFetchedAt) : 'ещё не проверены'} · Москва: ${date(data.sources.moscow.modifiedAt)} · СПб: ${date(data.sources.spb.modifiedAt)}${stale ? ' · данные устарели, наличие уточняйте' : ''}`;
       $('#stockSummary').classList.toggle('is-stale', stale);

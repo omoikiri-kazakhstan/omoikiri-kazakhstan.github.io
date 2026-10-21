@@ -1,13 +1,20 @@
 import { requireAdmin } from '../../_lib/auth.js';
 import { json, methodNotAllowed } from '../../_lib/http.js';
 
+export function stockRefreshUrl(base) {
+  const url = new URL(base);
+  const pathname = url.pathname.replace(/\/+$/, '');
+  url.pathname = pathname.endsWith('/refresh') ? pathname : `${pathname}/refresh`;
+  return url.toString();
+}
+
 export async function onRequestPost(context) {
   const unauthorized = await requireAdmin(context);
   if (unauthorized) return unauthorized;
   const { STOCK_SYNC_URL: url, STOCK_SYNC_TOKEN: token } = context.env;
   if (!url || !token) return json({ error: 'Ручное обновление пока не настроено.' }, { status: 503 });
   try {
-    const response = await fetch(`${url}/refresh`, {
+    const response = await fetch(stockRefreshUrl(url), {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
       signal: AbortSignal.timeout(30_000),

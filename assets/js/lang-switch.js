@@ -1016,6 +1016,40 @@
         line-height: 1.15 !important;
       }
 
+      body:not(.dealer-info-page) .mob_menu .menu-top_menu-container {
+        margin-top: 20px !important;
+      }
+
+      body:not(.dealer-info-page) .mob_menu #menu-top_menu-1.menu {
+        position: relative !important;
+        top: auto !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+        border: 0 !important;
+        list-style: none !important;
+      }
+
+      body:not(.dealer-info-page) .mob_menu #menu-top_menu-1 > li {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+      }
+
+      body:not(.dealer-info-page) .mob_menu #menu-top_menu-1 > li > a {
+        display: block !important;
+        padding: 10px 25px !important;
+        line-height: 1.2 !important;
+        letter-spacing: .02em !important;
+      }
+
       @media (min-width: 1341px) {
         html[lang="kk"] #menu-top_menu.menu {
           gap: 12px !important;

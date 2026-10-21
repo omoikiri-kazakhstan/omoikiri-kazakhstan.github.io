@@ -13,6 +13,7 @@ test('all API paths map to their existing handlers', () => {
 
 test('SQLite upserts become MariaDB upserts', () => {
   assert.match(translateSql('INSERT INTO stock_snapshot (id) VALUES (1) ON CONFLICT(id) DO UPDATE SET payload = excluded.payload'), /ON DUPLICATE KEY UPDATE/);
+  assert.match(translateSql('INSERT INTO ru_price_snapshot (id) VALUES (1) ON CONFLICT(id) DO UPDATE SET payload = excluded.payload'), /ON DUPLICATE KEY UPDATE payload/);
   assert.match(translateSql('INSERT INTO catalog_visibility_overrides (slug) VALUES (?) ON CONFLICT(slug) DO UPDATE SET visible = excluded.visible'), /VALUES\(visible\)/);
 });
 
@@ -50,7 +51,7 @@ test('Node server serves public files and blocks repository internals', async ()
 test('Node server runs existing API handler', async () => {
   const response = await fetch(`${base}/api/prices`);
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), { bySku: {}, bySlug: {}, fetchedAt: null });
+  assert.deepEqual(await response.json(), { bySku: {}, regularBySku: {}, bySlug: {}, fetchedAt: null });
   const orderResponse = await fetch(`${base}/api/orders/`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
   });

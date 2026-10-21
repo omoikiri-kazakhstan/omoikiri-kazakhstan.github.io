@@ -65,3 +65,9 @@ CREATE TABLE stock_snapshot (
   spb_modified_at VARCHAR(40) NULL,
   article_count INT UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE ru_price_snapshot (
+  id INTEGER NOT NULL PRIMARY KEY,
+  payload LONGTEXT NOT NULL,
+  fetched_at VARCHAR(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

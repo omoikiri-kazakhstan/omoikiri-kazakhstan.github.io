@@ -51,7 +51,7 @@
     try {
       const response = await fetch('/api/prices');
       if (!response.ok) return;
-      const { bySku = {} } = await response.json();
+      const { bySku = {}, regularBySku = {}, bySlug = {} } = await response.json();
       const form = document.querySelector('form.variations_form[data-product_variations]');
       if (form) {
         const variations = JSON.parse(form.getAttribute('data-product_variations') || '[]');
@@ -60,7 +60,7 @@
           const rub = Number(bySku[variation.sku]);
           if (!rub) continue;
           variation.display_price = rub;
-          variation.display_regular_price = rub;
+          variation.display_regular_price = Number(regularBySku[variation.sku]) || rub;
           changed = true;
         }
         if (changed) {
@@ -68,7 +68,7 @@
           updateVariationPriceDisplay();
         }
       } else {
-        const rub = Number(bySku[productSku()]);
+        const rub = Number(bySku[productSku()] || bySlug[productSlug()]?.default?.rub);
         if (rub) {
           const price = roundKzt(rub);
           CURRENT_PRICE_OVERRIDES[productSlug()] = price;

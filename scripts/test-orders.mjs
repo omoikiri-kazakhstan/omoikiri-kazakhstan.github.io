@@ -9,7 +9,7 @@ function database() {
     rows,
     overrides,
     prepare(sql) {
-      if (sql.includes('FROM stock_snapshot')) return { async first() { return null; } };
+      if (sql.includes('FROM ru_price_snapshot')) return { async first() { return null; } };
       return {
         bind(...args) {
           return {

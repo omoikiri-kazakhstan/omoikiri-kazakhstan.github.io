@@ -5,7 +5,8 @@
     "audit:product-encoding": "node scripts/repair-product-encoding.mjs --dry-run",
     "audit:release-seo": "node scripts/release-seo.mjs --dry-run",
     "audit:kz-products": "node scripts/audit-kz-products.mjs",
-    "sync:stock": "node plesk/sync-stock.js"
+    "sync:stock": "node plesk/sync-stock.js",
+    "sync:ru-prices": "node plesk/sync-ru-prices.js"
   },
   "devDependencies": {
     "parse5": "8.0.0"

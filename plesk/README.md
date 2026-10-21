@@ -24,6 +24,16 @@ and a fresh production backup exists.
 7. Schedule `node plesk/sync-stock.js` daily in Plesk, using the same database
    environment. Confirm that the snapshot timestamp advances without losing
    the previous snapshot on a source error.
+8. On this Plesk account, schedule a daily HTTP GET to
+   `https://staging.omoikiri.kz/healthz` at 15:30 Asia/Almaty with task
+   notifications disabled. This wakes the Passenger application; its hourly
+   poll refreshes RU prices when the snapshot is at least 23 hours old. The
+   `node plesk/sync-ru-prices.js` command is an alternative only if the task
+   environment provides the `MYSQL_*` variables. The sync reads public RU
+   product pages by SKU and publishes one validated price snapshot; the
+   storefront and checkout apply the fixed 6.1 KZT multiplier and 880
+   rounding. Do not use the stock Excel price column for the storefront: it
+   can differ from the RU site.
 
 The Node server exposes only the existing public pages and assets plus the
 application API. Files in `plesk/`, `functions/`, and `migrations/` are not

@@ -26,8 +26,44 @@ export function acceptedPrices(prices) {
 }
 
 export async function loadLivePrices(db) {
-  const row = await db.prepare('SELECT payload FROM stock_snapshot WHERE id = 1').first();
-  if (!row?.payload) return { bySku: {}, bySlug: {}, fetchedAt: null };
+  const empty = { bySku: {}, regularBySku: {}, bySlug: {}, fetchedAt: null };
+  let row;
+  try {
+    row = await db.prepare('SELECT payload, fetched_at FROM ru_price_snapshot WHERE id = 1').first();
+  } catch (error) {
+    if (/no such table|doesn't exist/i.test(String(error))) return empty;
+    throw error;
+  }
+  if (!row?.payload) return empty;
   const snapshot = JSON.parse(row.payload);
-  return { ...acceptedPrices(snapshot.prices), fetchedAt: snapshot.priceFetchedAt || null };
+  const saved = snapshot.prices || {};
+  const bySku = {};
+  const regularBySku = {};
+  const bySlug = {};
+  for (const product of catalog) {
+    const variants = product.variations?.length ? product.variations : [{ sku: product.sku, color: 'default' }];
+    for (const variant of variants) {
+      const sku = String(variant.sku || '');
+      const current = Number(saved[sku]?.price);
+      const regular = Number(saved[sku]?.regular);
+      if (!sku || quarantinedSkus.has(sku) || !Number.isSafeInteger(current) ||
+          current < 100 || current > 5_000_000 || !Number.isSafeInteger(regular) ||
+          regular < current || regular > 5_000_000) continue;
+      bySku[sku] = current;
+      regularBySku[sku] = regular;
+      (bySlug[product.slug] ||= {})[variant.color || 'default'] = { sku, rub: current, regular };
+    }
+  }
+  for (const [slug, single] of Object.entries(snapshot.singles || {})) {
+    const price = Number(single.price);
+    const regular = Number(single.regular);
+    if (!Number.isSafeInteger(price) || price < 100 || price > 5_000_000 ||
+        !Number.isSafeInteger(regular) || regular < price || regular > 5_000_000) continue;
+    (bySlug[slug] ||= {}).default = { sku: String(single.sku || ''), rub: price, regular };
+    if (single.sku) {
+      bySku[single.sku] = price;
+      regularBySku[single.sku] = regular;
+    }
+  }
+  return { bySku, regularBySku, bySlug, fetchedAt: row.fetched_at };
 }

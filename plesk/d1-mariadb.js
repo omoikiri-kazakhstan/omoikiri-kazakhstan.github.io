@@ -1,6 +1,10 @@
 import mysql from 'mysql2/promise';
 
 export function translateSql(sql) {
+  if (/INSERT INTO ru_price_snapshot\b/i.test(sql) && /ON CONFLICT\(id\) DO UPDATE SET/i.test(sql)) {
+    return sql.replace(/ON CONFLICT\(id\) DO UPDATE SET[\s\S]*$/i,
+      'ON DUPLICATE KEY UPDATE payload = VALUES(payload), fetched_at = VALUES(fetched_at)');
+  }
   if (/ON CONFLICT\(slug\) DO UPDATE SET/i.test(sql)) {
     return sql.replace(/ON CONFLICT\(slug\) DO UPDATE SET[\s\S]*$/i,
       'ON DUPLICATE KEY UPDATE visible = VALUES(visible), hidden_colors = VALUES(hidden_colors), updated_at = CURRENT_TIMESTAMP');

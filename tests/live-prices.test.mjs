@@ -9,16 +9,21 @@ test('uses the fixed 6.1 rate and 880 rounding', () => {
   assert.equal(kztPrice(46788), 285880);
 });
 
-test('snapshot prices are disabled for the public API and checkout by default', async () => {
+test('site prices are shared by the public API and checkout', async () => {
+  const snapshot = { prices: { '4999128': { price: 46788, regular: 49788 } } };
   const db = { prepare(sql) {
     if (sql.includes('stock_snapshot')) throw new Error('snapshot must not be queried');
+    if (sql.includes('ru_price_snapshot')) return { first: async () => ({ payload: JSON.stringify(snapshot), fetched_at: '2026-10-21T09:00:00.000Z' }) };
     return { bind: () => ({ first: async () => null }) };
   } };
-  const response = await getPrices({ env: { CATALOG_DB: db, STOCK_PRICES_ENABLED: 'true' } });
-  assert.deepEqual(await response.json(), { bySku: {}, bySlug: {}, fetchedAt: null });
-  const item = { slug: 'dry-04', sku: '4999128', price: kztPrice(45888), qty: 1 };
+  const response = await getPrices({ env: { CATALOG_DB: db } });
+  const prices = await response.json();
+  assert.equal(prices.bySku['4999128'], 46788);
+  assert.equal(prices.regularBySku['4999128'], 49788);
+  assert.equal(prices.bySlug['dry-04'].gb.rub, 46788);
+  const item = { slug: 'dry-04', sku: '4999128', price: kztPrice(46788), qty: 1 };
   assert.equal((await resolveOrderItems(db, [item])).items[0].price, item.price);
-  assert.match((await resolveOrderItems(db, [{ ...item, price: kztPrice(46788) }])).error, /Цена/);
+  assert.match((await resolveOrderItems(db, [{ ...item, price: kztPrice(45888) }])).error, /Цена/);
 });
 
 test('accepts checked SKU prices and quarantines mismapped or extreme changes', () => {

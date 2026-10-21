@@ -435,11 +435,11 @@
     async function refreshCartPrices() {
       const response = await fetch('/api/prices', { cache: 'no-store' });
       if (!response.ok) throw new Error('Не удалось проверить актуальные цены. Попробуйте позже.');
-      const { bySku = {} } = await response.json();
+      const { bySku = {}, bySlug = {} } = await response.json();
       let changed = false;
       for (const item of cart) {
         const sku = String(item.article || item.sku || '');
-        const rub = Number(bySku[sku]);
+        const rub = Number(bySku[sku] || bySlug[item.slug]?.default?.rub);
         if (!rub) continue;
         const price = Math.ceil((rub * 6.1 - 880) / 1000) * 1000 + 880;
         if (Number(item.price) !== price) {

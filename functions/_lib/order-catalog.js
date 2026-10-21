@@ -1,5 +1,5 @@
 import catalog from '../../assets/data/admin-full-catalog.json' with { type: 'json' };
-import { kztPrice } from './live-prices.js';
+import { kztPrice, loadLivePrices } from './live-prices.js';
 
 const products = new Map(catalog.map((product) => [product.slug, product]));
 const discontinuedSkus = new Set([
@@ -24,6 +24,7 @@ function unavailable() {
 
 export async function resolveOrderItems(db, submitted) {
   const items = [];
+  const livePrices = await loadLivePrices(db);
   for (const item of submitted) {
     const slug = item.slug.toLowerCase();
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return unavailable();
@@ -56,9 +57,10 @@ export async function resolveOrderItems(db, submitted) {
       if (!variant) return unavailable();
       sku = variant.sku;
       colorCode = variant.color;
-      price = kztPrice(variant.price);
+      price = kztPrice(livePrices.bySku[sku] || variant.price);
     } else {
-      price = product.price;
+      const currentRub = livePrices.bySku[sku] || livePrices.bySlug[slug]?.default?.rub;
+      price = currentRub ? kztPrice(currentRub) : product.price;
       if (sku && sku !== item.sku) return unavailable();
     }
 

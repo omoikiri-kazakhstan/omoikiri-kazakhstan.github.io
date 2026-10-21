@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="assets/css/buttons.css?v=20261020-pixel">
 	<link rel="stylesheet" href="assets/css/favorites.css">
 	<link rel="stylesheet" href="assets/css/home-intro.css?v=20261012-original">
-	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261020-pixel">
+	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261021-filter-video">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 </head>
@@ -675,7 +675,7 @@ $(function() {
 </section>
 <div class="filters_title"><h2>filters</h2></div>
 <section class="filters">
-	<video muted loop playsinline preload="none" id="video_filter">
+	<video muted loop playsinline preload="none" poster="/assets/img/home-refresh/filter-1-poster.jpg" id="video_filter">
 		<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_id1.mp4" id="id1_video" class="active" type="video/mp4">
 		<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_id2.mp4" id="id2_video" class="" type="video/mp4">
 		<source src="/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_id3.mp4" id="id3_video" class="" type="video/mp4">
@@ -768,10 +768,9 @@ document.addEventListener("DOMContentLoaded", function() {
             // Обновляем атрибут 'src' и переигрываем видео
             const newSrc = `/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/filter_${id}.mp4`;
             videoSource.setAttribute("src", newSrc);
-            if (window.matchMedia('(min-width: 781px)').matches) {
-                videoElement.load();
-                videoElement.play().catch(() => {});
-            }
+            videoElement.poster = `/assets/img/home-refresh/filter-${id.slice(-1)}-poster.jpg`;
+            videoElement.load();
+            videoElement.play().catch(() => {});
         });
     });
 });
@@ -779,14 +778,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 // Load each decorative video when it approaches the viewport. This prevents
-// four tap videos and the desktop-only filter video competing for bandwidth.
+// four tap videos and the filter video competing for bandwidth.
 (() => {
   const filterVideo = document.getElementById('video_filter');
   const videos = [...document.querySelectorAll('.taps video'), filterVideo];
   const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       const video = entry.target;
-      if (entry.isIntersecting && (video !== filterVideo || window.matchMedia('(min-width: 781px)').matches)) {
+      if (entry.isIntersecting) {
         video.play().catch(() => {});
       } else {
         video.pause();
@@ -794,13 +793,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }, { rootMargin: '300px 0px' });
   videos.forEach(video => observer.observe(video));
-  window.matchMedia('(min-width: 781px)').addEventListener('change', (event) => {
-    if (!event.matches) filterVideo.pause();
-    else if (filterVideo.getBoundingClientRect().top < innerHeight + 300 && filterVideo.getBoundingClientRect().bottom > -300) {
-      filterVideo.load();
-      filterVideo.play().catch(() => {});
-    }
-  });
 })();
 </script>
 

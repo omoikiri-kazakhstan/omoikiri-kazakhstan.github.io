@@ -11,7 +11,8 @@ const hopHeaders = new Set([
 
 export function createProxy(origin = staging) {
   const transport = origin.protocol === 'https:' ? https : http;
-  return createServer((req, res) => {
+  const agent = new transport.Agent({ keepAlive: true, maxSockets: 16, maxFreeSockets: 8 });
+  const server = createServer((req, res) => {
     if (!req.url?.startsWith('/') || req.url.startsWith('//') || req.url.includes('\\')) {
       res.writeHead(400).end();
       return;
@@ -20,9 +21,7 @@ export function createProxy(origin = staging) {
     const destination = new URL(req.url, origin);
     const headers = { ...req.headers, host: origin.host, 'x-forwarded-proto': 'https' };
     for (const name of hopHeaders) delete headers[name];
-    headers.connection = 'close';
-
-    const upstream = transport.request(destination, { method: req.method, headers }, (response) => {
+    const upstream = transport.request(destination, { method: req.method, headers, agent }, (response) => {
       const responseHeaders = { ...response.headers };
       for (const name of hopHeaders) delete responseHeaders[name];
       delete responseHeaders['x-robots-tag'];
@@ -39,5 +38,7 @@ export function createProxy(origin = staging) {
     });
     req.pipe(upstream);
   });
+  server.on('close', () => agent.destroy());
+  return server;
 }
 

@@ -39,6 +39,12 @@ test('forwards request body', async () => {
   assert.equal(await response.text(), 'order-test');
 });
 
+test('forwards parallel static requests', async () => {
+  const responses = await Promise.all(Array.from({ length: 32 }, (_, index) => fetch(`${url}/assets/${index}.js`)));
+  assert.ok(responses.every((response) => response.status === 200));
+  await Promise.all(responses.map((response) => response.arrayBuffer()));
+});
+
 test('rewrites upstream redirects to the public domain', async () => {
   const response = await fetch(`${url}/redirect`, { redirect: 'manual' });
   assert.equal(response.status, 302);

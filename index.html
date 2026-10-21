@@ -1216,17 +1216,22 @@ if (pc.matches) {
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// The canvas is hidden on mobile; loading all 99 frames there stalls the
-// visible tap videos and images on slower staging connections.
+// Load the canvas frames only as the disposer approaches the viewport.
+// Starting 99 image requests on page load delays the earlier product videos.
 const disposerCanvasMedia = window.matchMedia('(min-width: 501px)');
-let disposerCanvasInitialized = false;
+let disposerCanvasWatching = false;
 function initializeDisposerCanvas() {
-  if (!disposerCanvasMedia.matches || disposerCanvasInitialized) return;
-  disposerCanvasInitialized = true;
-  gsap.utils.toArray(".anvideo").forEach((section) => {
-    const canvas = section.querySelector("canvas");
-    if (canvas) initCanvas(section, canvas);
-  });
+  if (!disposerCanvasMedia.matches || disposerCanvasWatching) return;
+  disposerCanvasWatching = true;
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      const canvas = entry.target.querySelector('canvas');
+      if (canvas) initCanvas(entry.target, canvas);
+      observer.unobserve(entry.target);
+    }
+  }, { threshold: 0.1 });
+  gsap.utils.toArray('.anvideo').forEach(section => observer.observe(section));
 }
 initializeDisposerCanvas();
 disposerCanvasMedia.addEventListener('change', initializeDisposerCanvas);

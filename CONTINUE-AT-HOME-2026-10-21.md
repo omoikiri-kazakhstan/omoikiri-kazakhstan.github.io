@@ -42,6 +42,7 @@
    The Plesk Node.js information page rendered environment-variable values into this session's technical output during verification. Treat those credentials as exposed; rotate them before production launch without putting values in chat or Git.
 3. Solve the main-domain Node/Passenger routing with Hoster support ticket #2709962. A prior `/production-proxy/public` attempt yielded 403/404 and was reverted. Do not repeat the toggle on live traffic without a tested configuration and immediate rollback.
 4. Before cutover, preserve the working new-site release and settings; after cutover, verify `omoikiri.kz` serves without staging redirect or `noindex`, then place one marked test order and confirm admin and Telegram.
+5. Free space in Plesk after recording current disk usage and checking `/staging.omoikiri.kz` by file size. Review the deployment ZIPs left in the staging root (including `staging-followup-20261021.zip`, `staging-legacy-post-cleanup-20261021.zip`, and the later homepage media archives). Remove only verified redundant upload archives after confirming the deployed files are extracted and the rollback copy of the working new-site release is stored safely. Do not remove the live app, media, database, or the sole rollback copy.
 
 ## Boundaries
 

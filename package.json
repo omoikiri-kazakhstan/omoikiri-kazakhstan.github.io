@@ -4,6 +4,7 @@
   "scripts": {
     "audit:product-encoding": "node scripts/repair-product-encoding.mjs --dry-run",
     "audit:release-seo": "node scripts/release-seo.mjs --dry-run",
+    "audit:kz-products": "node scripts/audit-kz-products.mjs",
     "sync:stock": "node plesk/sync-stock.js"
   },
   "devDependencies": {

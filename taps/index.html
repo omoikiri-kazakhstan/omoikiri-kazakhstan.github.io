@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         allProducts.forEach(product => {
             // Предположим, у каждого продукта есть атрибут data-default-color
-            let defaultColor = 'product.getAttribute('data-default-color')';
+            let defaultColor = product.getAttribute('data-default-color');
 
             if (defaultColor) {
                 let productLink = product.getAttribute('href');

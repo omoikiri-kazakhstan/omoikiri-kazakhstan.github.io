@@ -844,9 +844,9 @@
 
         body.single-product .card_actions {
           display: grid !important;
-          grid-template-columns: 110px 120px minmax(0, 1fr) !important;
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
           align-items: center !important;
-          gap: 5px !important;
+          gap: 8px 10px !important;
           width: 100% !important;
           max-width: 100% !important;
           white-space: normal !important;
@@ -871,13 +871,14 @@
           display: inline-flex !important;
           align-items: center !important;
           min-height: 44px !important;
+          column-gap: 6px !important;
         }
 
         body.single-product .card_actions .fav_button,
         body.single-product .card_actions .pin {
           display: flex !important;
           align-items: center !important;
-          justify-content: center !important;
+          justify-content: flex-start !important;
           gap: 6px !important;
           min-width: 0 !important;
           min-height: 44px !important;
@@ -887,9 +888,11 @@
         }
 
         body.single-product .card_actions .dealer-simple-cart-button {
-          width: 100% !important;
+          grid-column: 1 / -1 !important;
+          width: max-content !important;
+          min-width: 120px !important;
           min-height: 44px !important;
-          padding: 0 6px !important;
+          padding: 0 18px !important;
           font-size: 12px !important;
           white-space: nowrap !important;
         }
@@ -898,7 +901,8 @@
         body.single-product .card_actions .pin a,
         body.single-product .card_actions .pin span {
           font-size: 12px !important;
-          white-space: nowrap !important;
+          white-space: normal !important;
+          overflow-wrap: anywhere !important;
           text-align: center !important;
         }
       }

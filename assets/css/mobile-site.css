@@ -1,4 +1,4 @@
-@media (min-width: 801px) and (max-width: 1450px) {
+@media (min-width: 801px) and (max-width: 1050px) {
   body.single-product .card_grid {
     flex-direction: column;
     gap: 25px;

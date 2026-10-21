@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import crypto from 'node:crypto';
-import { execFileSync } from 'node:child_process';
 import { zipSync } from 'fflate';
 
 const paths = [
@@ -47,19 +46,28 @@ for (const file of paths) {
 }
 files['STAGING-FOLLOWUP-MANIFEST.json'] = new TextEncoder().encode(JSON.stringify(manifest, null, 2));
 const output = new URL('../test-results/launch-2026-10-21/staging-followup-20261021.zip', import.meta.url);
+await fs.mkdir(new URL('../test-results/launch-2026-10-21/', import.meta.url), { recursive: true });
 await fs.writeFile(output, zipSync(files, { level: 6 }));
 console.log(`Prepared ${manifest.length} files`);
 
 if (process.argv.includes('--legacy')) {
   const productFiles = {};
-  const changed = execFileSync('git', ['diff', '--name-only', '--', 'product'], { encoding: 'utf8' })
-    .trim().split(/\r?\n/).filter(Boolean);
-  for (const file of changed) {
+  const productDirs = await fs.readdir(new URL('../product/', import.meta.url), { withFileTypes: true });
+  for (const dir of productDirs) {
+    if (!dir.isDirectory()) continue;
+    const file = `product/${dir.name}/index.html`;
+    try {
+      await fs.access(new URL(`../${file}`, import.meta.url));
+    } catch {
+      continue;
+    }
     const data = await fs.readFile(new URL(`../${file}`, import.meta.url));
-    if (data.includes(Buffer.from("url: '/wp-content/themes/twentynineteen/check.php'"))) continue;
+    if (data.includes(Buffer.from("url: '/wp-content/themes/twentynineteen/check.php'"))) {
+      throw new Error(`Legacy check.php request remains in ${file}`);
+    }
     productFiles[file] = new Uint8Array(data);
   }
   const legacyOutput = new URL('../test-results/launch-2026-10-21/staging-legacy-post-cleanup-20261021.zip', import.meta.url);
   await fs.writeFile(legacyOutput, zipSync(productFiles, { level: 6 }));
-  console.log(`Prepared ${Object.keys(productFiles).length} changed product pages without legacy POST`);
+  console.log(`Prepared ${Object.keys(productFiles).length} product pages without legacy POST`);
 }

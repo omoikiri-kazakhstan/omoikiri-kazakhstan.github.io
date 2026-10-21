@@ -14,7 +14,7 @@
 - About-page RU/KZ/RU translation and manufacturing-country switching were repaired. `assets/js/about-kz.js` covers all Russian text nodes currently in the About main content and dynamic country paragraphs. This is a machine-assisted draft and still needs a Kazakh editorial review.
 - The legacy WordPress `check.php` request was removed from 408 product pages. Other obsolete WordPress/form requests, including `ajax-noop.json`, need a functional review rather than blind removal.
 - Earlier working-tree changes cover discontinued variants, correct FP-07/FP-08 articles/prices, Kinaru photos, local fonts, catalog pagination/filters, public stock dashboard, and price/stock polling. Review the diff before another deployment.
-- Staging release packages are local generated artifacts, not committed: `test-results/launch-2026-10-21/staging-followup-20261021.zip` and `test-results/launch-2026-10-21/staging-legacy-post-cleanup-20261021.zip`. They were **not** successfully uploaded after the Plesk session expired. Rebuild if source changes before deployment.
+- Staging release packages are generated artifacts, not committed: `test-results/launch-2026-10-21/staging-followup-20261021.zip` and `test-results/launch-2026-10-21/staging-legacy-post-cleanup-20261021.zip`. In a fresh clone, run `npm ci` and `node scripts/build-staging-followup.mjs --legacy` to recreate both from tracked files. They were **not** successfully uploaded after the Plesk session expired. Rebuild if source changes before deployment.
 - Latest local checks: `node --test tests/*.test.mjs` (42 passed), `node scripts/test-orders.mjs` (6 passed), `node scripts/test-admin-orders.mjs` (3 passed). A browser About RU/KZ/RU test also passed. Local tests are not proof of a live deploy.
 
 ## Next steps

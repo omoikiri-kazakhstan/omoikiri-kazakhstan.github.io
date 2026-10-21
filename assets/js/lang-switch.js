@@ -941,46 +941,6 @@
     const style = document.createElement('style');
     style.id = 'dealer-kz-layer-style-global';
     style.textContent = `
-      @font-face {
-        font-family: "GothamProRegular";
-        src: url("/assets/fonts/Montserrat-400.woff2") format("woff2");
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-      }
-
-      @font-face {
-        font-family: "GothamProLight";
-        src: url("/assets/fonts/Montserrat-300.woff2") format("woff2");
-        font-weight: 300;
-        font-style: normal;
-        font-display: swap;
-      }
-
-      @font-face {
-        font-family: "GothamProMedium";
-        src: url("/assets/fonts/Montserrat-500.woff2") format("woff2");
-        font-weight: 500;
-        font-style: normal;
-        font-display: swap;
-      }
-
-      @font-face {
-        font-family: "GothamProBold";
-        src: url("/assets/fonts/Montserrat-700.woff2") format("woff2");
-        font-weight: 700;
-        font-style: normal;
-        font-display: swap;
-      }
-
-      @font-face {
-        font-family: "GothamProItalic";
-        src: url("/assets/fonts/Montserrat-400-italic.woff2") format("woff2");
-        font-weight: 400;
-        font-style: italic;
-        font-display: swap;
-      }
-
       body,
       .top_nav,
       .top_nav a,
@@ -1054,6 +1014,29 @@
       #menu-top_menu-1 a {
         font-size: 15px !important;
         line-height: 1.15 !important;
+      }
+
+      @media (min-width: 1341px) {
+        html[lang="kk"] #menu-top_menu.menu {
+          gap: 12px !important;
+        }
+        html[lang="kk"] #menu-top_menu.menu li {
+          flex: 0 0 auto !important;
+        }
+        html[lang="kk"] #menu-top_menu.menu a {
+          font-size: 14px !important;
+          letter-spacing: 0 !important;
+          white-space: nowrap !important;
+        }
+      }
+
+      @media (min-width: 1341px) and (max-width: 1600px) {
+        html[lang="kk"] #menu-top_menu.menu {
+          gap: 8px !important;
+        }
+        html[lang="kk"] #menu-top_menu.menu a {
+          font-size: 12px !important;
+        }
       }
 
       .woocommerce-loop-product__title,
@@ -1679,6 +1662,27 @@
     document.head.appendChild(mobileStyles);
   }
 
+  function setKazakhFontFaces(enabled) {
+    const id = 'dealer-kz-font-faces';
+    document.getElementById(id)?.remove();
+    if (!enabled) return;
+
+    const fonts = [
+      ['GothamProRegular', 'Montserrat-400.woff2', [400], 'normal'],
+      ['GothamProLight', 'Montserrat-300.woff2', [300, 400], 'normal'],
+      ['GothamProMedium', 'Montserrat-500.woff2', [400, 500], 'normal'],
+      ['GothamProBold', 'Montserrat-700.woff2', [400, 700], 'normal'],
+      ['GothamProItalic', 'Montserrat-400-italic.woff2', [400], 'normal'],
+      ['GothamProItalic', 'Montserrat-400-italic.woff2', [400], 'italic']
+    ];
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = fonts.flatMap(([family, file, weights, fontStyle]) =>
+      weights.map((weight) => `@font-face { font-family: "${family}"; src: url("/assets/fonts/${file}") format("woff2"); font-weight: ${weight}; font-style: ${fontStyle}; font-display: swap; }`)
+    ).join('\n');
+    document.head.appendChild(style);
+  }
+
   function saveElement(el) {
     if (!elementStore.has(el)) elementStore.set(el, el.innerHTML);
   }
@@ -1745,6 +1749,7 @@
 
   function restoreRu() {
     document.documentElement.lang = 'ru';
+    setKazakhFontFaces(false);
     elementStore.forEach((html, el) => {
       if (el && el.isConnected) el.innerHTML = html;
     });
@@ -1775,6 +1780,7 @@
   }
 
   function applyKz(showNote) {
+    setKazakhFontFaces(true);
     selectorHtml.forEach(([selector, html]) => setHtml(selector, html));
     replaceExactText();
     document.documentElement.lang = 'kk';

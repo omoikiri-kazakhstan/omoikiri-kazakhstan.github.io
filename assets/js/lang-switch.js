@@ -1275,7 +1275,7 @@
 
       @media (max-width: 780px) {
         .dealer-lang-switch {
-          position: absolute;
+          position: fixed;
           top: 72px;
           right: 12px;
           transform: none;
@@ -1692,7 +1692,7 @@
 
     const mobileStyles = document.createElement('link');
     mobileStyles.rel = 'stylesheet';
-    mobileStyles.href = ROOT + 'assets/css/mobile-site.css?v=20261020-styles2c';
+    mobileStyles.href = ROOT + 'assets/css/mobile-site.css?v=20261022-lang-visible';
     document.head.appendChild(mobileStyles);
   }
 

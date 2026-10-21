@@ -86,6 +86,20 @@
   };
   const CURRENT_PRICE_OVERRIDES = {};
   let livePricesBySlug = {};
+  let catalogPricesBySlug = new Map();
+  let catalogPricesPromise = null;
+
+  function ensureCatalogPricesLoaded() {
+    if (!catalogPricesPromise) {
+      catalogPricesPromise = fetch(root + 'assets/data/admin-full-catalog.json')
+        .then((response) => response.ok ? response.json() : [])
+        .then((items) => {
+          catalogPricesBySlug = new Map(items.map((item) => [item.slug, item.variations || []]));
+        })
+        .catch(() => {});
+    }
+    return catalogPricesPromise;
+  }
 
   async function loadLivePrices() {
     try {
@@ -94,6 +108,7 @@
       const data = await response.json();
       livePricesBySlug = data.bySlug || {};
       convertPriceText(document);
+      updatePriceSliderForColor(selectedFilters());
       applyFilters();
     } catch (error) {
       // Static prices remain usable if the feed cannot be reached.
@@ -1543,7 +1558,7 @@
     if (!filter.dataset.defaultMin && (rangeMin || min)) filter.dataset.defaultMin = String(rangeMin || min);
     if (!filter.dataset.defaultMax && (rangeMax || max)) filter.dataset.defaultMax = String(rangeMax || max);
     const defaultMin = Number(filter.dataset.defaultMin || rangeMin || min || 0);
-    const defaultMax = Number(filter.dataset.defaultMax || rangeMax || max || 0);
+    const defaultMax = Number(filter.dataset.colorMax || filter.dataset.defaultMax || rangeMax || max || 0);
 
     return {
       active: Boolean(min || max) && (min !== defaultMin || max !== defaultMax),
@@ -1701,7 +1716,16 @@
     }
   }
 
-  function productPriceRubRange(product) {
+  function productPriceRubRange(product, colors = []) {
+    if (colors.length) {
+      const slug = productSlug(product);
+      const variations = catalogPricesBySlug.get(slug) || [];
+      const values = variations
+        .filter((variation) => colors.includes(variation.color) && !isDiscontinuedSlugColor(slug, variation.color))
+        .map((variation) => Number(livePricesBySlug[slug]?.[variation.color]?.rub) || Number(variation.price))
+        .filter((value) => value > 0);
+      if (values.length) return { min: Math.min(...values), max: Math.max(...values) };
+    }
     const price = product.querySelector('.price');
     if (!price) return { min: 0, max: 0 };
 
@@ -2002,10 +2026,10 @@
     return true;
   }
 
-  function productMatchesPrice(product, range) {
+  function productMatchesPrice(product, range, filters = {}) {
     if (!range.active) return true;
 
-    const productRange = productPriceRubRange(product);
+    const productRange = productPriceRubRange(product, filters.pa_color || []);
     if (!productRange.min || !productRange.max) return true;
 
     return productRange.max >= range.min && productRange.min <= range.max;
@@ -2030,7 +2054,7 @@
 
   function productMatchesFilterSet(product, filters, priceRange, skipFilter) {
     if (product.classList.contains('dealer-discontinued-product')) return false;
-    if (!productMatchesPrice(product, priceRange)) return false;
+    if (!productMatchesPrice(product, priceRange, filters)) return false;
 
     return Object.entries(filters).every(([filter, values]) => (
       filter === skipFilter || productMatchesFilter(product, filter, values)
@@ -2236,7 +2260,7 @@
     const toLabel = filter.querySelector('.irs-to');
     const singleLabel = filter.querySelector('.irs-single');
     const minLimit = Number(filter.dataset.defaultMin || 0);
-    const maxLimit = Number(filter.dataset.defaultMax || 0);
+    const maxLimit = Number(filter.dataset.colorMax || filter.dataset.defaultMax || 0);
     if (!minLimit || !maxLimit || minLimit >= maxLimit) return;
 
     const [inputMin, inputMax] = String(input?.value || '').split(';').map((part) => Number(String(part || '').replace(/\D/g, '')));
@@ -2362,6 +2386,7 @@
     const minLimit = Number(filter.dataset.defaultMin || 0);
     const maxLimit = Number(filter.dataset.defaultMax || 0);
     if (!minLimit || !maxLimit) return;
+    delete filter.dataset.colorMax;
 
     const input = filter.querySelector('input.pf_rng_price');
     const hiddenMin = filter.querySelector('input[name="rng_min_price"]');
@@ -2373,8 +2398,39 @@
     filter.dataset.currentMax = String(maxLimit);
     const instance = window.jQuery?.(input).data('ionRangeSlider');
     if (instance?.update) {
-      instance.update({ from: minLimit, to: maxLimit });
+      instance.update({ max: maxLimit, from: minLimit, to: maxLimit });
     }
+    filter.dispatchEvent(new Event('dealer-price-bounds'));
+    syncLocalPriceSlider(filter);
+  }
+
+  function updatePriceSliderForColor(filters) {
+    const filter = document.querySelector('.prdctfltr_rng_price');
+    if (!filter) return;
+
+    const minLimit = Number(filter.dataset.defaultMin || 0);
+    const defaultMax = Number(filter.dataset.defaultMax || 0);
+    if (!minLimit || !defaultMax) return;
+
+    const colors = filters.pa_color || [];
+    const products = [...document.querySelectorAll('ul.products li.product')];
+    const prices = colors.length ? products
+      .filter((product) => !product.classList.contains('dealer-discontinued-product')
+        && Object.entries(filters).every(([key, values]) => productMatchesFilter(product, key, values)))
+      .map((product) => productPriceRubRange(product, colors).max)
+      .filter((price) => price > 0) : [];
+    const maxLimit = prices.length ? Math.max(minLimit + 1, Math.max(...prices)) : defaultMax;
+    const previousMax = Number(filter.dataset.colorMax || defaultMax);
+    if (maxLimit === previousMax) return;
+
+    if (colors.length && prices.length) filter.dataset.colorMax = String(maxLimit);
+    else delete filter.dataset.colorMax;
+    filter.dataset.currentMin = String(minLimit);
+    filter.dataset.currentMax = String(maxLimit);
+    const input = filter.querySelector('input.pf_rng_price');
+    const instance = input && window.jQuery?.(input).data('ionRangeSlider');
+    if (instance?.update) instance.update({ max: maxLimit, from: minLimit, to: maxLimit });
+    filter.dispatchEvent(new Event('dealer-price-bounds'));
     syncLocalPriceSlider(filter);
   }
 
@@ -2435,17 +2491,18 @@
     let ignoreMouseUntil = 0;
     let ignoreTouchUntil = 0;
 
-    const valueToPercent = (value) => ((value - minLimit) / (maxLimit - minLimit)) * 100;
+    const currentMaxLimit = () => Number(filter.dataset.colorMax || maxLimit);
+    const valueToPercent = (value) => ((value - minLimit) / (currentMaxLimit() - minLimit)) * 100;
     const pointToValue = (event) => {
       const point = event.touches?.[0] || event.changedTouches?.[0] || event;
       const rect = line.getBoundingClientRect();
       const ratio = Math.min(1, Math.max(0, (point.clientX - rect.left) / Math.max(rect.width, 1)));
-      return Math.round(minLimit + ratio * (maxLimit - minLimit));
+      return Math.round(minLimit + ratio * (currentMaxLimit() - minLimit));
     };
 
     const sync = () => {
       from = Math.max(minLimit, Math.min(from, to));
-      to = Math.min(maxLimit, Math.max(to, from));
+      to = Math.min(currentMaxLimit(), Math.max(to, from));
 
       const fromPercent = valueToPercent(from);
       const toPercent = valueToPercent(to);
@@ -2565,6 +2622,11 @@
     document.addEventListener('visibilitychange', forceEnd, true);
     window.addEventListener('blur', forceEnd);
 
+    filter.addEventListener('dealer-price-bounds', () => {
+      from = Number(filter.dataset.currentMin || minLimit);
+      to = Number(filter.dataset.currentMax || currentMaxLimit());
+      sync();
+    });
     sync();
   }
 
@@ -2599,7 +2661,7 @@
       }
 
       const matches = Object.entries(filters).every(([filter, values]) => productMatchesFilter(product, filter, values))
-        && productMatchesPrice(product, priceRange);
+        && productMatchesPrice(product, priceRange, filters);
       product.classList.toggle('dealer-filter-hidden', !matches);
       if (matches) visible += 1;
     });
@@ -2691,6 +2753,8 @@
         document.querySelectorAll('.xwc--pf-loader-overlay, .prdctfltr_loader').forEach((node) => node.remove());
         await ensureAllLocalProductsLoaded();
         await ensureCatalogMetaLoaded();
+        await ensureCatalogPricesLoaded();
+        updatePriceSliderForColor(selectedFilters());
         applyFilters();
       }, true);
       filterClickBound = true;
@@ -2775,6 +2839,8 @@
 
         await ensureAllLocalProductsLoaded();
         await ensureCatalogMetaLoaded();
+        await ensureCatalogPricesLoaded();
+        updatePriceSliderForColor(selectedFilters());
         applyFilters();
       });
     });
@@ -2843,6 +2909,12 @@
     persistCatalogReturnUrl();
     ensureCatalogMetaLoaded().then(() => {
       document.body.classList.remove('dealer-meta-loading');
+      applyFilters();
+    });
+    ensureCatalogPricesLoaded().then(async () => {
+      if (selectedFilters().pa_color?.length) await ensureAllLocalProductsLoaded();
+      await ensureCatalogMetaLoaded();
+      updatePriceSliderForColor(selectedFilters());
       applyFilters();
     });
     if (document.body.classList.contains('term-taps')) {

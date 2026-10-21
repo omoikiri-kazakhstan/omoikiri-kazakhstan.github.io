@@ -25,6 +25,7 @@ const routes = new Map(Object.entries({
   '/api/prices': 'prices.js',
   '/api/stock-public': 'stock-public.js',
   '/api/orders': 'orders/index.js',
+  '/api/inquiries': 'inquiries.js',
   '/api/orders/payment': 'orders/payment.js',
   '/api/payments/tiptop/pay': 'payments/tiptop/pay.js',
   '/api/payments/tiptop/check': 'payments/tiptop/check.js',

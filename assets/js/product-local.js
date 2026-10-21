@@ -380,6 +380,104 @@
     });
   }
 
+  function replaceLegacyInquiryForm() {
+    const legacy = document.querySelector('form#forminator-module-21310');
+    if (!legacy || document.querySelector('.dealer-inquiry-form')) return;
+
+    const form = document.createElement('form');
+    form.className = 'dealer-inquiry-form';
+    form.noValidate = true;
+    form.innerHTML = `
+      <label><span data-inquiry-text="name"></span><input name="name" autocomplete="name" maxlength="100" required></label>
+      <label><span data-inquiry-text="phone"></span><input name="phone" type="tel" autocomplete="tel" maxlength="32"></label>
+      <label><span data-inquiry-text="email"></span><input name="email" type="email" autocomplete="email" maxlength="150"></label>
+      <label class="dealer-inquiry-message"><span data-inquiry-text="message"></span><textarea name="message" maxlength="1200" rows="5" required></textarea></label>
+      <label class="dealer-inquiry-consent"><input name="consent" type="checkbox" required><span data-inquiry-text="consent"></span></label>
+      <div class="dealer-inquiry-turnstile"></div>
+      <button type="submit" data-inquiry-text="submit"></button>
+      <p class="dealer-inquiry-status" role="status" aria-live="polite"></p>`;
+    legacy.replaceWith(form);
+
+    if (!document.getElementById('dealer-inquiry-style')) {
+      const style = document.createElement('style');
+      style.id = 'dealer-inquiry-style';
+      style.textContent = `.dealer-inquiry-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:850px;margin:28px auto 60px}.dealer-inquiry-form>label{display:grid;gap:7px;font-size:14px}.dealer-inquiry-form input:not([type=checkbox]),.dealer-inquiry-form textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #bbb;border-radius:4px;font:inherit}.dealer-inquiry-message,.dealer-inquiry-consent,.dealer-inquiry-turnstile,.dealer-inquiry-status{grid-column:1/-1}.dealer-inquiry-consent{display:flex!important;align-items:start;gap:8px}.dealer-inquiry-form button{background:#222;color:#fff;border:0;border-radius:4px;padding:13px 22px;cursor:pointer}.dealer-inquiry-form button:disabled{opacity:.55;cursor:wait}.dealer-inquiry-status{min-height:20px;margin:0}@media(max-width:600px){.dealer-inquiry-form{grid-template-columns:1fr;padding:0 18px}}`;
+      document.head.appendChild(style);
+    }
+
+    const copy = {
+      ru: { name: 'Имя', phone: 'Телефон или e-mail', email: 'E-mail (если нужен ответ по почте)', message: 'Ваш вопрос', consent: 'Согласен на обработку контактных данных для ответа на вопрос', submit: 'Отправить вопрос', sending: 'Отправляем…', success: 'Вопрос отправлен. Мы свяжемся с вами.', missing: 'Укажите имя, вопрос и телефон или e-mail.', captcha: 'Подтвердите, что вы человек.', failed: 'Не удалось отправить вопрос. Попробуйте ещё раз или позвоните нам.' },
+      kz: { name: 'Атыңыз', phone: 'Телефон немесе e-mail', email: 'E-mail (жауапты поштаға алғыңыз келсе)', message: 'Сұрағыңыз', consent: 'Сұраққа жауап алу үшін байланыс деректерімді өңдеуге келісемін', submit: 'Сұрақ жіберу', sending: 'Жіберілуде…', success: 'Сұрақ жіберілді. Біз сізбен хабарласамыз.', missing: 'Атыңызды, сұрағыңызды және телефонды немесе e-mail мекенжайын көрсетіңіз.', captcha: 'Адам екеніңізді растаңыз.', failed: 'Сұрақ жіберілмеді. Қайта көріңіз немесе бізге қоңырау шалыңыз.' }
+    };
+    const language = () => document.documentElement.lang.toLowerCase().startsWith('kk') ? 'kz' : 'ru';
+    const renderCopy = () => {
+      const words = copy[language()];
+      form.querySelectorAll('[data-inquiry-text]').forEach((node) => { node.textContent = words[node.dataset.inquiryText]; });
+    };
+    renderCopy();
+    new MutationObserver(renderCopy).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+    let widgetId = null;
+    function renderTurnstile() {
+      if (widgetId !== null || !window.turnstile) return;
+      widgetId = window.turnstile.render(form.querySelector('.dealer-inquiry-turnstile'), {
+        sitekey: '0x4AAAAAAFR_mTc93kitTTkd'
+      });
+    }
+    function loadTurnstile() {
+      if (window.turnstile) return renderTurnstile();
+      if (document.getElementById('dealer-inquiry-turnstile-script')) return;
+      const script = document.createElement('script');
+      script.id = 'dealer-inquiry-turnstile-script';
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.onload = renderTurnstile;
+      document.head.appendChild(script);
+    }
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) { loadTurnstile(); observer.disconnect(); }
+      }, { rootMargin: '300px' });
+      observer.observe(form);
+    } else {
+      loadTurnstile();
+    }
+    form.addEventListener('focusin', loadTurnstile, { once: true });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const fields = new FormData(form);
+      const words = copy[language()];
+      const status = form.querySelector('.dealer-inquiry-status');
+      const button = form.querySelector('button[type="submit"]');
+      const name = String(fields.get('name') || '').trim();
+      const phone = String(fields.get('phone') || '').trim();
+      const email = String(fields.get('email') || '').trim();
+      const message = String(fields.get('message') || '').trim();
+      if (name.length < 2 || message.length < 8 || (!phone && !email) || fields.get('consent') !== 'on') {
+        status.textContent = words.missing;
+        return;
+      }
+      const turnstileToken = widgetId === null ? '' : window.turnstile?.getResponse(widgetId) || '';
+      if (!turnstileToken) { loadTurnstile(); status.textContent = words.captcha; return; }
+      button.disabled = true;
+      status.textContent = words.sending;
+      try {
+        const response = await fetch('/api/inquiries', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, email, message, consent: true, productPath: window.location.pathname.replace(/\/index\.html$/, '/'), turnstileToken })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.error || words.failed);
+        form.reset();
+        status.textContent = words.success;
+      } catch (error) {
+        status.textContent = error.message || words.failed;
+      } finally {
+        button.disabled = false;
+        if (widgetId !== null) window.turnstile?.reset(widgetId);
+      }
+    });
+  }
+
   function addStyle() {
     if (document.getElementById('dealer-local-product-style')) return;
 
@@ -2060,6 +2158,7 @@
     fixMojibake(document);
     normalizeDealerChrome();
     normalizePhoneCountry();
+    replaceLegacyInquiryForm();
     addCartLink();
     removeDiscontinuedVariants();
     applyRequestedColor();

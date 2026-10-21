@@ -1,11 +1,13 @@
 # OMOIKIRI KZ production routing, 21 October 2026
 
-## Current state (12:05 Asia/Qyzylorda)
+## Current state (21 October 2026, 12:23 Asia/Qyzylorda)
 
 - `https://omoikiri.kz/` temporarily returns HTTP 302 to `https://staging.omoikiri.kz/`. Main, product (including color query), and admin paths return HTTP 200 after the redirect. The visitor's address bar changes to staging; this is **not** a completed main-domain launch.
 - The redirect is the first line of `/httpdocs/.htaccess`: `RedirectMatch 302 ^/(.*)$ https://staging.omoikiri.kz/$1`. The original 808-byte file is copied to `/httpdocs/.htaccess.rollback-20261021`; the full Plesk backup below is a second recovery point.
 - Main-domain Node.js is **disabled**, document root is `/httpdocs`, and the old Bitrix database/files were not changed. A separate `/production-proxy` folder exists but is not serving traffic.
-- A direct Node.js launch through the main Plesk domain returned HTTP 500 (Apache logged `End of script output before headers`) and then nginx 403/404. After disabling Node and restoring `/httpdocs`, static Bitrix assets loaded but PHP pages timed out. Reapplying the original hosting, Apache/nginx, and PHP settings did not restore dynamic Bitrix responses. The temporary 302 is therefore also a recovery route for visitors.
+- The first direct Node.js launch through the main Plesk domain returned HTTP 500 (Apache logged `End of script output before headers`): Passenger did not enter the conditional startup code. This was fixed by splitting `app.js` (unconditional entrypoint) and `server.js`. A later trial briefly served `/healthz`, pages, and assets with HTTP 200, but browser loading exposed intermittent upstream failures. A bounded keep-alive agent fixed those errors in a local browser test (two complete Akita loads with no console errors).
+- After deploying that fix, Plesk's main-domain Node setting did not remain enabled: the domain fell back to nginx 403/404 while the UI reported Node disabled. Node was left disabled and `/httpdocs` restored. Do not retry a main-domain toggle during traffic until Hoster confirms why its Node configuration reverts or an alternate reverse-proxy configuration is prepared and tested separately.
+- With the original Bitrix configuration restored, static Bitrix assets loaded but PHP pages timed out. Reapplying the original hosting, Apache/nginx, and PHP settings did not restore dynamic Bitrix responses. The temporary 302 is therefore also a recovery route for visitors.
 - Staging remains HTTP 200 with local media and the working Plesk backend. It sends `X-Robots-Tag: noindex, nofollow`, so this redirect is only a short-term availability measure. Do not declare the main-domain cutover complete until the site serves the main hostname, indexing is configured, and a real-domain test order/Telegram notification passes.
 
 ### Reverting the temporary redirect
@@ -15,7 +17,7 @@ Restore `/httpdocs/.htaccess` from `/httpdocs/.htaccess.rollback-20261021` in Pl
 ## Scope
 
 - Main domain: `omoikiri.kz` on Plesk. DNS and nameservers stay unchanged.
-- The existing Bitrix files in `/httpdocs` and its database remain untouched.
+- The existing Bitrix database and application files remain untouched. Only `/httpdocs/.htaccess` has the temporary first-line redirect, with a separate original copy and the full backup above.
 - A separate Node.js application in `/production-proxy` was prepared as a same-server bridge but failed its main-domain smoke test and is currently disabled. It is not a Cloudflare Pages dependency.
 - Online payment remains disabled. Orders are placed without payment on the site.
 - The staging catalog database is shared by both hostnames. Mark test orders clearly and do not reset it during production use.

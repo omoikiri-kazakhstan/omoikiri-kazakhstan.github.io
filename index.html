@@ -1241,10 +1241,6 @@ function initCanvas(section, canvas) {
   canvas.width = 1681;
   canvas.height = 2978;
   let frameCount = 99;
-  let filePath = section.dataset.file;
-  let top = section.dataset.top;
-  let text = "#" + section.dataset.text;
-  console.log("text is " + text);
 	const currentFrame = (index) =>
     `/assets/remote/omoikiri.ru/wp-content/themes/twentynineteen/img/main/sq/img_${index}.png`;
 
@@ -1255,8 +1251,11 @@ function initCanvas(section, canvas) {
 
   for (let i = 1; i <= frameCount; i++) {
     let img = new Image();
-    img.src = currentFrame(i);
+    img.onload = () => {
+      if (i === 1 || airpods.frame === i - 1) render();
+    };
     images.push(img);
+    img.src = currentFrame(i);
   }
 
   gsap
@@ -1264,7 +1263,6 @@ function initCanvas(section, canvas) {
       onUpdate: render,
       scrollTrigger: {
         trigger: section,
-        onToggle: self => console.log("toggle", section, self.isActive),
         scrub: 1,
         start: "-30% top",
         end: "top top",
@@ -1281,19 +1279,14 @@ function initCanvas(section, canvas) {
         duration: 3
       },
       0
-    )
-    .fromTo(
-      text,
-      { top: "100%" },
-      { top: "10%", duration: 3, stagger: 1 },
-      "0"
     );
 
-  images[0].onload = render;
-
   function render() {
+    const selected = images[airpods.frame];
+    const image = selected?.complete && selected.naturalWidth ? selected : images[0];
+    if (!image?.complete || !image.naturalWidth) return;
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(images[airpods.frame], 0, 0);
+    context.drawImage(image, 0, 0);
   }
 }
 </script>

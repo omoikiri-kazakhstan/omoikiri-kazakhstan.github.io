@@ -1,0 +1,73 @@
+# Parallel PHP site
+
+This is an isolated PHP 8.4 port of the OMOIKIRI KZ storefront. It is for local
+testing and a future dedicated staging deployment. Do not replace the working
+Node.js site or point `omoikiri.kz` here until the production checks below pass.
+
+## Implemented locally
+
+- All allowlisted static pages and media, including HTTP byte ranges.
+- Catalog, RU price snapshot, public stock API and stock-dashboard CORS.
+- Checkout without online payment: server-side SKU/color/price validation,
+  Turnstile, MariaDB order persistence, idempotent retry and Telegram notification.
+- Product inquiries with Turnstile and Telegram.
+- Admin login/session/magic link, orders, products, catalog overrides and stock view.
+- Manual stock refresh and PHP CLI jobs for Excel stock and RU-site prices.
+- TipTopPay stays disabled. Payment routes fail closed.
+
+The app uses the existing `plesk/mariadb-schema.sql` tables. Its document root
+must be `php-poc/public`; PHP reads the repository assets from outside the
+document root. Apache mod_rewrite must honor `.htaccess`. PHP needs PDO MySQL,
+curl, OpenSSL, mbstring, ZipArchive and SimpleXML. Set `MYSQL_HOST`, `MYSQL_PORT`,
+`MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`, `ADMIN_LOGIN`, `ADMIN_PASSWORD`,
+`ADMIN_SESSION_SECRET`, `TURNSTILE_SECRET`, `TELEGRAM_BOT_TOKEN`,
+`TELEGRAM_CHAT_ID`, and `STOCK_SYNC_TOKEN` outside Git and the web root.
+
+Schedule `php php-poc/bin/sync-stock.php` every 30 minutes and
+`php php-poc/bin/sync-ru-prices.php` daily on the test host. The public site
+does not show stock quantities. The separate stock dashboard can read them.
+Do not use the Excel price column for storefront prices: the RU snapshot is
+converted using the existing 6.1/880 rule.
+
+## Local tests
+
+From the repository root, set `PHP_BINARY` to the installed PHP executable if
+`php` is not on the current shell's PATH, then run:
+
+```sh
+php php-poc/tests/logic.php
+php php-poc/tests/order.php
+php php-poc/tests/sync.php
+node php-poc/tests/http.mjs
+```
+
+The HTTP test starts its own loopback PHP server and isolated SQLite fixture.
+For a visual check with that fixture, run `php php-poc/tests/fixture.php` with a
+temporary database path, set `APP_ENV=test` and `TEST_DB_DSN=sqlite:<path>`, then:
+
+```sh
+php -S 127.0.0.1:8797 -t php-poc/public php-poc/public/index.php
+node tests/staging-release.browser.mjs http://127.0.0.1:8797
+node php-poc/tests/admin.browser.mjs http://127.0.0.1:8797
+node php-poc/tests/sitemap.mjs http://127.0.0.1:8797
+```
+
+`APP_ENV=test` enables only the local SQLite fixture connection. Never use it
+on a public host. The local fixture does not call live Turnstile or Telegram.
+
+## Before any public switch
+
+1. Deploy to a separate PHP test host without changing the current staging or
+   main domain. Confirm Plesk's PHP version/extensions and sufficient disk space.
+2. Compare the PHP and Node APIs against the same read-only copy of MariaDB.
+   Verify all 419 product pages, live photos, RU/KZ, admin and mobile layouts.
+3. Run real stock and RU price refreshes; confirm snapshot counts/timestamps and
+   that a source outage leaves the previous good snapshot intact.
+4. Place a marked test order with real Turnstile verification and confirm the
+   MariaDB row and Telegram notification. Test a product inquiry too.
+5. Save a release/database backup and test a rollback before domain cutover.
+   Then recheck no staging redirect/noindex, pages, cart, order, admin and prices.
+
+The local tests below passed, but steps 1-5 are not completed. `/healthz`
+therefore deliberately reports `apiComplete:false`. This is not a production
+readiness signal.

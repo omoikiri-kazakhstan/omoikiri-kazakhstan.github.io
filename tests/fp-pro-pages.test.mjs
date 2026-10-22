@@ -16,9 +16,9 @@ function attribute(node, name) {
   return node.attrs?.find((item) => item.name === name)?.value || '';
 }
 
-for (const [slug, sku, price, imageName] of [
-  ['fp-07-pro', '4999153', '107 880 ₸', 'fp-07-pro-gb-600x600.png'],
-  ['fp-08-pro', '4999154', '78 880 ₸', 'fp-08-pro-gb-600x600.png']
+for (const [slug, sku, price, imageName, schemeName] of [
+  ['fp-07-pro', '4999153', '107 880 ₸', 'fp-07-pro-gb-600x600.png', 'fp-08-pro.jpg'],
+  ['fp-08-pro', '4999154', '78 880 ₸', 'fp-08-pro-gb-600x600.png', 'fp-07-pro.jpg']
 ]) {
   test(`${slug} has its own photo, SKU and KZT price before scripts run`, () => {
     const html = fs.readFileSync(path.join(root, 'product', slug, 'index.html'), 'utf8');
@@ -41,5 +41,8 @@ for (const [slug, sku, price, imageName] of [
     assert.equal(productSchema?.sku, sku);
     assert.equal(Number(productSchema?.offers?.[0]?.price), Number(price.replace(/\D/g, '')));
     assert.ok(productSchema?.image.endsWith(imageName.replace('-600x600', '')));
+    const scheme = elements(doc, (node) => node.tagName === 'a' && attribute(node, 'data-fancybox') === 'gallery')[0];
+    assert.ok(attribute(scheme, 'href').endsWith(schemeName));
+    assert.ok(fs.existsSync(path.join(root, 'assets', 'remote', 'omoikiri.ru', 'wp-content', 'uploads', '2024', '09', schemeName)));
   });
 }

@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="assets/css/buttons.css?v=20261020-pixel">
 	<link rel="stylesheet" href="assets/css/favorites.css">
 	<link rel="stylesheet" href="assets/css/home-intro.css?v=20261012-original">
-	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261021-filter-video">
+	<link rel="stylesheet" href="assets/css/home-refresh.css?v=20261022-kz-home-layout">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 </head>
@@ -483,19 +483,19 @@ $(function() {
 				</svg>
 			</div>
 			</a>
-			<div class="btn_orange" id="elleci_video">
+			<a class="btn_orange" id="elleci_video" href="https://www.youtube.com/watch?v=2bGCmZlv4RQ" target="_blank" rel="noopener noreferrer" aria-label="Смотреть видео OMOIKIRI x ELLECI на YouTube">
 				<span>видео</span>
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
 				</svg>
-			</div>
+			</a>
 		</div>
     </div>
-	<div class="elleci_video" role="button" tabindex="0" aria-label="Смотреть видео OMOIKIRI x ELLECI">
+	<a class="elleci_video" href="https://www.youtube.com/watch?v=2bGCmZlv4RQ" target="_blank" rel="noopener noreferrer" aria-label="Смотреть видео OMOIKIRI x ELLECI на YouTube">
         <p>OMOIKIRI<br> x Elleci</p>
         <div class="play"></div>
         <p>видео</p>
-    </div>
+    </a>
     <img src="/assets/img/home-refresh/elleci/sintesi_mob.jpg" class="mob_kin" alt="">
     </div>
     <script>
@@ -537,34 +537,6 @@ $(function() {
             document.querySelector('.main_kin').style.display = 'block';
         });
     </script>
-	<dialog class="elleci-video-dialog" aria-label="Видео OMOIKIRI x ELLECI">
-		<button type="button" class="elleci-video-close" aria-label="Закрыть видео">&times;</button>
-		<iframe title="Видео OMOIKIRI x ELLECI" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-	</dialog>
-	<script>
-		(() => {
-			const trigger = document.querySelector('.elleci_video');
-			const dialog = document.querySelector('.elleci-video-dialog');
-			const frame = dialog.querySelector('iframe');
-			const videoUrl = 'https://vkvideo.ru/video_ext.php?oid=-52606916&id=456239649&hash=a37e56382c3729d3&hd=4&autoplay=1';
-			const open = () => {
-				frame.src = videoUrl;
-				dialog.showModal();
-			};
-			trigger.addEventListener('click', open);
-			trigger.addEventListener('keydown', (event) => {
-				if (event.key === 'Enter' || event.key === ' ') {
-					event.preventDefault();
-					open();
-				}
-			});
-			dialog.querySelector('.elleci-video-close').addEventListener('click', () => dialog.close());
-			dialog.addEventListener('click', (event) => {
-				if (event.target === dialog) dialog.close();
-			});
-			dialog.addEventListener('close', () => { frame.removeAttribute('src'); });
-		})();
-	</script>
 </section>
 
 <section class="sinks2">

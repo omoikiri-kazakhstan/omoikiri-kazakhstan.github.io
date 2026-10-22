@@ -6,36 +6,8 @@
   font-display: swap;
 }
 
-.elleci_video[role="button"] { cursor: pointer; }
-.elleci_video[role="button"]:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
-
-.elleci-video-dialog {
-  position: fixed;
-  inset: 0;
-  width: min(960px, calc(100vw - 32px));
-  max-width: none;
-  height: auto;
-  max-height: calc(100dvh - 32px);
-  padding: 0;
-  border: 0;
-  background: #000;
-  color: #fff;
-}
-.elleci-video-dialog::backdrop { background: rgba(0, 0, 0, .82); }
-.elleci-video-dialog iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
-.elleci-video-close {
-  position: absolute;
-  z-index: 1;
-  top: 8px;
-  right: 8px;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  background: #fff;
-  color: #111;
-  font: 30px/1 Arial, sans-serif;
-  cursor: pointer;
-}
+.elleci_video { text-decoration: none; }
+.elleci_video:focus-visible { outline: 2px solid #000; outline-offset: 4px; }
 
 body.dealer-home-page .main_block {
   height: calc(100svh - 67px);
@@ -471,6 +443,38 @@ body.dealer-home-page .main_block > img {
   font-weight: 100;
   line-height: .8;
   color: #000;
+}
+
+@media (min-width: 901px) {
+  html[lang="kk"] .home_bg_text {
+    box-sizing: border-box;
+    justify-content: space-between;
+    gap: clamp(32px, 4vw, 80px);
+    padding: 150px clamp(32px, 5vw, 110px) 0;
+  }
+
+  html[lang="kk"] .home_bg_text > h2 {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: clamp(58px, 5.5vw, 105px);
+    line-height: 1.02;
+    overflow-wrap: normal;
+  }
+
+  html[lang="kk"] .home_text {
+    flex: 0 1 480px;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  html[lang="kk"] .home_bg_text > h2 {
+    font-size: clamp(48px, 5vw, 55px);
+  }
+
+  html[lang="kk"] .home_text {
+    flex-basis: 420px;
+  }
 }
 
 .home_text {

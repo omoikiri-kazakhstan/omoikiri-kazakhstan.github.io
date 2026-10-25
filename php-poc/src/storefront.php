@@ -110,23 +110,32 @@ function resolve_order_items(PDO $db, array $submitted): array
 
 function order_response(array $row, int $status = 200): void
 {
-    send_json(['ok' => true, 'orderId' => (int) $row['id'],
-        'paymentStatus' => $row['payment_status'], 'paymentTestMode' => (bool) $row['payment_test_mode']], $status);
+    $result = ['ok' => true, 'orderId' => (int) $row['id'],
+        'paymentStatus' => $row['payment_status'], 'paymentTestMode' => (bool) $row['payment_test_mode']];
+    if (payment_enabled() && $row['payment_status'] === 'pending') {
+        if (strtotime((string) $row['payment_expires_at']) <= time()) {
+            send_json(['error' => 'Время на оплату этого заказа истекло. Обновите страницу и оформите заказ снова.'], 409);
+            return;
+        }
+        $result['payment'] = payment_intent($row);
+    }
+    send_json($result, $status);
 }
 
-function notify_telegram(int $orderId, array $order): void
+function notify_telegram(int $orderId, array $order, bool $paid = false, bool $testMode = false): void
 {
     $token = getenv('TELEGRAM_BOT_TOKEN');
     $chatId = getenv('TELEGRAM_CHAT_ID');
     if (!$token || !$chatId) throw new RuntimeException('Missing Telegram configuration');
-    $lines = ['Новый заказ №' . $orderId, ''];
+    $lines = [($testMode ? 'ТЕСТОВАЯ оплата заказа' : ($paid ? 'Оплачен заказ' : 'Новый заказ')) . ' №' . $orderId, ''];
     foreach ($order['items'] as $item) {
         $lines[] = $item['name'] . ($item['sku'] ? ' (арт. ' . $item['sku'] . ')' : '') .
             ($item['color'] ? ', ' . $item['color'] : '') . ' × ' . $item['qty'] .
             ' — ' . number_format($item['price'] * $item['qty'], 0, '', ' ') . ' ₸';
     }
     $lines[] = '';
-    $lines[] = 'Предварительная сумма: ' . number_format($order['total'], 0, '', ' ') . ' ₸';
+    $lines[] = ($testMode ? 'Тестовая сумма (без списания)' : ($paid ? 'Оплачено' : 'Предварительная сумма')) .
+        ': ' . number_format($order['total'], 0, '', ' ') . ' ₸';
     $lines[] = 'Имя: ' . $order['name'];
     $lines[] = 'Телефон: ' . $order['phone'];
     $lines[] = 'Город: ' . $order['city'];
@@ -206,18 +215,25 @@ function create_order(PDO $db, ?array $testBody = null, ?callable $verify = null
             }
             order_response($existing); return;
         }
+        $onlinePayment = payment_enabled();
+        $expiresAt = $onlinePayment ? gmdate('Y-m-d\TH:i:s\Z', time() + 1800) : '';
         db_run($db, 'INSERT INTO orders (request_id, customer_name, phone, city, address, comment, items_json, estimated_total, payment_status, payment_expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [$order['requestId'], $order['name'], $order['phone'], $order['city'],
-                $order['address'], $order['comment'], $itemsJson, $order['total'], 'not_required', '']);
+                $order['address'], $order['comment'], $itemsJson, $order['total'], $onlinePayment ? 'pending' : 'not_required', $expiresAt]);
         $id = (int) $db->lastInsertId();
-        try {
-            $notify($id, $order);
-            db_run($db, "UPDATE orders SET notification_status = 'sent' WHERE id = ?", [$id]);
-        } catch (Throwable $error) {
-            error_log('Order notification failed for order ' . $id . ': ' . $error->getMessage());
-            db_run($db, "UPDATE orders SET notification_status = 'failed' WHERE id = ?", [$id]);
+        if (!$onlinePayment) {
+            try {
+                $notify($id, $order);
+                db_run($db, "UPDATE orders SET notification_status = 'sent' WHERE id = ?", [$id]);
+            } catch (Throwable $error) {
+                error_log('Order notification failed for order ' . $id . ': ' . $error->getMessage());
+                db_run($db, "UPDATE orders SET notification_status = 'failed' WHERE id = ?", [$id]);
+            }
         }
-        order_response(['id' => $id, 'payment_status' => 'not_required', 'payment_test_mode' => 0], 201);
+        order_response(['id' => $id, 'request_id' => $order['requestId'], 'customer_name' => $order['name'],
+            'phone' => $order['phone'], 'city' => $order['city'], 'estimated_total' => $order['total'],
+            'payment_status' => $onlinePayment ? 'pending' : 'not_required', 'payment_test_mode' => 0,
+            'payment_expires_at' => $expiresAt], 201);
     } catch (Throwable $error) {
         error_log('PHP order failed: ' . $error->getMessage());
         send_json(['error' => 'Не удалось сохранить заказ. Попробуйте ещё раз или позвоните нам.'], 500);

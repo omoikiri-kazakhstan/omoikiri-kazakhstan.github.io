@@ -1,8 +1,8 @@
 # Parallel PHP site
 
-This is an isolated PHP 8.4 port of the OMOIKIRI KZ storefront. It is for local
-testing and a future dedicated staging deployment. Do not replace the working
-Node.js site or point `omoikiri.kz` here until the production checks below pass.
+This is the PHP storefront served by `omoikiri.kz` and `php-test.omoikiri.kz`.
+Both hosts share the PHP source and configuration. Keep live payments disabled
+until a signed test payment and its Telegram notification pass.
 
 ## Implemented locally
 
@@ -13,7 +13,8 @@ Node.js site or point `omoikiri.kz` here until the production checks below pass.
 - Product inquiries with Turnstile and Telegram.
 - Admin login/session/magic link, orders, products, catalog overrides and stock view.
 - Manual stock refresh and PHP CLI jobs for Excel stock and RU-site prices.
-- TipTopPay stays disabled. Payment routes fail closed.
+- TipTopPay Check/Pay/Fail webhooks verify Content-HMAC and the saved order.
+  The storefront creates payment intents only when explicitly enabled.
 
 The app uses the existing `plesk/mariadb-schema.sql` tables. Its document root
 must be `php-poc/public`; PHP reads the repository assets from outside the
@@ -32,6 +33,16 @@ keep it outside `public/`, and restrict it to owner read/write (0600). The
 `prepare:php-config` script is only for a shell where the variables are already
 present; it refuses to overwrite an existing config and forces payment off.
 
+For payment testing, keep `TIPTOP_PAYMENTS_ENABLED=false`, set
+`TIPTOP_TEST_PAYMENTS_ENABLED=true` and
+`TIPTOP_TEST_PAYMENT_HOST=php-test.omoikiri.kz`, and configure
+`TIPTOP_PUBLIC_TERMINAL_ID` plus `TIPTOP_API_SECRET` for the test terminal.
+Only that host then receives payment intents. Point the terminal's Check, Pay
+and Fail notifications to the matching `/api/payments/tiptop/` URLs on
+`https://php-test.omoikiri.kz`. Keep the API secret outside Git and the web
+root. Verify a test order, paid status, and Telegram before configuring the
+live terminal and enabling `TIPTOP_PAYMENTS_ENABLED`.
+
 Schedule `php php-poc/bin/sync-stock.php` every 30 minutes and
 `php php-poc/bin/sync-ru-prices.php` daily on the test host. The public site
 does not show stock quantities. The separate stock dashboard can read them.
@@ -46,6 +57,7 @@ From the repository root, set `PHP_BINARY` to the installed PHP executable if
 ```sh
 php php-poc/tests/logic.php
 php php-poc/tests/order.php
+php php-poc/tests/payment.php
 php php-poc/tests/sync.php
 node php-poc/tests/http.mjs
 node php-poc/tests/release.mjs

@@ -369,6 +369,8 @@ function run_app(): void
     $routes = [
         '/api/catalog' => ['GET'], '/api/prices' => ['GET'], '/api/stock-public' => ['GET', 'OPTIONS'],
         '/api/orders' => ['POST'], '/api/inquiries' => ['POST'], '/api/orders/payment' => ['GET'],
+        '/api/payments/tiptop/check' => ['POST'], '/api/payments/tiptop/pay' => ['POST'],
+        '/api/payments/tiptop/fail' => ['POST'],
         '/api/admin/login' => ['POST'], '/api/admin/logout' => ['POST'],
         '/api/admin/session' => ['GET'], '/api/admin/access' => ['GET'],
         '/api/admin/orders' => ['GET'], '/api/admin/stock' => ['GET'],
@@ -407,6 +409,9 @@ function run_app(): void
     if ($path === '/api/admin/session') { send_json(['authenticated' => authenticated()]); return; }
     if ($path === '/api/inquiries') { inquiry(); return; }
     $db = database();
+    if (str_starts_with($path, '/api/payments/tiptop/')) {
+        tiptop_notification($db, substr($path, strlen('/api/payments/tiptop/'))); return;
+    }
     if ($path === '/api/orders') { create_order($db); return; }
     if ($path === '/api/orders/payment') { order_payment($db); return; }
     if ($path === '/api/admin/access') { admin_access($db); return; }
@@ -447,6 +452,7 @@ function run_app(): void
 }
 
 require_once __DIR__ . '/storefront.php';
+require_once __DIR__ . '/tiptop.php';
 require_once __DIR__ . '/admin.php';
 require_once __DIR__ . '/stock.php';
 require_once __DIR__ . '/sync.php';

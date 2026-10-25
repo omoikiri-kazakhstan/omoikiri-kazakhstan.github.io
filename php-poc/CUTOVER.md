@@ -14,9 +14,12 @@ and an off-server DB backup are verified. Online payment remains off.
 - `php-test.omoikiri.kz` has Plesk document root
   `/staging.omoikiri.kz/php-poc/public`. The PHP app reads the same static
   media from the staging application tree; it does not duplicate the media.
-- `omoikiri.kz` now has Plesk document root
-  `/staging.omoikiri.kz/php-poc/public`. `/httpdocs/.htaccess` remains intact
-  with `RedirectMatch 302 ^/(.*)$ https://staging.omoikiri.kz/$1` for rollback.
+- `omoikiri.kz` has Plesk document root
+  `/staging.omoikiri.kz/php-poc/public`. On 2026-10-25 the user authorized
+  deletion of only the old Bitrix files: all 67 items inside `/httpdocs` were
+  removed. The folder is empty; the old Bitrix database `p-345209_omoibd`
+  and all three Plesk backups were left untouched. Plesk's recalculated
+  usage fell from 22505.7 MB to 16156.2 MB.
 - `php-poc/config.local.php` is outside the document root and is 0600. It
   uses the same staging MariaDB and Telegram configuration as Node. Never
   include it in an archive or Git commit.
@@ -51,7 +54,7 @@ and an off-server DB backup are verified. Online payment remains off.
    The earlier downloaded 540 KB Plesk HTML files are **not** backup archives.
 4. The main Plesk document root was changed from `httpdocs` to the PHP public
    folder with no DNS, nameserver, or payment changes. The old `.htaccess`
-   remains in `/httpdocs`; Plesk remains available for rollback.
+   was later removed with the Bitrix files; Plesk remains available.
 5. Both main hosts respond 200 without staging redirects and without noindex;
    staging and PHP test retain noindex. All 436 sitemap URLs passed on the
    main host. Desktop (1440 px) and mobile (390 px) browser regressions passed
@@ -69,9 +72,12 @@ Telegram before declaring checkout fully verified after cutover.
 
 ## Rollback
 
-If checkout, Telegram, assets, or admin fail, restore the `omoikiri.kz` Plesk
-document root to `httpdocs`. Its existing 302 redirect returns visitors to
-the working Node staging immediately, without a DNS change. Confirm the 302
-and a test page/order. Restore the pre-cutover database export only if the
-failure involved a data mutation that cannot be corrected in place; orders
-placed during the switch must be reconciled first.
+If checkout, Telegram, assets, or admin fail, first create `/httpdocs/.htaccess`
+in Plesk with `RedirectMatch 302 ^/(.*)$ https://staging.omoikiri.kz/$1`.
+Then change the `omoikiri.kz` document root to `httpdocs`, without a DNS
+change. Confirm the 302 and a test page/order. This post-cleanup route
+fallback has not been retested. Do not expect the old Bitrix files in
+`httpdocs`; restoring Bitrix would require a Plesk backup. Restore the
+pre-cutover database export only if the failure involved a data mutation that
+cannot be corrected in place; orders placed during the switch must be
+reconciled first.

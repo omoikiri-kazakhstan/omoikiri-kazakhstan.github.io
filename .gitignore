@@ -8,5 +8,6 @@ Thumbs.db
 .workers-types/
 node_modules/
 plesk/data/
+php-poc/config.local.php
 __pycache__/
 *.pyc

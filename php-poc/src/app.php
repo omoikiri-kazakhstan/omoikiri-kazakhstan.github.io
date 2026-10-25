@@ -1,6 +1,22 @@
 <?php
 declare(strict_types=1);
 
+$localConfig = dirname(__DIR__) . '/config.local.php';
+if (is_file($localConfig)) {
+    $config = require $localConfig;
+    if (!is_array($config)) {
+        throw new RuntimeException('Invalid local PHP configuration');
+    }
+    foreach ($config as $key => $value) {
+        if (!is_string($key) || !preg_match('/^[A-Z][A-Z0-9_]*$/', $key) || !is_scalar($value)) {
+            throw new RuntimeException('Invalid local PHP configuration entry');
+        }
+        if (getenv($key) === false) {
+            putenv($key . '=' . (string) $value);
+        }
+    }
+}
+
 function send_json(array $body, int $status = 200, string $cache = 'no-store'): void
 {
     http_response_code($status);
@@ -322,7 +338,10 @@ function run_app(): void
 {
     $path = rtrim(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/', '/');
     $path = $path === '' ? '/' : $path;
-    if (($_SERVER['HTTP_HOST'] ?? '') === 'staging.omoikiri.kz') header('X-Robots-Tag: noindex, nofollow');
+    $host = strtolower(explode(':', $_SERVER['HTTP_HOST'] ?? '', 2)[0]);
+    if (!in_array($host, ['omoikiri.kz', 'www.omoikiri.kz'], true)) {
+        header('X-Robots-Tag: noindex, nofollow');
+    }
     if ($path === '/healthz') {
         send_json(['ok' => true, 'apiComplete' => false]);
         return;

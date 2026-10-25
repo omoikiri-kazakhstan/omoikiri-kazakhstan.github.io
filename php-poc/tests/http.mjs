@@ -36,7 +36,10 @@ try {
     try {
       const result = await request('/healthz');
       ready = result.body.ok === true;
-      if (ready) break;
+      if (ready) {
+        assert.equal(result.response.headers.get('x-robots-tag'), 'noindex, nofollow');
+        break;
+      }
     } catch { /* server is starting */ }
     await new Promise((resolve) => setTimeout(resolve, 100));
   }

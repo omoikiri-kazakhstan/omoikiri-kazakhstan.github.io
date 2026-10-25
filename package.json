@@ -6,7 +6,8 @@
     "audit:release-seo": "node scripts/release-seo.mjs --dry-run",
     "audit:kz-products": "node scripts/audit-kz-products.mjs",
     "sync:stock": "node plesk/sync-stock.js",
-    "sync:ru-prices": "node plesk/sync-ru-prices.js"
+    "sync:ru-prices": "node plesk/sync-ru-prices.js",
+    "prepare:php-config": "node php-poc/bin/import-node-env.mjs"
   },
   "devDependencies": {
     "parse5": "8.0.0"

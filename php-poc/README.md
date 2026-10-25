@@ -22,6 +22,15 @@ curl, OpenSSL, mbstring, ZipArchive and SimpleXML. Set `MYSQL_HOST`, `MYSQL_PORT
 `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`, `ADMIN_LOGIN`, `ADMIN_PASSWORD`,
 `ADMIN_SESSION_SECRET`, `TURNSTILE_SECRET`, `TELEGRAM_BOT_TOKEN`,
 `TELEGRAM_CHAT_ID`, and `STOCK_SYNC_TOKEN` outside Git and the web root.
+For Plesk PHP-FPM, place `php-poc/config.local.php` outside `public/` and
+return an associative array of those names and values. The file is ignored by
+Git; never include it in deployment archives. Existing process environment
+values take precedence. Both web requests and CLI sync jobs load it.
+Plesk's "Run script" npm action does not inherit the site's configured Node
+environment variables. Create `config.local.php` with the Plesk file editor,
+keep it outside `public/`, and restrict it to owner read/write (0600). The
+`prepare:php-config` script is only for a shell where the variables are already
+present; it refuses to overwrite an existing config and forces payment off.
 
 Schedule `php php-poc/bin/sync-stock.php` every 30 minutes and
 `php php-poc/bin/sync-ru-prices.php` daily on the test host. The public site
@@ -39,9 +48,12 @@ php php-poc/tests/logic.php
 php php-poc/tests/order.php
 php php-poc/tests/sync.php
 node php-poc/tests/http.mjs
+node php-poc/tests/release.mjs
 ```
 
 The HTTP test starts its own loopback PHP server and isolated SQLite fixture.
+The release test does the same, then runs the desktop/mobile storefront,
+admin-login and sitemap browser checks against that local server.
 For a visual check with that fixture, run `php php-poc/tests/fixture.php` with a
 temporary database path, set `APP_ENV=test` and `TEST_DB_DSN=sqlite:<path>`, then:
 

@@ -55,6 +55,9 @@ try {
         'OperationType' => 'Payment', 'Status' => 'Completed', 'TestMode' => true];
     $raw = json_encode($payload, JSON_THROW_ON_ERROR);
     $sign = static fn (string $value): string => base64_encode(hash_hmac('sha256', $value, 'test-secret-do-not-deploy', true));
+    $form = http_build_query($payload);
+    payment_check(tiptop_payload($form, 'application/x-www-form-urlencoded')['InvoiceId'] === (string) $id &&
+        tiptop_signature_valid($form, $sign($form)), 'Signed form notification parses');
     $invalid = captured(static fn () => tiptop_notification($db, 'check', $raw, $sign('tampered'), $notify));
     payment_check($invalid['status'] === 401, 'Invalid signature rejected');
     $wrong = $payload; $wrong['Amount'] = 1;

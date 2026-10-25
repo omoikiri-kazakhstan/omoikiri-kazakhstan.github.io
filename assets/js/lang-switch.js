@@ -1093,9 +1093,9 @@
 
       #search {
         display: inline-block !important;
-        flex: 0 0 30px;
-        width: 29px !important;
-        height: 29px !important;
+        flex: 0 0 34px;
+        width: 34px !important;
+        height: 34px !important;
         background: #222 !important;
         transform: translateY(0) !important;
         vertical-align: middle !important;
@@ -1104,7 +1104,7 @@
       }
 
       #search:hover {
-        background: #c9001a !important;
+        background: #ff5a00 !important;
       }
 
       .side_menu,
@@ -1132,8 +1132,8 @@
       }
 
       .dealer-local-cart-tab svg {
-        width: 30px !important;
-        height: 30px !important;
+        width: 38px !important;
+        height: 38px !important;
         display: block !important;
         stroke: currentColor !important;
         stroke-width: 2.05 !important;
@@ -1219,10 +1219,12 @@
       .favorites-link::before {
         content: "" !important;
         display: block !important;
-        width: 28px !important;
-        height: 28px !important;
+        width: 34px !important;
+        height: 34px !important;
         background: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 24.2C10.2 20.7 5 16.5 5 10.9C5 7.9 7.25 5.75 10.05 5.75C11.75 5.75 13.15 6.55 14 7.9C14.85 6.55 16.25 5.75 17.95 5.75C20.75 5.75 23 7.9 23 10.9C23 16.5 17.8 20.7 14 24.2Z' fill='none' stroke='%23111' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 28px 28px no-repeat !important;
         pointer-events: none !important;
+        background-size: 34px 34px !important;
+        transform: scale(1.3) !important;
       }
 
       #favorites-count,
@@ -1551,6 +1553,89 @@
         padding: 18px 20px;
         color: #555;
         font-size: 14px;
+      }
+
+      .dealer-search-results {
+        min-height: 100vh;
+        padding: 185px max(24px, calc((100vw - 1600px) / 2)) 70px;
+        background: #fff;
+        box-sizing: border-box;
+      }
+
+      .dealer-search-results h1 {
+        margin: 0 0 10px;
+        color: #111;
+        font: 500 34px/1.2 "GothamProRegular", Arial, Helvetica, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0;
+      }
+
+      .dealer-search-results-count {
+        margin: 0 0 28px;
+        color: #555;
+        font: 400 15px/1.4 "GothamProRegular", Arial, Helvetica, sans-serif;
+      }
+
+      .dealer-search-results-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .dealer-search-result-card {
+        position: relative;
+        display: block;
+        min-width: 0;
+        padding: 22px 16px 28px;
+        border: 1px solid #e8e8e8;
+        margin: 0 -1px -1px 0;
+        color: #111;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .dealer-search-result-card:hover,
+      .dealer-search-result-card:focus-visible {
+        border-color: #ff5a00;
+        z-index: 1;
+      }
+
+      .dealer-search-result-card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: contain;
+      }
+
+      .dealer-search-result-card-title {
+        display: block;
+        margin-top: 12px;
+        font: 500 20px/1.2 "GothamProRegular", Arial, Helvetica, sans-serif;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+      }
+
+      .dealer-search-result-card-meta {
+        display: block;
+        margin-top: 8px;
+        color: #666;
+        font: 400 13px/1.3 "GothamProRegular", Arial, Helvetica, sans-serif;
+      }
+
+      html[lang="kk"] .dealer-search-results .dealer-search-ru,
+      html:not([lang="kk"]) .dealer-search-results .dealer-search-kz {
+        display: none;
+      }
+
+      @media (max-width: 1000px) {
+        .dealer-search-results-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      }
+
+      @media (max-width: 600px) {
+        .dealer-search-results { padding: 155px 12px 40px; }
+        .dealer-search-results h1 { font-size: 23px; }
+        .dealer-search-results-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .dealer-search-result-card { padding: 14px 8px 20px; }
+        .dealer-search-result-card-title { font-size: 15px; }
       }
 
       body.dealer-info-page .search_line {
@@ -1954,7 +2039,7 @@
     return box;
   }
 
-  function searchMatches(index, query) {
+  function searchMatches(index, query, limit = 24) {
     const q = normalizeSearch(query);
     if (q.length < 2) return [];
 
@@ -1975,8 +2060,81 @@
       })
       .filter((entry) => entry.score < 99)
       .sort((a, b) => a.score - b.score || a.item.title.localeCompare(b.item.title, 'ru', { sensitivity: 'base', numeric: true }))
-      .slice(0, 24)
+      .slice(0, limit)
       .map((entry) => entry.item);
+  }
+
+  function renderSearchResults() {
+    const query = new URLSearchParams(window.location.search).get('s')?.trim();
+    if (!query || !['/', '/index.html'].includes(window.location.pathname)) return;
+
+    document.documentElement.classList.add('dealer-search-page');
+    document.title = query + ' - OMOIKIRI KZ';
+    document.querySelector('.dgwt-wcas-search-input')?.setAttribute('value', query);
+    document.querySelector('link[rel="canonical"]')?.remove();
+    const robots = document.createElement('meta');
+    robots.name = 'robots';
+    robots.content = 'noindex, follow';
+    document.head.appendChild(robots);
+
+    const main = document.createElement('main');
+    main.className = 'dealer-search-results';
+    const heading = document.createElement('h1');
+    heading.append(document.createTextNode(query + ' '));
+    const ruLabel = document.createElement('span');
+    ruLabel.className = 'dealer-search-ru';
+    ruLabel.textContent = 'результаты поиска';
+    const kzLabel = document.createElement('span');
+    kzLabel.className = 'dealer-search-kz';
+    kzLabel.textContent = 'іздеу нәтижелері';
+    heading.append(ruLabel, kzLabel);
+    const count = document.createElement('p');
+    count.className = 'dealer-search-results-count';
+    const grid = document.createElement('div');
+    grid.className = 'dealer-search-results-grid';
+    main.append(heading, count, grid);
+    document.querySelector('.menu')?.after(main);
+
+    loadSearchIndex().then((index) => {
+      const items = searchMatches(index, query, Infinity);
+      count.textContent = String(items.length) + ' ';
+      const countRu = document.createElement('span');
+      countRu.className = 'dealer-search-ru';
+      countRu.textContent = 'товаров';
+      const countKz = document.createElement('span');
+      countKz.className = 'dealer-search-kz';
+      countKz.textContent = 'тауар';
+      count.append(countRu, countKz);
+
+      if (!items.length) {
+        const empty = document.createElement('p');
+        empty.textContent = 'Ничего не найдено';
+        grid.appendChild(empty);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      items.forEach((item) => {
+        const card = document.createElement('a');
+        card.className = 'dealer-search-result-card';
+        card.href = productHref(item);
+        const image = document.createElement('img');
+        image.src = item.image;
+        image.alt = item.title;
+        image.loading = 'lazy';
+        const title = document.createElement('span');
+        title.className = 'dealer-search-result-card-title';
+        title.textContent = item.title;
+        const meta = document.createElement('span');
+        meta.className = 'dealer-search-result-card-meta';
+        meta.textContent = item.category || '';
+        card.append(image, title, meta);
+        fragment.appendChild(card);
+      });
+      grid.appendChild(fragment);
+    }).catch(() => {
+      count.textContent = 'Не удалось загрузить результаты поиска';
+    });
   }
 
   function renderSuggestions(items, query) {
@@ -2022,20 +2180,11 @@
 
     input.addEventListener('input', update);
     input.addEventListener('focus', update);
-    input.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter') return;
-      event.preventDefault();
-      const first = document.querySelector('.dealer-search-suggestion');
-      if (first) window.location.href = first.href;
-      else update();
-    });
-
     if (form) {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        const first = document.querySelector('.dealer-search-suggestion');
-        if (first) window.location.href = first.href;
-        else update();
+        const query = input.value.trim();
+        if (query) window.location.href = ROOT + '?s=' + encodeURIComponent(query);
       });
     }
 
@@ -2298,6 +2447,7 @@
     bindSearchState();
     bindLightboxState();
     bindLocalSearchSuggestions();
+    renderSearchResults();
     let languageRefreshPending = false;
     new MutationObserver((mutations) => {
       if (document.documentElement.lang !== 'kk' || languageRefreshPending) return;

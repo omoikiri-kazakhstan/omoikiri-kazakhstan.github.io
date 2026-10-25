@@ -4,6 +4,10 @@
 	<title>OMOIKIRI KZ</title>
 	<meta charset="UTF-8" />
 	<link rel="canonical" href="https://omoikiri.kz/" />
+	<script>if (new URLSearchParams(location.search).get('s')?.trim()) document.documentElement.classList.add('dealer-search-page');</script>
+	<style>
+		html.dealer-search-page body.dealer-home-page > :not(.top_nav):not(.menu):not(.mob_menu):not(.dealer-search-results):not(.dealer-search-suggestions):not(.dealer-lang-switch):not(.dealer-local-cart-tab):not(script):not(style) { display: none !important; }
+	</style>
 	<link type="image/x-icon" href="/assets/remote/omoikiri.ru/fav.png" rel="shortcut icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/assets/remote/omoikiri.ru/wp-content/plugins/ajax-search-for-woocommerce-premium/assets/css/style.min.css">

@@ -697,12 +697,15 @@ body.dealer-home-page .main_block > img {
   .acs_title { padding: 25px 0; }
   .acs_title h2 { font-size: 8vw; line-height: 1.1; }
   body.dealer-home-page .main_block {
-    height: calc(100svh - 67px);
-    min-height: 360px;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1;
+    background-image: none;
   }
 
-  body.dealer-home-page .main_block > img { object-position: center; }
-  .intro_transition .num_cont { height: calc(100svh - 67px); min-height: 0; }
+  body.dealer-home-page .main_block > img { object-fit: cover; object-position: 57% center; }
+  body.dealer-home-page .main_block .arrow-container { display: none; }
+  .intro_transition .num_cont { height: min(55svh, 460px); min-height: 300px; }
   .intro_transition .eight { font-size: 50vw; line-height: .7; }
   .intro_transition .eight_text { margin-left: 10px; font-size: 24px; }
   .intro_transition .sinks_title { padding: 25px 0; }

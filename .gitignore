@@ -9,5 +9,6 @@ Thumbs.db
 node_modules/
 plesk/data/
 php-poc/config.local.php
+php-poc/backups/
 __pycache__/
 *.pyc

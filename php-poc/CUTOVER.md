@@ -1,8 +1,10 @@
 # PHP cutover checklist
 
-Status on 2026-10-25: **do not switch `omoikiri.kz` yet**. The isolated PHP
-site is live at `https://php-test.omoikiri.kz/`, but a real PHP checkout and
-Telegram delivery have not been verified. Online payment remains off.
+Status on 2026-10-25: the isolated PHP site is live at
+`https://php-test.omoikiri.kz/`. Test order 13 (`PHP TEST 25.10`) is recorded
+in the PHP admin with status Test, and the user confirmed Telegram delivery.
+The full RU-price refresh and an off-server DB backup are verified. The main
+domain has **not** been switched yet. Online payment remains off.
 
 ## Current layout
 
@@ -17,19 +19,34 @@ Telegram delivery have not been verified. Online payment remains off.
   uses the same staging MariaDB and Telegram configuration as Node. Never
   include it in an archive or Git commit.
 - Plesk tasks 1937 (stock, `*/30 * * * *`) and 1938 (RU prices, daily 05:00)
-  are prepared with PHP 8.4 but **disabled**. Existing tasks still wake Node;
-  Node performs the current refreshes in-process.
+  are prepared with PHP 8.3 but **disabled**. PHP 8.4's scheduled-task
+  handler lacked `ZipArchive`; a manual stock sync on 8.3 passed with 1594
+  articles. Existing tasks still wake Node, which performs the current
+  refreshes in-process.
+- Task 1939 is a disabled, manually run database backup. Its latest SQL file
+  is `/staging.omoikiri.kz/php-poc/backups/staging-db-20261025-080937.sql`
+  (6 tables, 18 rows, 409754 bytes, SHA-256
+  `2098b7deae1836b4e4b16463354efaf131eb70f4b8475f7e0c3d1468fcf137f1`).
+  The directory is 0700 and the file is 0600, outside the document root.
+  A byte-for-byte verified off-server copy is at
+  `C:\Users\madir\Documents\OMOIKIRI-backups\staging-db-20261025-080937.sql`.
+- Task 1940 is a disabled RU connectivity probe. Its four sample pages
+  returned 2, 2, 2 and 4 parsed prices on PHP 8.3.
+- The PHP RU-price job completed in 325 seconds with 1464 prices, 1485
+  expected SKUs, 97.24% observed coverage and one RU page error. Existing
+  prices were retained for a failed fetch; PHP and Node APIs agree for all
+  1464 returned prices. PHP and Node storefront domains both inherit PHP
+  8.2 from the Plesk account; CLI jobs use PHP 8.3.
 
 ## Go/no-go before changing the main domain
 
-1. Record a marked test order at the PHP test host with real Turnstile and
-   confirm its MariaDB row and Telegram message. Test a product inquiry too.
-2. Compare PHP and Node prices/catalog/stock once more and check the admin
-   login, order management, color changes, mobile layout, and media responses.
-   Run PHP stock and RU-price jobs once on the test host and confirm that a
-   source failure leaves the last good snapshot intact.
-3. Verify Plesk backup and a database export made immediately before cutover.
-   The downloaded 540 KB Plesk HTML files are **not** valid backup archives.
+1. Test order 13 with real Turnstile, MariaDB and Telegram passed. Test a
+   product inquiry too when a human can complete its CAPTCHA.
+2. PHP and Node prices/catalog/stock were compared; 436 sitemap URLs, admin,
+   order management, color changes, mobile layout, stock and RU-price jobs
+   passed. Confirm the newest snapshot timestamp immediately before cutover.
+3. Confirm the server-side and off-server SQL copies above remain intact.
+   The earlier downloaded 540 KB Plesk HTML files are **not** backup archives.
 4. Preserve a screenshot or written copy of main-domain hosting settings and
    `/httpdocs/.htaccess`; make sure Plesk remains reachable for rollback.
 5. Arrange a quiet order window. Avoid running both Node and PHP stock/price

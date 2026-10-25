@@ -59,9 +59,64 @@ function ru_product_html(string $slug): string
     return $html;
 }
 
+function ru_pages_batch(array $products, ?callable $fetch): array
+{
+    if ($fetch !== null) {
+        $pages = [];
+        foreach ($products as $product) {
+            try { $pages[] = $fetch($product['slug']); }
+            catch (Throwable $error) { $pages[] = $error; }
+        }
+        return $pages;
+    }
+    $multi = curl_multi_init();
+    $handles = [];
+    try {
+        foreach ($products as $product) {
+            $slug = $product['slug'];
+            if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)) {
+                throw new InvalidArgumentException('Invalid slug');
+            }
+            $curl = curl_init('https://omoikiri.ru/product/' . $slug . '/');
+            if ($curl === false) throw new RuntimeException('Could not open RU page');
+            curl_setopt_array($curl, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 15,
+                CURLOPT_HTTPHEADER => ['Accept: text/html'], CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_MAXREDIRS => 3]);
+            curl_multi_add_handle($multi, $curl);
+            $handles[] = $curl;
+        }
+        do {
+            $result = curl_multi_exec($multi, $running);
+            if ($result !== CURLM_OK) throw new RuntimeException('RU batch request failed');
+            if ($running && curl_multi_select($multi, 1.0) === -1) usleep(10000);
+        } while ($running);
+        $pages = [];
+        foreach ($handles as $curl) {
+            $html = curl_multi_getcontent($curl);
+            $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+            $effective = curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
+            $pages[] = is_string($html) && curl_errno($curl) === 0 && $status === 200 &&
+                str_starts_with($effective, 'https://omoikiri.ru/')
+                ? $html : new RuntimeException('RU page returned HTTP ' . $status);
+        }
+        return $pages;
+    } finally {
+        foreach ($handles as $curl) { curl_multi_remove_handle($multi, $curl); curl_close($curl); }
+        curl_multi_close($multi);
+    }
+}
+
+function ru_product_pages(array $products, ?callable $fetch): Generator
+{
+    foreach (array_chunk($products, 4) as $batch) {
+        foreach (ru_pages_batch($batch, $fetch) as $index => $page) {
+            yield [$batch[$index], $page];
+        }
+    }
+}
+
 function sync_ru_prices(PDO $db, ?callable $fetch = null): array
 {
-    $fetch ??= 'ru_product_html';
     $previousRow = db_one($db, 'SELECT payload FROM ru_price_snapshot WHERE id = 1');
     $previous = $previousRow ? json_decode($previousRow['payload'], true) : [];
     $saved = $previous['prices'] ?? [];
@@ -71,7 +126,7 @@ function sync_ru_prices(PDO $db, ?callable $fetch = null): array
     $expected = [];
     $observed = [];
     $errors = 0;
-    foreach (catalog_file() as $product) {
+    foreach (ru_product_pages(catalog_file(), $fetch) as [$product, $page]) {
         $slug = $product['slug'];
         $skus = [];
         foreach (($product['variations'] ?: [['sku' => $product['sku'] ?? '']]) as $variant) {
@@ -79,7 +134,8 @@ function sync_ru_prices(PDO $db, ?callable $fetch = null): array
             if ($sku) { $skus[$sku] = true; $expected[$sku] = true; }
         }
         try {
-            $html = $fetch($slug);
+            if ($page instanceof Throwable) throw $page;
+            $html = $page;
             $live = parse_ru_prices($html);
             if (!$skus) {
                 $single = parse_ru_single($html);

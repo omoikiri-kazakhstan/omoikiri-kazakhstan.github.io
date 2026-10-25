@@ -41,7 +41,9 @@ Only that host then receives payment intents. Point the terminal's Check, Pay
 and Fail notifications to the matching `/api/payments/tiptop/` URLs on
 `https://php-test.omoikiri.kz`. Keep the API secret outside Git and the web
 root. Verify a test order, paid status, and Telegram before configuring the
-live terminal and enabling `TIPTOP_PAYMENTS_ENABLED`.
+live terminal and enabling `TIPTOP_PAYMENTS_ENABLED`. The live flag applies
+only to `omoikiri.kz` (or an explicitly configured `TIPTOP_LIVE_PAYMENT_HOST`),
+not to the test subdomain.
 
 Schedule `php php-poc/bin/sync-stock.php` every 30 minutes and
 `php php-poc/bin/sync-ru-prices.php` daily on the test host. The public site

@@ -29,6 +29,7 @@ try {
     putenv('TIPTOP_PAYMENTS_ENABLED=true');
     putenv('TIPTOP_PUBLIC_TERMINAL_ID=test-terminal');
     putenv('TIPTOP_API_SECRET=test-secret-do-not-deploy');
+    $_SERVER['HTTP_HOST'] = 'omoikiri.kz';
     payment_check(payment_enabled(), 'Payment flag should require all settings');
     $body = ['requestId' => 'd71ab029-9158-4dc2-bff9-c25a5091337a',
         'name' => 'Payment Test', 'phone' => '+77077832888', 'city' => 'Astana',
@@ -98,6 +99,11 @@ try {
     payment_check(!payment_enabled(), 'Test terminal is disabled on production host');
     $_SERVER['HTTP_HOST'] = 'php-test.omoikiri.kz';
     payment_check(payment_enabled(), 'Test terminal is enabled only on test host');
+    putenv('TIPTOP_PAYMENTS_ENABLED=true');
+    putenv('TIPTOP_TEST_PAYMENTS_ENABLED=false');
+    payment_check(!payment_enabled(), 'Live terminal is disabled on test host');
+    $_SERVER['HTTP_HOST'] = 'omoikiri.kz';
+    payment_check(payment_enabled(), 'Live terminal is enabled only on production host');
     echo "PHP TipTopPay checks passed\n";
 } finally {
     $db = null;

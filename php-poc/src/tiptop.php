@@ -4,10 +4,12 @@ declare(strict_types=1);
 function payment_enabled(): bool
 {
     $host = strtolower(explode(':', (string) ($_SERVER['HTTP_HOST'] ?? ''), 2)[0]);
+    $liveHost = strtolower((string) (getenv('TIPTOP_LIVE_PAYMENT_HOST') ?: 'omoikiri.kz'));
     $testHost = strtolower((string) getenv('TIPTOP_TEST_PAYMENT_HOST'));
+    $liveEnabled = getenv('TIPTOP_PAYMENTS_ENABLED') === 'true' && hash_equals($liveHost, $host);
     $testEnabled = getenv('TIPTOP_TEST_PAYMENTS_ENABLED') === 'true' &&
         $testHost !== '' && hash_equals($testHost, $host);
-    return (getenv('TIPTOP_PAYMENTS_ENABLED') === 'true' || $testEnabled) &&
+    return ($liveEnabled || $testEnabled) &&
         (bool) getenv('TIPTOP_PUBLIC_TERMINAL_ID') && (bool) getenv('TIPTOP_API_SECRET');
 }
 

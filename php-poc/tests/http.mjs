@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
+import { request as httpRequest } from 'node:http';
 
 const root = path.resolve(fileURLToPath(new URL('../../', import.meta.url)));
 const php = process.env.PHP_BINARY || 'php';
@@ -37,6 +38,7 @@ try {
       const result = await request('/healthz');
       ready = result.body.ok === true;
       if (ready) {
+        assert.equal(result.body.apiComplete, false);
         assert.equal(result.response.headers.get('x-robots-tag'), 'noindex, nofollow');
         break;
       }
@@ -44,6 +46,18 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
   assert.ok(ready, 'PHP server did not start');
+  const productionHome = await new Promise((resolve, reject) => {
+    const call = httpRequest(base + '/', { headers: { Host: 'omoikiri.kz' } }, (response) => {
+      response.resume();
+      response.on('end', () => resolve(response));
+    });
+    call.on('error', reject);
+    call.end();
+  });
+  assert.equal(productionHome.statusCode, 200);
+  assert.equal(productionHome.headers['x-robots-tag'], undefined);
+  const privateConfig = await fetch(base + '/php-poc/config.local.php');
+  assert.equal(privateConfig.status, 404);
 
   let result = await request('/api/prices');
   assert.equal(result.response.status, 200);
